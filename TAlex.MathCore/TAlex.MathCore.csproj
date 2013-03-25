@@ -39,10 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Complex.cs" />
+    <Compile Include="ComplexComparer.cs" />
+    <Compile Include="CPolynomial.cs" />
+    <Compile Include="ExMath.cs" />
+    <Compile Include="Fraction.cs" />
+    <Compile Include="FunctionDelegates.cs" />
+    <Compile Include="Machine.cs" />
+    <Compile Include="NotConvergenceException.cs" />
+    <Compile Include="NumericUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir).nuget\nuget.exe pack "$(ProjectPath)" -Prop Configuration=$(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
