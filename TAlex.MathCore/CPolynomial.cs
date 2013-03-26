@@ -367,20 +367,6 @@ namespace TAlex.MathCore
             return result;
         }
 
-        // TODO: Extend to extension
-        /// <summary>
-        /// Returns a vector of approximate values of roots of a complex polynomial.
-        /// </summary>
-        /// <param name="poly">A complex polynomial.</param>
-        /// <returns>The approximate values of roots of poly.</returns>
-        /// <exception cref="System.ArgumentException">
-        /// Number of elements in poly is less than 2 or more than 99.
-        /// </exception>
-        //public static Complex[] Roots(CPolynomial poly)
-        //{
-        //    return CompanionMatrixRootsFinding(poly);
-        //}
-
         /// <summary>
         /// Returns a vector of approximate values of roots of a complex polynomial by Laguerre's method.
         /// </summary>
@@ -470,48 +456,6 @@ namespace TAlex.MathCore
             Array.Sort<Complex>(roots, new ComplexComparer());
             return roots;
         }
-
-        // TODO: Extend to extension
-        /// <summary>
-        /// Returns a vector of approximate values of roots of a complex polynomial by companion matrix method.
-        /// </summary>
-        /// <param name="poly">A complex polynomial.</param>
-        /// <returns>The approximate values of roots of poly.</returns>
-        /// <exception cref="System.ArgumentException">
-        /// Number of elements in coeffs is less than 2 or more than 99.
-        /// </exception>
-        //public static Complex[] CompanionMatrixRootsFinding(CPolynomial poly)
-        //{
-        //    // Remove zero elements standing at the end.
-        //    int lidx = 0;
-        //    int ridx = poly.Length - 1;
-        //    while (ridx >= 0 && poly[ridx] == Complex.Zero) ridx--;
-        //    while (lidx < poly.Length && poly[lidx] == Complex.Zero) lidx++;
-        //    int length = ridx + 1;
-
-        //    if (length < 2 || length > 99)
-        //        throw new ArgumentException("Number of coefficients must be between 1 and 100.");
-
-        //    int rootsCount = length - 1;
-        //    Complex[] roots = new Complex[rootsCount];
-
-        //    int n = ridx - lidx;
-        //    CMatrix companionMatrix = new CMatrix(n, n);
-
-        //    for (int i = 1; i < n; i++)
-        //        companionMatrix[i, i - 1] = Complex.One;
-
-        //    for (int i = 0; i < n; i++)
-        //        companionMatrix[i, n - 1] = -poly[lidx + i] / poly[ridx];
-
-        //    CMatrix eigenvals = CMatrix.Eigenvalues(companionMatrix);
-
-        //    for (int i = 0; i < n; i++)
-        //        roots[i] = eigenvals[i];
-
-        //    Array.Sort<Complex>(roots, new ComplexComparer());
-        //    return roots;
-        //}
 
         /// <summary>
         /// Returns the interpolating polynomial through a set of nodes using the Lagrange method.
@@ -660,33 +604,6 @@ namespace TAlex.MathCore
 
             return result;
         }
-
-        // TODO: Extend to extension
-        /// <summary>
-        /// Returns the value of the complex polynomial evaluated at a specified value.
-        /// </summary>
-        /// <param name="value">A complex square matrix.</param>
-        /// <returns>The evaluated value of the complex polynomial.</returns>
-        /// <exception cref="MatrixSizeMismatchException">The matrix value is not square.</exception>
-        //public CMatrix Evaluate(CMatrix value)
-        //{
-        //    if (!value.IsSquare)
-        //        throw new MatrixSizeMismatchException("The matrix must be square.");
-
-        //    int len = Degree + 1;
-        //    int n = value.RowCount;
-
-        //    CMatrix m = CMatrix.Identity(n);
-        //    CMatrix result = new CMatrix(n, n);
-
-        //    for (int i = 0; i < len; i++)
-        //    {
-        //        result += _coeffs[i] * m;
-        //        m *= value;
-        //    }
-
-        //    return result;
-        //}
 
         /// <summary>
         /// Returns the first derivative of the complex polynomial.

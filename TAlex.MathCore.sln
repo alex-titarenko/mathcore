@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.LinearAlgebr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{37EACF5A-E850-4D26-860F-707D0CF7E54A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.Test", "TAlex.MathCore\Test\TAlex.MathCore.Test.csproj", "{DD8BB990-B370-44B4-B99A-A2100D8CFF69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.LinearAlgebra.Test", "TAlex.MathCore.LinearAlgebra\Test\TAlex.MathCore.LinearAlgebra.Test.csproj", "{CE627563-ACDC-4F7D-B317-42B6F48C5A09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,20 @@ Global
 		{44709D81-B144-4BF5-BA30-CA852FA9B29B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44709D81-B144-4BF5-BA30-CA852FA9B29B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44709D81-B144-4BF5-BA30-CA852FA9B29B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD8BB990-B370-44B4-B99A-A2100D8CFF69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD8BB990-B370-44B4-B99A-A2100D8CFF69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD8BB990-B370-44B4-B99A-A2100D8CFF69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD8BB990-B370-44B4-B99A-A2100D8CFF69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE627563-ACDC-4F7D-B317-42B6F48C5A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE627563-ACDC-4F7D-B317-42B6F48C5A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE627563-ACDC-4F7D-B317-42B6F48C5A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE627563-ACDC-4F7D-B317-42B6F48C5A09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DD8BB990-B370-44B4-B99A-A2100D8CFF69} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
+		{CE627563-ACDC-4F7D-B317-42B6F48C5A09} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 	EndGlobalSection
 EndGlobal

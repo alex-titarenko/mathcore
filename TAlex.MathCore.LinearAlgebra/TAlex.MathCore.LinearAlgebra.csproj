@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="CEigenproblem.cs" />
     <Compile Include="CMatrix.cs" />
+    <Compile Include="CPolynomialExtensions.cs" />
     <Compile Include="CSVD.cs" />
     <Compile Include="LAPACK.cs" />
     <Compile Include="MatrixSizeMismatchException.cs" />
