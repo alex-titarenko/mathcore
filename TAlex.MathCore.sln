@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.Test", "TAle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.LinearAlgebra.Test", "TAlex.MathCore.LinearAlgebra\Test\TAlex.MathCore.LinearAlgebra.Test.csproj", "{CE627563-ACDC-4F7D-B317-42B6F48C5A09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ExpressionsBase", "TAlex.MathCore.ExpressionsBase\TAlex.MathCore.ExpressionsBase.csproj", "{62A967EC-EBDD-488A-A80A-D1B5EC1AD587}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ExpressionsBase.Test", "TAlex.MathCore.ExpressionsBase\Test\TAlex.MathCore.ExpressionsBase.Test.csproj", "{06FC6FAE-213F-4B96-AF31-AD711854B64E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{CE627563-ACDC-4F7D-B317-42B6F48C5A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE627563-ACDC-4F7D-B317-42B6F48C5A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE627563-ACDC-4F7D-B317-42B6F48C5A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62A967EC-EBDD-488A-A80A-D1B5EC1AD587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62A967EC-EBDD-488A-A80A-D1B5EC1AD587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62A967EC-EBDD-488A-A80A-D1B5EC1AD587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62A967EC-EBDD-488A-A80A-D1B5EC1AD587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06FC6FAE-213F-4B96-AF31-AD711854B64E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06FC6FAE-213F-4B96-AF31-AD711854B64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06FC6FAE-213F-4B96-AF31-AD711854B64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06FC6FAE-213F-4B96-AF31-AD711854B64E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,5 +52,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DD8BB990-B370-44B4-B99A-A2100D8CFF69} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 		{CE627563-ACDC-4F7D-B317-42B6F48C5A09} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
+		{06FC6FAE-213F-4B96-AF31-AD711854B64E} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 	EndGlobalSection
 EndGlobal
