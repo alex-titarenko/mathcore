@@ -5,6 +5,9 @@ using TAlex.MathCore.Test.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
 using System.Globalization;
+using System.Xml.Serialization;
+using System.IO;
+using System.Text;
 
 
 namespace TAlex.MathCore.Test
@@ -133,6 +136,44 @@ namespace TAlex.MathCore.Test
 
             //action
             string actual = c.ToString(CultureInfo.InvariantCulture);
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void WriteXmlTest_Serialize()
+        {
+            //arrange
+            Complex c = new Complex(3.6, -0.8);
+            XmlSerializer serializer = new XmlSerializer(typeof(Complex));
+            StringBuilder sb = new StringBuilder();
+            
+            //action
+            using (StringWriter writter = new StringWriter(sb))
+            {
+                serializer.Serialize(writter, c);
+            }
+
+            //assert
+            sb.ToString().Should().Be(String.Format(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<Complex Re=""{0}"" Im=""{1}"" />", c.Re, c.Im));
+        }
+
+        [Test]
+        public void ReadXmlTest_Deserialize()
+        {
+            //arrange
+            Complex expected = new Complex(3.6, -0.8);
+            Complex actual;
+            XmlSerializer serializer = new XmlSerializer(typeof(Complex));
+            string xml = String.Format(@"<Complex Re=""{0}"" Im=""{1}"" />", expected.Re, expected.Im);
+
+            //action
+            using (StringReader reader = new StringReader(xml))
+            {
+                actual = (Complex)serializer.Deserialize(reader);
+            }
 
             //assert
             actual.Should().Be(expected);

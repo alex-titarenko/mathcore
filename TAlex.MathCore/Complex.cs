@@ -1645,6 +1645,9 @@ namespace TAlex.MathCore
 
         #region IXmlSerializable Members
 
+        private static readonly string _reAttrName = "Re";
+        private static readonly string _imAttrName = "Im";
+
         XmlSchema IXmlSerializable.GetSchema()
         {
             throw new NotImplementedException();
@@ -1652,12 +1655,14 @@ namespace TAlex.MathCore
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            throw new NotImplementedException();
+            _real = double.Parse(reader.GetAttribute(_reAttrName), CultureInfo.InvariantCulture);
+            _imag = double.Parse(reader.GetAttribute(_imAttrName), CultureInfo.InvariantCulture);
         }
 
         void IXmlSerializable.WriteXml(XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteAttributeString(_reAttrName, Re.ToString(CultureInfo.InvariantCulture));
+            writer.WriteAttributeString(_imAttrName, Im.ToString(CultureInfo.InvariantCulture));
         }
 
         #endregion
