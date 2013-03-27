@@ -1,131 +1,141 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using TAlex.MathCore;
 using TAlex.MathCore.Test.Helpers;
+using FluentAssertions;
+using NUnit.Framework;
+using System.Globalization;
+
 
 namespace TAlex.MathCore.Test
 {
-    /// <summary>
-    /// This is a test class for ComplexTest and is intended
-    /// to contain all ComplexTest Unit Tests
-    ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class ComplexTest
     {
-        private RandomGenerator _rand = new RandomGenerator();
-
-
-        private bool ComplexEquals(Complex c1, Complex c2, double TOL)
-        {
-            return (Math.Abs(c1.Re - c2.Re) < TOL) && (Math.Abs(c1.Im - c2.Im) < TOL);
-        }
-
-
-        /// <summary>
-        /// A test for Add
-        /// </summary>
-        [TestMethod()]
-        public void AddTest()
-        {
-            Complex c1 = new Complex(3, 5);
-            Complex c2 = new Complex(-6, 16);
-
-            Complex expected = Complex.Add(c1, c2);
-            Complex actual = new Complex(-3, 21);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-
-        /// <summary>
-        /// A test for Sqrt
-        /// </summary>
-        [TestMethod()]
-        public void SqrtTest_MinusOne()
-        {
-            Complex expected = Complex.Sqrt(-1);
-            Complex actual = Complex.I;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        ///A test for Sqrt
-        ///</summary>
-        [TestMethod()]
-        public void SqrtTest()
-        {
-            int n = 1000000;
-            double TOL = 10E-11;
-
-            for (int idx = 0; idx < n; idx++)
-            {
-                Complex number = _rand.NextComplex(-100000, 100000, 3);
-                Complex sqrt = Complex.Sqrt(number);
-
-                if (!ComplexEquals(sqrt * sqrt, number, TOL))
-                {
-                    Assert.Fail("Error: {0}", sqrt * sqrt - number);
-                }
-            }
-        }
-
-        /// <summary>
-        ///A test for Sin and Cos
-        ///</summary>
-        [TestMethod()]
-        public void SinCosTest()
-        {
-            int n = 10000;
-            double TOL = 10E-8;
-
-            for (int idx = 0; idx < n; idx++)
-            {
-                Complex number = _rand.NextComplex(-10000, 10000, -10, 10, 3);
-                Complex sin = Complex.Sin(number);
-                Complex cos = Complex.Cos(number);
-                
-                if (!ComplexEquals(sin * sin + cos * cos, 1.0, TOL))
-                    Assert.Fail("Error: {0}", sin * sin + cos * cos - 1);
-            }
-        }
-
-        /// <summary>
-        ///A test for Sinh and Cosh
-        ///</summary>
-        [TestMethod()]
-        public void SinhCoshTest()
-        {
-            int n = 1000000;
-            double TOL = 10E-9;
-
-            for (int idx = 0; idx < n; idx++)
-            {
-                Complex number = _rand.NextComplex(-8, 8, -10000, 10000, 3);
-                Complex sinh = Complex.Sinh(number);
-                Complex cosh = Complex.Cosh(number);
-
-                if (!ComplexEquals(cosh * cosh - sinh * sinh, 1.0, TOL))
-                {
-                    Assert.Fail("Error: {0}", (cosh * cosh - sinh * sinh) - 1);
-                }
-            }
-        }
-
-
-        [TestMethod()]
-        public void ParseTest()
+        [TestCase(3,5, -6,16, -3,21)]
+        public void AddTest(double re1, double im1, double re2, double im2, double re3, double im3)
         {
             //arrange
-            string s = "3 + 6i";
-            Complex expected = new Complex(3, 6);
+            Complex c1 = new Complex(re1, im1);
+            Complex c2 = new Complex(re2, im2);
+
+            Complex expected = new Complex(re3, im3);
 
             //action
-            Complex actual = Complex.Parse(s);
+            Complex actual = Complex.Add(c1, c2);
+            
+            //assert
+            expected.Should().Be(actual);
+        }
+
+        [TestCase(-1, 0)]
+        [TestCase(2, -1)]
+        [TestCase(1, 0)]
+        [TestCase(100, 0)]
+        public void SqrtTest(double re, double im)
+        {
+            //arrange
+            Complex number = new Complex(re, im);
+            
+            //action
+            Complex sqrt = Complex.Sqrt(number);
 
             //assert
-            Assert.AreEqual(expected, actual);
+            NumericUtil.FuzzyEquals(sqrt * sqrt, number, 10E-10).Should().BeTrue();
+        }
+
+        [TestCase(0,0, 0,0)]
+        [TestCase(ExMath.TwoPi,0, 0,0)]
+        public void SinTest(double re, double im, double reExp, double imExp)
+        {
+            //arrange
+            Complex c = new Complex(re, im);
+            Complex expected = new Complex(reExp, imExp);
+
+            //action
+            Complex actual = Complex.Sin(c);
+
+            //assert
+            NumericUtil.FuzzyEquals(actual, expected, 10E-8).Should().BeTrue();
+        }
+
+        [TestCase(3, -8)]
+        public void SinCosTest(double re, double im)
+        {
+            //arrange
+            Complex number = new Complex(re, im);
+            Complex sin = Complex.Sin(number);
+            Complex cos = Complex.Cos(number);
+                
+            //action
+            Complex actual = sin * sin + cos * cos;
+            
+            //assert
+            NumericUtil.FuzzyEquals(actual, Complex.One, 10E-10).Should().BeTrue();
+        }
+
+        [TestCase(-3, 346)]
+        [TestCase(3.5, 185.36)]
+        public void SinhCoshTest(double re, double im)
+        {
+            //arrange
+            Complex number = new Complex(re, im);
+            Complex sinh = Complex.Sinh(number);
+            Complex cosh = Complex.Cosh(number);
+
+            //action
+            Complex actual = cosh * cosh - sinh * sinh;
+
+            //assert
+            NumericUtil.FuzzyEquals(actual, Complex.One, 10E-10).Should().BeTrue();
+        }
+
+        [TestCase("5.5", 5.5, 0)]
+        [TestCase("1.3i", 0, 1.3)]
+        [TestCase("3 + 6i", 3, 6)]
+        [TestCase("-5.2i+2.1", 2.1, -5.2)]
+        [TestCase("-2.5i+2i-16", -16, -0.5)]
+        public void ParseTest(string s, double re, double im)
+        {
+            //arrange
+            Complex expected = new Complex(re, im);
+
+            //action
+            Complex actual = Complex.Parse(s, CultureInfo.InvariantCulture);
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [TestCase("3dfg+5i")]
+        [TestCase("3. 5+6i")]
+        [TestCase("1 2")]
+        [TestCase("5 8i")]
+        [TestCase("6-")]
+        [TestCase("1. i")]
+        public void ParseTest_InvalidInput_ThrowException(string s)
+        {
+            //action
+            Action action = () => Complex.Parse(s);
+
+            //assert
+            action.ShouldThrow<FormatException>();
+        }
+
+        [TestCase(5.5, 0, "5.5")]
+        [TestCase(0, -16, "-16i")]
+        [TestCase(3, 8, "3 + 8i")]
+        [TestCase(-1, -1, "-1 - 1i")]
+        public void ToStringTest(double re, double im, string expected)
+        {
+            //arrange
+            Complex c = new Complex(re, im);
+
+            //action
+            string actual = c.ToString(CultureInfo.InvariantCulture);
+
+            //assert
+            actual.Should().Be(expected);
         }
     }
 }

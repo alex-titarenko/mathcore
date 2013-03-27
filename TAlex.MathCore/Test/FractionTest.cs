@@ -12,34 +12,6 @@ namespace TAlex.MathCore.Test
     [TestClass()]
     public class FractionTest
     {
-        #region Fields
-
-        private TestContext testContextInstance;
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion
-
-        #region Methods
-
         /// <summary>
         ///A test for op_Equality
         ///</summary>
@@ -136,7 +108,5 @@ namespace TAlex.MathCore.Test
             Fraction actual = Fraction.Parse(s);
             Assert.AreEqual(expected, actual);
         }
-
-        #endregion
     }
 }

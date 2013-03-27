@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Text;
 using System.Globalization;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Xml.Schema;
+using System.Text.RegularExpressions;
 
 
 namespace TAlex.MathCore
@@ -9,9 +13,11 @@ namespace TAlex.MathCore
     /// Represents a complex number.
     /// </summary>
     [Serializable]
-    public struct Complex : IEquatable<Complex>, IFormattable
+    public struct Complex : IEquatable<Complex>, IConvertible, IFormattable, IXmlSerializable
     {
         #region Fields
+
+        private static readonly Regex _complexRegex = new Regex(@"^(?<num>[-+]?[ \t]*[0-9.,]+[ij]?)(?<num>[ \t]*[-+][ \t]*[0-9.,]+[ij]?)*$", RegexOptions.Compiled);
 
         /// <summary>
         /// The real part of the complex number.
@@ -1173,39 +1179,26 @@ namespace TAlex.MathCore
         /// <exception cref="System.FormatException">The string s is not a number in a valid format.</exception>
         public static Complex Parse(string s, IFormatProvider provider)
         {
-            if (s == null)
-                throw new ArgumentNullException("String should not be null reference.");
+            if (s == null) throw new ArgumentNullException(Properties.Resources.EXC_STRING_NOT_NULL);
 
-            s = s.Replace(" ", "");
+            string str = s.Trim();
+            if (String.IsNullOrEmpty(str)) throw new ArgumentException(Properties.Resources.EXC_STRING_NOT_EMPTY);
 
-            if (s.Length == 0)
-                throw new ArgumentException("String should not be empty.");
+            Match match = _complexRegex.Match(str);
+            if (!match.Success) throw new FormatException(Properties.Resources.EXC_INVALID_FORMAT_COMPLEX);
 
-            NumberFormatInfo info = NumberFormatInfo.GetInstance(provider);
-            string digits = String.Concat(info.NativeDigits);
-            string plusMinus = String.Concat(info.PositiveSign, info.NegativeSign);
-
-            string number = String.Format("([{0}]+[{1}][{0}]+|[{0}]+)", digits, info.NumberDecimalSeparator);
-            string pattern = String.Format("(^(((?<re>[{1}]?{0})(?<im>[{1}]{0})[i])|((?<im>[{1}]?{0})[i])|(?<re>[{1}]?{0}))$)", number, plusMinus);
-
-            System.Text.RegularExpressions.Regex r =
-                new System.Text.RegularExpressions.Regex(pattern);
-
-            if (r.IsMatch(s))
+            Complex result = Complex.Zero;
+            foreach (Capture capture in match.Groups["num"].Captures)
             {
-                System.Text.RegularExpressions.Match mathc = r.Match(s);
-                string re = mathc.Groups["re"].Value;
-                string im = mathc.Groups["im"].Value;
+                string term = capture.Value.Replace(" ", String.Empty).Replace("\t", String.Empty);
 
-                if (im == String.Empty)
-                    return FromReal(Double.Parse(re, provider));
-                else if (re == String.Empty)
-                    return FromRealImaginary(0, Double.Parse(im, provider));
+                if (term.EndsWith("i") || term.EndsWith("j"))
+                    result += Complex.FromRealImaginary(0, double.Parse(term.Substring(0, term.Length - 1), provider));
                 else
-                    return FromRealImaginary(Double.Parse(re, provider), Double.Parse(im, provider));
+                    result += double.Parse(term, provider);
             }
-            else
-                throw new FormatException("Invalid format of the complex number.");
+
+            return result;
         }
 
         #endregion
@@ -1557,6 +1550,114 @@ namespace TAlex.MathCore
         public static explicit operator double(Complex value)
         {
             return value._real;
+        }
+
+        #endregion
+
+        #region IConvertible Members
+
+        TypeCode IConvertible.GetTypeCode()
+        {
+            return TypeCode.Object;
+        }
+
+        bool IConvertible.ToBoolean(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        byte IConvertible.ToByte(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        char IConvertible.ToChar(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        DateTime IConvertible.ToDateTime(IFormatProvider provider)
+        {
+            throw new InvalidCastException(String.Format(Properties.Resources.EXC_INVALID_CAST, typeof(Complex), typeof(DateTime)));
+        }
+
+        decimal IConvertible.ToDecimal(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        double IConvertible.ToDouble(IFormatProvider provider)
+        {
+            return (Double)this;
+        }
+
+        short IConvertible.ToInt16(IFormatProvider provider)
+        {
+            return (Int16)this;
+        }
+
+        int IConvertible.ToInt32(IFormatProvider provider)
+        {
+            return (Int32)this;
+        }
+
+        long IConvertible.ToInt64(IFormatProvider provider)
+        {
+            return (Int64)this;
+        }
+
+        sbyte IConvertible.ToSByte(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        float IConvertible.ToSingle(IFormatProvider provider)
+        {
+            return (Single)this;
+        }
+
+        string IConvertible.ToString(IFormatProvider provider)
+        {
+            return ToString(provider);
+        }
+
+        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        ushort IConvertible.ToUInt16(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        uint IConvertible.ToUInt32(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        ulong IConvertible.ToUInt64(IFormatProvider provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IXmlSerializable Members
+
+        XmlSchema IXmlSerializable.GetSchema()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IXmlSerializable.ReadXml(XmlReader reader)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IXmlSerializable.WriteXml(XmlWriter writer)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
