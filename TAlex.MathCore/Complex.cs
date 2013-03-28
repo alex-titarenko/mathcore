@@ -13,10 +13,12 @@ namespace TAlex.MathCore
     /// Represents a complex number.
     /// </summary>
     [Serializable]
-    public struct Complex : IEquatable<Complex>, IConvertible, IFormattable, IXmlSerializable
+    public struct Complex : IEquatable<Complex>, IFormattable, IXmlSerializable
     {
         #region Fields
 
+        private static readonly string _reAttrName = "Re";
+        private static readonly string _imAttrName = "Im";
         private static readonly Regex _complexRegex = new Regex(@"^(?<num>[-+]?[ \t]*[0-9.,]+[ij]?)(?<num>[ \t]*[-+][ \t]*[0-9.,]+[ij]?)*$", RegexOptions.Compiled);
 
         /// <summary>
@@ -1236,32 +1238,6 @@ namespace TAlex.MathCore
         }
 
         /// <summary>
-        /// Converts the complex value of this instance to its equivalent string representation.
-        /// </summary>
-        /// <param name="format">A numeric format string.</param>
-        /// <param name="provider">An System.IFormatProvider that supplies culture-specific formatting information.</param>
-        /// <returns>The string representation of the value of this instance as specified by format and provider.</returns>
-        /// <exception cref="System.FormatException">The format is invalid.</exception>
-        public string ToString(string format, IFormatProvider provider)
-        {
-            NumberFormatInfo formatInfo = NumberFormatInfo.GetInstance(provider);
-            
-            string real = _real.ToString(format, provider);
-            string imag = Math.Abs(_imag).ToString(format, provider);
-
-            if (this == Zero) return "0";
-            if (IsReal) return real;
-            else if (IsImaginary && _imag < 0)
-                return String.Format("{0}{1}i", formatInfo.NegativeSign, imag);
-            else if (IsImaginary && _imag >= 0)
-                return String.Format("{0}i", imag);
-            else if (_imag < 0)
-                return String.Format("{0} {1} {2}i", real, formatInfo.NegativeSign, imag);
-            else
-                return String.Format("{0} {1} {2}i", real, formatInfo.PositiveSign, imag);
-        }
-
-        /// <summary>
         /// Returns a value indicating whether this instance is equal
         /// to a specified object.
         /// </summary>
@@ -1274,17 +1250,6 @@ namespace TAlex.MathCore
         {
             if (!(obj is Complex)) return false;
             return this == (Complex)obj;
-        }
-
-        /// <summary>
-        /// Returns a value indicating whether this instance is equal
-        /// to a specified complex number.
-        /// </summary>
-        /// <param name="obj">A Complex object to compare to this instance.</param>
-        /// <returns>True if obj is equal to this instance; otherwise, false.</returns>
-        public bool Equals(Complex obj)
-        {
-            return this == obj;
         }
 
         /// <summary>
@@ -1554,99 +1519,53 @@ namespace TAlex.MathCore
 
         #endregion
 
-        #region IConvertible Members
 
-        TypeCode IConvertible.GetTypeCode()
+        #region IEquatable<Complex> Members
+
+        /// <summary>
+        /// Returns a value indicating whether this instance is equal
+        /// to a specified complex number.
+        /// </summary>
+        /// <param name="obj">A Complex object to compare to this instance.</param>
+        /// <returns>True if obj is equal to this instance; otherwise, false.</returns>
+        public bool Equals(Complex obj)
         {
-            return TypeCode.Object;
+            return this == obj;
         }
 
-        bool IConvertible.ToBoolean(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
-        byte IConvertible.ToByte(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
+        #region IFormattable Members
 
-        char IConvertible.ToChar(IFormatProvider provider)
+        /// <summary>
+        /// Converts the complex value of this instance to its equivalent string representation.
+        /// </summary>
+        /// <param name="format">A numeric format string.</param>
+        /// <param name="provider">An System.IFormatProvider that supplies culture-specific formatting information.</param>
+        /// <returns>The string representation of the value of this instance as specified by format and provider.</returns>
+        /// <exception cref="System.FormatException">The format is invalid.</exception>
+        public string ToString(string format, IFormatProvider provider)
         {
-            throw new NotImplementedException();
-        }
+            NumberFormatInfo formatInfo = NumberFormatInfo.GetInstance(provider);
 
-        DateTime IConvertible.ToDateTime(IFormatProvider provider)
-        {
-            throw new InvalidCastException(String.Format(Properties.Resources.EXC_INVALID_CAST, typeof(Complex), typeof(DateTime)));
-        }
+            string real = _real.ToString(format, provider);
+            string imag = Math.Abs(_imag).ToString(format, provider);
 
-        decimal IConvertible.ToDecimal(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        double IConvertible.ToDouble(IFormatProvider provider)
-        {
-            return (Double)this;
-        }
-
-        short IConvertible.ToInt16(IFormatProvider provider)
-        {
-            return (Int16)this;
-        }
-
-        int IConvertible.ToInt32(IFormatProvider provider)
-        {
-            return (Int32)this;
-        }
-
-        long IConvertible.ToInt64(IFormatProvider provider)
-        {
-            return (Int64)this;
-        }
-
-        sbyte IConvertible.ToSByte(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        float IConvertible.ToSingle(IFormatProvider provider)
-        {
-            return (Single)this;
-        }
-
-        string IConvertible.ToString(IFormatProvider provider)
-        {
-            return ToString(provider);
-        }
-
-        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        ushort IConvertible.ToUInt16(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        uint IConvertible.ToUInt32(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
-        }
-
-        ulong IConvertible.ToUInt64(IFormatProvider provider)
-        {
-            throw new NotImplementedException();
+            if (this == Zero) return "0";
+            if (IsReal) return real;
+            else if (IsImaginary && _imag < 0)
+                return String.Format("{0}{1}i", formatInfo.NegativeSign, imag);
+            else if (IsImaginary && _imag >= 0)
+                return String.Format("{0}i", imag);
+            else if (_imag < 0)
+                return String.Format("{0} {1} {2}i", real, formatInfo.NegativeSign, imag);
+            else
+                return String.Format("{0} {1} {2}i", real, formatInfo.PositiveSign, imag);
         }
 
         #endregion
 
         #region IXmlSerializable Members
-
-        private static readonly string _reAttrName = "Re";
-        private static readonly string _imAttrName = "Im";
 
         XmlSchema IXmlSerializable.GetSchema()
         {

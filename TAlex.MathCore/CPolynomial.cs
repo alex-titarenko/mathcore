@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Globalization;
-//using TAlex.MathCore.LinearAlgebra;
+using System.Xml.Serialization;
+using System.Xml;
 
 
 namespace TAlex.MathCore
@@ -9,7 +10,7 @@ namespace TAlex.MathCore
     /// <summary>
     /// Represents a complex polynomial.
     /// </summary>
-    public class CPolynomial : ICloneable, IFormattable
+    public class CPolynomial : ICloneable, IFormattable, IXmlSerializable
     {
         #region Fields
 
@@ -1048,6 +1049,25 @@ namespace TAlex.MathCore
         public static CPolynomial operator %(CPolynomial poly1, CPolynomial poly2)
         {
             return Modulus(poly1, poly2);
+        }
+
+        #endregion
+
+        #region IXmlSerializable Members
+
+        System.Xml.Schema.XmlSchema IXmlSerializable.GetSchema()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IXmlSerializable.ReadXml(XmlReader reader)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IXmlSerializable.WriteXml(XmlWriter writer)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
