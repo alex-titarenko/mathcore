@@ -61,7 +61,7 @@
     <Compile Include="ComplexTest.cs" />
     <Compile Include="CPolynomialTest.cs" />
     <Compile Include="FractionTest.cs" />
-    <Compile Include="Helpers\RandomGenerator.cs" />
+    <Compile Include="NumericUtilTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

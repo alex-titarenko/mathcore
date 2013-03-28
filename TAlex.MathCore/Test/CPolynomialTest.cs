@@ -1,217 +1,179 @@
 ﻿using System;
 using TAlex.MathCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TAlex.MathCore.Test.Helpers;
+using NUnit.Framework;
+using FluentAssertions;
 
 
 namespace TAlex.MathCore.Test
 {
-    /// <summary>
-    /// This is a test class for CPolynomialTest and is intended
-    /// to contain all CPolynomialTest Unit Tests
-    ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class CPolynomialTest
     {
-        private RandomGenerator _rand = new RandomGenerator();
-
-
-        /// <summary>
-        ///A test for FirstDerivative
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void FromRootsTest()
         {
-            int size = 5;
-            int n = 10000;
-            double TOL = 10E-5;
+            //arrange
+            double TOL = 10E-10;
+            Complex[] roots = new Complex[] { 3, 0, 158.3, 13, 8 };
 
-            Complex[] roots = new Complex[size];
+            //action
+            CPolynomial poly = CPolynomial.FromRoots(roots);
 
-            for (int idx = 0; idx < n; idx++)
+            //assert
+            for (int i = 0; i < roots.Length; i++)
             {
-                _rand.Fill(roots, -100, 100, 1);
-
-                CPolynomial poly = CPolynomial.FromRoots(roots);
-
-                for (int i = 0; i < roots.Length; i++)
-                {
-                    Complex p = poly.Evaluate(roots[i]);
-
-                    if (Complex.Abs(p) >= TOL)
-                        Assert.Fail("Polynom : {0}", p);
-                }
+                Complex p = poly.Evaluate(roots[i]);
+                Complex.Abs(p).Should().BeLessThan(TOL);
             }
         }
 
-        /// <summary>
-        ///A test for FirstDerivative
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void FirstDerivativeTest()
         {
+            //arrange
             CPolynomial target = new CPolynomial(new Complex[] {5, 8, -14, 3, 6, -22});
             Complex value = 3;
             Complex expected = -8257;
+            
+            //action
             Complex actual = target.FirstDerivative(value);
 
-            Assert.AreEqual(expected, actual);
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for FirstDerivative
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void FirstDerivativeTest_Analytical()
         {
+            //arrange
             CPolynomial target = new CPolynomial(new Complex[] { 5, 8, -14, 3, 6, -22 });
             CPolynomial expected = new CPolynomial(new Complex[] {8, -28, 9, 24, -110});
 
+            //action
             CPolynomial actual = target.FirstDerivative();
 
-            Assert.AreEqual(expected, actual);
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for SecondDerivative
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void SecondDerivativeTest()
         {
+            //arrange
             CPolynomial target = new CPolynomial(new Complex[] { 5, 8, -14, 3, 6, -22 });
             Complex c = 3;
             Complex expected = -11206;
+
+            //action
             Complex actual = target.SecondDerivative(c);
 
-            Assert.AreEqual(expected, actual);
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for SecondDerivative
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void SecondDerivativeTest_Analytical()
         {
+            //arrange
             CPolynomial target = new CPolynomial(new Complex[] { 5, 8, -14, 3, 6, -22 });
             CPolynomial expected = new CPolynomial(new Complex[] { -28, 18, 72, -440 });
+
+            //action
             CPolynomial actual = target.SecondDerivative();
 
-            Assert.AreEqual(expected, actual);
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for NthDerivative
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void NthDerivativeTest()
         {
+            //arrange
             CPolynomial target = new CPolynomial(new Complex[] { 5, 8, -14, 3, 6, -22 });
             Complex c = 3;
             Complex expected = -11430;
+
+            //action
             Complex actual = target.NthDerivative(3, c);
 
-            Assert.AreEqual(expected, actual);
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for NthDerivative
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void NthDerivativeTest_Analytical()
         {
+            //arrange
             CPolynomial target = new CPolynomial(new Complex[] { 5, 8, -14, 3, 6, -22 });
             CPolynomial expected = new CPolynomial(new Complex[] { 18, 144, -1320 });
+
+            //action
             CPolynomial actual = target.NthDerivative(3);
 
-            Assert.AreEqual(expected, actual);
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for Antiderivative
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void AntiderivativeTest()
         {
+            //arrange
             CPolynomial target = new CPolynomial(new Complex[] { 3, 8, 16 });
             CPolynomial expected = new CPolynomial(new Complex[] { 0, 3, 4, 16.0 / 3 });
+
+            //action
             CPolynomial actual = target.Antiderivative();
 
-            Assert.AreEqual(expected, actual);
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for DivBinom
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void DivBinomTest()
         {
-            int size = 8;
-            int n = 10000;
+            //arrange
             double TOL = 1E-10;
+            CPolynomial f = new CPolynomial(new Complex[] {3, 0.2, new Complex(3, 8.2), -0.16, new Complex(2.3, 2), 0, 18.3466, 2000});
+            Complex c = 346.34645;
+            Complex r, rtest;
+            
+            //action
+            CPolynomial q = CPolynomial.DivBinom(f, c, out r);
 
-            CPolynomial f = new CPolynomial(size);
+            f[0] -= r;
+            CPolynomial qtest = CPolynomial.DivBinom(f, c, out rtest);
 
-            for (int i = 0; i < n; i++)
-            {
-                _rand.Fill(f, -1000, 1000, 5);
-                Complex c = _rand.NextDouble(-1000, 1000, 5);
-
-                Complex r;
-                CPolynomial q = CPolynomial.DivBinom(f, c, out r);
-
-                f[0] -= r;
-                Complex rtest;
-                CPolynomial qtest = CPolynomial.DivBinom(f, c, out rtest);
-
-                if (Complex.Abs(rtest) > TOL)
-                    Assert.Fail("remainder: {0}", rtest);
-
-                if (q != qtest)
-                    Assert.Fail("qtest: {0} | q: {1}", qtest, q);
-            }
+            //assert
+            Complex.Abs(rtest).Should().BeLessOrEqualTo(TOL);
+            q.Should().Be(qtest);
         }
 
-        /// <summary>
-        ///A test for Div
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void DivTest()
         {
-            int size1 = 7;
-            int size2 = 5;
-            int n = 10000;
-            double TOL = 1E-5;
+            //arrange
+            double TOL = 1E-12;
 
-            CPolynomial f = new CPolynomial(size1);
-            CPolynomial g = new CPolynomial(size2);
+            CPolynomial f = new CPolynomial(new Complex[] { new Complex(3467.2, 456), new Complex(2.225, -0.0123), new Complex(46.2 ,4.24), new Complex(2, 2), new Complex(12.8, 16.3), new Complex(0, 0), new Complex(22, 347) });
+            CPolynomial g = new CPolynomial(new Complex[] { new Complex(3, 8.5), new Complex(11, -0.5), new Complex(0, 1), new Complex(1, 2), new Complex(346, 4.365) });
             CPolynomial zero = new CPolynomial(1);
 
-            for (int i = 0; i < n; i++)
+            CPolynomial r;
+            CPolynomial q = CPolynomial.Divide(f, g, out r);
+            CPolynomial rtest = new CPolynomial(1);
+            
+            //action
+            CPolynomial qtest = CPolynomial.Divide(f - r, g, out rtest);
+
+            //assert
+            for (int j = 0; j < rtest.Length; j++)
             {
-                _rand.Fill(f, -1000, 1000, 5);
-                _rand.Fill(g, -1000, 1000, 5);
-
-                CPolynomial r;
-                CPolynomial q = CPolynomial.Divide(f, g, out r);
-
-                CPolynomial rtest = new CPolynomial(1);
-                CPolynomial qtest = CPolynomial.Divide(f - r, g, out rtest);
-
-                for (int j = 0; j < rtest.Length; j++)
-                {
-                    if (Complex.Abs(rtest[j]) > TOL)
-                        Assert.Fail("remainder: {0}", rtest);
-                }
-
-                if (qtest != q)
-                    Assert.Fail("qtest: {0} | q: {1}", qtest, q);
+                Complex.Abs(rtest[j]).Should().BeLessOrEqualTo(TOL);
             }
+            qtest.Should().Be(q);
         }
 
-        /// <summary>
-        ///A test for LaguerreRootsFinding
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void LaguerreRootsFindingTest()
         {
             int size = 5;
@@ -222,7 +184,7 @@ namespace TAlex.MathCore.Test
 
             for (int idx = 0; idx < n; idx++)
             {
-                _rand.Fill(poly, -100, 100, 1);
+                //_rand.Fill(poly, -100, 100, 1);
 
                 Complex[] roots = CPolynomial.LaguerreRootsFinding(poly);
 
@@ -238,39 +200,22 @@ namespace TAlex.MathCore.Test
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
-        /// <summary>
-        ///A test for InterpolatingPolynomial
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void InterpolatingPolynomialTest()
         {
-            int size = 5;
-            int n = 10000;
+            //arrange
             double TOL = 1E-6;
+            double[] xValues = new double[] { 1, 2.5, 6, 7.9, 18 };
+            double[] yValues = new double[] { 8.6, 0, -2, 9, 33 };
 
-            double[] xValues = new double[size];
-            double[] yValues = new double[size];
+            //action
+            CPolynomial poly = CPolynomial.InterpolatingPolynomial(xValues, yValues);
 
-            for (int i = 0; i < n; i++)
+            //assert
+            for (int j = 0; j < xValues.Length; j++)
             {
-                xValues[0] = _rand.NextDouble(-100, 100, 5);
-                yValues[0] = _rand.NextDouble(-100, 100, 5);
-
-                for (int j = 1; j < size; j++)
-                {
-                    xValues[j] = xValues[j - 1] + _rand.NextDouble(1, 100, 5);
-                    yValues[j] = _rand.NextDouble(-100, 100, 5);
-                }
-
-                CPolynomial poly = CPolynomial.InterpolatingPolynomial(xValues, yValues);
-
-                for (int j = 0; j < size; j++)
-                {
-                    Complex val = poly.Evaluate(xValues[j]);
-
-                    if (Complex.Abs(yValues[j] - val) >= TOL * Complex.Abs(val))
-                        Assert.Fail("Error: {0}", yValues[j] - val);
-                }
+                Complex val = poly.Evaluate(xValues[j]);
+                NumericUtil.FuzzyEquals(yValues[j], val, TOL).Should().BeTrue();
             }
         }
     }

@@ -1,112 +1,116 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using TAlex.MathCore;
+using NUnit.Framework;
+using FluentAssertions;
+
 
 namespace TAlex.MathCore.Test
 {
-    /// <summary>
-    /// This is a test class for FractionTest and is intended
-    /// to contain all FractionTest Unit Tests
-    ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class FractionTest
     {
-        /// <summary>
-        ///A test for op_Equality
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void op_EqualityTest()
         {
+            //arrange
             Fraction frac1 = new Fraction(39, 99);
             Fraction frac2 = new Fraction(220272, 559152);
             bool expected = true;
 
+            //action
             bool actual = (frac1 == frac2);
-            Assert.AreEqual(expected, actual);
+
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for op_Addition
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void op_AdditionTest()
         {
+            //arrange
             Fraction frac1 = new Fraction(5, 6);
             Fraction frac2 = new Fraction(8, 9);
             Fraction expected = new Fraction(31, 18);
 
+            //action
             Fraction actual = frac1 + frac2;
-            Assert.AreEqual(expected, actual);
+
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for op_Subtraction
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void op_SubtractionTest()
         {
+            //arrange
             Fraction frac1 = new Fraction(5, 6);
             Fraction frac2 = new Fraction(15, 4);
             Fraction expected = new Fraction(-35, 12);
 
+            //action
             Fraction actual = (frac1 - frac2);
-            Assert.AreEqual(expected, actual);
+
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for op_Multiply
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void op_MultiplyTest()
         {
+            //arrange
             Fraction frac1 = new Fraction(5, 6);
             Fraction frac2 = new Fraction(8, 9);
             Fraction expected = new Fraction(20, 27);
 
+            //action
             Fraction actual = frac1 * frac2;
-            Assert.AreEqual(expected, actual);
+
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for op_Division
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void op_DivisionTest()
         {
+            //arrange
             Fraction frac1 = new Fraction(5, -8);
             Fraction frac2 = new Fraction(15, 2);
             Fraction expected = new Fraction(-1, 12);
 
+            //action
             Fraction actual = (frac1 / frac2);
-            Assert.AreEqual(expected, actual);
+
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for Pow
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void PowTest()
         {
+            //arrange
             Fraction frac = new Fraction(-3, 8);
             int exponent = -3;
             Fraction expected = new Fraction(-512, 27);
 
+            //action
             Fraction actual = Fraction.Pow(frac, exponent);
-            Assert.AreEqual(expected, actual);
+
+            //assert
+            actual.Should().Be(expected);
         }
 
-        /// <summary>
-        ///A test for Parse
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void ParseTest()
         {
+            //arrange
             string s = "-3/5";
             Fraction expected = new Fraction(-3, 5);
 
+            //action
             Fraction actual = Fraction.Parse(s);
-            Assert.AreEqual(expected, actual);
+
+            //assert
+            actual.Should().Be(expected);
         }
     }
 }

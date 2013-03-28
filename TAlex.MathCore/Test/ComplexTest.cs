@@ -1,7 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TAlex.MathCore;
-using TAlex.MathCore.Test.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
 using System.Globalization;

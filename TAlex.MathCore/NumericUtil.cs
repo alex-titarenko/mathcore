@@ -125,12 +125,26 @@ namespace TAlex.MathCore
 
         public static bool FuzzyEquals(double value1, double value2, double relativeTolerance)
         {
+            if (value1 == value2) return true;
+
+            if (value1 == 0 || value2 == 0)
+            {
+                return Math.Abs(value1 - value2) <= relativeTolerance;
+            }
+
             return Math.Abs(value1 - value2) <= relativeTolerance * Math.Max(Math.Abs(value1), Math.Abs(value2));
         }
 
         public static bool FuzzyEquals(Complex value1, Complex value2, double relativeTolerance)
         {
-            return FuzzyEquals(value1.Re, value2.Re, relativeTolerance) && FuzzyEquals(value1.Im, value2.Im, relativeTolerance);
+            if (value1 == value2) return true;
+
+            if (value1.IsZero || value2.IsZero)
+            {
+                return Complex.Abs(value1 - value2) <= relativeTolerance;
+            }
+
+            return Complex.Abs(value1 - value2) <= relativeTolerance * Math.Max(Complex.Abs(value1), Complex.Abs(value2));
         }
 
         /// <summary>

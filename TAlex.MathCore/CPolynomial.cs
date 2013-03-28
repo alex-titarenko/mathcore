@@ -412,7 +412,7 @@ namespace TAlex.MathCore
                 // Degree of the div polynomial
                 int n = div.Length - 1;
 
-                while (Complex.Abs(a - a_old) > Machine.Epsilon * Complex.Abs(a))
+                while (!NumericUtil.FuzzyEquals(a, a_old, Machine.Epsilon))
                 {
                     if (currIter > maxIters)
                     {
@@ -803,18 +803,6 @@ namespace TAlex.MathCore
         /// </summary>
         /// <param name="format">A numeric format string.</param>
         /// <param name="provider">An System.IFormatProvider that supplies culture-specific formatting information.</param>
-        /// <returns>The string representation of the value of this instance as specified by format and provider.</returns>
-        /// <exception cref="System.FormatException">The format is invalid.</exception>
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return ToString(format, provider, "x");
-        }
-
-        /// <summary>
-        /// Converts the complex polynomial of this instance to its equivalent string representation.
-        /// </summary>
-        /// <param name="format">A numeric format string.</param>
-        /// <param name="provider">An System.IFormatProvider that supplies culture-specific formatting information.</param>
         /// <param name="varName">Represents the variable name substitution.</param>
         /// <returns>The string representation of the value of this instance as specified by format and provider.</returns>
         /// <exception cref="System.FormatException">The format is invalid.</exception>
@@ -856,15 +844,6 @@ namespace TAlex.MathCore
             {
                 return nfi.NativeDigits[0];
             }
-        }
-
-        /// <summary>
-        /// Creates a shallow copy of the complex polynomial.
-        /// </summary>
-        /// <returns>A shallow copy of the CPolynomial.</returns>
-        public Object Clone()
-        {
-            return new CPolynomial(_coeffs);
         }
 
         /// <summary>
@@ -1049,6 +1028,36 @@ namespace TAlex.MathCore
         public static CPolynomial operator %(CPolynomial poly1, CPolynomial poly2)
         {
             return Modulus(poly1, poly2);
+        }
+
+        #endregion
+
+
+        #region ICloneable Members
+
+        /// <summary>
+        /// Creates a shallow copy of the complex polynomial.
+        /// </summary>
+        /// <returns>A shallow copy of the CPolynomial.</returns>
+        public Object Clone()
+        {
+            return new CPolynomial(_coeffs);
+        }
+
+        #endregion
+
+        #region IFormattable Members
+
+        /// <summary>
+        /// Converts the complex polynomial of this instance to its equivalent string representation.
+        /// </summary>
+        /// <param name="format">A numeric format string.</param>
+        /// <param name="provider">An System.IFormatProvider that supplies culture-specific formatting information.</param>
+        /// <returns>The string representation of the value of this instance as specified by format and provider.</returns>
+        /// <exception cref="System.FormatException">The format is invalid.</exception>
+        public string ToString(string format, IFormatProvider provider)
+        {
+            return ToString(format, provider, "x");
         }
 
         #endregion
