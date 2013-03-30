@@ -3,6 +3,11 @@ using System.Linq;
 using TAlex.MathCore;
 using NUnit.Framework;
 using FluentAssertions;
+using System.Xml.Serialization;
+using System.Text;
+using System.IO;
+using System.Globalization;
+using System.Xml;
 
 
 namespace TAlex.MathCore.Test
@@ -10,6 +15,13 @@ namespace TAlex.MathCore.Test
     [TestFixture]
     public class CPolynomialTest
     {
+        [Test]
+        public void Class_DecoratedWithSerializable()
+        {
+            //assert
+            typeof(CPolynomial).Should().BeDecoratedWith<SerializableAttribute>();
+        }
+
         [Test]
         public void FromRootsTest()
         {
@@ -209,6 +221,122 @@ namespace TAlex.MathCore.Test
                 Complex val = poly.Evaluate(xValues[j]);
                 NumericUtil.FuzzyEquals(yValues[j], val, TOL).Should().BeTrue();
             }
+        }
+
+        [Test]
+        public void ToStringTest()
+        {
+            //arrange
+            CPolynomial poly = new CPolynomial(new Complex[] { 3, 1.1, 1, 0, 0, new Complex(-5, 12.3) });
+            string expected = "3 + 1.1*t + t^2 + (-5 + 12.3i)*t^5";
+
+            //action
+            var actual = poly.ToString(null, CultureInfo.InvariantCulture, "t");
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void ParseTest_Success()
+        {
+            //arrange
+            CPolynomial expected = new CPolynomial(new Complex[] { 0, 1 });
+
+            //action
+            CPolynomial actual = CPolynomial.Parse("+x");
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void ParseTest_Success2()
+        {
+            //arrange
+            CPolynomial expected = new CPolynomial(new Complex[] { new Complex(0, -0.3) });
+
+            //action
+            CPolynomial actual = CPolynomial.Parse("-0.3i");
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void ParseTest_Success3()
+        {
+            //arrange
+            CPolynomial expected = new CPolynomial(new Complex[] { 0, 2 });
+
+            //action
+            CPolynomial actual = CPolynomial.Parse("2x");
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void ParseTest_Success4()
+        {
+            //arrange
+            CPolynomial expected = new CPolynomial(new Complex[] { 3, 1, 1, 0, 0, new Complex(-5, 12.3) });
+
+            //action
+            CPolynomial actual = CPolynomial.Parse("x+3 + x^2-(5-12.3i)*x^5");
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [TestCase("2*x+y")]
+        [TestCase("2*x^3.5")]
+        public void ParseTest_Fail(string s)
+        {
+            //action
+            Action action = () => CPolynomial.Parse(s);
+
+            //assert
+            action.ShouldThrow<FormatException>();
+        }
+
+
+        [Test]
+        public void WriteXmlTest_Serialize()
+        {
+            //arrange
+            CPolynomial poly = new CPolynomial(new Complex[] { 3, 5.2, new Complex(3, -0.2), 0, new Complex(2, 35) });
+            string expected = "<CPolynomial>3+5.2*x+(3-0.2i)*x^2+(2+35i)*x^4</CPolynomial>";
+            XmlSerializer serializer = new XmlSerializer(typeof(CPolynomial));
+            StringBuilder sb = new StringBuilder();
+
+            //action
+            using (XmlWriter xw = XmlWriter.Create(sb, new XmlWriterSettings { OmitXmlDeclaration = true }))
+            {
+                serializer.Serialize(xw, poly);
+            }
+
+            //assert
+            sb.ToString().Should().Be(expected);
+        }
+
+        [Test]
+        public void ReadXmlTest_Deserialize()
+        {
+            //arrange
+            CPolynomial expected = new CPolynomial(new Complex[] { 3, 10.2, new Complex(3, -0.2), 0, new Complex(2, 35) });
+            CPolynomial actual;
+            XmlSerializer serializer = new XmlSerializer(typeof(CPolynomial));
+            string xml = "<CPolynomial>3 + 10.2*x + (3 - 0.2i)*x^2 + (2 + 35i)*x^4</CPolynomial>";
+
+            //action
+            using (StringReader reader = new StringReader(xml))
+            {
+                actual = (CPolynomial)serializer.Deserialize(reader);
+            }
+
+            //assert
+            actual.Should().Be(expected);
         }
 
 

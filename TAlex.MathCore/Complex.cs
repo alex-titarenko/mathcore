@@ -19,7 +19,9 @@ namespace TAlex.MathCore
 
         private static readonly string _reAttrName = "Re";
         private static readonly string _imAttrName = "Im";
-        private static readonly Regex _complexRegex = new Regex(@"^(?<num>[-+]?[ \t]*[0-9.,]+[ij]?)(?<num>[ \t]*[-+][ \t]*[0-9.,]+[ij]?)*$", RegexOptions.Compiled);
+        internal static readonly string ComplexPattern = @"(?<num>[-+]?[ \t]*[0-9.,]+[ij]?)(?<num>[ \t]*[-+][ \t]*[0-9.,]+[ij]?)*";
+        private static readonly string _complexFullPattern = String.Format(@"^{0}$", ComplexPattern);
+        private static readonly Regex _complexRegex = new Regex(_complexFullPattern, RegexOptions.Compiled);
 
         /// <summary>
         /// The real part of the complex number.

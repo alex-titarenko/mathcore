@@ -124,6 +124,12 @@
   <data name="EXC_INVALID_FORMAT_COMPLEX" xml:space="preserve">
     <value>Invalid format of the complex number.</value>
   </data>
+  <data name="EXC_POLY_INCCORECT_FORMAT" xml:space="preserve">
+    <value>Incorrect format of complex polynomial.</value>
+  </data>
+  <data name="EXC_POLY_MISMATCH_VAR_NAMES" xml:space="preserve">
+    <value>Polynomial can't contains variables with different names.</value>
+  </data>
   <data name="EXC_STRING_NOT_EMPTY" xml:space="preserve">
     <value>String should not be empty.</value>
   </data>

@@ -3,6 +3,8 @@ using System.Text;
 using System.Globalization;
 using System.Xml.Serialization;
 using System.Xml;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 
 namespace TAlex.MathCore
@@ -10,6 +12,7 @@ namespace TAlex.MathCore
     /// <summary>
     /// Represents a complex polynomial.
     /// </summary>
+    [Serializable]
     public class CPolynomial : ICloneable, IFormattable, IXmlSerializable
     {
         #region Fields
@@ -18,6 +21,13 @@ namespace TAlex.MathCore
         /// Providing data for the complex polynomial.
         /// </summary>
         private Complex[] _coeffs;
+
+        private static readonly string _polyPartPattern = @"(?<sign>[+-]{0})[ \t]*(((?<num>[0-9.,]+i?)|\((?<num>{1})\))\*?)?(?<var>[_a-zA-Z][a-zA-Z0-9]*)?(\^(?<exp>[0-9]+))?";
+        private static readonly string _polyFirstPartPattern = String.Format(_polyPartPattern, "?", Complex.ComplexPattern);
+        private static readonly string _polyOtherPartsPattern = String.Format(_polyPartPattern, String.Empty, Complex.ComplexPattern);
+        private static readonly string _polyPattern = String.Format(@"^(?<term>[ \t]*{0})(?<term>[ \t]*{1})*$", _polyFirstPartPattern, _polyOtherPartsPattern);
+        private static readonly Regex _polyRegex = new Regex(_polyPattern, RegexOptions.Compiled);
+        private static readonly Regex _polyPartRegex = new Regex(_polyFirstPartPattern, RegexOptions.Compiled);
 
         #endregion
 
@@ -70,6 +80,10 @@ namespace TAlex.MathCore
         #endregion
 
         #region Constructors
+
+        private CPolynomial()
+        {
+        }
 
         /// <summary>
         /// Initializes a complex polynomial with the specified coefficients count.
@@ -546,6 +560,66 @@ namespace TAlex.MathCore
             }
 
             return true;
+        }
+
+        public static CPolynomial Parse(string s)
+        {
+            return Parse(s, null);
+        }
+
+        public static CPolynomial Parse(string s, IFormatProvider provider)
+        {
+            s = s.Trim();
+            string varName = String.Empty;
+
+            Match matchAll = _polyRegex.Match(s);
+            if (!matchAll.Success) throw new FormatException(Properties.Resources.EXC_POLY_INCCORECT_FORMAT);
+
+            SortedDictionary<int, Complex> p = new SortedDictionary<int, Complex>();
+
+            int maxExp = 0;
+            foreach (Capture capture in matchAll.Groups["term"].Captures)
+            {
+                Match match = _polyPartRegex.Match(capture.Value.Trim());
+
+                if (!String.IsNullOrEmpty(match.Value))
+                {
+                    string sign_s = match.Groups["sign"].Value;
+                    string coef_s = match.Groups["num"].Value;
+                    string var_s = match.Groups["var"].Value;
+                    string exp_s = match.Groups["exp"].Value;
+
+                    if (!String.IsNullOrEmpty(var_s))
+                    {
+                        if (String.IsNullOrEmpty(varName)) varName = var_s;
+                        if (varName != var_s)
+                            throw new FormatException(Properties.Resources.EXC_POLY_MISMATCH_VAR_NAMES);
+                    }
+
+                    int sign = int.Parse(sign_s + 1, provider);
+                    Complex coef = !String.IsNullOrEmpty(coef_s) ? sign * Complex.Parse(coef_s, provider) : sign;
+                    int exp = !String.IsNullOrEmpty(exp_s) ? int.Parse(exp_s, provider) : 0;
+
+                    if (!String.IsNullOrEmpty(var_s) && String.IsNullOrEmpty(exp_s))
+                        exp = 1;
+
+                    if (maxExp < exp) maxExp = exp;
+
+                    if (p.ContainsKey(exp))
+                        p[exp] += coef;
+                    else
+                        p.Add(exp, coef);
+                }
+            }
+
+            // Need to find the maximum degree and put here
+            CPolynomial poly = new CPolynomial(maxExp + 1);
+            foreach (KeyValuePair<int, Complex> pair in p)
+            {
+                poly[pair.Key] = pair.Value;
+            }
+
+            return poly;
         }
 
         /// <summary>
@@ -1071,12 +1145,14 @@ namespace TAlex.MathCore
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            throw new NotImplementedException();
+            string value = reader.ReadElementString();
+            CPolynomial poly = Parse(value, CultureInfo.InvariantCulture);
+            _coeffs = poly._coeffs;
         }
 
         void IXmlSerializable.WriteXml(XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteValue(ToString(null, CultureInfo.InvariantCulture, "x").Replace(" ", String.Empty));
         }
 
         #endregion

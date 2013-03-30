@@ -79,6 +79,24 @@ namespace TAlex.MathCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect format of complex polynomial..
+        /// </summary>
+        internal static string EXC_POLY_INCCORECT_FORMAT {
+            get {
+                return ResourceManager.GetString("EXC_POLY_INCCORECT_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Polynomial can&apos;t contains variables with different names..
+        /// </summary>
+        internal static string EXC_POLY_MISMATCH_VAR_NAMES {
+            get {
+                return ResourceManager.GetString("EXC_POLY_MISMATCH_VAR_NAMES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to String should not be empty..
         /// </summary>
         internal static string EXC_STRING_NOT_EMPTY {
