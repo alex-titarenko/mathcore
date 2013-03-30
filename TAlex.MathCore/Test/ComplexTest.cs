@@ -52,6 +52,17 @@ namespace TAlex.MathCore.Test
             NumericUtil.FuzzyEquals(sqrt * sqrt, number, 10E-10).Should().BeTrue();
         }
 
+
+        [Test]
+        public void ArgTest_Zero()
+        {
+            //action
+            double actual = Complex.Arg(Complex.Zero);
+
+            //assert
+            double.IsNaN(actual).Should().BeTrue();
+        }
+
         [TestCase(0,0, 0,0)]
         [TestCase(ExMath.TwoPi,0, 0,0)]
         public void SinTest(double re, double im, double reExp, double imExp)
