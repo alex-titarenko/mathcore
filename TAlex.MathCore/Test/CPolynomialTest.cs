@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TAlex.MathCore;
 using NUnit.Framework;
 using FluentAssertions;
@@ -173,31 +174,22 @@ namespace TAlex.MathCore.Test
             qtest.Should().Be(q);
         }
 
-        [Test]
-        public void LaguerreRootsFindingTest()
+        [TestCase(3.6,0, 5,-32.436, -8,0, 0,0, 1000.01,-6.6)]
+        public void LaguerreRootsFindingTest(params double[] nums)
         {
-            int size = 5;
-            int n = 10000;
+            //arrange
             double TOL = 10E-7;
+            CPolynomial poly = FromArray(nums);
 
-            CPolynomial poly = new CPolynomial(size);
+            //action
+            Complex[] roots = CPolynomial.LaguerreRootsFinding(poly);
 
-            for (int idx = 0; idx < n; idx++)
+            //assert
+            for (int i = 0; i < roots.Length; i++)
             {
-                //_rand.Fill(poly, -100, 100, 1);
-
-                Complex[] roots = CPolynomial.LaguerreRootsFinding(poly);
-
-                for (int i = 0; i < roots.Length; i++)
-                {
-                    Complex p = poly.Evaluate(roots[i]);
-
-                    if (Complex.Abs(p) >= TOL)
-                        Assert.Fail("P(root): {0}", p);
-                }
+                Complex p = poly.Evaluate(roots[i]);
+                Complex.Abs(p).Should().BeLessOrEqualTo(TOL);
             }
-
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         [Test]
@@ -218,5 +210,24 @@ namespace TAlex.MathCore.Test
                 NumericUtil.FuzzyEquals(yValues[j], val, TOL).Should().BeTrue();
             }
         }
+
+
+        #region Helpers
+
+        public static CPolynomial FromArray(double[] nums)
+        {
+            if (nums.Length % 2 != 0)
+                throw new ArgumentException();
+
+            Complex[] data = new Complex[nums.Length / 2];
+            for (int i = 0; i < nums.Length / 2; i++)
+            {
+                data[i] = new Complex(nums[i * 2], nums[i * 2 + 1]);
+            }
+
+            return new CPolynomial(data);
+        }
+
+        #endregion
     }
 }
