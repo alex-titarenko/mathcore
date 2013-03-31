@@ -123,6 +123,13 @@ namespace TAlex.MathCore
             return ZeroThreshold(ComplexThreshold(value, complexThreshold), zeroThreshold);
         }
 
+        /// <summary>
+        /// Returns a value that indicates whether the two double numbers are equal with the specified relative tolerance.
+        /// </summary>
+        /// <param name="value1">The first double value to fuzzy compare.</param>
+        /// <param name="value2">The second double value to fuzzy compare.</param>
+        /// <param name="relativeTolerance">A double value that represents the relative tolerance for compare.</param>
+        /// <returns>true if the value1 and value2 are fuzzy equal with the specified relative tolerance; otherwise false.</returns>
         public static bool FuzzyEquals(double value1, double value2, double relativeTolerance)
         {
             if (value1 == value2) return true;
@@ -135,6 +142,13 @@ namespace TAlex.MathCore
             return Math.Abs(value1 - value2) <= relativeTolerance * Math.Max(Math.Abs(value1), Math.Abs(value2));
         }
 
+        /// <summary>
+        /// Returns a value that indicates whether the two complex numbers are equal with the specified relative tolerance.
+        /// </summary>
+        /// <param name="value1">The first complex number to fuzzy compare.</param>
+        /// <param name="value2">The second complex number to fuzzy compare.</param>
+        /// <param name="relativeTolerance">A double value that represents the relative tolerance for compare.</param>
+        /// <returns>true if the value1 and value2 are fuzzy equal with the specified relative tolerance; otherwise false.</returns>
         public static bool FuzzyEquals(Complex value1, Complex value2, double relativeTolerance)
         {
             if (value1 == value2) return true;
@@ -155,8 +169,8 @@ namespace TAlex.MathCore
         /// are theoretically identical, so no code calling this should fail to work if this 
         /// returns false.
         /// </summary>
-        /// <param name="value1"> The first double to compare. </param>
-        /// <param name="value2"> The second double to compare. </param>
+        /// <param name="value1">The first double value to compare.</param>
+        /// <param name="value2">The second double value to compare.</param>
         /// <returns>result of the AreClose comparision.</returns>
         public static bool AreClose(double value1, double value2)
         {
