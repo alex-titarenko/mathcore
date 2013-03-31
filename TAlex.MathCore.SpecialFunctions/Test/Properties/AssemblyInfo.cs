@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Test")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("TAlex.MathCore.SpecialFunctions.Test")]
+[assembly: AssemblyDescription("Unit Tests for TAlex.MathCore.SpecialFunctions Library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("T-Alex Software")]
-[assembly: AssemblyProduct("Test")]
+[assembly: AssemblyProduct("TAlex.MathCore.SpecialFunctions.Test")]
 [assembly: AssemblyCopyright("Copyright © 2013 T-Alex Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TAlex.MathCore.Test")]
-[assembly: AssemblyDescription("Unit Tests for TAlex.MathCore Library")]
+[assembly: AssemblyTitle("TAlex.MathCore.Statistics.Test")]
+[assembly: AssemblyDescription("Unit Tests for TAlex.MathCore.Statistics Library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("T-Alex Softwaer")]
-[assembly: AssemblyProduct("TAlex.MathCore.Test")]
-[assembly: AssemblyCopyright("Copyright © 2013 T-Alex Softwaer")]
+[assembly: AssemblyCompany("T-Alex Software")]
+[assembly: AssemblyProduct("TAlex.MathCore.Statistics.Test")]
+[assembly: AssemblyCopyright("Copyright ©  2013 T-Alex Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("39a95305-2c65-404c-b0a4-9b7606819ec3")]
+[assembly: Guid("5e090e38-e571-4341-9df6-c5a15163bf1f")]
 
 // Version information for an assembly consists of the following four values:
 //

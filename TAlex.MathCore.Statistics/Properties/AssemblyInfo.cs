@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TAlex.MathCore.Test")]
-[assembly: AssemblyDescription("Unit Tests for TAlex.MathCore Library")]
+[assembly: AssemblyTitle("TAlex.MathCore.Statistics")]
+[assembly: AssemblyDescription("T-Alex MathCore.Statistics Library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("T-Alex Softwaer")]
-[assembly: AssemblyProduct("TAlex.MathCore.Test")]
-[assembly: AssemblyCopyright("Copyright © 2013 T-Alex Softwaer")]
+[assembly: AssemblyCompany("T-Alex Software")]
+[assembly: AssemblyProduct("TAlex.MathCore.Statistics")]
+[assembly: AssemblyCopyright("Copyright ©  2013 T-Alex Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("39a95305-2c65-404c-b0a4-9b7606819ec3")]
+[assembly: Guid("cef3a6ce-6d86-4560-ad02-b7064e4f157b")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
