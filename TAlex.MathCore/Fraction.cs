@@ -396,7 +396,7 @@ namespace TAlex.MathCore
             }
             else
             {
-                long n = GCD(a, b);
+                long n = SpecialFunctions.NumberTheory.GCD(a, b);
 
                 if (n != 1L)
                 {
@@ -404,18 +404,6 @@ namespace TAlex.MathCore
                     b = b / n;
                 }
             }
-        }
-
-        private static long GCD(long a, long b)
-        {
-            while (b != 0L)
-            {
-                long temp = a % b;
-                a = b;
-                b = temp;
-            }
-
-            return Math.Abs(a);
         }
 
         #endregion

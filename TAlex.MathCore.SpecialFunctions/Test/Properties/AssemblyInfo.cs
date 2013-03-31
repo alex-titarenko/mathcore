@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("T-Alex Softwaer")]
+[assembly: AssemblyCompany("T-Alex Software")]
 [assembly: AssemblyProduct("Test")]
-[assembly: AssemblyCopyright("Copyright © 2013 T-Alex Softwaer")]
+[assembly: AssemblyCopyright("Copyright © 2013 T-Alex Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a53e658f-2c46-471b-bbf8-3551f75c5a1f")]
+[assembly: Guid("b069f12a-baa2-4f52-951b-5a24fc6313c2")]
 
 // Version information for an assembly consists of the following four values:
 //

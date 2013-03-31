@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Test")]
+[assembly: AssemblyTitle("TAlex.MathCore.SpecialFunctions")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("T-Alex Softwaer")]
-[assembly: AssemblyProduct("Test")]
-[assembly: AssemblyCopyright("Copyright © 2013 T-Alex Softwaer")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("TAlex.MathCore.SpecialFunctions")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a53e658f-2c46-471b-bbf8-3551f75c5a1f")]
+[assembly: Guid("83dccdaf-db74-4a6c-9806-2827fa4b6e0e")]
 
 // Version information for an assembly consists of the following four values:
 //
