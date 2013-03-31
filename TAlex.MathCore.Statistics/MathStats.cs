@@ -34,16 +34,16 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The arithmetic mean of the elements of v.</returns>
-        public static double Mean(double[] v)
+        public static double Mean(ICollection<double> v)
         {
             double sum = 0.0;
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (double item in v)
             {
-                sum += v[i];
+                sum += item;
             }
 
-            return sum / v.Length;
+            return sum / v.Count;
         }
 
         /// <summary>
@@ -51,16 +51,15 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The arithmetic mean of the elements of v.</returns>
-        public static Complex Mean(Complex[] v)
+        public static Complex Mean(ICollection<Complex> v)
         {
             Complex sum = Complex.Zero;
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (Complex item in v)
             {
-                sum += v[i];
+                sum += item;
             }
-
-            return sum / v.Length;
+            return sum / v.Count;
         }
 
         /// <summary>
@@ -71,19 +70,19 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The array v contains a negative numbers.
         /// </exception>
-        public static double GeometricMean(double[] v)
+        public static double GeometricMean(ICollection<double> v)
         {
             double mult = 1.0;
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (double item in v)
             {
-                if (v[i] < 0.0)
+                if (item < 0.0)
                     throw new ArgumentException("The geometric means accepts only positive real numbers.");
 
-                mult *= v[i];
+                mult *= item;
             }
 
-            return Math.Pow(mult, 1.0 / v.Length);
+            return Math.Pow(mult, 1.0 / v.Count);
         }
 
         /// <summary>
@@ -94,19 +93,19 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The array v contains a negative numbers.
         /// </exception>
-        public static double HarmonicMean(double[] v)
+        public static double HarmonicMean(ICollection<double> v)
         {
             double sum = 0.0;
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (double item in v)
             {
-                if (v[i] < 0.0)
+                if (item < 0.0)
                     throw new ArgumentException("The harmonic means accepts only positive real numbers.");
 
-                sum += (1.0 / v[i]);
+                sum += (1.0 / item);
             }
 
-            return (double)v.Length / sum;
+            return (double)v.Count / sum;
         }
 
         /// <summary>
@@ -212,9 +211,9 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The sample variance of the elements of v.</returns>
-        public static double SampleVariance(double[] v)
+        public static double SampleVariance(ICollection<double> v)
         {
-            if (v.Length == 1)
+            if (v.Count == 1)
             {
                 return 0.0;
             }
@@ -222,12 +221,12 @@ namespace TAlex.MathCore.Statistics
             double sum = 0.0;
             double mean = Mean(v);
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (double item in v)
             {
-                sum += ExMath.Pow(v[i] - mean, 2);
+                sum += ExMath.Pow(item - mean, 2);
             }
 
-            return sum / (v.Length - 1);
+            return sum / (v.Count - 1);
         }
 
         /// <summary>
@@ -235,9 +234,9 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The sample variance of the elements of v.</returns>
-        public static double SampleVariance(Complex[] v)
+        public static double SampleVariance(ICollection<Complex> v)
         {
-            if (v.Length == 1)
+            if (v.Count == 1)
             {
                 return 0.0;
             }
@@ -245,12 +244,12 @@ namespace TAlex.MathCore.Statistics
             double sum = 0.0;
             Complex mean = Mean(v);
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (Complex item in v)
             {
-                sum += Complex.AbsSquared(v[i] - mean);
+                sum += Complex.AbsSquared(item - mean);
             }
 
-            return sum / (v.Length - 1);
+            return sum / (v.Count - 1);
         }
 
         /// <summary>
@@ -258,7 +257,7 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The square root of the sample variance of the elements of v.</returns>
-        public static double SampleStandardDeviation(double[] v)
+        public static double SampleStandardDeviation(ICollection<double> v)
         {
             return Math.Sqrt(SampleVariance(v));
         }
@@ -268,7 +267,7 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The square root of the sample variance of the elements of v.</returns>
-        public static double SampleStandardDeviation(Complex[] v)
+        public static double SampleStandardDeviation(ICollection<Complex> v)
         {
             return Math.Sqrt(SampleVariance(v));
         }
@@ -278,22 +277,22 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The sample skewness of the elements of v.</returns>
-        public static double SampleSkewness(double[] v)
+        public static double SampleSkewness(ICollection<double> v)
         {
-            if (v.Length < 3)
+            if (v.Count < 3)
             {
                 return double.NaN;
             }
 
-            int n = v.Length;
+            int n = v.Count;
             double mean = Mean(v);
 
             double sumcube = 0.0;
             double sumsq = 0.0;
 
-            for (int i = 0; i < n; i++)
+            foreach (double item in v)
             {
-                double c = v[i] - mean;
+                double c = item - mean;
                 double sq = c * c;
                 sumcube += sq * c;
                 sumsq += sq;
@@ -308,22 +307,22 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The sample skewness of the elements of v.</returns>
-        public static Complex SampleSkewness(Complex[] v)
+        public static Complex SampleSkewness(ICollection<Complex> v)
         {
-            if (v.Length < 3)
+            if (v.Count < 3)
             {
                 return Complex.NaN;
             }
 
-            int n = v.Length;
+            int n = v.Count;
             Complex mean = Mean(v);
 
             Complex sumcube = Complex.Zero;
             Complex sumsq = Complex.Zero;
 
-            for (int i = 0; i < n; i++)
+            foreach (Complex item in v)
             {
-                Complex c = v[i] - mean;
+                Complex c = item - mean;
                 Complex sq = c * c;
                 sumcube += sq * c;
                 sumsq += sq;
@@ -338,22 +337,22 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The sample kurtosis of the elements of v.</returns>
-        public static double SampleKurtosis(double[] v)
+        public static double SampleKurtosis(ICollection<double> v)
         {
-            if (v.Length < 4)
+            if (v.Count < 4)
             {
                 return double.NaN;
             }
 
-            int n = v.Length;
+            int n = v.Count;
             double mean = Mean(v);
 
             double num = 0.0;
             double sumsq = 0.0;
 
-            for (int i = 0; i < n; i++)
+            foreach (double item in v)
             {
-                double c = v[i] - mean;
+                double c = item - mean;
                 double sq = c * c;
                 num += sq * sq;
                 sumsq += sq;
@@ -369,22 +368,22 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The sample kurtosis of the elements of v.</returns>
-        public static Complex SampleKurtosis(Complex[] v)
+        public static Complex SampleKurtosis(ICollection<Complex> v)
         {
-            if (v.Length < 4)
+            if (v.Count < 4)
             {
                 return Complex.NaN;
             }
 
-            int n = v.Length;
+            int n = v.Count;
             Complex mean = Mean(v);
 
             Complex num = Complex.Zero;
             Complex sumsq = Complex.Zero;
 
-            for (int i = 0; i < n; i++)
+            foreach (Complex item in v)
             {
-                Complex c = v[i] - mean;
+                Complex c = item - mean;
                 Complex sq = c * c;
                 num += sq * sq;
                 sumsq += sq;
@@ -404,9 +403,9 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The length of the array a does not match the length of the array b.
         /// </exception>
-        public static double SampleCovariance(double[] a, double[] b)
+        public static double SampleCovariance(IList<double> a, IList<double> b)
         {
-            if (a.Length != b.Length)
+            if (a.Count != b.Count)
                 throw new ArgumentException("The lengths of the two arrays do not match.");
 
             double mean_a = Mean(a);
@@ -414,12 +413,12 @@ namespace TAlex.MathCore.Statistics
 
             double sum = 0.0;
 
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 sum += (a[i] - mean_a) * (b[i] - mean_b);
             }
 
-            return sum / (a.Length - 1);
+            return sum / (a.Count - 1);
         }
 
         /// <summary>
@@ -431,9 +430,9 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The length of the array a does not match the length of the array b.
         /// </exception>
-        public static Complex SampleCovariance(Complex[] a, Complex[] b)
+        public static Complex SampleCovariance(IList<Complex> a, IList<Complex> b)
         {
-            if (a.Length != b.Length)
+            if (a.Count != b.Count)
                 throw new ArgumentException("The lengths of the two arrays do not match.");
 
             Complex mean_a = Mean(a);
@@ -441,12 +440,12 @@ namespace TAlex.MathCore.Statistics
 
             Complex sum = Complex.Zero;
 
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 sum += Complex.ConjugateMultiply(b[i] - mean_b, a[i] - mean_a);
             }
 
-            return sum / (a.Length - 1);
+            return sum / (a.Count - 1);
         }
 
         /// <summary>
@@ -454,9 +453,9 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The population variance of the elements of v.</returns>
-        public static double PopulationVariance(double[] v)
+        public static double PopulationVariance(ICollection<double> v)
         {
-            if (v.Length == 1)
+            if (v.Count == 1)
             {
                 return 0.0;
             }
@@ -464,12 +463,12 @@ namespace TAlex.MathCore.Statistics
             double sum = 0.0;
             double mean = Mean(v);
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (double item in v)
             {
-                sum += ExMath.Pow(v[i] - mean, 2);
+                sum += ExMath.Pow(item - mean, 2);
             }
 
-            return sum / v.Length;
+            return sum / v.Count;
         }
 
         /// <summary>
@@ -477,9 +476,9 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The population variance of the elements of v.</returns>
-        public static double PopulationVariance(Complex[] v)
+        public static double PopulationVariance(ICollection<Complex> v)
         {
-            if (v.Length == 1)
+            if (v.Count == 1)
             {
                 return 0.0;
             }
@@ -487,12 +486,12 @@ namespace TAlex.MathCore.Statistics
             double sum = 0.0;
             Complex mean = Mean(v);
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (Complex item in v)
             {
-                sum += Complex.AbsSquared(v[i] - mean);
+                sum += Complex.AbsSquared(item - mean);
             }
 
-            return sum / v.Length;
+            return sum / v.Count;
         }
 
         /// <summary>
@@ -500,7 +499,7 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The square root of the population variance of the elements of v.</returns>
-        public static double PopulationStandardDeviation(double[] v)
+        public static double PopulationStandardDeviation(ICollection<double> v)
         {
             return Math.Sqrt(PopulationVariance(v));
         }
@@ -510,7 +509,7 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The square root of the population variance of the elements of v.</returns>
-        public static double PopulationStandardDeviation(Complex[] v)
+        public static double PopulationStandardDeviation(ICollection<Complex> v)
         {
             return Math.Sqrt(PopulationVariance(v));
         }
@@ -520,22 +519,22 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The population skewness of the elements of v.</returns>
-        public static double PopulationSkewness(double[] v)
+        public static double PopulationSkewness(ICollection<double> v)
         {
-            if (v.Length < 3)
+            if (v.Count < 3)
             {
                 return double.NaN;
             }
 
-            int n = v.Length;
+            int n = v.Count;
             double mean = Mean(v);
 
             double sumcube = 0.0;
             double sumsq = 0.0;
 
-            for (int i = 0; i < n; i++)
+            foreach (double item in v)
             {
-                double c = v[i] - mean;
+                double c = item - mean;
                 double sq = c * c;
                 sumcube += sq * c;
                 sumsq += sq;
@@ -550,22 +549,22 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The population skewness of the elements of v.</returns>
-        public static Complex PopulationSkewness(Complex[] v)
+        public static Complex PopulationSkewness(ICollection<Complex> v)
         {
-            if (v.Length < 3)
+            if (v.Count < 3)
             {
                 return Complex.NaN;
             }
 
-            int n = v.Length;
+            int n = v.Count;
             Complex mean = Mean(v);
 
             Complex sumcube = Complex.Zero;
             Complex sumsq = Complex.Zero;
 
-            for (int i = 0; i < n; i++)
+            foreach (Complex item in v)
             {
-                Complex c = v[i] - mean;
+                Complex c = item - mean;
                 Complex sq = c * c;
                 sumcube += sq * c;
                 sumsq += sq;
@@ -580,22 +579,22 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The population kurtosis of the elements of v.</returns>
-        public static double PopulationKurtosis(double[] v)
+        public static double PopulationKurtosis(ICollection<double> v)
         {
-            if (v.Length < 4)
+            if (v.Count < 4)
             {
                 return double.NaN;
             }
 
-            int n = v.Length;
+            int n = v.Count;
             double mean = Mean(v);
 
             double num = 0.0;
             double sumsq = 0.0;
 
-            for (int i = 0; i < n; i++)
+            foreach (double item in v)
             {
-                double c = v[i] - mean;
+                double c = item - mean;
                 double sq = c * c;
                 num += sq * sq;
                 sumsq += sq;
@@ -610,22 +609,22 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The population kurtosis of the elements of v.</returns>
-        public static Complex PopulationKurtosis(Complex[] v)
+        public static Complex PopulationKurtosis(ICollection<Complex> v)
         {
-            if (v.Length < 4)
+            if (v.Count < 4)
             {
                 return Complex.NaN;
             }
 
-            int n = v.Length;
+            int n = v.Count;
             Complex mean = Mean(v);
 
             Complex num = Complex.Zero;
             Complex sumsq = 0.0;
 
-            for (int i = 0; i < n; i++)
+            foreach (Complex item in v)
             {
-                Complex c = v[i] - mean;
+                Complex c = item - mean;
                 Complex sq = c * c;
                 num += sq * sq;
                 sumsq += sq;
@@ -642,26 +641,26 @@ namespace TAlex.MathCore.Statistics
         /// <param name="k">The order of the moment.</param>
         /// <returns>The moment of k-order of the elements of v.</returns>
         /// <exception cref="System.ArgumentException">The value of k less than one.</exception>
-        public static double PopulationMoment(double[] v, int k)
+        public static double PopulationMoment(ICollection<double> v, int k)
         {
             if (k < 1)
             {
                 throw new ArgumentException("The order of the moment must be greater than zero.");
             }
 
-            if (v.Length == 0)
+            if (v.Count == 0)
             {
                 return double.NaN;
             }
 
             double sum = 0.0;
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (double item in v)
             {
-                sum += ExMath.Pow(v[i], k);
+                sum += ExMath.Pow(item, k);
             }
 
-            return sum / v.Length;
+            return sum / v.Count;
         }
 
         /// <summary>
@@ -671,26 +670,26 @@ namespace TAlex.MathCore.Statistics
         /// <param name="k">The order of the moment.</param>
         /// <returns>The moment of k-order of the elements of v.</returns>
         /// <exception cref="System.ArgumentException">The value of k less than one.</exception>
-        public static Complex PopulationMoment(Complex[] v, int k)
+        public static Complex PopulationMoment(ICollection<Complex> v, int k)
         {
             if (k < 1)
             {
                 throw new ArgumentException("The order of the moment must be greater than zero.");
             }
 
-            if (v.Length == 0)
+            if (v.Count == 0)
             {
                 return Complex.NaN;
             }
 
             Complex sum = 0.0;
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (Complex item in v)
             {
-                sum += Complex.Pow(v[i], k);
+                sum += Complex.Pow(item, k);
             }
 
-            return sum / v.Length;
+            return sum / v.Count;
         }
 
         /// <summary>
@@ -700,14 +699,14 @@ namespace TAlex.MathCore.Statistics
         /// <param name="k">The order of the central moment.</param>
         /// <returns>The central moment of k-order of the elements of v.</returns>
         /// <exception cref="System.ArgumentException">The value of k less than one.</exception>
-        public static double PopulationCentralMoment(double[] v, int k)
+        public static double PopulationCentralMoment(ICollection<double> v, int k)
         {
             if (k < 1)
             {
                 throw new ArgumentException("The order of the central moment must be greater than zero.");
             }
 
-            if (v.Length == 0)
+            if (v.Count == 0)
             {
                 return double.NaN;
             }
@@ -720,12 +719,12 @@ namespace TAlex.MathCore.Statistics
             double mean = Mean(v);
             double sum = 0.0;
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (double item in v)
             {
-                sum += ExMath.Pow(v[i] - mean, k);
+                sum += ExMath.Pow(item - mean, k);
             }
 
-            return sum / v.Length;
+            return sum / v.Count;
         }
 
         /// <summary>
@@ -735,14 +734,14 @@ namespace TAlex.MathCore.Statistics
         /// <param name="k">The order of the central moment.</param>
         /// <returns>The central moment of k-order of the elements of v.</returns>
         /// <exception cref="System.ArgumentException">The value of k less than one.</exception>
-        public static Complex PopulationCentralMoment(Complex[] v, int k)
+        public static Complex PopulationCentralMoment(ICollection<Complex> v, int k)
         {
             if (k < 1)
             {
                 throw new ArgumentException("The order of the central moment must be greater than zero.");
             }
 
-            if (v.Length == 0)
+            if (v.Count == 0)
             {
                 return Complex.NaN;
             }
@@ -755,12 +754,12 @@ namespace TAlex.MathCore.Statistics
             Complex mean = Mean(v);
             Complex sum = 0.0;
 
-            for (int i = 0; i < v.Length; i++)
+            foreach (Complex item in v)
             {
-                sum += Complex.Pow(v[i] - mean, k);
+                sum += Complex.Pow(item - mean, k);
             }
 
-            return sum / v.Length;
+            return sum / v.Count;
         }
 
         /// <summary>
@@ -772,9 +771,9 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The length of the array a does not match the length of the array b.
         /// </exception>
-        public static double PopulationCovariance(double[] a, double[] b)
+        public static double PopulationCovariance(IList<double> a, IList<double> b)
         {
-            if (a.Length != b.Length)
+            if (a.Count != b.Count)
                 throw new ArgumentException("The lengths of the two arrays do not match.");
 
             double mean_a = Mean(a);
@@ -782,12 +781,12 @@ namespace TAlex.MathCore.Statistics
 
             double sum = 0.0;
 
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 sum += (a[i] - mean_a) * (b[i] - mean_b);
             }
 
-            return sum / a.Length;
+            return sum / a.Count;
         }
 
         /// <summary>
@@ -799,9 +798,9 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The length of the array a does not match the length of the array b.
         /// </exception>
-        public static Complex PopulationCovariance(Complex[] a, Complex[] b)
+        public static Complex PopulationCovariance(IList<Complex> a, IList<Complex> b)
         {
-            if (a.Length != b.Length)
+            if (a.Count != b.Count)
                 throw new ArgumentException("The lengths of the two arrays do not match.");
 
             Complex mean_a = Mean(a);
@@ -809,12 +808,12 @@ namespace TAlex.MathCore.Statistics
 
             Complex sum = Complex.Zero;
 
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 sum += Complex.ConjugateMultiply(b[i] - mean_b, a[i] - mean_a);
             }
 
-            return sum / a.Length;
+            return sum / a.Count;
         }
 
         /// <summary>
@@ -826,9 +825,9 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The length of the array a does not match the length of the array b.
         /// </exception>
-        public static double Correlation(double[] a, double[] b)
+        public static double Correlation(IList<double> a, IList<double> b)
         {
-            if (a.Length != b.Length)
+            if (a.Count != b.Count)
                 throw new ArgumentException("The lengths of the two arrays do not match.");
 
             double mean_a = Mean(a);
@@ -838,7 +837,7 @@ namespace TAlex.MathCore.Statistics
             double sum1 = 0.0;
             double sum2 = 0.0;
 
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 double c1 = a[i] - mean_a;
                 double c2 = b[i] - mean_b;
@@ -860,9 +859,9 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The length of the array a does not match the length of the array b.
         /// </exception>
-        public static Complex Correlation(Complex[] a, Complex[] b)
+        public static Complex Correlation(IList<Complex> a, IList<Complex> b)
         {
-            if (a.Length != b.Length)
+            if (a.Count != b.Count)
                 throw new ArgumentException("The lengths of the two arrays do not match.");
 
             Complex mean_a = Mean(a);
@@ -872,7 +871,7 @@ namespace TAlex.MathCore.Statistics
             double sum1 = 0.0;
             double sum2 = 0.0;
 
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 Complex c1 = a[i] - mean_a;
                 Complex c2 = b[i] - mean_b;
@@ -890,15 +889,15 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The range of the elements of v.</returns>
-        public static double Range(double[] v)
+        public static double Range(IList<double> v)
         {
-            if (v.Length == 0)
+            if (v.Count == 0)
                 return 0.0;
 
             double min = v[0];
             double max = v[0];
 
-            for (int i = 1; i < v.Length; i++)
+            for (int i = 1; i < v.Count; i++)
             {
                 if (min > v[i]) min = v[i];
                 else if (max < v[i]) max = v[i];
@@ -1026,14 +1025,14 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The maximum value of the elements of v.</returns>
-        public static double Max(double[] v)
+        public static double Max(IList<double> v)
         {
-            if (v.Length == 0)
+            if (v.Count == 0)
                 return 0.0;
 
             double max = v[0];
 
-            for (int i = 1; i < v.Length; i++)
+            for (int i = 1; i < v.Count; i++)
             {
                 if (max < v[i])
                 {
@@ -1049,14 +1048,14 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The maximum value of the elements of v.</returns>
-        public static Complex Max(Complex[] v)
+        public static Complex Max(IList<Complex> v)
         {
-            if (v.Length == 0)
+            if (v.Count == 0)
                 return Complex.Zero;
 
             Complex max = v[0];
 
-            for (int i = 1; i < v.Length; i++)
+            for (int i = 1; i < v.Count; i++)
             {
                 max = Complex.Max(max, v[i]);
             }
@@ -1069,14 +1068,14 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The minimum value of the elements of v.</returns>
-        public static double Min(double[] v)
+        public static double Min(IList<double> v)
         {
-            if (v.Length == 0)
+            if (v.Count == 0)
                 return 0.0;
 
             double min = v[0];
 
-            for (int i = 1; i < v.Length; i++)
+            for (int i = 1; i < v.Count; i++)
             {
                 if (min > v[i])
                 {
@@ -1092,14 +1091,14 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The minimum value of the elements of v.</returns>
-        public static Complex Min(Complex[] v)
+        public static Complex Min(IList<Complex> v)
         {
-            if (v.Length == 0)
+            if (v.Count == 0)
                 return Complex.Zero;
 
             Complex min = v[0];
 
-            for (int i = 1; i < v.Length; i++)
+            for (int i = 1; i < v.Count; i++)
             {
                 min = Complex.Min(min, v[i]);
             }
