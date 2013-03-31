@@ -390,7 +390,7 @@ namespace TAlex.MathCore
         /// <exception cref="System.ArgumentException">
         /// Number of elements in poly is less than 2 or more than 99.
         /// </exception>
-        public static Complex[] LaguerreRootsFinding(CPolynomial poly)
+        public static Complex[] LaguerreRoots(CPolynomial poly)
         {
             const int maxIters = 100;
             const int maxAttempts = 10;
@@ -562,17 +562,39 @@ namespace TAlex.MathCore
             return true;
         }
 
+        /// <summary>
+        /// Converts string representation into the equivalent of a complex polynomial.
+        /// </summary>
+        /// <param name="s">A string containing a complex polynomial to convert.</param>
+        /// <returns>A complex polynomial equivalent to the value specified in s.</returns>
+        /// <exception cref="System.ArgumentNullException">The string s is null.</exception>
+        /// <exception cref="System.ArgumentException">The string s is empty string.</exception>
+        /// <exception cref="System.FormatException">The string s is not a polynomial in a valid format.</exception>
         public static CPolynomial Parse(string s)
         {
             return Parse(s, null);
         }
 
+        /// <summary>
+        /// Converts string representation of a polynomial
+        /// in a specified culture-specific format to its complex polynomial equivalent.
+        /// </summary>
+        /// <param name="s">A string containing a complex polynomial to convert.</param>
+        /// <param name="provider">An System.IFormatProvider that supplies culture-specific formatting information about s.</param>
+        /// <returns>A complex polynomial equivalent to the value specified in s.</returns>
+        /// <exception cref="System.ArgumentNullException">The string s is null.</exception>
+        /// <exception cref="System.ArgumentException">The string s is empty string.</exception>
+        /// <exception cref="System.FormatException">The string s is not a polynomial in a valid format.</exception>
         public static CPolynomial Parse(string s, IFormatProvider provider)
         {
-            s = s.Trim();
+            if (s == null) throw new ArgumentNullException(Properties.Resources.EXC_STRING_NOT_NULL);
+
+            string str = s.Trim();
+            if (String.IsNullOrEmpty(str)) throw new ArgumentException(Properties.Resources.EXC_STRING_NOT_EMPTY);
+
             string varName = String.Empty;
 
-            Match matchAll = _polyRegex.Match(s);
+            Match matchAll = _polyRegex.Match(str);
             if (!matchAll.Success) throw new FormatException(Properties.Resources.EXC_POLY_INCCORECT_FORMAT);
 
             SortedDictionary<int, Complex> p = new SortedDictionary<int, Complex>();

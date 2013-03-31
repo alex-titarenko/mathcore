@@ -194,7 +194,7 @@ namespace TAlex.MathCore.Test
             CPolynomial poly = FromArray(nums);
 
             //action
-            Complex[] roots = CPolynomial.LaguerreRootsFinding(poly);
+            Complex[] roots = CPolynomial.LaguerreRoots(poly);
 
             //assert
             for (int i = 0; i < roots.Length; i++)
