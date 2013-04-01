@@ -46,6 +46,7 @@
     <Compile Include="ExMath.cs" />
     <Compile Include="Fraction.cs" />
     <Compile Include="FunctionDelegates.cs" />
+    <Compile Include="Graphing\CoordSysConverter.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="NotConvergenceException.cs" />
     <Compile Include="NumericUtil.cs" />
