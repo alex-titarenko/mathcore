@@ -39,10 +39,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EquationSolvers\BisectionEquationSolver.cs" />
+    <Compile Include="EquationSolvers\BrentEquationSolver.cs" />
+    <Compile Include="EquationSolvers\ComplexEquationSolver.cs" />
+    <Compile Include="EquationSolvers\ComplexInitialGuessEquationSolver.cs" />
+    <Compile Include="EquationSolvers\ComplexMullerEquationSolver.cs" />
+    <Compile Include="EquationSolvers\ComplexNewtonEquationSolver.cs" />
+    <Compile Include="EquationSolvers\ComplexSecantEquationSolver.cs" />
+    <Compile Include="EquationSolvers\EquationSolver.cs" />
+    <Compile Include="EquationSolvers\InitialGuessEquationSolver.cs" />
+    <Compile Include="EquationSolvers\MullerEquationSolver.cs" />
+    <Compile Include="EquationSolvers\NewtonEquationSolver.cs" />
+    <Compile Include="EquationSolvers\RidderEquationSolver.cs" />
+    <Compile Include="EquationSolvers\RootBracketingEquationSolver.cs" />
+    <Compile Include="EquationSolvers\SecantEquationSolver.cs" />
+    <Compile Include="Interpolation\Interpolator.cs" />
+    <Compile Include="Interpolation\LagrangePolynomialInterpolator.cs" />
+    <Compile Include="Interpolation\LinearInterpolator.cs" />
+    <Compile Include="Interpolation\NewtonPolynomialInterpolator.cs" />
+    <Compile Include="NumericalDerivation.cs" />
+    <Compile Include="NumericalIntegration\ComplexAdaptiveIntegrator.cs" />
+    <Compile Include="NumericalIntegration\ComplexCompositeIntegrator.cs" />
+    <Compile Include="NumericalIntegration\ComplexIntegrator.cs" />
+    <Compile Include="NumericalIntegration\ComplexRombergIntegrator.cs" />
+    <Compile Include="NumericalIntegration\GaussKronrodQuadratures.cs" />
+    <Compile Include="NumericalIntegration\NewtonCotesQuadratures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sequence.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Optimization\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TAlex.MathCore\TAlex.MathCore.csproj">
+      <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
+      <Name>TAlex.MathCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
