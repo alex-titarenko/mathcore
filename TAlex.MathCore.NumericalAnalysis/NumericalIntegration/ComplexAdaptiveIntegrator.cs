@@ -50,25 +50,9 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <summary>
         /// Initializes a new instance of the ComplexAdaptiveIntegrator class.
         /// </summary>
-        /// <param name="integrand">A complex function to integrate of one variable.</param>
-        /// <param name="lowerBound">The lower integration limit.</param>
-        /// <param name="upperBound">The upper integration limit.</param>
-        public ComplexAdaptiveIntegrator(Function1Complex integrand, double lowerBound, double upperBound) :
-            base(integrand, lowerBound, upperBound)
-        {
-            MaxIterations = 6000;
-            Tolerance = 1E-9;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ComplexAdaptiveIntegrator class.
-        /// </summary>
-        /// <param name="integrand">A complex function to integrate of one variable.</param>
         /// <param name="quadrature">A complex function representing the quadrature formula of integration.</param>
-        /// <param name="lowerBound">The lower integration limit.</param>
-        /// <param name="upperBound">The upper integration limit.</param>
-        public ComplexAdaptiveIntegrator(Function1Complex integrand, Quadrature quadrature, double lowerBound, double upperBound) :
-            this(integrand, lowerBound, upperBound)
+        public ComplexAdaptiveIntegrator(Quadrature quadrature)
+            : this()
         {
             _quadr = quadrature;
         }
@@ -84,16 +68,13 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <exception cref="NotConvergenceException">
         /// The algorithm does not converged for a certain number of iterations.
         /// </exception>
-        public override Complex Integrate()
+        public override Complex Integrate(Function1Complex integrand, double lowerBound, double upperBound)
         {
-            if (LowerBound == UpperBound)
+            if (lowerBound == upperBound)
             {
                 return Complex.Zero;
             }
 
-            double lowerBound = LowerBound;
-            double upperBound = UpperBound;
-            Function1Complex integrand = Integrand;
             int sign = 1;
 
             if (lowerBound > upperBound)
@@ -110,13 +91,13 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
                 if (double.IsNegativeInfinity(lowerBound))
                 {
                     if (double.IsPositiveInfinity(upperBound))
-                        integrand = new TransformationLimits(Integrand, LimitType.BothBoundsInfinity, 0.0).FiniteIntegrand;
+                        integrand = new TransformationLimits(integrand, LimitType.BothBoundsInfinity, 0.0).FiniteIntegrand;
                     else
-                        integrand = new TransformationLimits(Integrand, LimitType.LowerBoundInfinity, upperBound).FiniteIntegrand;
+                        integrand = new TransformationLimits(integrand, LimitType.LowerBoundInfinity, upperBound).FiniteIntegrand;
                 }
                 else if (double.IsPositiveInfinity(upperBound))
                 {
-                    integrand = new TransformationLimits(Integrand, LimitType.UpperBoundInfinity, lowerBound).FiniteIntegrand;
+                    integrand = new TransformationLimits(integrand, LimitType.UpperBoundInfinity, lowerBound).FiniteIntegrand;
                 }
 
                 lowerBound = 0.0;

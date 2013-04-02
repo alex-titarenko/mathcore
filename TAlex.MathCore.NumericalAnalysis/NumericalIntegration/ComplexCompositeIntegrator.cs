@@ -79,27 +79,5 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         }
 
         #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the ComplexCompositeIntegrator class.
-        /// </summary>
-        protected ComplexCompositeIntegrator() : base()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the ComplexCompositeIntegrator class.
-        /// </summary>
-        /// <param name="integrand">A complex function to integrate of one variable.</param>
-        /// <param name="lowerBound">The lower integration limit.</param>
-        /// <param name="upperBound">The upper integration limit.</param>
-        protected ComplexCompositeIntegrator(Function1Complex integrand, double lowerBound, double upperBound) :
-            base(integrand, lowerBound, upperBound)
-        {
-        }
-
-        #endregion
     }
 }

@@ -6,8 +6,8 @@
     <ProjectGuid>{77E73422-576E-4F9C-8DD4-986B996E8135}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TAlex.MathCore.NumericalAnalysis</RootNamespace>
-    <AssemblyName>TAlex.MathCore.NumericalAnalysis</AssemblyName>
+    <RootNamespace>TAlex.MathCore.NumericalAnalysis.Test</RootNamespace>
+    <AssemblyName>TAlex.MathCore.NumericalAnalysis.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -58,10 +58,22 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="NumericalIntegration\ComplexAdaptiveIntegratorTest.cs" />
+    <Compile Include="NumericalIntegration\ComplexRombergIntegratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TAlex.MathCore\TAlex.MathCore.csproj">
+      <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
+      <Name>TAlex.MathCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TAlex.MathCore.NumericalAnalysis.csproj">
+      <Project>{948cea84-43b5-4a5c-b8ba-1acbf5bc7d12}</Project>
+      <Name>TAlex.MathCore.NumericalAnalysis</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

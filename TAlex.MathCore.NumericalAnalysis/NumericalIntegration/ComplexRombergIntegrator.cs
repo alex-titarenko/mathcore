@@ -26,20 +26,6 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
             R = new Complex[MaxIterations, MaxIterations];
         }
 
-        /// <summary>
-        /// Initializes a new instance of the ComplexRombergIntegrator class.
-        /// </summary>
-        /// <param name="integrand">A complex function to integrate of one variable.</param>
-        /// <param name="lowerBound">The lower integration limit.</param>
-        /// <param name="upperBound">The upper integration limit.</param>
-        public ComplexRombergIntegrator(Function1Complex integrand, double lowerBound, double upperBound) :
-            base(integrand, lowerBound, upperBound)
-        {
-            MaxIterations = 20;
-            Tolerance = 1E-15;
-            R = new Complex[MaxIterations, MaxIterations];
-        }
-
         #endregion
 
         #region Methods
@@ -51,16 +37,13 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <exception cref="NotConvergenceException">
         /// The algorithm does not converged for a certain number of iterations.
         /// </exception>
-        public override Complex Integrate()
+        public override Complex Integrate(Function1Complex integrand, double lowerBound, double upperBound)
         {
-            if (LowerBound == UpperBound)
+            if (lowerBound == upperBound)
             {
                 return Complex.Zero;
             }
 
-            double lowerBound = LowerBound;
-            double upperBound = UpperBound;
-            Function1Complex integrand = Integrand;
             double tol = Tolerance;
 
             // Testing the limits to infinity
