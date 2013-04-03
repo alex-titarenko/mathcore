@@ -43,7 +43,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// </summary>
         public ComplexAdaptiveIntegrator()
         {
-            MaxIterations = 6000;
+            MaxIterations = 8000;
             Tolerance = 1E-9;
         }
 

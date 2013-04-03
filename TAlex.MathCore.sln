@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.NumericalAna
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.NumericalAnalysis.Test", "TAlex.MathCore.NumericalAnalysis\Test\TAlex.MathCore.NumericalAnalysis.Test.csproj", "{77E73422-576E-4F9C-8DD4-986B996E8135}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ComplexExpressions", "TAlex.MathCore.ComplexExpressions\TAlex.MathCore.ComplexExpressions.csproj", "{35F20E7E-DF52-4018-943C-7AEDE5E5DE5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ComplexExpressions.Test", "TAlex.MathCore.ComplexExpressions\Test\TAlex.MathCore.ComplexExpressions.Test.csproj", "{C22015BF-B7B1-410C-90B9-05424FBD7F4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,14 @@ Global
 		{77E73422-576E-4F9C-8DD4-986B996E8135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77E73422-576E-4F9C-8DD4-986B996E8135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77E73422-576E-4F9C-8DD4-986B996E8135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35F20E7E-DF52-4018-943C-7AEDE5E5DE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35F20E7E-DF52-4018-943C-7AEDE5E5DE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35F20E7E-DF52-4018-943C-7AEDE5E5DE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35F20E7E-DF52-4018-943C-7AEDE5E5DE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22015BF-B7B1-410C-90B9-05424FBD7F4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22015BF-B7B1-410C-90B9-05424FBD7F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22015BF-B7B1-410C-90B9-05424FBD7F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22015BF-B7B1-410C-90B9-05424FBD7F4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,5 +104,6 @@ Global
 		{07846086-435C-48A4-9EB0-959B08E59065} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 		{8AB079F3-BE64-456C-A831-4BCBBDB51B40} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 		{77E73422-576E-4F9C-8DD4-986B996E8135} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
+		{C22015BF-B7B1-410C-90B9-05424FBD7F4F} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 	EndGlobalSection
 EndGlobal

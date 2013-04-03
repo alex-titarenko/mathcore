@@ -7,7 +7,7 @@
     <ProjectGuid>{62A967EC-EBDD-488A-A80A-D1B5EC1AD587}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TAlex.MathCore.ExpressionsBase</RootNamespace>
+    <RootNamespace>TAlex.MathCore.ExpressionEvaluation</RootNamespace>
     <AssemblyName>TAlex.MathCore.ExpressionsBase</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

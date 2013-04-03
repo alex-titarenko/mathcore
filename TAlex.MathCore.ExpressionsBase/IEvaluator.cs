@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TAlex.MathCore.ExpressionEvaluation
+﻿namespace TAlex.MathCore.ExpressionEvaluation
 {
     /// <summary>
     /// Defines a method for evaluating.

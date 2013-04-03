@@ -124,6 +124,10 @@
   <data name="EXC_INVALID_FORMAT_COMPLEX" xml:space="preserve">
     <value>Invalid format of the complex number.</value>
   </data>
+  <data name="EXC_INVALID_NUMBER_FORMAT" xml:space="preserve">
+    <value>The number {0} contains an invalid character '{1}'</value>
+    <comment>{0} - number, {1} - invalid character.</comment>
+  </data>
   <data name="EXC_POLY_INCCORECT_FORMAT" xml:space="preserve">
     <value>Incorrect format of complex polynomial.</value>
   </data>

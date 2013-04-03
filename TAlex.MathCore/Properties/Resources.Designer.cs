@@ -79,6 +79,15 @@ namespace TAlex.MathCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The number {0} contains an invalid character &apos;{1}&apos;.
+        /// </summary>
+        internal static string EXC_INVALID_NUMBER_FORMAT {
+            get {
+                return ResourceManager.GetString("EXC_INVALID_NUMBER_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect format of complex polynomial..
         /// </summary>
         internal static string EXC_POLY_INCCORECT_FORMAT {
