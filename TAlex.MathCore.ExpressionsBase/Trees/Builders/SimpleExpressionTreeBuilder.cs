@@ -11,9 +11,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
     {
         #region Fields
 
-        protected IEnumerator<Token> _tokens;
-        protected IDictionary<string, VariableExpression<T>> _variables;
-        protected object _syncRoot = new object();
+        protected IEnumerator<Token> Tokens;
+        protected IDictionary<string, VariableExpression<T>> Variables;
+        protected object SyncRoot = new object();
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             while (true)
             {
-                switch (_tokens.Current.Value)
+                switch (Tokens.Current.Value)
                 {
                     case "+":
                         BinaryExpression<T> add = CreateAddExpression();
@@ -73,7 +73,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             while (true)
             {
-                switch (_tokens.Current.Value)
+                switch (Tokens.Current.Value)
                 {
                     case "*":
                         BinaryExpression<T> mult = CreateMultExpression();
@@ -101,7 +101,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             while (true)
             {
-                if (_tokens.Current.Value == "^" || _tokens.Current.Value == "**")
+                if (Tokens.Current.Value == "^" || Tokens.Current.Value == "**")
                 {
                     BinaryExpression<T> pow = CreatePowExpression();
                     pow.LeftExpression = left;
@@ -117,32 +117,32 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         protected virtual Expression<T> Unary()
         {
-            _tokens.MoveNext();
+            Tokens.MoveNext();
 
-            switch (_tokens.Current.TokenType)
+            switch (Tokens.Current.TokenType)
             {
                 case TokenType.Scalar:
-                    ScalarExpression<T> subExpr = ParseScalarValue(_tokens.Current.Value);
-                    _tokens.MoveNext();
+                    ScalarExpression<T> subExpr = ParseScalarValue(Tokens.Current.Value);
+                    Tokens.MoveNext();
                     return subExpr;
 
                 case TokenType.Identifier:
-                    string identifierName = _tokens.Current.Value;
-                    _tokens.MoveNext();
+                    string identifierName = Tokens.Current.Value;
+                    Tokens.MoveNext();
 
                     ConstantExpression<T> consExpr = ConstantFlyweightFactory.GetConstant(identifierName);
                     if (consExpr != null) return consExpr;
 
                     VariableExpression<T> varExpr = null;
-                    if (!_variables.TryGetValue(identifierName, out varExpr))
+                    if (!Variables.TryGetValue(identifierName, out varExpr))
                     {
                         varExpr = new VariableExpression<T>(identifierName) { Value = GetDefaultVariableValue() };
-                        _variables.Add(identifierName, varExpr);
+                        Variables.Add(identifierName, varExpr);
                     }
                     return varExpr;
 
                 case TokenType.Operator:
-                    switch (_tokens.Current.Value)
+                    switch (Tokens.Current.Value)
                     {
                         case "-":
                             return CreateUnaryMinusExpression(Pow());
@@ -152,36 +152,36 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
                         case "(":
                             Expression<T> bracketsSubExpr = AddSub();
-                            if (_tokens.Current.Value == ")")
+                            if (Tokens.Current.Value == ")")
                             {
-                                _tokens.MoveNext();
+                                Tokens.MoveNext();
                                 return bracketsSubExpr;
                             }
                             else
                                 throw new SyntaxException("\")\" expected.");
 
                         default:
-                            throw new SyntaxException(String.Format("Incorrect operator \"{0}\".", _tokens.Current.Value));
+                            throw new SyntaxException(String.Format("Incorrect operator \"{0}\".", Tokens.Current.Value));
                     }
 
                 case TokenType.Function:
-                    string funcName = _tokens.Current.Value;
+                    string funcName = Tokens.Current.Value;
                     IList<Expression<T>> args = new List<Expression<T>>();
 
-                    _tokens.MoveNext();
-                    if (_tokens.Current.Value != "(")
+                    Tokens.MoveNext();
+                    if (Tokens.Current.Value != "(")
                         throw new SyntaxException("\"(\" expected.");
 
                     args.Add(AddSub());
-                    while (_tokens.Current.Value != ")" && _tokens.Current.Value == ",")
+                    while (Tokens.Current.Value != ")" && Tokens.Current.Value == ",")
                     {
                         args.Add(AddSub());
                     }
 
-                    if (_tokens.Current.Value != ")")
+                    if (Tokens.Current.Value != ")")
                         throw new SyntaxException("\")\" expected.");
 
-                    _tokens.MoveNext();
+                    Tokens.MoveNext();
                     return ResolveFunctionExpression(funcName, args.ToArray());
 
                 default:
@@ -235,14 +235,14 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         public Expression<T> BuildTree(string expression)
         {
-            lock (_syncRoot)
+            lock (SyncRoot)
             {
-                _tokens = Tokenizer.GetTokens(expression).GetEnumerator();   
-                _variables = new Dictionary<string, VariableExpression<T>>();
+                Tokens = Tokenizer.GetTokens(expression).GetEnumerator();   
+                Variables = new Dictionary<string, VariableExpression<T>>();
 
                 Expression<T> result = AddSub();
 
-                if (_tokens.MoveNext())
+                if (Tokens.MoveNext())
                     throw new SyntaxException();
 
                 return result;

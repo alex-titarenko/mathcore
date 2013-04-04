@@ -64,6 +64,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Tokenize
                         tokenValue += expression[idx++];
                         if (idx >= len) break;
                     }
+                    ScalarPostProcessing(tokens, ref tokenType, ref tokenValue);
                 }
                 else if (GetOperator(expression, idx, out tokenValue)) // Token type is Operator
                 {
@@ -92,6 +93,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.Tokenize
             }
 
             return tokens.ToArray();
+        }
+
+        protected virtual void ScalarPostProcessing(IList<Token> tokens, ref TokenType tokenType, ref string tokenValue)
+        {
         }
 
         protected bool GetOperator(string expression, int idx, out string @operator)

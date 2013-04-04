@@ -9,7 +9,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 
 
-namespace TAlex.MathCore.ExpressionEvaluation.Test
+namespace TAlex.MathCore.ExpressionsBase.Test.Trees.Builders
 {
     /// <summary>
     /// Summary description for DoubleExpressionTreeBuilder

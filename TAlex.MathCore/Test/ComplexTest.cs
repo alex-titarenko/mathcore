@@ -36,6 +36,22 @@ namespace TAlex.MathCore.Test
             expected.Should().Be(actual);
         }
 
+        [TestCase(1,0, 0,2.5, 0,-0.4)]
+        public void DivTest(double re1, double im1, double re2, double im2, double re3, double im3)
+        {
+            //arrange
+            Complex c1 = new Complex(re1, im1);
+            Complex c2 = new Complex(re2, im2);
+
+            Complex expected = new Complex(re3, im3);
+
+            //action
+            Complex actual = Complex.Divide(c1, c2);
+
+            //assert
+            expected.Should().Be(actual);
+        }
+
         [TestCase(-1, 0)]
         [TestCase(2, -1)]
         [TestCase(1, 0)]

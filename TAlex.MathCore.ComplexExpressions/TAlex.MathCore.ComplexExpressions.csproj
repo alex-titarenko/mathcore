@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tokenize\ComplexExpressionTokenizer.cs" />
     <Compile Include="Trees\Builders\ComplexExpressionTreeBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

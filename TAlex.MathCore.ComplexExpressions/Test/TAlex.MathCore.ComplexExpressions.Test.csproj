@@ -58,6 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Tokenize\ComplexExpressionTokenizerTest.cs" />
     <Compile Include="Trees\Builders\ComplexExpressionTreeBuilderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
