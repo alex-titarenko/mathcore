@@ -4,6 +4,7 @@ using TAlex.MathCore;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using FluentAssertions;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
+using TAlex.MathCore.LinearAlgebra;
 
 
 namespace Test
@@ -48,6 +49,36 @@ namespace Test
 
             //assert
             NumericUtil.FuzzyEquals(actual, expected, 10E-16).Should().BeTrue();
+        }
+
+        [Test]
+        public void EvaluateMatrixTest()
+        {
+            //arrange
+            const string s = "{1, 2; 3, 8}";
+            CMatrix expected = new CMatrix(new Complex[,] { { 1, 2 }, { 3, 8 } });
+
+            //action
+            Expression<object> expr = TreeBuilder.BuildTree(s);
+            CMatrix actual = (CMatrix)expr.Evaluate();
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void EvaluateMatrixTest2()
+        {
+            //arrange
+            const string s = "{1, 2; 3, 8; 1+2, -0.8}";
+            CMatrix expected = new CMatrix(new Complex[,] { { 1, 2 }, { 3, 8 }, { 3, -0.8 } });
+
+            //action
+            Expression<object> expr = TreeBuilder.BuildTree(s);
+            CMatrix actual = (CMatrix)expr.Evaluate();
+
+            //assert
+            actual.Should().Be(expected);
         }
     }
 }

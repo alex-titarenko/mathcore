@@ -39,9 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tokenize\ComplexExpressionTokenizer.cs" />
     <Compile Include="Trees\Builders\ComplexExpressionTreeBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trees\CMatrixExpression.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TAlex.MathCore.ExpressionsBase\TAlex.MathCore.ExpressionsBase.csproj">
@@ -68,6 +74,12 @@
       <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
       <Name>TAlex.MathCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

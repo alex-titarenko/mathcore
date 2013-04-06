@@ -70,6 +70,10 @@
       <Project>{62a967ec-ebdd-488a-a80a-d1b5ec1ad587}</Project>
       <Name>TAlex.MathCore.ExpressionsBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\TAlex.MathCore.LinearAlgebra\TAlex.MathCore.LinearAlgebra.csproj">
+      <Project>{44709d81-b144-4bf5-ba30-ca852fa9b29b}</Project>
+      <Name>TAlex.MathCore.LinearAlgebra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\TAlex.MathCore\TAlex.MathCore.csproj">
       <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
       <Name>TAlex.MathCore</Name>

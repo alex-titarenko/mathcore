@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using System;
 using TAlex.MathCore;
 using TAlex.MathCore.LinearAlgebra;
@@ -7,16 +8,13 @@ using TAlex.MathCore.LinearAlgebra.Test.Helpers;
 
 namespace TAlex.MathCore.LinearAlgebra.Test
 {
-    [TestClass()]
+    [TestFixture]
     public class CPolynomialExtensionsTest
     {
         private RandomGenerator _rand = new RandomGenerator();
 
 
-        /// <summary>
-        ///A test for CompanionMatrixRootsFinding
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void CompanionMatrixRootsFindingTest()
         {
             int size = 5;
@@ -35,8 +33,8 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 {
                     Complex p = poly.Evaluate(roots[i]);
 
-                    if (Complex.Abs(p) >= TOL)
-                        Assert.Fail("Polynom : {0}", p);
+                    //assert
+                    Complex.Abs(p).Should().BeLessThan(TOL);
                 }
             }
 

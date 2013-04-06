@@ -26,6 +26,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         public IList<KeyValuePair<string, Type>> Functions { get; set; }
 
+        public IDictionary<string, Func<Expression<T>>> UnaryOperatorHandlers { get; set; }
+
         #endregion
 
         #region Constructors
@@ -33,6 +35,22 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         public SimpleExpressionTreeBuilder()
         {
             Tokenizer = new StandardExpressionTokenizer();
+
+            UnaryOperatorHandlers = new Dictionary<string, Func<Expression<T>>>
+            {
+                { "-", () => CreateUnaryMinusExpression(Pow()) },
+                { "+", () => new UnaryPlusExpression<T>(Pow()) },
+                { "(", () => {
+                    Expression<T> bracketsSubExpr = AddSub();
+                    if (Tokens.Current.Value == ")")
+                    {
+                        Tokens.MoveNext();
+                        return bracketsSubExpr;
+                    }
+                    else
+                        throw new SyntaxException("\")\" expected.");
+                }}
+            };
         }
 
         #endregion
@@ -142,27 +160,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     return varExpr;
 
                 case TokenType.Operator:
-                    switch (Tokens.Current.Value)
-                    {
-                        case "-":
-                            return CreateUnaryMinusExpression(Pow());
-
-                        case "+":
-                            return new UnaryPlusExpression<T>(Pow());
-
-                        case "(":
-                            Expression<T> bracketsSubExpr = AddSub();
-                            if (Tokens.Current.Value == ")")
-                            {
-                                Tokens.MoveNext();
-                                return bracketsSubExpr;
-                            }
-                            else
-                                throw new SyntaxException("\")\" expected.");
-
-                        default:
-                            throw new SyntaxException(String.Format("Incorrect operator \"{0}\".", Tokens.Current.Value));
-                    }
+                    Func<Expression<T>> func;
+                    if (UnaryOperatorHandlers.TryGetValue(Tokens.Current.Value, out func))
+                        return func();
+                    else
+                        throw new SyntaxException(String.Format("Incorrect operator \"{0}\".", Tokens.Current.Value));
 
                 case TokenType.Function:
                     string funcName = Tokens.Current.Value;

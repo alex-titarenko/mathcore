@@ -15,6 +15,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         public ComplexExpressionTreeBuilder()
         {
             Tokenizer = new ComplexExpressionTokenizer();
+
+            UnaryOperatorHandlers.Add("{", HandleMatrixBracket);
         }
 
 
@@ -66,6 +68,57 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         }
 
 
+        private Expression<Object> HandleMatrixBracket()
+        {
+            Expression<Object> value = AddSub();
+
+            if (Tokens.Current.Value == "}")
+            {
+                Tokens.MoveNext();
+                return new CMatrixExpression(1, value);
+            }
+            else if (Tokens.Current.Value == "," || Tokens.Current.Value == ";")
+            {
+                int? stride = null;
+                int currLineLenght = 1;
+                List<Expression<Object>> m = new List<Expression<Object>>();
+                m.Add(value);
+
+                while (Tokens.Current.Value != "}" && (Tokens.Current.Value == "," || Tokens.Current.Value == ";"))
+                {
+                    if (Tokens.Current.Value == ";")
+                    {
+                        if (!stride.HasValue) stride = currLineLenght;
+                        else if (stride != currLineLenght) throw new MatrixSizeMismatchException();
+                        currLineLenght = 1;
+                    }
+                    else
+                    {
+                        currLineLenght++;
+                    }
+
+                    value = AddSub();
+                    m.Add(value);
+                }
+
+                if (Tokens.Current.Value != "}")
+                    throw new SyntaxException("\"}\" expected.");
+
+                Tokens.MoveNext();
+                return new CMatrixExpression(stride ?? m.Count, m.ToArray());
+            }
+            else
+            {
+                throw new SyntaxException("\"}\" expected.");
+            }
+        }
+
+        private static Exception ThrowWrongArgumentType(string op)
+        {
+            return new ArgumentException(String.Format(Properties.Resources.EXC_WRONG_TYPE_ARGUMENTS_OPERATION, op));
+        }
+
+
         #region Nested Types
 
         private class AddComplexExpression : AddExpression<Object>
@@ -79,17 +132,17 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 {
                     if (right is Complex) return (Complex)left + (Complex)right;
                     else if (right is CMatrix) return (Complex)left + (CMatrix)right;
-                    else throw new ArgumentException("Wrong type arguments operation '+'.");
+                    else throw ThrowWrongArgumentType("+");
                 }
                 else if (left is CMatrix)
                 {
                     if (right is Complex) return (CMatrix)left + (Complex)right;
                     else if (right is CMatrix) return (CMatrix)left + (CMatrix)right;
-                    else throw new ArgumentException("Wrong type arguments operation '+'.");
+                    else throw ThrowWrongArgumentType("+");
                 }
                 else
                 {
-                    throw new ArgumentException("Wrong type arguments operation '+'.");
+                    throw ThrowWrongArgumentType("+");
                 }
             }
         }
@@ -105,17 +158,17 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 {
                     if (right is Complex) return (Complex)left - (Complex)right;
                     else if (right is CMatrix) return (Complex)left - (CMatrix)right;
-                    else throw new ArgumentException("Wrong type arguments operation '-'.");
+                    else throw ThrowWrongArgumentType("-");
                 }
                 else if (left is CMatrix)
                 {
                     if (right is Complex) return (CMatrix)left - (Complex)right;
                     else if (right is CMatrix) return (CMatrix)left - (CMatrix)right;
-                    else throw new ArgumentException("Wrong type arguments operation '-'.");
+                    else throw ThrowWrongArgumentType("-");
                 }
                 else
                 {
-                    throw new ArgumentException("Wrong type arguments operation '-'.");
+                    throw ThrowWrongArgumentType("-");
                 }
             }
         }
@@ -131,17 +184,17 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 {
                     if (right is Complex) return (Complex)left * (Complex)right;
                     else if (right is CMatrix) return (Complex)left * (CMatrix)right;
-                    else throw new ArgumentException("Wrong type arguments operation '*'.");
+                    else throw ThrowWrongArgumentType("*");
                 }
                 else if (left is CMatrix)
                 {
                     if (right is Complex) return (CMatrix)left * (Complex)right;
                     else if (right is CMatrix) return (CMatrix)left * (CMatrix)right;
-                    else throw new ArgumentException("Wrong type arguments operation '*'.");
+                    else throw ThrowWrongArgumentType("*");
                 }
                 else
                 {
-                    throw new ArgumentException("Wrong type arguments operation '*'.");
+                    throw ThrowWrongArgumentType("*");
                 }
             }
         }
@@ -157,17 +210,17 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 {
                     if (right is Complex) return (Complex)left / (Complex)right;
                     else if (right is CMatrix) return (Complex)left / (CMatrix)right;
-                    else throw new ArgumentException("Wrong type arguments operation '/'.");
+                    else throw ThrowWrongArgumentType("/");
                 }
                 else if (left is CMatrix)
                 {
                     if (right is Complex) return (CMatrix)left / (Complex)right;
                     else if (right is CMatrix) return (CMatrix)left / (CMatrix)right;
-                    else throw new ArgumentException("Wrong type arguments operation '/'.");
+                    else throw ThrowWrongArgumentType("/");
                 }
                 else
                 {
-                    throw new ArgumentException("Wrong type arguments operation '/'.");
+                    throw ThrowWrongArgumentType("/");
                 }
             }
         }
@@ -184,18 +237,18 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     if (right is Complex)
                         return EvaluateComplexComplex((Complex)left, (Complex)right);
                     else
-                        throw new ArgumentException("Wrong type arguments operation '^'.");
+                        throw ThrowWrongArgumentType("^");
                 }
                 else if (left is CMatrix)
                 {
                     if (right is Complex)
                         return EvaluateCMatrixComplex((CMatrix)left, (Complex)right);
                     else
-                        throw new ArgumentException("Wrong type arguments operation '^'.");
+                        throw ThrowWrongArgumentType("^");
                 }
                 else
                 {
-                    throw new ArgumentException("Wrong type arguments operation '^'.");
+                    throw ThrowWrongArgumentType("^");
                 }
             }
 
@@ -230,7 +283,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 }
                 else
                 {
-                    throw new ArgumentException("The matrix must be square or column vector.");
+                    throw new ArgumentException(Properties.Resources.EXC_MATRIX_MUST_BE_SQUARE_OR_VECTOR);
                 }
             }
         }
@@ -251,7 +304,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 else if (value is CMatrix)
                     return CMatrix.Negate((CMatrix)value);
                 else
-                    throw new ArgumentException("Wrong type argument operation '-'.");
+                    throw ThrowWrongArgumentType("-");
             }
         }
 

@@ -1,5 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using NUnit.Framework;
+using System;
 using TAlex.MathCore;
 using TAlex.MathCore.LinearAlgebra;
 using TAlex.MathCore.LinearAlgebra.Test.Helpers;
@@ -7,46 +8,13 @@ using TAlex.MathCore.LinearAlgebra.Test.Helpers;
 
 namespace TAlex.MathCore.LinearAlgebra.Test
 {    
-    /// <summary>
-    /// This is a test class for CMatrix and is intended
-    /// to contain all CMatrix Unit Tests
-    ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class CMatrixTest
     {
-        #region Fields
-
-        private TestContext testContextInstance;
         private RandomGenerator _rand = new RandomGenerator();
 
-        #endregion
 
-        #region Properties
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///A test for LUPDecomposition
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void LUPDecompositionTest()
         {
             int size = 10;
@@ -60,20 +28,18 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             {
                 _rand.Fill(m, -1000, 1000, 3);
 
+                //action
                 CMatrix[] LUP = CMatrix.LUPDecomposition(m);
                 CMatrix P = LUP[0];
                 CMatrix L = LUP[1];
                 CMatrix U = LUP[2];
 
-                if (!CMatrix.Equals(P * m, L * U, TOL))
-                    Assert.Fail((P * m - L * U).ToString());
+                //assert
+                CMatrix.Equals(P * m, L * U, TOL).Should().BeTrue();
             }
         }
 
-        /// <summary>
-        ///A test for QRDecomposition
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void QRDecompositionTest()
         {
             int rowCount = 10;
@@ -87,25 +53,19 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             {
                 _rand.Fill(m, -1000, 1000, 3);
 
+                //action
                 CMatrix[] QR = CMatrix.QRDecomposition(m);
                 CMatrix Q = QR[0];
                 CMatrix R = QR[1];
 
-                if (!Q.IsUnitary)
-                    Assert.Fail("Q is not unitary (iter: {0})", idx);
-
-                if (!R.IsUpperTrapeze)
-                    Assert.Fail("R is not upper trapeze (iter: {0})", R.ToString());
-
-                if (!CMatrix.Equals(m, Q * R, TOL))
-                    Assert.Fail((m - Q * R).ToString());
+                //assert
+                Q.IsUnitary.Should().BeTrue("Q is not unitary");
+                R.IsUpperTrapeze.Should().BeTrue("R is not upper trapeze");
+                CMatrix.Equals(m, Q * R, TOL).Should().BeTrue();
             }
         }
 
-        /// <summary>
-        ///A test for Div
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void DivTest()
         {
             int size = 10;
@@ -120,17 +80,15 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 _rand.Fill(a, -1000, 1000, 3);
                 _rand.Fill(b, -1000, 1000, 3);
 
+                //action
                 CMatrix c = CMatrix.Divide(a, b);
 
-                if (!CMatrix.Equals(c * b, a, TOL))
-                    Assert.Fail();
+                //assert
+                CMatrix.Equals(c * b, a, TOL).Should().BeTrue();
             }
         }
 
-        /// <summary>
-        ///A test for Sqrt
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void SqrtTest()
         {
             int size = 10;
@@ -143,17 +101,15 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             {
                 _rand.Fill(m, -1000, 1000, 3);
 
+                //action
                 CMatrix sq = CMatrix.Sqrt(m);
 
-                if (!CMatrix.Equals(sq * sq, m, TOL))
-                    Assert.Fail();
+                //assert
+                CMatrix.Equals(sq * sq, m, TOL).Should().BeTrue();
             }
         }
 
-        /// <summary>
-        ///A test for Inverse
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void InverseTest()
         {
             int size = 10;
@@ -167,17 +123,15 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             {
                 _rand.Fill(m, -10000, 10000, 3);
 
+                //action
                 CMatrix inv_m = CMatrix.Inverse(m);
 
-                if (!CMatrix.Equals(m * inv_m, identity, TOL))
-                    Assert.Fail((m * inv_m).ToString());
+                //assert
+                CMatrix.Equals(m * inv_m, identity, TOL).Should().BeTrue();
             }
         }
 
-        /// <summary>
-        ///A test for Solve
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void SolveTest()
         {
             int size = 10;
@@ -192,17 +146,15 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 _rand.Fill(a, -1000, 1000, 3);
                 _rand.Fill(b, -1000, 1000, 3);
 
+                //action
                 CMatrix x = CMatrix.Solve(a, b);
 
-                if (!CMatrix.Equals(a * x, b, TOL))
-                    Assert.Fail((a * x - b).ToString());
+                //assert
+                CMatrix.Equals(a * x, b, TOL).Should().BeTrue();
             }
         }
 
-        /// <summary>
-        ///A test for CharacteristicPolynomial
-        ///</summary>
-        [TestMethod()]
+        [Test]
         public void CharacteristicPolynomialTest()
         {
             int size = 4;
@@ -216,14 +168,13 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             {
                 _rand.Fill(m, -100, 100, 0);
 
+                //action
                 CPolynomial poly = CMatrix.CharacteristicPolynomial(m);
                 CMatrix test = poly.Evaluate(m);
 
-                if (!CMatrix.Equals(test, zero, TOL))
-                    Assert.Fail("m: {0}", test);
+                //assert
+                CMatrix.Equals(test, zero, TOL).Should().BeTrue();
             }
         }
-
-        #endregion
     }
 }
