@@ -1,25 +1,33 @@
-﻿using System;
+﻿using FluentAssertions;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
+using NUnit.Framework;
 
 
 namespace TAlex.MathCore.ExpressionsBase.Test.Tokenize
 {
-    [TestClass]
+    [TestFixture]
     public class StandardExpressionTokenizerTest
     {
-        [TestMethod]
+        protected StandardExpressionTokenizer ExpressionTokenizer;
+
+        [SetUp]
+        public virtual void SetUp()
+        {
+            ExpressionTokenizer = new StandardExpressionTokenizer();
+        }
+
+
+        [Test]
         public void GetTokensTest()
         {
+            //arrange
             string expression = "sin(x + 2) - 3.6";
-            StandardExpressionTokenizer target = new StandardExpressionTokenizer();
-            IEnumerable<Token> actualTokens = target.GetTokens(expression);
 
-            IList<Token> expectedTokens = new List<Token>()
+            IList<Token> expected = new List<Token>()
             {
                 new Token("sin", TokenType.Function),
                 new Token("(", TokenType.Operator),
@@ -32,17 +40,20 @@ namespace TAlex.MathCore.ExpressionsBase.Test.Tokenize
                 new Token("$", TokenType.End)
             };
 
-            CollectionAssert.AreEqual(expectedTokens.ToList(), actualTokens.ToList());
+            //action
+            IEnumerable<Token> actual = ExpressionTokenizer.GetTokens(expression);
+
+            //assert
+            actual.ShouldAllBeEquivalentTo(expected);
         }
 
-        [TestMethod]
+        [Test]
         public void GetTokensTest_ComplexNumber()
         {
+            //arrange
             string expression = "1/2i";
-            StandardExpressionTokenizer target = new StandardExpressionTokenizer();
-            IEnumerable<Token> actualTokens = target.GetTokens(expression);
-
-            IList<Token> expectedTokens = new List<Token>()
+            
+            IList<Token> expected = new List<Token>()
             {
                 new Token("1", TokenType.Scalar),
                 new Token("/", TokenType.Operator),
@@ -50,7 +61,11 @@ namespace TAlex.MathCore.ExpressionsBase.Test.Tokenize
                 new Token("$", TokenType.End)
             };
 
-            CollectionAssert.AreEqual(expectedTokens.ToList(), actualTokens.ToList());
+            //action
+            IEnumerable<Token> actual = ExpressionTokenizer.GetTokens(expression);
+
+            //assert
+            actual.ShouldAllBeEquivalentTo(expected);
         }
     }
 }
