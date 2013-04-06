@@ -80,5 +80,36 @@ namespace Test
             //assert
             actual.Should().Be(expected);
         }
+
+        [Test]
+        public void EvaluateMatrixTest3()
+        {
+            //arrange
+            const string s = "{1, 2; 3, 8; 1+2i, -0.8} * { 3, 8, 2i; 2, 2+8i, 2 } - 2";
+            CMatrix expected = new CMatrix(new Complex[,] {
+                { 5, new Complex(10, 16), new Complex(2, 2) },
+                {23, new Complex(38, 64), new Complex(14, 6)},
+                { new Complex(-0.6, 6), new Complex(4.4, 9.6), new Complex(-7.6, 2) }
+            });
+
+            //action
+            Expression<object> expr = TreeBuilder.BuildTree(s);
+            CMatrix actual = (CMatrix)expr.Evaluate();
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        public void EvaluateMatrix_ThrowExceptionWhenMatrixSizeMismatch()
+        {
+            const string s = "{1, 2; 3, 8; 1; -0.8}";
+
+            //action
+            Action action = () => TreeBuilder.BuildTree(s);
+
+            //assert
+            action.ShouldThrow<MatrixSizeMismatchException>();
+        }
     }
 }
