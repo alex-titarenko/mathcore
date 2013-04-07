@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
+namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class FunctionSignatureAttribute : Attribute

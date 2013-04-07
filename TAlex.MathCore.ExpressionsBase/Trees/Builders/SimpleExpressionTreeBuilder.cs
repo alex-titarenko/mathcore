@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-
+using System.Reflection;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
@@ -56,6 +57,29 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         #endregion
 
         #region Methods
+
+        public virtual void LoadFunctionsFromAssemblies(IEnumerable<Assembly> assemblies)
+        {
+            Functions.Clear();
+
+            foreach (Assembly assembly in assemblies)
+            {
+                foreach (var item in GetFunctionsFromAssembly(assembly))
+                {
+                    Functions.Add(item);
+                }
+            }
+        }
+
+        protected virtual IEnumerable<KeyValuePair<string, Type>> GetFunctionsFromAssembly(Assembly assembly)
+        {
+            Type[] exportedTypes = assembly.GetExportedTypes();
+                List<Type> fnTypes = exportedTypes
+                    .Where(x => x.GetCustomAttribute<FunctionSignatureAttribute>() != null && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
+
+            return fnTypes.Select(x => new KeyValuePair<string, Type>(x.GetCustomAttribute<FunctionSignatureAttribute>().Name, x));
+        }
+
 
         protected virtual Expression<T> AddSub()
         {

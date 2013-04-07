@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using TAlex.MathCore.LinearAlgebra;
 
 
@@ -39,6 +40,28 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
             }
 
             return matrix;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{");
+
+            int i = 0;
+            foreach (var expression in Expressions)
+            {
+                sb.Append(expression);
+                if (i < Expressions.Count - 1)
+                {
+                    if ((i + 1) % Stride == 0) sb.Append("; ");
+                    else sb.Append(",");
+                }
+
+                i++;
+            }
+
+            sb.Append("}");
+            return sb.ToString();
         }
     }
 }

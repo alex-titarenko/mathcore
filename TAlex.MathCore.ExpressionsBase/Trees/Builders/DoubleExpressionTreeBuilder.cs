@@ -7,6 +7,7 @@ using System.Globalization;
 using System.ComponentModel;
 
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
