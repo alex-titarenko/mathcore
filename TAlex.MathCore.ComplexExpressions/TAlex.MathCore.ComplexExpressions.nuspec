@@ -12,5 +12,11 @@
     <releaseNotes>Reconfigured to release version.</releaseNotes>
     <copyright>Copyright 2013 T-Alex Software</copyright>
     <tags>Math MathCore Mathematica Complex Expressions</tags>
+	
+	<dependencies>
+		<dependency id="TAlex.MathCore" />
+		<dependency id="TAlex.MathCore.ExpressionsBase" />
+		<dependency id="TAlex.MathCore.LinearAlgebra" />
+	</dependencies>
   </metadata>
 </package>

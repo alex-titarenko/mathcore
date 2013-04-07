@@ -12,5 +12,10 @@
     <releaseNotes>Reconfigured to release version.</releaseNotes>
     <copyright>Copyright 2013 T-Alex Software</copyright>
     <tags>Math MathCore Mathematica Statistics Distribution</tags>
+	
+	<dependencies>
+		<dependency id="TAlex.MathCore" />
+		<dependency id="TAlex.MathCore.SpecialFunctions" />
+	</dependencies>
   </metadata>
 </package>

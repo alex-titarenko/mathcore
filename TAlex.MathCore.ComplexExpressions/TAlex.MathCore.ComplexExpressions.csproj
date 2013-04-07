@@ -58,18 +58,6 @@
       <Project>{44709d81-b144-4bf5-ba30-ca852fa9b29b}</Project>
       <Name>TAlex.MathCore.LinearAlgebra</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TAlex.MathCore.NumericalAnalysis\TAlex.MathCore.NumericalAnalysis.csproj">
-      <Project>{948cea84-43b5-4a5c-b8ba-1acbf5bc7d12}</Project>
-      <Name>TAlex.MathCore.NumericalAnalysis</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TAlex.MathCore.SpecialFunctions\TAlex.MathCore.SpecialFunctions.csproj">
-      <Project>{4cbe910e-5ade-46e5-abf9-f6c51c4f8533}</Project>
-      <Name>TAlex.MathCore.SpecialFunctions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TAlex.MathCore.Statistics\TAlex.MathCore.Statistics.csproj">
-      <Project>{3890567e-f3c6-43c5-94c0-46f5d12317fc}</Project>
-      <Name>TAlex.MathCore.Statistics</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TAlex.MathCore\TAlex.MathCore.csproj">
       <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
       <Name>TAlex.MathCore</Name>
