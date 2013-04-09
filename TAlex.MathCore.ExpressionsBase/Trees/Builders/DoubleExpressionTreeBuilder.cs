@@ -18,7 +18,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         public DoubleExpressionTreeBuilder()
         {
-            ConstantFlyweightFactory = new ConstantFlyweightFactory<double>()
+            ConstantFactory = new ConstantFlyweightFactory<double>()
             {
                 Constants = new Dictionary<string, Type>()
                 {
@@ -27,38 +27,36 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 }
             };
 
-            Functions = new List<KeyValuePair<string, Type>>()
+            FunctionFactory = new FunctionFactory<double>()
             {
-                new KeyValuePair<string, Type>("rnd", typeof(RandomFuncExpression)),
-                new KeyValuePair<string, Type>("min", typeof(MinFuncExpression)),
-                new KeyValuePair<string, Type>("max", typeof(MaxFuncExpression)),
-                new KeyValuePair<string, Type>("abs", typeof(AbsFuncExpression)),
-                new KeyValuePair<string, Type>("sqrt", typeof(SqrtFuncExpression)),
-                new KeyValuePair<string, Type>("ln", typeof(LogFuncExpression)),
-                new KeyValuePair<string, Type>("log", typeof(Log10FuncExpression)),
-                new KeyValuePair<string, Type>("log", typeof(LogFreeBaseFuncExpression)),
-                new KeyValuePair<string, Type>("exp", typeof(ExpFuncExpression)),
-                new KeyValuePair<string, Type>("sin", typeof(SinFuncExpression)),
-                new KeyValuePair<string, Type>("cos", typeof(CosFuncExpression)),
-                new KeyValuePair<string, Type>("tan", typeof(TanFuncExpression)),
-                new KeyValuePair<string, Type>("asin", typeof(AsinFuncExpression)),
-                new KeyValuePair<string, Type>("acos", typeof(AcosFuncExpression)),
-                new KeyValuePair<string, Type>("atan", typeof(AtanFuncExpression)),
-                new KeyValuePair<string, Type>("atan2", typeof(Atan2FuncExpression)),
-                new KeyValuePair<string, Type>("sinh", typeof(SinhFuncExpression)),
-                new KeyValuePair<string, Type>("cosh", typeof(CoshFuncExpression)),
-                new KeyValuePair<string, Type>("tanh", typeof(TanhFuncExpression)),
+                Functions = new List<KeyValuePair<string, Type>>()
+                {
+                    new KeyValuePair<string, Type>("rnd", typeof(RandomFuncExpression)),
+                    new KeyValuePair<string, Type>("min", typeof(MinFuncExpression)),
+                    new KeyValuePair<string, Type>("max", typeof(MaxFuncExpression)),
+                    new KeyValuePair<string, Type>("abs", typeof(AbsFuncExpression)),
+                    new KeyValuePair<string, Type>("sqrt", typeof(SqrtFuncExpression)),
+                    new KeyValuePair<string, Type>("ln", typeof(LogFuncExpression)),
+                    new KeyValuePair<string, Type>("log", typeof(Log10FuncExpression)),
+                    new KeyValuePair<string, Type>("log", typeof(LogFreeBaseFuncExpression)),
+                    new KeyValuePair<string, Type>("exp", typeof(ExpFuncExpression)),
+                    new KeyValuePair<string, Type>("sin", typeof(SinFuncExpression)),
+                    new KeyValuePair<string, Type>("cos", typeof(CosFuncExpression)),
+                    new KeyValuePair<string, Type>("tan", typeof(TanFuncExpression)),
+                    new KeyValuePair<string, Type>("asin", typeof(AsinFuncExpression)),
+                    new KeyValuePair<string, Type>("acos", typeof(AcosFuncExpression)),
+                    new KeyValuePair<string, Type>("atan", typeof(AtanFuncExpression)),
+                    new KeyValuePair<string, Type>("atan2", typeof(Atan2FuncExpression)),
+                    new KeyValuePair<string, Type>("sinh", typeof(SinhFuncExpression)),
+                    new KeyValuePair<string, Type>("cosh", typeof(CoshFuncExpression)),
+                    new KeyValuePair<string, Type>("tanh", typeof(TanhFuncExpression)),
+                }
             };
         }
 
         #endregion
 
         #region Methods
-
-        protected override double GetDefaultVariableValue()
-        {
-            return Double.NaN;
-        }
 
         protected override BinaryExpression<double> CreateAddExpression()
         {

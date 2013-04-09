@@ -7,7 +7,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Tokenize
     public class SyntaxException : Exception
     {
         public SyntaxException()
-            : base()
+            : this(Properties.Resources.EXC_INCORRECT_SYNTAX)
         {
         }
 

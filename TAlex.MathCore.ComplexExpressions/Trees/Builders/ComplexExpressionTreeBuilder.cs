@@ -20,11 +20,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         }
 
 
-        protected override object GetDefaultVariableValue()
-        {
-            return null;
-        }
-
         protected override BinaryExpression<object> CreateAddExpression()
         {
             return new AddComplexExpression();

@@ -7,9 +7,26 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 {
     public class VariableExpression<T> : Expression<T>
     {
+        private T _value;
+        private bool _assigned;
+
+
         public readonly string VariableName;
 
-        public T Value;
+        public T Value
+        {
+            get
+            {
+                return _value;
+            }
+
+            set
+            {
+                _assigned = true;
+                _value = value;
+            }
+        }
+
 
         public VariableExpression(string variableName)
         {
@@ -18,6 +35,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 
         public override T Evaluate()
         {
+            if (!_assigned) throw new UnassignedVariableException(VariableName);
             return Value;
         }
 

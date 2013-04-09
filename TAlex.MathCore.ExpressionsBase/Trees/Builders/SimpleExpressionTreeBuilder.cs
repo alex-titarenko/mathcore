@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Reflection;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
@@ -22,10 +21,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         public IExpressionTokenizer Tokenizer { get; set; }
 
-        public ConstantFlyweightFactory<T> ConstantFlyweightFactory { get; set; }
-        //public Dictionary<string, Type> Constants { get; set; }
+        public IConstantFactory<T> ConstantFactory { get; set; }
 
-        public IList<KeyValuePair<string, Type>> Functions { get; set; }
+        public IFunctionFactory<T> FunctionFactory { get; set; }
 
         public IDictionary<string, Func<Expression<T>>> UnaryOperatorHandlers { get; set; }
 
@@ -57,29 +55,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         #endregion
 
         #region Methods
-
-        public virtual void LoadFunctionsFromAssemblies(IEnumerable<Assembly> assemblies)
-        {
-            Functions.Clear();
-
-            foreach (Assembly assembly in assemblies)
-            {
-                foreach (var item in GetFunctionsFromAssembly(assembly))
-                {
-                    Functions.Add(item);
-                }
-            }
-        }
-
-        protected virtual IEnumerable<KeyValuePair<string, Type>> GetFunctionsFromAssembly(Assembly assembly)
-        {
-            Type[] exportedTypes = assembly.GetExportedTypes();
-                List<Type> fnTypes = exportedTypes
-                    .Where(x => x.GetCustomAttribute<FunctionSignatureAttribute>() != null && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
-
-            return fnTypes.Select(x => new KeyValuePair<string, Type>(x.GetCustomAttribute<FunctionSignatureAttribute>().Name, x));
-        }
-
 
         protected virtual Expression<T> AddSub()
         {
@@ -172,13 +147,13 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     string identifierName = Tokens.Current.Value;
                     Tokens.MoveNext();
 
-                    ConstantExpression<T> consExpr = ConstantFlyweightFactory.GetConstant(identifierName);
+                    ConstantExpression<T> consExpr = ConstantFactory.GetConstant(identifierName);
                     if (consExpr != null) return consExpr;
 
                     VariableExpression<T> varExpr = null;
                     if (!Variables.TryGetValue(identifierName, out varExpr))
                     {
-                        varExpr = new VariableExpression<T>(identifierName) { Value = GetDefaultVariableValue() };
+                        varExpr = new VariableExpression<T>(identifierName);
                         Variables.Add(identifierName, varExpr);
                     }
                     return varExpr;
@@ -196,7 +171,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
                     Tokens.MoveNext();
                     if (Tokens.Current.Value != "(")
-                        throw new SyntaxException("\"(\" expected.");
+                        throw ThrowExpectedException("(");
 
                     args.Add(AddSub());
                     while (Tokens.Current.Value != ")" && Tokens.Current.Value == ",")
@@ -205,41 +180,16 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     }
 
                     if (Tokens.Current.Value != ")")
-                        throw new SyntaxException("\")\" expected.");
+                        throw ThrowExpectedException(")");
 
                     Tokens.MoveNext();
-                    return ResolveFunctionExpression(funcName, args.ToArray());
+                    return FunctionFactory.CreateFunction(funcName, args.ToArray());
 
                 default:
-                    throw new SyntaxException("No expression.");
+                    throw new SyntaxException();
             }
         }
 
-        protected virtual Expression<T> ResolveFunctionExpression(string name, Expression<T>[] args)
-        {
-            IEnumerable<KeyValuePair<string, Type>> targetFunctions = Functions.Where(x => x.Key == name);
-
-            if (targetFunctions.Any())
-            {
-                foreach (KeyValuePair<string, Type> pair in targetFunctions)
-                {
-                    try
-                    {
-                        return (Expression<T>)Activator.CreateInstance(pair.Value, args);
-                    }
-                    catch
-                    {
-                    }
-                }
-
-                throw new SyntaxException(String.Format("Function '{0}' with {1} arguments is not defined.", name, args.Length));
-            }
-
-            throw new SyntaxException(String.Format("Function '{0}' is not defined.", name));
-        }
-
-
-        protected abstract T GetDefaultVariableValue();
 
         protected abstract BinaryExpression<T> CreateAddExpression();
 
@@ -254,6 +204,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         protected abstract UnaryExpression<T> CreateUnaryMinusExpression(Expression<T> subExpression);
 
         protected abstract ScalarExpression<T> ParseScalarValue(string s);
+
+        #endregion
+
+        #region Helpers
+
+        private Exception ThrowExpectedException(string s)
+        {
+            return new SyntaxException(String.Format(Properties.Resources.EXC_EXPECTED, s));
+        }
 
         #endregion
 

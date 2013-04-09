@@ -42,6 +42,11 @@
   <ItemGroup>
     <Compile Include="IEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Tokenize\IExpressionTokenizer.cs" />
     <Compile Include="Tokenize\StandardExpressionTokenizer.cs" />
     <Compile Include="Tokenize\SyntaxException.cs" />
@@ -49,6 +54,9 @@
     <Compile Include="Tokenize\TokenType.cs" />
     <Compile Include="Trees\AddExpression.cs" />
     <Compile Include="Trees\BinaryExpression.cs" />
+    <Compile Include="Trees\Builders\FunctionFactory.cs" />
+    <Compile Include="Trees\Builders\IConstantFactory.cs" />
+    <Compile Include="Trees\Builders\IFunctionFactory.cs" />
     <Compile Include="Trees\Metadata\AttributeFunctionMetadataProvider.cs" />
     <Compile Include="Trees\Metadata\ConstantAttribute.cs" />
     <Compile Include="Trees\Builders\ConstantFlyweightFactory.cs" />
@@ -75,6 +83,13 @@
     <Compile Include="Trees\UnaryMinusExpression.cs" />
     <Compile Include="Trees\UnaryPlusExpression.cs" />
     <Compile Include="Trees\VariableExpression.cs" />
+    <Compile Include="UnassignedVariableException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
