@@ -147,7 +147,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     string identifierName = Tokens.Current.Value;
                     Tokens.MoveNext();
 
-                    ConstantExpression<T> consExpr = ConstantFactory.GetConstant(identifierName);
+                    ConstantExpression<T> consExpr = ConstantFactory.CreateConstant(identifierName);
                     if (consExpr != null) return consExpr;
 
                     VariableExpression<T> varExpr = null;

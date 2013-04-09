@@ -20,9 +20,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             Constants = new Dictionary<string, Type>();
             _instances = new Dictionary<Type, ConstantExpression<T>>();
         }
-        
 
-        public ConstantExpression<T> GetConstant(string constantName)
+
+        #region IConstantFactory<T> Members
+
+        public ConstantExpression<T> CreateConstant(string constantName)
         {
             ConstantExpression<T> constant = null;
             Type constantType;
@@ -38,10 +40,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             return constant;
         }
 
-        public void LoadFromAssemblies(IEnumerable<Assembly> assemblies)
-        {
-            Constants.Clear();
+        #endregion
 
+
+        public virtual void AddFromAssemblies(IEnumerable<Assembly> assemblies)
+        {
             foreach (Assembly assembly in assemblies)
             {
                 Type[] exportedTypes = assembly.GetExportedTypes();
@@ -49,6 +52,12 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 var constants = exportedTypes.Where(x => x.GetCustomAttribute<ConstantAttribute>() != null && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
                 constants.ForEach(x => Constants.Add(x.GetCustomAttribute<ConstantAttribute>().Name, x));
             }
+        }
+
+        public void LoadFromAssemblies(IEnumerable<Assembly> assemblies)
+        {
+            Constants.Clear();
+            AddFromAssemblies(assemblies);
         }
     }
 }

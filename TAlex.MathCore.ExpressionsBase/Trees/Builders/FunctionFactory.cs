@@ -14,6 +14,12 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         public IList<KeyValuePair<string, Type>> Functions { get; set; }
 
 
+        public FunctionFactory()
+        {
+            Functions = new List<KeyValuePair<string, Type>>();
+        }
+
+
         #region IFunctionFactory<T> Members
 
         public Expression<T> CreateFunction(string functionName, Expression<T>[] args)
@@ -41,10 +47,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         #endregion
 
-        public virtual void LoadFunctionsFromAssemblies(IEnumerable<Assembly> assemblies)
-        {
-            Functions.Clear();
 
+        public virtual void AddFromAssemblies(IEnumerable<Assembly> assemblies)
+        {
             foreach (Assembly assembly in assemblies)
             {
                 foreach (var item in GetFunctionsFromAssembly(assembly))
@@ -52,6 +57,12 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     Functions.Add(item);
                 }
             }
+        }
+
+        public void LoadFromAssemblies(IEnumerable<Assembly> assemblies)
+        {
+            Functions.Clear();
+            AddFromAssemblies(assemblies);
         }
 
         protected virtual IEnumerable<KeyValuePair<string, Type>> GetFunctionsFromAssembly(Assembly assembly)

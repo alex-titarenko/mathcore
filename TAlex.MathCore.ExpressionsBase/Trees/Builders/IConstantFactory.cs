@@ -8,6 +8,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 {
     public interface IConstantFactory<T>
     {
-        ConstantExpression<T> GetConstant(string constantName);
+        ConstantExpression<T> CreateConstant(string constantName);
     }
 }
