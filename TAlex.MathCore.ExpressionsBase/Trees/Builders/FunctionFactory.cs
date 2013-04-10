@@ -34,7 +34,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     {
                         return (Expression<T>)Activator.CreateInstance(pair.Value, args);
                     }
-                    catch
+                    catch (Exception exc)
                     {
                     }
                 }

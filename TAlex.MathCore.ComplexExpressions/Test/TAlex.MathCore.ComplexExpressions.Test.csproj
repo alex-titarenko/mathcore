@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Tokenize\ComplexExpressionTokenizerTest.cs" />
+    <Compile Include="Trees\Builders\ComplexExpressionTreeBuilderExTest.cs" />
     <Compile Include="Trees\Builders\ComplexExpressionTreeBuilderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\TAlex.MathCore.ComplexExpressions.AddOns\TAlex.MathCore.ComplexExpressions.AddOns.csproj">
+      <Project>{e1c14cd2-671a-4181-b59e-c64dca742b11}</Project>
+      <Name>TAlex.MathCore.ComplexExpressions.AddOns</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\TAlex.MathCore.ExpressionsBase\TAlex.MathCore.ExpressionsBase.csproj">
       <Project>{62a967ec-ebdd-488a-a80a-d1b5ec1ad587}</Project>
       <Name>TAlex.MathCore.ExpressionsBase</Name>

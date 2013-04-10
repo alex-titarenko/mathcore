@@ -17,7 +17,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [FunctionSignature("sin", "complex value")]
     public class SinFuncExpression : UnaryExpression<Object>
     {
-        SinFuncExpression(Expression<Object> subExpression)
+        public SinFuncExpression(Expression<Object> subExpression)
             : base(subExpression)
         {
         }
@@ -35,7 +35,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [FunctionSignature("cos", "complex value")]
     public class CosFuncExpression : UnaryExpression<Object>
     {
-        CosFuncExpression(Expression<Object> subExpression)
+        public CosFuncExpression(Expression<Object> subExpression)
             : base(subExpression)
         {
         }
