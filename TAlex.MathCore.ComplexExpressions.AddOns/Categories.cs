@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
 {
-    public static class Categories
+    internal static class Categories
     {
         public const string General = "General";
     }

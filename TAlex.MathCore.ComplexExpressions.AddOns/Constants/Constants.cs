@@ -3,7 +3,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 
-namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
+namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
 {
     [Constant("i")]
     public class ImaginaryConstantExpression : ConstantExpression<Object>
