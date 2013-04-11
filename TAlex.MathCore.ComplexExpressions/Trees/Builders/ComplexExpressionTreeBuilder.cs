@@ -90,6 +90,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     else
                     {
                         currLineLenght++;
+                        if (currLineLenght > stride) throw new MatrixSizeMismatchException();
                     }
 
                     value = AddSub();

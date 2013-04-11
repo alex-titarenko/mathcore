@@ -100,11 +100,11 @@ namespace Test
             actual.Should().Be(expected);
         }
 
-        [Test]
-        public void EvaluateMatrix_ThrowExceptionWhenMatrixSizeMismatch()
+        [TestCase("{1, 2; 3, 8; 1; -0.8}")]
+        [TestCase("{7;7,5,9}")]
+        [TestCase("{7,2;7,5,9}")]
+        public void EvaluateMatrix_ThrowExceptionWhenMatrixSizeMismatch(string s)
         {
-            const string s = "{1, 2; 3, 8; 1; -0.8}";
-
             //action
             Action action = () => TreeBuilder.BuildTree(s);
 
