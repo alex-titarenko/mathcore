@@ -18,6 +18,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 
         public virtual IList<FunctionSignature> Signatures { get; set; }
 
+        public virtual IList<ExampleUsage> ExampleUsages { get; set; }
+
         public virtual Type FunctionType
         {
             get;
@@ -32,6 +34,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
         {
             FunctionType = functionType;
             Signatures = new List<FunctionSignature>();
+            ExampleUsages = new List<ExampleUsage>();
         }
 
         #endregion

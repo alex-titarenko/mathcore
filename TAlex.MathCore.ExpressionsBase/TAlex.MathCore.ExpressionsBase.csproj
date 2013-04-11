@@ -61,6 +61,8 @@
     <Compile Include="Trees\Metadata\ConstantAttribute.cs" />
     <Compile Include="Trees\Builders\ConstantFlyweightFactory.cs" />
     <Compile Include="Trees\Builders\DoubleExpressionTreeBuilder.cs" />
+    <Compile Include="Trees\Metadata\ExampleUsage.cs" />
+    <Compile Include="Trees\Metadata\ExampleUsageAttribute.cs" />
     <Compile Include="Trees\Metadata\FunctionMetadata.cs" />
     <Compile Include="Trees\Metadata\FunctionSignatureAttribute.cs" />
     <Compile Include="Trees\Builders\IExpressionTreeBuilder.cs" />

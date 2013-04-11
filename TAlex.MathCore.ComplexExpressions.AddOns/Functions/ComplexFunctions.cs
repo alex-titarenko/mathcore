@@ -15,6 +15,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Section("Trigonometry")]
     [Description("Calculates sine for a complex number.")]
     [FunctionSignature("sin", "complex value")]
+    [ExampleUsage("sin(0)", "0")]
     public class SinFuncExpression : UnaryExpression<Object>
     {
         public SinFuncExpression(Expression<Object> subExpression)
@@ -33,6 +34,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Section("Trigonometry")]
     [Description("Calculates cosine for a complex number.")]
     [FunctionSignature("cos", "complex value")]
+    [ExampleUsage("cos(0)", "1")]
     public class CosFuncExpression : UnaryExpression<Object>
     {
         public CosFuncExpression(Expression<Object> subExpression)

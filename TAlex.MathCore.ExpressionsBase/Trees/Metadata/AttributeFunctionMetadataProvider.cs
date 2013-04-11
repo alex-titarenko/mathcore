@@ -38,6 +38,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
                     })));
             }
 
+            foreach (var exampleUsage in functionType.GetCustomAttributes<ExampleUsageAttribute>())
+            {
+                functionMetadata.ExampleUsages.Add(new ExampleUsage(exampleUsage.Expression, exampleUsage.Result));
+            }
+
 
             return functionMetadata;
         }
