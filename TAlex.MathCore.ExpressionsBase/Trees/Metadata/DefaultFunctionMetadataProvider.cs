@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 {
-    public class AttributeFunctionMetadataProvider : IFunctionMetadataProvider
+    public class DefaultFunctionMetadataProvider : IFunctionMetadataProvider
     {
         #region IFunctionMetadataProvider Members
 

@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
+
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 {
-    public class FunctionFactory<T> : IFunctionFactory<T>
+    public class FunctionFactory<T> : IFunctionFactory<T>, IFunctionsMetadataProvider
     {
+        public IFunctionMetadataProvider MetadataProvider { get; set; }
+
         public IList<KeyValuePair<string, Type>> Functions { get; set; }
 
 
         public FunctionFactory()
         {
+            MetadataProvider = new DefaultFunctionMetadataProvider();
             Functions = new List<KeyValuePair<string, Type>>();
         }
 
@@ -43,6 +47,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             }
 
             throw new SyntaxException(String.Format("Function '{0}' is not defined.", functionName));
+        }
+
+        #endregion
+
+        #region IFunctionsMetadataProvider Members
+
+        public IEnumerable<FunctionMetadata> GetMetadata()
+        {
+            return Functions.Select(x => MetadataProvider.GetMetadata(x.Value));
         }
 
         #endregion

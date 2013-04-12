@@ -57,7 +57,8 @@
     <Compile Include="Trees\Builders\FunctionFactory.cs" />
     <Compile Include="Trees\Builders\IConstantFactory.cs" />
     <Compile Include="Trees\Builders\IFunctionFactory.cs" />
-    <Compile Include="Trees\Metadata\AttributeFunctionMetadataProvider.cs" />
+    <Compile Include="Trees\Metadata\DefaultConstantMetadataProvider.cs" />
+    <Compile Include="Trees\Metadata\DefaultFunctionMetadataProvider.cs" />
     <Compile Include="Trees\Metadata\ConstantAttribute.cs" />
     <Compile Include="Trees\Builders\ConstantFlyweightFactory.cs" />
     <Compile Include="Trees\Builders\DoubleExpressionTreeBuilder.cs" />
@@ -69,7 +70,10 @@
     <Compile Include="Trees\Builders\IExpressionTreeBuilder.cs" />
     <Compile Include="Trees\Builders\ParametricFunctionCreator.cs" />
     <Compile Include="Trees\Metadata\FunctionSignature.cs" />
+    <Compile Include="Trees\Metadata\IConstantMetadataProvider.cs" />
+    <Compile Include="Trees\Metadata\IConstantsMetadataProvider.cs" />
     <Compile Include="Trees\Metadata\IFunctionMetadataProvider.cs" />
+    <Compile Include="Trees\Metadata\IFunctionsMetadataProvider.cs" />
     <Compile Include="Trees\Metadata\SectionAttribute.cs" />
     <Compile Include="Trees\Builders\SimpleExpressionTreeBuilder.cs" />
     <Compile Include="Trees\ConditionalExpression.cs" />

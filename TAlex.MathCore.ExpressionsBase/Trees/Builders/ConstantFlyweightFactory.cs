@@ -8,8 +8,10 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 {
-    public class ConstantFlyweightFactory<T> : IConstantFactory<T>
+    public class ConstantFlyweightFactory<T> : IConstantFactory<T>, IConstantsMetadataProvider
     {
+        public IConstantMetadataProvider MetadataProvider { get; set; }
+
         public IDictionary<string, Type> Constants { get; set; }
 
         private IDictionary<Type, ConstantExpression<T>> _instances;
@@ -17,6 +19,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         public ConstantFlyweightFactory()
         {
+            MetadataProvider = new DefaultConstantMetadataProvider();
             Constants = new Dictionary<string, Type>();
             _instances = new Dictionary<Type, ConstantExpression<T>>();
         }
@@ -38,6 +41,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             }
 
             return constant;
+        }
+
+        #endregion
+
+        #region IConstantsMetadataProvider Members
+
+        public IEnumerable<ConstantMetadata> GetMetadata()
+        {
+            return Constants.Select(x => MetadataProvider.GetMetadata(x.Value));
         }
 
         #endregion
