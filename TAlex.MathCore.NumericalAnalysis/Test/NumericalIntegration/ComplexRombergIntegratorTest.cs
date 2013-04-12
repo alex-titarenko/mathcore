@@ -27,7 +27,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Test.NumericalIntegration
             //arrange
             Complex expected = (2 * upperBound * upperBound * Complex.Log(upperBound) - upperBound * upperBound) / 4.0 -
                     (2 * lowerBound * lowerBound * Complex.Log(lowerBound) - lowerBound * lowerBound) / 4.0; ;
-            Function1Complex targetFunc = (c) => Complex.Log(c) * c;
+            Func<Complex, Complex> targetFunc = (c) => Complex.Log(c) * c;
 
             //action
             Complex actual = Integrator.Integrate(targetFunc, lowerBound, upperBound);
@@ -41,7 +41,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Test.NumericalIntegration
         {
             //arrange
             Complex expected = upperBound * upperBound / 2.0 - lowerBound * lowerBound / 2.0;
-            Function1Complex targetFunc = (c) => c;
+            Func<Complex, Complex> targetFunc = (c) => c;
 
             //action
             Complex actual = Integrator.Integrate(targetFunc, lowerBound, upperBound);
@@ -55,7 +55,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Test.NumericalIntegration
         {
             //arrange
             Complex expected = Complex.Pow(upperBound, 3) / 3.0 - Complex.Pow(lowerBound, 3) / 3.0; ;
-            Function1Complex targetFunc = (c) => c * c;
+            Func<Complex, Complex> targetFunc = (c) => c * c;
 
             //action
             Complex actual = Integrator.Integrate(targetFunc, lowerBound, upperBound);
@@ -69,7 +69,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Test.NumericalIntegration
         {
             //arrange
             Complex expected = 2.0 / 3.0 * Complex.Pow(upperBound, 3.0 / 2.0) - 2.0 / 3.0 * Complex.Pow(lowerBound, 3.0 / 2.0);
-            Function1Complex targetFunc = (c) => Complex.Sqrt(c);
+            Func<Complex, Complex> targetFunc = (c) => Complex.Sqrt(c);
 
             //action
             Complex actual = Integrator.Integrate(targetFunc, lowerBound, upperBound);
@@ -83,7 +83,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Test.NumericalIntegration
         {
             //arrange
             Complex expected = (Complex.Sin(upperBound) - upperBound * Complex.Cos(upperBound)) - (Complex.Sin(lowerBound) - lowerBound * Complex.Cos(lowerBound));
-            Function1Complex targetFunc = (c) => c * Complex.Sin(c);
+            Func<Complex, Complex> targetFunc = (c) => c * Complex.Sin(c);
 
             //action
             Complex actual = Integrator.Integrate(targetFunc, lowerBound, upperBound);

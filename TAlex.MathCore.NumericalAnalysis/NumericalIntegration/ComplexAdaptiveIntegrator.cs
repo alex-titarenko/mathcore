@@ -68,7 +68,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <exception cref="NotConvergenceException">
         /// The algorithm does not converged for a certain number of iterations.
         /// </exception>
-        public override Complex Integrate(Function1Complex integrand, double lowerBound, double upperBound)
+        public override Complex Integrate(Func<Complex, Complex> integrand, double lowerBound, double upperBound)
         {
             if (lowerBound == upperBound)
             {
@@ -110,7 +110,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
             return sign * RecursionProcedure(integrand, lowerBound, upperBound, Sab, Tolerance, _maxRecursionDepth);
         }
 
-        private Complex RecursionProcedure(Function1Complex integrand, double a, double b, Complex Sab, double tol, int trace)
+        private Complex RecursionProcedure(Func<Complex, Complex> integrand, double a, double b, Complex Sab, double tol, int trace)
         {
             double c = (a + b) / 2;
 
@@ -147,17 +147,17 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         {
             #region Fields
 
-            private Function1Complex _infinityIntegrand;
+            private Func<Complex, Complex> _infinityIntegrand;
 
             private double _limit;
 
-            private Function1Complex _finiteIntegrand;
+            private Func<Complex, Complex> _finiteIntegrand;
 
             #endregion
 
             #region Properties
 
-            public Function1Complex FiniteIntegrand
+            public Func<Complex, Complex> FiniteIntegrand
             {
                 get
                 {
@@ -169,7 +169,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
 
             #region Constructors
 
-            public TransformationLimits(Function1Complex infinityIntegrand, LimitType limitType, double limit)
+            public TransformationLimits(Func<Complex, Complex> infinityIntegrand, LimitType limitType, double limit)
             {
                 _infinityIntegrand = infinityIntegrand;
                 _limit = limit;
@@ -177,15 +177,15 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
                 switch (limitType)
                 {
                     case LimitType.LowerBoundInfinity:
-                        _finiteIntegrand = new Function1Complex(LowerBoundInfinityTransform);
+                        _finiteIntegrand = new Func<Complex, Complex>(LowerBoundInfinityTransform);
                         break;
 
                     case LimitType.BothBoundsInfinity:
-                        _finiteIntegrand = new Function1Complex(BothBoundsInfinityTransform);
+                        _finiteIntegrand = new Func<Complex, Complex>(BothBoundsInfinityTransform);
                         break;
 
                     case LimitType.UpperBoundInfinity:
-                        _finiteIntegrand = new Function1Complex(UpperBoundInfinityTransform);
+                        _finiteIntegrand = new Func<Complex, Complex>(UpperBoundInfinityTransform);
                         break;
                 }
             }
@@ -226,5 +226,5 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
     /// <param name="lowerBound">The lower integration limit.</param>
     /// <param name="upperBound">The upper integration limit.</param>
     /// <returns>The numerical value of the definite integral.</returns>
-    public delegate Complex Quadrature(Function1Complex integrand, double lowerBound, double upperBound);
+    public delegate Complex Quadrature(Func<Complex, Complex> integrand, double lowerBound, double upperBound);
 }

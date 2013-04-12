@@ -12,7 +12,7 @@ namespace TAlex.MathCore.NumericalAnalysis
 
         #region Methods
 
-        public static Complex Summation(Function1Complex term, int m, int n)
+        public static Complex Summation(Func<Complex, Complex> term, int m, int n)
         {
             Complex sum = Complex.Zero;
 
@@ -24,7 +24,7 @@ namespace TAlex.MathCore.NumericalAnalysis
             return sum;
         }
 
-        public static Complex InfiniteSummation(Function1Complex term, int m, double relativeTolerance)
+        public static Complex InfiniteSummation(Func<Complex, Complex> term, int m, double relativeTolerance)
         {
             double tolsq = relativeTolerance * relativeTolerance;
 
@@ -43,7 +43,7 @@ namespace TAlex.MathCore.NumericalAnalysis
             throw new NotConvergenceException();
         }
 
-        public static Complex Product(Function1Complex term, int m, int n)
+        public static Complex Product(Func<Complex, Complex> term, int m, int n)
         {
             Complex product = 1;
 
@@ -55,7 +55,7 @@ namespace TAlex.MathCore.NumericalAnalysis
             return product;
         }
 
-        public static Complex InfiniteProduct(Function1Complex term, int m, double relativeTolerance)
+        public static Complex InfiniteProduct(Func<Complex, Complex> term, int m, double relativeTolerance)
         {
             double tolsq = relativeTolerance * relativeTolerance;
 

@@ -5,7 +5,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
 {
-    [Constant("i")]
+    [Constant("i", Value = "1i")]
     public class ImaginaryConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -19,7 +19,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("pi")]
+    [Constant("pi", Value = "3.141592653589793...")]
     public class PiConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -33,7 +33,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("e")]
+    [Constant("e", Value = "2.718281828459045...")]
     public class EConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -47,7 +47,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("goldrat")]
+    [Constant("goldrat", Value = "1.6180339887498949...")]
     public class GoldenRatioConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -61,7 +61,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("euler")]
+    [Constant("euler", Value = "0.57721566490153287...")]
     public class EulerConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -75,7 +75,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("catalan")]
+    [Constant("catalan", Value = "0.91596559417721901...")]
     public class CatalanConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -89,7 +89,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("sqrt2")]
+    [Constant("sqrt2", Value = "1.4142135623730952...")]
     public class Sqrt2ConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -103,7 +103,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("sqrt3")]
+    [Constant("sqrt3", Value = "1.7320508075688772...")]
     public class Sqrt3ConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -117,7 +117,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("maxval")]
+    [Constant("maxval", Value = "1E+307")]
     public class MaxValueConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -131,7 +131,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("minval")]
+    [Constant("minval", Value = "-1E+307")]
     public class MinValueConstantExpression : ConstantExpression<Object>
     {
         public override string Name
@@ -145,7 +145,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants
         }
     }
 
-    [Constant("inf")]
+    [Constant("inf", Value = "Infinity")]
     public class InfinityConstantExpression : ConstantExpression<Object>
     {
         public override string Name

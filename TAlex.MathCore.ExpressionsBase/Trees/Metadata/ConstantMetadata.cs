@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 {
-    public class ConstantAttribute : Attribute
+    public class ConstantMetadata
     {
         public string Name { get; set; }
 
         public string Value { get; set; }
-
-        public ConstantAttribute(string name)
-        {
-            Name = name;
-        }
     }
 }

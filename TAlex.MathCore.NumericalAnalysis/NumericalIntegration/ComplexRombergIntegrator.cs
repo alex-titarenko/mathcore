@@ -37,7 +37,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <exception cref="NotConvergenceException">
         /// The algorithm does not converged for a certain number of iterations.
         /// </exception>
-        public override Complex Integrate(Function1Complex integrand, double lowerBound, double upperBound)
+        public override Complex Integrate(Func<Complex, Complex> integrand, double lowerBound, double upperBound)
         {
             if (lowerBound == upperBound)
             {

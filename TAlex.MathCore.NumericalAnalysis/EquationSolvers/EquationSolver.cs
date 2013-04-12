@@ -11,7 +11,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
     {
         #region Fields
 
-        private Function1Real _func;
+        private Func<double, double> _func;
 
         private double _tol = 1E-9;
 
@@ -26,7 +26,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <summary>
         /// Gets or sets the target function.
         /// </summary>
-        public Function1Real Function
+        public Func<double, double> Function
         {
             get
             {
@@ -114,7 +114,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// Initializes a new instance of the EquationSolver class with the specified target function.
         /// </summary>
         /// <param name="function">A delegate that specifies the target function.</param>
-        protected EquationSolver(Function1Real function)
+        protected EquationSolver(Func<double, double> function)
         {
             _func = function;
         }
@@ -127,7 +127,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// tolerance must be non negative.
         /// </exception>
-        protected EquationSolver(Function1Real function, double tolerance)
+        protected EquationSolver(Func<double, double> function, double tolerance)
         {
             if (tolerance < 0.0)
                 throw new ArgumentOutOfRangeException("The value of tolerance must be non negative.");

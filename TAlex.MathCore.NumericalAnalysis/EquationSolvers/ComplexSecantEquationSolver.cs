@@ -28,7 +28,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// </summary>
         /// <param name="function">A delegate that specifies the target function.</param>
         /// <param name="initialGuess">The initial guess for the root.</param>
-        public ComplexSecantEquationSolver(Function1Complex function, Complex initialGuess)
+        public ComplexSecantEquationSolver(Func<Complex, Complex> function, Complex initialGuess)
             : base(function, initialGuess)
         {
         }
@@ -43,7 +43,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// tolerance must be non negative.
         /// </exception>
-        public ComplexSecantEquationSolver(Function1Complex function, Complex initialGuess, double tolerance)
+        public ComplexSecantEquationSolver(Func<Complex, Complex> function, Complex initialGuess, double tolerance)
             : base(function, initialGuess, tolerance)
         {
         }
@@ -67,7 +67,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
                 return InitialGuess;
             }
 
-            Function1Complex func = Function;
+            Func<Complex, Complex> func = Function;
 
             Complex a = InitialGuess;
             Complex b = a + 2.0 * Tolerance * ((Complex.Abs(a) > 1.0) ? a : 1.0);

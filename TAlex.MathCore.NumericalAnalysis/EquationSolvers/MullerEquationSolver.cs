@@ -29,7 +29,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// </summary>
         /// <param name="function">A delegate that specifies the target function.</param>
         /// <param name="initialGuess">The initial guess for the root.</param>
-        public MullerEquationSolver(Function1Real function, double initialGuess)
+        public MullerEquationSolver(Func<double, double> function, double initialGuess)
             : base(function, initialGuess)
         {
         }
@@ -44,7 +44,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// tolerance must be non negative.
         /// </exception>
-        public MullerEquationSolver(Function1Real function, double initialGuess, double tolerance)
+        public MullerEquationSolver(Func<double, double> function, double initialGuess, double tolerance)
             : base(function, initialGuess, tolerance)
         {
         }
@@ -68,7 +68,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
                 return InitialGuess;
             }
 
-            Function1Real f = Function;
+            Func<double, double> f = Function;
 
             double x0 = InitialGuess;
             double x1 = x0 + 2.0 * Tolerance * ((Math.Abs(x0) > 1.0) ? x0 : 1.0);

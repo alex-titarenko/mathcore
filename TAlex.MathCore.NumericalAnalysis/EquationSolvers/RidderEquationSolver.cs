@@ -30,7 +30,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <param name="function">A delegate that specifies the target function.</param>
         /// <param name="lowerBound">The lower bound of the interval.</param>
         /// <param name="upperBound">The upper bound of the interval.</param>
-        public RidderEquationSolver(Function1Real function, double lowerBound, double upperBound)
+        public RidderEquationSolver(Func<double, double> function, double lowerBound, double upperBound)
             : base(function, lowerBound, upperBound)
         {
         }
@@ -46,7 +46,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// tolerance must be non negative.
         /// </exception>
-        public RidderEquationSolver(Function1Real function, double lowerBound, double upperBound, double tolerance)
+        public RidderEquationSolver(Func<double, double> function, double lowerBound, double upperBound, double tolerance)
             : base(function, lowerBound, upperBound, tolerance)
         {
         }
@@ -67,7 +67,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// </exception>
         public override double Solve()
         {
-            Function1Real f = Function;
+            Func<double, double> f = Function;
 
             double x1 = LowerBound;
             double x2 = UpperBound;

@@ -29,7 +29,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// </summary>
         /// <param name="function">A delegate that specifies the target function.</param>
         /// <param name="initialGuess">The initial guess for the root.</param>
-        public ComplexMullerEquationSolver(Function1Complex function, Complex initialGuess)
+        public ComplexMullerEquationSolver(Func<Complex, Complex> function, Complex initialGuess)
             : base(function, initialGuess)
         {
         }
@@ -44,7 +44,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// tolerance must be non negative.
         /// </exception>
-        public ComplexMullerEquationSolver(Function1Complex function, Complex initialGuess, double tolerance)
+        public ComplexMullerEquationSolver(Func<Complex, Complex> function, Complex initialGuess, double tolerance)
             : base(function, initialGuess, tolerance)
         {
         }
@@ -68,7 +68,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
                 return InitialGuess;
             }
 
-            Function1Complex f = Function;
+            Func<Complex, Complex> f = Function;
 
             Complex x0 = InitialGuess;
             Complex x1 = x0 + 2.0 * Tolerance * ((Complex.Abs(x0) > 1.0) ? x0 : 1.0);

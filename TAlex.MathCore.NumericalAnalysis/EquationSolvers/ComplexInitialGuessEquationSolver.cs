@@ -52,7 +52,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// </summary>
         /// <param name="function">A delegate that specifies the target function.</param>
         /// <param name="initialGuess">The initial guess for the root.</param>
-        protected ComplexInitialGuessEquationSolver(Function1Complex function, Complex initialGuess)
+        protected ComplexInitialGuessEquationSolver(Func<Complex, Complex> function, Complex initialGuess)
             : base(function)
         {
             _x0 = initialGuess;
@@ -68,7 +68,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// tolerance must be non negative.
         /// </exception>
-        protected ComplexInitialGuessEquationSolver(Function1Complex function, Complex initialGuess, double tolerance)
+        protected ComplexInitialGuessEquationSolver(Func<Complex, Complex> function, Complex initialGuess, double tolerance)
             : base(function, tolerance)
         {
             _x0 = initialGuess;

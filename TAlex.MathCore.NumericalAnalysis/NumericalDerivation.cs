@@ -30,7 +30,7 @@ namespace TAlex.MathCore.NumericalAnalysis
         /// <param name="function">A target complex function.</param>
         /// <param name="c">A point at which the derivative is calculated.</param>
         /// <returns>Numerical approximation of the value of the derivative of function at point c.</returns>
-        public static Complex FirstDerivative(Function1Complex function, Complex c)
+        public static Complex FirstDerivative(Func<Complex, Complex> function, Complex c)
         {
             double err;
             double h = 0.01 + 1E-16;
@@ -45,7 +45,7 @@ namespace TAlex.MathCore.NumericalAnalysis
         /// <param name="function">A target complex function.</param>
         /// <param name="c">A point at which the derivative is calculated.</param>
         /// <returns>Numerical approximation of the value of the derivative of function at point c.</returns>
-        public static Complex SecondDerivative(Function1Complex function, Complex c)
+        public static Complex SecondDerivative(Func<Complex, Complex> function, Complex c)
         {
             double err;
             double h = 0.01 + 1E-16;
@@ -60,7 +60,7 @@ namespace TAlex.MathCore.NumericalAnalysis
         /// <param name="function">A target complex function.</param>
         /// <param name="c">A point at which the derivative is calculated.</param>
         /// <returns>Numerical approximation of the value of the derivative of function at point c.</returns>
-        public static Complex ThirdDerivative(Function1Complex function, Complex c)
+        public static Complex ThirdDerivative(Func<Complex, Complex> function, Complex c)
         {
             double err;
             double h = 0.01 + 1E-16;
@@ -75,7 +75,7 @@ namespace TAlex.MathCore.NumericalAnalysis
         /// <param name="function">A target complex function.</param>
         /// <param name="c">A point at which the derivative is calculated.</param>
         /// <returns>Numerical approximation of the value of the derivative of function at point c.</returns>
-        public static Complex FourthDerivative(Function1Complex function, Complex c)
+        public static Complex FourthDerivative(Func<Complex, Complex> function, Complex c)
         {
             double err;
             double h = 0.1 + 1E-16;
@@ -97,7 +97,7 @@ namespace TAlex.MathCore.NumericalAnalysis
         /// <param name="h">An estimated initial stepsize.</param>
         /// <param name="err">An estimate of the error.</param>
         /// <returns>Numerical approximation of the value of the derivative of function at point x.</returns>
-        private static Complex RidersDerivation(Function1Complex function, DifferenceQuotient difference, Complex x, double h, out double err)
+        private static Complex RidersDerivation(Func<Complex, Complex> function, DifferenceQuotient difference, Complex x, double h, out double err)
         {
             if (Complex.IsNaN(function(x)) || Complex.IsInfinity(function(x)))
             {
@@ -155,50 +155,50 @@ namespace TAlex.MathCore.NumericalAnalysis
 
         #region Differences
 
-        private static Complex CentralFirstDerivative3Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralFirstDerivative3Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (func(value + h) - func(value - h)) / (2.0 * h);
         }
 
-        private static Complex CentralFirstDerivative5Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralFirstDerivative5Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (-func(value + 2 * h) + 8 * func(value + h) - 8 * func(value - h) + func(value - 2 * h)) / (12 * h);
         }
 
-        private static Complex CentralFirstDerivative7Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralFirstDerivative7Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (-func(value - 3 * h) + 9 * func(value - 2 * h) - 45 * func(value - h) + 45 * func(value + h) - 9 * func(value + 2 * h) + func(value + 3 * h)) / (60 * h);
         }
 
 
-        private static Complex CentralSecondDerivative3Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralSecondDerivative3Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (func(value - h) - 2 * func(value) + func(value + h)) / (h * h);
         }
 
-        private static Complex CentralSecondDerivative5Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralSecondDerivative5Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (-func(value + 2 * h) + 16 * func(value + h) - 30 * func(value) + 16 * func(value - h) - func(value - 2 * h)) / (12 * h * h);
         }
 
-        private static Complex CentralSecondDerivative7Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralSecondDerivative7Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (2 * func(value - 3 * h) - 27 * func(value - 2 * h) + 270 * func(value - h) - 490 * func(value) + 270 * func(value + h) - 27 * func(value + 2 * h) + 2 * func(value + 3 * h)) / (180 * h * h);
         }
 
 
-        private static Complex CentralThirdDerivative3Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralThirdDerivative3Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (-func(value - 2 * h) + 2 * func(value - h) - 2 * func(value + h) + func(value + 2 * h)) / (2 * h * h * h);
         }
 
 
-        private static Complex CentralFourthDerivative5Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralFourthDerivative5Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (func(value + 2 * h) - 4 * func(value + h) + 6 * func(value) - 4 * func(value - h) + func(value - 2 * h)) / (h * h * h * h);
         }
 
-        private static Complex CentralFourthDerivative7Points(Function1Complex func, Complex value, double h)
+        private static Complex CentralFourthDerivative7Points(Func<Complex, Complex> func, Complex value, double h)
         {
             return (-func(value - 3 * h) + 12 * func(value - 2 * h) - 39 * func(value - h) + 56 * func(value) - 39 * func(value + h) + 12 * func(value + 2 * h) - func(value + 3 * h)) / (6 * h * h * h * h);
         }
@@ -216,7 +216,7 @@ namespace TAlex.MathCore.NumericalAnalysis
         /// <param name="c">A point at which the derivative is calculated.</param>
         /// <param name="h">A stepsize value.</param>
         /// <returns>Numerical approximation of the value of the derivative of function at point c.</returns>
-        private delegate Complex DifferenceQuotient(Function1Complex function, Complex c, double h);
+        private delegate Complex DifferenceQuotient(Func<Complex, Complex> function, Complex c, double h);
 
         #endregion
     }

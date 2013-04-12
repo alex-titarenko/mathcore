@@ -2379,7 +2379,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// A complex matrix whose elements are the result of
         /// applying the specified function func to the elements of this matrix.
         /// </returns>
-        public CMatrix ApplyFunction(Function1Complex func)
+        public CMatrix ApplyFunction(Func<Complex, Complex> func)
         {
             CMatrix m = new CMatrix(RowCount, ColumnCount);
 
@@ -2403,7 +2403,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// A complex matrix whose elements are the result of
         /// applying the specified function func to the elements of this matrix.
         /// </returns>
-        public CMatrix ApplyFunction(Function1Complex2Int func)
+        public CMatrix ApplyFunction(Func<Complex, int, int, Complex> func)
         {
             CMatrix m = new CMatrix(RowCount, ColumnCount);
 

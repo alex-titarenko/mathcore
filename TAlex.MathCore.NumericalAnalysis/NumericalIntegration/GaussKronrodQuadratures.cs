@@ -168,7 +168,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <param name="lowerBound">The lower integration limit.</param>
         /// <param name="upperBound">The upper integration limit.</param>
         /// <returns>The numerical value of the definite integral.</returns>
-        public static Complex GaussKronrod15Rule(Function1Complex integrand, double lowerBound, double upperBound)
+        public static Complex GaussKronrod15Rule(Func<Complex, Complex> integrand, double lowerBound, double upperBound)
         {
             Complex result = Complex.Zero;
 
@@ -197,7 +197,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <param name="lowerBound">The lower integration limit.</param>
         /// <param name="upperBound">The upper integration limit.</param>
         /// <returns>The numerical value of the definite integral.</returns>
-        public static Complex GaussKronrod21Rule(Function1Complex integrand, double lowerBound, double upperBound)
+        public static Complex GaussKronrod21Rule(Func<Complex, Complex> integrand, double lowerBound, double upperBound)
         {
             Complex result = Complex.Zero;
 
@@ -226,7 +226,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <param name="lowerBound">The lower integration limit.</param>
         /// <param name="upperBound">The upper integration limit.</param>
         /// <returns>The numerical value of the definite integral.</returns>
-        public static Complex GaussKronrod31Rule(Function1Complex integrand, double lowerBound, double upperBound)
+        public static Complex GaussKronrod31Rule(Func<Complex, Complex> integrand, double lowerBound, double upperBound)
         {
             Complex result = Complex.Zero;
 
@@ -255,7 +255,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <param name="lowerBound">The lower integration limit.</param>
         /// <param name="upperBound">The upper integration limit.</param>
         /// <returns>The numerical value of the definite integral.</returns>
-        public static Complex GaussKronrod41Rule(Function1Complex integrand, double lowerBound, double upperBound)
+        public static Complex GaussKronrod41Rule(Func<Complex, Complex> integrand, double lowerBound, double upperBound)
         {
             Complex result = Complex.Zero;
 
@@ -284,7 +284,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <param name="lowerBound">The lower integration limit.</param>
         /// <param name="upperBound">The upper integration limit.</param>
         /// <returns>The numerical value of the definite integral.</returns>
-        public static Complex GaussKronrod51Rule(Function1Complex integrand, double lowerBound, double upperBound)
+        public static Complex GaussKronrod51Rule(Func<Complex, Complex> integrand, double lowerBound, double upperBound)
         {
             Complex result = Complex.Zero;
 
@@ -313,7 +313,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <param name="lowerBound">The lower integration limit.</param>
         /// <param name="upperBound">The upper integration limit.</param>
         /// <returns>The numerical value of the definite integral.</returns>
-        public static Complex GaussKronrod61Rule(Function1Complex integrand, double lowerBound, double upperBound)
+        public static Complex GaussKronrod61Rule(Func<Complex, Complex> integrand, double lowerBound, double upperBound)
         {
             Complex result = Complex.Zero;
 

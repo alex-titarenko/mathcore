@@ -73,7 +73,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <param name="function">A delegate that specifies the target function.</param>
         /// <param name="lowerBound">The lower bound of the interval.</param>
         /// <param name="upperBound">The upper bound of the interval.</param>
-        protected RootBracketingEquationSolver(Function1Real function, double lowerBound, double upperBound)
+        protected RootBracketingEquationSolver(Func<double, double> function, double lowerBound, double upperBound)
             : base(function)
         {
             _a = lowerBound;
@@ -91,7 +91,7 @@ namespace TAlex.MathCore.NumericalAnalysis.EquationSolvers
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// tolerance must be non negative.
         /// </exception>
-        protected RootBracketingEquationSolver(Function1Real function, double lowerBound, double upperBound, double tolerance)
+        protected RootBracketingEquationSolver(Func<double, double> function, double lowerBound, double upperBound, double tolerance)
             : base(function, tolerance)
         {
             _a = lowerBound;

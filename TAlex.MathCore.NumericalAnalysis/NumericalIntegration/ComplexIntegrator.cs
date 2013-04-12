@@ -17,7 +17,7 @@ namespace TAlex.MathCore.NumericalAnalysis.NumericalIntegration
         /// <param name="lowerBound">The lower integration limit.</param>
         /// <param name="upperBound">The upper integration limit.</param>
         /// <returns>Approximate value of the definite integral.</returns>
-        public abstract Complex Integrate(Function1Complex integrand, double lowerBound, double upperBound);
+        public abstract Complex Integrate(Func<Complex, Complex> integrand, double lowerBound, double upperBound);
 
         #endregion
     }
