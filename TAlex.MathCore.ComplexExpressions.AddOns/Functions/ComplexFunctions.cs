@@ -13,7 +13,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [DisplayName("Sine")]
     [Category(Categories.General)]
     [Section("Trigonometry")]
-    [Description("Calculates sine for a complex number.")]
+    [Description("Calculates sine of a complex number.")]
     [FunctionSignature("sin", "complex value")]
     [ExampleUsage("sin(0)", "0")]
     public class SinFuncExpression : UnaryExpression<Object>
@@ -32,7 +32,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [DisplayName("Cosine")]
     [Category(Categories.General)]
     [Section("Trigonometry")]
-    [Description("Calculates cosine for a complex number.")]
+    [Description("Calculates cosine of a complex number.")]
     [FunctionSignature("cos", "complex value")]
     [ExampleUsage("cos(0)", "1")]
     public class CosFuncExpression : UnaryExpression<Object>
@@ -45,6 +45,25 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         public override object Evaluate()
         {
             return Complex.Cos((Complex)SubExpr.Evaluate());
+        }
+    }
+
+    [DisplayName("Tangent")]
+    [Category(Categories.General)]
+    [Section("Trigonometry")]
+    [Description("Calculates tangent of a complex number.")]
+    [FunctionSignature("tan", "complex value")]
+    [ExampleUsage("tan(0)", "0")]
+    public class TanFuncExpression : UnaryExpression<Object>
+    {
+        public TanFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Tan((Complex)SubExpr.Evaluate());
         }
     }
 }
