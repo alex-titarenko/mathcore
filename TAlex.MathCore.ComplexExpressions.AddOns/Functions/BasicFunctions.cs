@@ -29,7 +29,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Absolute value")]
     [Category(Categories.Basic)]
-    [Description("Calculates abolute value (modulus) of a complex number. Formula to calculate: |z| = sqrt(x^2+y^2)")]
+    [Description("Calculates absolute value (modulus) of a complex number. Formula to calculate: |z| = sqrt(x^2+y^2)")]
     [FunctionSignature("abs", "complex value")]
     [ExampleUsage("abs(-12.5)", "12.5")]
     [ExampleUsage("abs(-3+4i)", "5")]
@@ -50,7 +50,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.Basic)]
     [Description("Calculates inverse value of a complex number or matrix.")]
     [FunctionSignature("inv", "complex value")]
-    [FunctionSignature("inv", "complex matrix m")]
+    [FunctionSignature("inv", "complex matrix value")]
     [ExampleUsage("inv(5)", "0.2")]
     [ExampleUsage("inv({1,2;3,4})", "{-2,1;1.5,-0.5}")]
     public class InvFuncExpression : UnaryExpression<Object>
@@ -77,7 +77,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.Basic)]
     [Description("Calculates complex or matrix value raised to second power.")]
     [FunctionSignature("sqr", "complex value")]
-    [FunctionSignature("sqr", "complex matrix m")]
+    [FunctionSignature("sqr", "complex matrix value")]
     [ExampleUsage("sqr(-5)", "25")]
     [ExampleUsage("sqr(2-3i)", "-5-12i")]
     [ExampleUsage("sqr({2,3;5,8})", "{19,30;50,79}")]
