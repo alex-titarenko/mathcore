@@ -35,7 +35,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
                     {
                         var parts = x.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                         return new FunctionSignature.Argument(parts[0], parts[1]);
-                    })));
+                    })) { Description = signature.Description });
             }
 
             foreach (var exampleUsage in functionType.GetCustomAttributes<ExampleUsageAttribute>())

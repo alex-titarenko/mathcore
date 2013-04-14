@@ -11,7 +11,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
     [DisplayName("Sine")]
-    [Category(Categories.General)]
+    [Category(Categories.Trigonometric)]
     [Section("Trigonometry")]
     [Description("Calculates sine of a complex number.")]
     [FunctionSignature("sin", "complex value")]
@@ -30,7 +30,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Cosine")]
-    [Category(Categories.General)]
+    [Category(Categories.Trigonometric)]
     [Section("Trigonometry")]
     [Description("Calculates cosine of a complex number.")]
     [FunctionSignature("cos", "complex value")]
@@ -49,7 +49,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Tangent")]
-    [Category(Categories.General)]
+    [Category(Categories.Trigonometric)]
     [Section("Trigonometry")]
     [Description("Calculates tangent of a complex number.")]
     [FunctionSignature("tan", "complex value")]

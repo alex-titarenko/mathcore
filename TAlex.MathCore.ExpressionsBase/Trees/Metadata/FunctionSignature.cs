@@ -13,6 +13,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 
         public IEnumerable<Argument> Arguments { get; set; }
 
+        public string Description { get; set; }
+
 
         public FunctionSignature(string name, IEnumerable<Argument> args)
         {

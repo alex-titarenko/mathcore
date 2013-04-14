@@ -41,7 +41,8 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
         [TestCase("cos(0)", 1, 0)]
         [TestCase("tan(0)", 0, 0)]
         [TestCase("sign(-5)", -1, 0)]
-        [TestCase("sign(12.8)", 1, 0)]
+        [TestCase("abs(-3)", 3, 0)]
+        [TestCase("inv(2)", 0.5, 0)]
         public void EvaluateTest_Functions(string expression, double re, double im)
         {
             //arrange

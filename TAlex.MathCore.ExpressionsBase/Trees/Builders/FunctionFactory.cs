@@ -82,9 +82,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         {
             Type[] exportedTypes = assembly.GetExportedTypes();
             List<Type> fnTypes = exportedTypes
-                .Where(x => x.GetCustomAttribute<FunctionSignatureAttribute>() != null && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
+                .Where(x => x.GetCustomAttributes<FunctionSignatureAttribute>().Any() && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
 
-            return fnTypes.Select(x => new KeyValuePair<string, Type>(x.GetCustomAttribute<FunctionSignatureAttribute>().Name, x));
+            return fnTypes.SelectMany(x => x.GetCustomAttributes<FunctionSignatureAttribute>().Select(a => a.Name).Distinct().Select(name => new KeyValuePair<string, Type>(name, x)));
         }
     }
 }

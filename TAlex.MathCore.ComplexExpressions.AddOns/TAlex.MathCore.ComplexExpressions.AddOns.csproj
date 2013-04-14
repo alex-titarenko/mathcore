@@ -42,7 +42,18 @@
     <Compile Include="Categories.cs" />
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Functions\BasicFunctions.cs" />
-    <Compile Include="Functions\ComplexFunctions.cs" />
+    <Compile Include="Functions\CalculusFunctions.cs" />
+    <Compile Include="Functions\ComplexNumberFunctions.cs" />
+    <Compile Include="Functions\GraphingFunctions.cs" />
+    <Compile Include="Functions\HyperbolicFunctions.cs" />
+    <Compile Include="Functions\InterpolationFunctions.cs" />
+    <Compile Include="Functions\LinearAlgebraFunctions.cs" />
+    <Compile Include="Functions\LogAndExponentialFunctions.cs" />
+    <Compile Include="Functions\PolynomialFunctions.cs" />
+    <Compile Include="Functions\SolvingFunctions.cs" />
+    <Compile Include="Functions\SpecialFunctions.cs" />
+    <Compile Include="Functions\StatisticFunctions.cs" />
+    <Compile Include="Functions\TrigonometricFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

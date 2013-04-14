@@ -12,6 +12,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 
         public string[] Arguments { get; set; }
 
+        public string Description { get; set; }
+
         #endregion
 
         #region Constructors

@@ -68,6 +68,25 @@ namespace TAlex.MathCore.Test
             NumericUtil.FuzzyEquals(sqrt * sqrt, number, 10E-10).Should().BeTrue();
         }
 
+        [TestCase(5.8, 0, 1)]
+        [TestCase(-12, 0, -1)]
+        [TestCase(0, 0, 0)]
+        [TestCase(12, 20, 1)]
+        [TestCase(0, -13, -1)]
+        [TestCase(-2, 5.2, -1)]
+        [TestCase(-2, -5, -1)]
+        public void SignTest(double re, double im, int expected)
+        {
+            //arrange
+            Complex c = new Complex(re, im);
+
+            //action
+            int actual = Complex.Sign(c);
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
 
         [Test]
         public void ArgTest_Zero()
