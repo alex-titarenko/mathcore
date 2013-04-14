@@ -72,4 +72,32 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
                 throw new InvalidCastException();
         }
     }
+
+    [DisplayName("Square")]
+    [Category(Categories.Basic)]
+    [Description("Calculates complex or matrix value raised to second power.")]
+    [FunctionSignature("sqr", "complex value")]
+    [FunctionSignature("sqr", "complex matrix m")]
+    [ExampleUsage("sqr(-5)", "25")]
+    [ExampleUsage("sqr(2-3i)", "-5-12i")]
+    [ExampleUsage("sqr({2,3;5,8})", "{19,30;50,79}")]
+    public class SquareFuncExpression : UnaryExpression<Object>
+    {
+        public SquareFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            object value = SubExpr.Evaluate();
+
+            if (value is Complex)
+                return Complex.Pow((Complex)value, 2);
+            else if (value is CMatrix)
+                return CMatrix.Pow((CMatrix)value, 2);
+            else
+                throw new InvalidCastException();
+        }
+    }
 }

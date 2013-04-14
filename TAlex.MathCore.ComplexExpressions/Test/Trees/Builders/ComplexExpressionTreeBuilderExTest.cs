@@ -43,6 +43,7 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
         [TestCase("sign(-5)", -1, 0)]
         [TestCase("abs(-3)", 3, 0)]
         [TestCase("inv(2)", 0.5, 0)]
+        [TestCase("sqr(-5)", 25, 0)]
         public void EvaluateTest_Functions(string expression, double re, double im)
         {
             //arrange
