@@ -8,6 +8,12 @@ namespace TAlex.MathCore
 {
     public static class ConvertEx
     {
+        public static double ToSafeDouble(Complex c)
+        {
+            if (!c.IsReal) throw new ArgumentException();
+            return c.Re;
+        }
+
         public static double ToDouble(string s)
         {
             return ToDouble(s, null);

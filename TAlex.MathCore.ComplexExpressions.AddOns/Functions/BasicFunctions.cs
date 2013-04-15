@@ -69,13 +69,13 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             else if (value is CMatrix)
                 return CMatrix.Inverse((CMatrix)value);
             else
-                throw new InvalidCastException();
+                throw ExceptionHelper.ThrowWrongArgumentType(value);
         }
     }
 
     [DisplayName("Square")]
     [Category(Categories.Basic)]
-    [Description("Calculates complex or matrix value raised to second power.")]
+    [Description("Calculates complex number or matrix value raised to second power.")]
     [FunctionSignature("sqr", "complex value")]
     [FunctionSignature("sqr", "complex matrix value")]
     [ExampleUsage("sqr(-5)", "25")]
@@ -97,7 +97,126 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             else if (value is CMatrix)
                 return CMatrix.Pow((CMatrix)value, 2);
             else
-                throw new InvalidCastException();
+                throw ExceptionHelper.ThrowWrongArgumentType(value);
+        }
+    }
+
+    [DisplayName("Cube")]
+    [Category(Categories.Basic)]
+    [Description("Calculates complex number or matrix value raised to third power.")]
+    [FunctionSignature("cube", "complex value")]
+    [FunctionSignature("cube", "complex matrix value")]
+    [ExampleUsage("cube(13)", "2197")]
+    [ExampleUsage("cube(-1+3i)", "26-18i")]
+    [ExampleUsage("cube({2i,-3;55,8})", "{-1320-668i,315-48i;-5775+880i,-2128-330i}")]
+    public class CubeFuncExpression : UnaryExpression<Object>
+    {
+        public CubeFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            object value = SubExpr.Evaluate();
+
+            if (value is Complex)
+                return Complex.Pow((Complex)value, 3);
+            else if (value is CMatrix)
+                return CMatrix.Pow((CMatrix)value, 3);
+            else
+                throw ExceptionHelper.ThrowWrongArgumentType(value);
+        }
+    }
+
+    [DisplayName("Square root")]
+    [Category(Categories.Basic)]
+    [Description("Calculates square root of complex number or matrix.")]
+    [FunctionSignature("sqrt", "complex value")]
+    [FunctionSignature("sqrt", "complex matrix value")]
+    [ExampleUsage("sqrt(-4)", "2i")]
+    [ExampleUsage("sqrt({33,24;48,57})", "{5,2;4,7}")]
+    public class SqrtFuncExpression : UnaryExpression<Object>
+    {
+        public SqrtFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            object value = SubExpr.Evaluate();
+
+            if (value is Complex)
+                return Complex.Sqrt((Complex)value);
+            else if (value is CMatrix)
+                return CMatrix.Sqrt((CMatrix)value);
+            else
+                throw ExceptionHelper.ThrowWrongArgumentType(value);
+        }
+    }
+
+    [DisplayName("Nth root")]
+    [Category(Categories.Basic)]
+    [Description("Calculates n-th root of complex number or matrix.")]
+    [FunctionSignature("nthroot", "complex value", "complex n")]
+    [ExampleUsage("nthroot(27,3)", "3")]
+    public class NthRootFuncExpression : BinaryExpression<Object>
+    {
+        public NthRootFuncExpression(Expression<Object> valueSubExpression, Expression<Object> expSubExpression)
+        {
+            LeftExpression = valueSubExpression;
+            RightExpression = expSubExpression;
+        }
+
+        public override object Evaluate()
+        {
+            object value = LeftExpression.Evaluate();
+            object exp = RightExpression.Evaluate();
+
+            return Complex.Pow((Complex)value, 1.0 / (Complex)exp);
+        }
+    }
+
+    [DisplayName("Pow ten")]
+    [Category(Categories.Basic)]
+    [Description("Calculates the number 10 raised to the specified power.")]
+    [FunctionSignature("powten", "complex value")]
+    [ExampleUsage("powten(2)", "100")]
+    [ExampleUsage("powten(3)", "1000")]
+    public class PowTenFuncExpression : UnaryExpression<Object>
+    {
+        public PowTenFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            object value = SubExpr.Evaluate();
+            return Complex.Pow(10.0, (Complex)value);
+        }
+    }
+
+    [DisplayName("Modulo")]
+    [Category(Categories.Basic)]
+    [Description("Calculates the number 10 raised to the specified power.")]
+    [FunctionSignature("mod", "real x", "real y")]
+    [ExampleUsage("mod(5,3)", "2")]
+    public class ModuloFuncExpression : BinaryExpression<Object>
+    {
+        public ModuloFuncExpression(Expression<Object> valueSubExpression, Expression<Object> expSubExpression)
+        {
+            LeftExpression = valueSubExpression;
+            RightExpression = expSubExpression;
+        }
+
+        public override object Evaluate()
+        {
+            object x = LeftExpression.Evaluate();
+            object y = RightExpression.Evaluate();
+
+            return (Complex)(ConvertEx.ToSafeDouble((Complex)x) % ConvertEx.ToSafeDouble((Complex)y));
         }
     }
 }

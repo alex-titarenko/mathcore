@@ -44,6 +44,11 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
         [TestCase("abs(-3)", 3, 0)]
         [TestCase("inv(2)", 0.5, 0)]
         [TestCase("sqr(-5)", 25, 0)]
+        [TestCase("cube(2)", 8, 0)]
+        [TestCase("sqrt(100)", 10, 0)]
+        [TestCase("nthroot(27, 3)", 3, 0)]
+        [TestCase("powten(3)", 1000, 0)]
+        [TestCase("mod(5,3)", 2, 0)]
         public void EvaluateTest_Functions(string expression, double re, double im)
         {
             //arrange

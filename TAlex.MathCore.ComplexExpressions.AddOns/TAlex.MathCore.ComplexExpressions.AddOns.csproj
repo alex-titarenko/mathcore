@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Categories.cs" />
     <Compile Include="Constants\Constants.cs" />
+    <Compile Include="ExceptionHelper.cs" />
     <Compile Include="Functions\BasicFunctions.cs" />
     <Compile Include="Functions\CalculusFunctions.cs" />
     <Compile Include="Functions\ComplexNumberFunctions.cs" />
