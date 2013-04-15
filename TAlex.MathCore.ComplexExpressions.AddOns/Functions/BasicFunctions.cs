@@ -200,7 +200,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Modulo")]
     [Category(Categories.Basic)]
-    [Description("Calculates the number 10 raised to the specified power.")]
+    [Description("Calculates remainder of division of one number by another.")]
     [FunctionSignature("mod", "real x", "real y")]
     [ExampleUsage("mod(5,3)", "2")]
     public class ModuloFuncExpression : BinaryExpression<Object>

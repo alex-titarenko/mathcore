@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TAlex.MathCore.ExpressionEvaluation.ComplexExpressions</RootNamespace>
-    <AssemblyName>TAlex.MathCore.ComplexExpressions.AddOns</AssemblyName>
+    <AssemblyName>TAlex.MathCore.ComplexExpressions.Extensions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
