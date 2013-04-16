@@ -140,4 +140,16 @@
   <data name="EXC_STRING_NOT_NULL" xml:space="preserve">
     <value>String should not be null reference.</value>
   </data>
+  <data name="EXC_VALUE_NOT_COMPLEX_NUMBER" xml:space="preserve">
+    <value>The value '{0}' is not a complex number.</value>
+    <comment>{0} - value</comment>
+  </data>
+  <data name="EXC_VALUE_NOT_INTEGER" xml:space="preserve">
+    <value>The value '{0}' is not an integer.</value>
+    <comment>{0} - value</comment>
+  </data>
+  <data name="EXC_VALUE_NOT_REAL" xml:space="preserve">
+    <value>The value '{0}' is not real.</value>
+    <comment>{0} - value</comment>
+  </data>
 </root>

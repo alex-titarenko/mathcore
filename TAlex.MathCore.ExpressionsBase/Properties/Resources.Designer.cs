@@ -70,6 +70,24 @@ namespace TAlex.MathCore.ExpressionEvaluation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Function &apos;{0}&apos; is not defined..
+        /// </summary>
+        internal static string EXC_FUNC_NOT_DEFINED {
+            get {
+                return ResourceManager.GetString("EXC_FUNC_NOT_DEFINED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Function &apos;{0}&apos; with {1} arguments is not defined..
+        /// </summary>
+        internal static string EXC_FUNC_WITH_ARG_COUNT_NOT_DEFINED {
+            get {
+                return ResourceManager.GetString("EXC_FUNC_WITH_ARG_COUNT_NOT_DEFINED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect syntax of expression..
         /// </summary>
         internal static string EXC_INCORRECT_SYNTAX {

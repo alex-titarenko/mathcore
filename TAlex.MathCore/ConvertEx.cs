@@ -8,11 +8,39 @@ namespace TAlex.MathCore
 {
     public static class ConvertEx
     {
-        public static double ToSafeDouble(Complex c)
+        public static int AsInt32(object o)
         {
-            if (!c.IsReal) throw new ArgumentException();
-            return c.Re;
+            if (o is Int32) return (int)o;
+            else if (o is Complex) return AsInt32((Complex)o);
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_INTEGER, o));
         }
+
+        public static double AsDouble(object o)
+        {
+            if (o is Double) return (double)o;
+            else if (o is Complex) return AsDouble((Complex)o);
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_REAL, o));
+        }
+
+        public static Complex AsComplex(object o)
+        {
+            if (o is Complex) return (Complex)o;
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_COMPLEX_NUMBER, o));
+        }
+
+        public static int AsInt32(Complex c)
+        {
+            if (c.IsReal && ExMath.IsInt32(c.Re))
+                return (int)c.Re;
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_INTEGER, c));
+        }
+
+        public static double AsDouble(Complex c)
+        {
+            if (c.IsReal) return c.Re;
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_REAL, c));
+        }
+
 
         public static double ToDouble(string s)
         {

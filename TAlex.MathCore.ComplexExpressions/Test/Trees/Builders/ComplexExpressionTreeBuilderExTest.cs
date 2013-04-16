@@ -49,6 +49,13 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
         [TestCase("nthroot(27, 3)", 3, 0)]
         [TestCase("powten(3)", 1000, 0)]
         [TestCase("mod(5,3)", 2, 0)]
+        [TestCase("int(-3.1)", -4, 0)]
+        [TestCase("frac(-5.2)", 0.79999999999999982, 0)]
+        [TestCase("floor(3.2)", 3, 0)]
+        [TestCase("ceil(3.1)", 4, 0)]
+        [TestCase("trunc(3.8)", 3, 0)]
+        [TestCase("round(3.8)", 4, 0)]
+        [TestCase("round(3.246, 2)", 3.25, 0)]
         public void EvaluateTest_Functions(string expression, double re, double im)
         {
             //arrange

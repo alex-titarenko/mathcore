@@ -121,6 +121,14 @@
     <value>'{0}' expected.</value>
     <comment>{0} - symbol</comment>
   </data>
+  <data name="EXC_FUNC_NOT_DEFINED" xml:space="preserve">
+    <value>Function '{0}' is not defined.</value>
+    <comment>{0} - function name</comment>
+  </data>
+  <data name="EXC_FUNC_WITH_ARG_COUNT_NOT_DEFINED" xml:space="preserve">
+    <value>Function '{0}' with {1} arguments is not defined.</value>
+    <comment>{0} - function name, {1} - argument count</comment>
+  </data>
   <data name="EXC_INCORRECT_SYNTAX" xml:space="preserve">
     <value>Incorrect syntax of expression.</value>
   </data>

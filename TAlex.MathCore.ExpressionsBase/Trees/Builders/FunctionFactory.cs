@@ -43,10 +43,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     }
                 }
 
-                throw new SyntaxException(String.Format("Function '{0}' with {1} arguments is not defined.", functionName, args.Length));
+                throw new SyntaxException(String.Format(Properties.Resources.EXC_FUNC_WITH_ARG_COUNT_NOT_DEFINED, functionName, args.Length));
             }
 
-            throw new SyntaxException(String.Format("Function '{0}' is not defined.", functionName));
+            throw new SyntaxException(String.Format(Properties.Resources.EXC_FUNC_NOT_DEFINED, functionName));
         }
 
         #endregion

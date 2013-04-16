@@ -10,7 +10,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
     {
         internal static Exception ThrowWrongArgumentType(object obj)
         {
-            return new ArgumentException(String.Format("The argument type '{0}' is not supported.", obj != null ? obj.GetType() : null));
+            return new ArgumentException(String.Format("The argument '{0}' has unsupported type.", obj));
         }
     }
 }

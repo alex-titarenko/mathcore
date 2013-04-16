@@ -122,5 +122,32 @@ namespace TAlex.MathCore.Properties {
                 return ResourceManager.GetString("EXC_STRING_NOT_NULL", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a complex number..
+        /// </summary>
+        internal static string EXC_VALUE_NOT_COMPLEX_NUMBER {
+            get {
+                return ResourceManager.GetString("EXC_VALUE_NOT_COMPLEX_NUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not an integer..
+        /// </summary>
+        internal static string EXC_VALUE_NOT_INTEGER {
+            get {
+                return ResourceManager.GetString("EXC_VALUE_NOT_INTEGER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not real..
+        /// </summary>
+        internal static string EXC_VALUE_NOT_REAL {
+            get {
+                return ResourceManager.GetString("EXC_VALUE_NOT_REAL", resourceCulture);
+            }
+        }
     }
 }
