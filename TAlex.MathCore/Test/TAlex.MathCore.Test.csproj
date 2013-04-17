@@ -57,6 +57,7 @@
     <Compile Include="ComplexTest.cs" />
     <Compile Include="CPolynomialTest.cs" />
     <Compile Include="ConvertExTest.cs" />
+    <Compile Include="ExMathTest.cs" />
     <Compile Include="FractionTest.cs" />
     <Compile Include="NumericUtilTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
