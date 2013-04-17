@@ -37,6 +37,7 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
             };
         }
 
+        // Basic
         [TestCase("sin(pi)", 0, 0)]
         [TestCase("cos(0)", 1, 0)]
         [TestCase("tan(0)", 0, 0)]
@@ -53,9 +54,14 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
         [TestCase("frac(-5.2)", 0.79999999999999982, 0)]
         [TestCase("floor(3.2)", 3, 0)]
         [TestCase("ceil(3.1)", 4, 0)]
-        [TestCase("trunc(3.8)", 3, 0)]
         [TestCase("round(3.8)", 4, 0)]
         [TestCase("round(3.246, 2)", 3.25, 0)]
+        [TestCase("trunc(3.8)", 3, 0)]
+        // Complex numbers
+        [TestCase("Re(3+5i)", 3, 0)]
+        [TestCase("Im(3+5i)", 5, 0)]
+        [TestCase("arg(3+5i)", 1.0303768265243125, 0)]
+        [TestCase("conj(3+5i)", 3, -5)]
         public void EvaluateTest_Functions(string expression, double re, double im)
         {
             //arrange
