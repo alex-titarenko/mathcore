@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
+using TAlex.MathCore.LinearAlgebra;
 
 
 namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
@@ -73,6 +74,23 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
 
             //assert
             NumericUtil.FuzzyEquals(actual, expected, Machine.Epsilon).Should().BeTrue();
+        }
+
+        [TestCase("cart2pol(9, -2)", 9.2195444572928889, -0.21866894587394195)]
+        [TestCase("pol2cart(9.2195444572928889, -0.21866894587394195)", 9, -2)]
+        [TestCase("cart2sph(9, -2, 3)", 9.6953597148326587, -0.21866894587394195, 1.2562065842346306)]
+        [TestCase("sph2cart(9.6953597148326587, -0.21866894587394195, 1.2562065842346306)", 9, -2, 2.9999999999999996)]
+        [TestCase("cart2cyl(9, -2, 3)", 9.2195444572928889, -0.21866894587394195, 3)]
+        [TestCase("cyl2cart(9.2195444572928889, -0.21866894587394195, 3)", 9, -2, 3)]
+        public void EvaluateTest_GraphingFunctions(string expression, params double[] result)
+        {
+            //action
+            Expression<Object> tree = ExpressionTreeBuilder.BuildTree(expression);
+            CMatrix actual = (CMatrix)tree.Evaluate();
+
+            //assert
+            actual.Length.Should().Be(result.Length);
+            for (int i = 0; i < actual.Length; i++) NumericUtil.FuzzyEquals(actual[i], result[i], Machine.Epsilon).Should().BeTrue(); 
         }
     }
 }

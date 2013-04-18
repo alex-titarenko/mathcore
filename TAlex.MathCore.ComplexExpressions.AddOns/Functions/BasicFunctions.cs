@@ -163,10 +163,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [ExampleUsage("nthroot(27, 3)", "3")]
     public class NthRootFuncExpression : BinaryExpression<Object>
     {
-        public NthRootFuncExpression(Expression<Object> valueSubExpression, Expression<Object> expSubExpression)
+        public NthRootFuncExpression(Expression<Object> valueExpression, Expression<Object> expExpression)
+            : base(valueExpression, expExpression)
         {
-            LeftExpression = valueSubExpression;
-            RightExpression = expSubExpression;
         }
 
         public override object Evaluate()
@@ -205,10 +204,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [ExampleUsage("mod(5, 3)", "2")]
     public class ModuloFuncExpression : BinaryExpression<Object>
     {
-        public ModuloFuncExpression(Expression<Object> valueSubExpression, Expression<Object> expSubExpression)
+        public ModuloFuncExpression(Expression<Object> xExpression, Expression<Object> yExpression)
+            : base(xExpression, yExpression)
         {
-            LeftExpression = valueSubExpression;
-            RightExpression = expSubExpression;
         }
 
         public override object Evaluate()
@@ -316,9 +314,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
 
         public RoundFuncExpression(Expression<Object> valueExpression, Expression<Object> digitsExpression)
+            : base(valueExpression, digitsExpression)
         {
-            LeftExpression = valueExpression;
-            RightExpression = digitsExpression;
         }
 
         public override object Evaluate()

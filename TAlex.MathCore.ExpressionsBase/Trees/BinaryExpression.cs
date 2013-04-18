@@ -6,10 +6,30 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 {
     public abstract class BinaryExpression<T> : Expression<T>
     {
+        #region Fields
+        
         public Expression<T> LeftExpression;
 
         public Expression<T> RightExpression;
 
+        #endregion
+
+        #region Constructors
+
+        public BinaryExpression()
+        {
+        }
+
+        public BinaryExpression(Expression<T> leftExpression, Expression<T> rightExpression)
+            : this()
+        {
+            LeftExpression = leftExpression;
+            RightExpression = rightExpression;
+        }
+
+        #endregion
+
+        #region Methods
 
         public override void FindVariable(string name, ref VariableExpression<T> var, ref bool isFound)
         {
@@ -25,5 +45,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
             LeftExpression.FindAllVariables(foundedVariables);
             RightExpression.FindAllVariables(foundedVariables);
         }
+
+        #endregion
     }
 }
