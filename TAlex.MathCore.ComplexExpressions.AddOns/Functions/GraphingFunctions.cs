@@ -73,7 +73,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [DisplayName("Spherical to Cartesian")]
     [Category(Categories.Graphing)]
     [Description("Transforms spherical coordinates to Cartesian.")]
-    [FunctionSignature("sph2cart", "real r", "real theta, real phi")]
+    [FunctionSignature("sph2cart", "real r", "real theta", "real phi")]
     [ExampleUsage("sph2cart(9.6953597148326587, -0.21866894587394195, 1.2562065842346306)", "{9; -2; 3}")]
     public class SphericalToCartesianFuncExpression : TernaryExpression<Object>
     {
