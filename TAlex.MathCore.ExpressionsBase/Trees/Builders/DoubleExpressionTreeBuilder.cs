@@ -146,7 +146,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return -SubExpr.Evaluate();
+                return -SubExpression.Evaluate();
             }
         }
 
@@ -231,7 +231,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Abs(SubExpr.Evaluate());
+                return Math.Abs(SubExpression.Evaluate());
             }
         }
 
@@ -245,7 +245,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Sqrt(SubExpr.Evaluate());
+                return Math.Sqrt(SubExpression.Evaluate());
             }
         }
 
@@ -260,7 +260,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Log(SubExpr.Evaluate());
+                return Math.Log(SubExpression.Evaluate());
             }
         }
 
@@ -274,7 +274,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Log10(SubExpr.Evaluate());
+                return Math.Log10(SubExpression.Evaluate());
             }
         }
 
@@ -304,7 +304,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Exp(SubExpr.Evaluate());
+                return Math.Exp(SubExpression.Evaluate());
             }
         }
 
@@ -319,7 +319,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Sin(SubExpr.Evaluate());
+                return Math.Sin(SubExpression.Evaluate());
             }
         }
 
@@ -333,7 +333,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Cos(SubExpr.Evaluate());
+                return Math.Cos(SubExpression.Evaluate());
             }
         }
 
@@ -347,7 +347,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Tan(SubExpr.Evaluate());
+                return Math.Tan(SubExpression.Evaluate());
             }
         }
 
@@ -362,7 +362,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Asin(SubExpr.Evaluate());
+                return Math.Asin(SubExpression.Evaluate());
             }
         }
 
@@ -376,7 +376,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Acos(SubExpr.Evaluate());
+                return Math.Acos(SubExpression.Evaluate());
             }
         }
 
@@ -390,7 +390,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Atan(SubExpr.Evaluate());
+                return Math.Atan(SubExpression.Evaluate());
             }
         }
 
@@ -420,7 +420,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Sinh(SubExpr.Evaluate());
+                return Math.Sinh(SubExpression.Evaluate());
             }
         }
 
@@ -434,7 +434,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Cosh(SubExpr.Evaluate());
+                return Math.Cosh(SubExpression.Evaluate());
             }
         }
 
@@ -448,7 +448,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override double Evaluate()
             {
-                return Math.Tanh(SubExpr.Evaluate());
+                return Math.Tanh(SubExpression.Evaluate());
             }
         }
 

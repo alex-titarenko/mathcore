@@ -12,7 +12,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 
         public override T Evaluate()
         {
-            return SubExpr.Evaluate();
+            return SubExpression.Evaluate();
         }
     }
 }

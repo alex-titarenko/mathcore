@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TAlex.MathCore.Properties {
+namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace TAlex.MathCore.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TAlex.MathCore.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,38 @@ namespace TAlex.MathCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to cast object of type &apos;{0}&apos; to type &apos;{1}&apos;.
+        ///   Looks up a localized string similar to Invalid object type. Expected type &apos;{0}&apos; but found &apos;{1}&apos;..
         /// </summary>
-        internal static string EXC_INVALID_CAST {
+        internal static string EXC_INVALID_OBJECT_TYPE {
             get {
-                return ResourceManager.GetString("EXC_INVALID_CAST", resourceCulture);
+                return ResourceManager.GetString("EXC_INVALID_OBJECT_TYPE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid format of the complex number..
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a complex number..
         /// </summary>
-        internal static string EXC_INVALID_FORMAT_COMPLEX {
+        internal static string EXC_VALUE_NOT_COMPLEX_NUMBER {
             get {
-                return ResourceManager.GetString("EXC_INVALID_FORMAT_COMPLEX", resourceCulture);
+                return ResourceManager.GetString("EXC_VALUE_NOT_COMPLEX_NUMBER", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The number {0} contains an invalid character &apos;{1}&apos;.
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not an integer..
         /// </summary>
-        internal static string EXC_INVALID_NUMBER_FORMAT {
+        internal static string EXC_VALUE_NOT_INTEGER {
             get {
-                return ResourceManager.GetString("EXC_INVALID_NUMBER_FORMAT", resourceCulture);
+                return ResourceManager.GetString("EXC_VALUE_NOT_INTEGER", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incorrect format of complex polynomial..
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not real..
         /// </summary>
-        internal static string EXC_POLY_INCCORECT_FORMAT {
+        internal static string EXC_VALUE_NOT_REAL {
             get {
-                return ResourceManager.GetString("EXC_POLY_INCCORECT_FORMAT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Polynomial can&apos;t contains variables with different names..
-        /// </summary>
-        internal static string EXC_POLY_MISMATCH_VAR_NAMES {
-            get {
-                return ResourceManager.GetString("EXC_POLY_MISMATCH_VAR_NAMES", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to String should not be empty..
-        /// </summary>
-        internal static string EXC_STRING_NOT_EMPTY {
-            get {
-                return ResourceManager.GetString("EXC_STRING_NOT_EMPTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to String should not be null reference..
-        /// </summary>
-        internal static string EXC_STRING_NOT_NULL {
-            get {
-                return ResourceManager.GetString("EXC_STRING_NOT_NULL", resourceCulture);
+                return ResourceManager.GetString("EXC_VALUE_NOT_REAL", resourceCulture);
             }
         }
     }

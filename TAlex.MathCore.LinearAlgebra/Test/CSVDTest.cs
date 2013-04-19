@@ -34,9 +34,9 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 CMatrix vh = svd.VH;
 
                 //assert
-                u.IsUnitary.Should().BeTrue("U is not unitary");
-                vh.IsUnitary.Should().BeTrue("VH is not unitary");
-                CMatrix.Equals(m, u * s * vh, TOL).Should().BeTrue();
+                u.IsUnitary(TOL).Should().BeTrue("U is not unitary");
+                vh.IsUnitary(TOL).Should().BeTrue("VH is not unitary");
+                CMatrix.FuzzyEquals(m, u * s * vh, TOL).Should().BeTrue();
             }
         }
     }

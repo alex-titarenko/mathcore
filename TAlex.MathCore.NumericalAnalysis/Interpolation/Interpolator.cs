@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace TAlex.MathCore.NumericalAnalysis.Interpolation
@@ -18,12 +19,12 @@ namespace TAlex.MathCore.NumericalAnalysis.Interpolation
         /// <summary>
         /// Represents the abscissas of the interpolation nodes.
         /// </summary>
-        protected double[] xValues;
+        protected IList<double> xValues;
 
         /// <summary>
         /// Represents the ordinates of the interpolation nodes.
         /// </summary>
-        protected double[] yValues;
+        protected IList<double> yValues;
 
         #endregion
 
@@ -32,7 +33,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Interpolation
         /// <summary>
         /// Gets the array of real numbers containing the abscissas of the interpolation nodes.
         /// </summary>
-        public double[] XValues
+        public IList<double> XValues
         {
             get
             {
@@ -43,7 +44,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Interpolation
         /// <summary>
         /// Gets the array of real numbers containing the ordinates of the interpolation nodes.
         /// </summary>
-        public double[] YValues
+        public IList<double> YValues
         {
             get
             {
@@ -63,14 +64,14 @@ namespace TAlex.MathCore.NumericalAnalysis.Interpolation
         /// <exception cref="System.ArgumentException">
         /// The length of the array xValues does not match the length of the array yValues.
         /// </exception>
-        public Interpolator(double[] xValues, double[] yValues)
+        public Interpolator(IList<double> xValues, IList<double> yValues)
         {
-            if (xValues.Length != yValues.Length)
+            if (xValues.Count != yValues.Count)
                 throw new ArgumentException("The lengths of the two arrays do not match.");
 
-            this.xValues = (double[])xValues.Clone();
-            this.yValues = (double[])yValues.Clone();
-            n = xValues.Length;
+            this.xValues = xValues;
+            this.yValues = yValues;
+            n = xValues.Count;
         }
 
         #endregion

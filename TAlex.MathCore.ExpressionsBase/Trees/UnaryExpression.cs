@@ -8,7 +8,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
     {
         #region Fields
 
-        public Expression<T> SubExpr;
+        public Expression<T> SubExpression;
 
         #endregion
 
@@ -16,7 +16,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 
         public UnaryExpression(Expression<T> subExpression)
         {
-            SubExpr = subExpression;
+            SubExpression = subExpression;
         }
 
         #endregion
@@ -26,12 +26,12 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
         public override void FindVariable(string name, ref VariableExpression<T> var, ref bool isFound)
         {
             if (!isFound)
-                SubExpr.FindVariable(name, ref var, ref isFound);
+                SubExpression.FindVariable(name, ref var, ref isFound);
         }
 
         public override void FindAllVariables(IList<VariableExpression<T>> foundedVariables)
         {
-            SubExpr.FindAllVariables(foundedVariables);
+            SubExpression.FindAllVariables(foundedVariables);
         }
 
         #endregion

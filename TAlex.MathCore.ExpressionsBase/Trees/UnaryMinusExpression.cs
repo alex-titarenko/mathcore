@@ -12,7 +12,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 
         public override string ToString()
         {
-            return "-" + SubExpr.ToString();
+            return "-" + SubExpression.ToString();
         }
     }
 }

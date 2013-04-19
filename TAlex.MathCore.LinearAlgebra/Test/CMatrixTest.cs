@@ -35,34 +35,54 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 CMatrix U = LUP[2];
 
                 //assert
-                CMatrix.Equals(P * m, L * U, TOL).Should().BeTrue();
+                CMatrix.FuzzyEquals(P * m, L * U, TOL).Should().BeTrue();
             }
         }
 
         [Test]
-        public void QRDecompositionTest()
+        public void QRDecompositionTest_Real()
         {
-            int rowCount = 10;
-            int columnCount = 10;
-            int n = 5000;
-            double TOL = 10E-12;
-
-            CMatrix m = new CMatrix(rowCount, columnCount);
-
-            for (int idx = 0; idx < n; idx++)
+            //arrange
+            double TOL = 10E-15;
+            CMatrix m = new CMatrix(new Complex[,]
             {
-                _rand.Fill(m, -1000, 1000, 3);
+                {12, -51, 4},
+                {6, 167, -68},
+                {-4, 24, -41}
+            });
 
-                //action
-                CMatrix[] QR = CMatrix.QRDecomposition(m);
-                CMatrix Q = QR[0];
-                CMatrix R = QR[1];
+            //action
+            CMatrix[] QR = CMatrix.QRDecomposition(m);
+            CMatrix Q = QR[0];
+            CMatrix R = QR[1];
 
-                //assert
-                Q.IsUnitary.Should().BeTrue("Q is not unitary");
-                R.IsUpperTrapeze.Should().BeTrue("R is not upper trapeze");
-                CMatrix.Equals(m, Q * R, TOL).Should().BeTrue();
-            }
+            //assert
+            Q.IsUnitary(TOL).Should().BeTrue("Q is not unitary");
+            R.IsUpperTrapeze.Should().BeTrue("R is not upper trapeze");
+            CMatrix.FuzzyEquals(m, Q * R, TOL).Should().BeTrue();
+        }
+
+        [Test]
+        public void QRDecompositionTest_Complex()
+        {
+            //arrange
+            double TOL = 10E-14;
+            CMatrix m = new CMatrix(new Complex[,]
+            {
+                {new Complex(12, -3), new Complex(-51, 0), -Complex.I},
+                {new Complex(6, 0), new Complex(-2, 167), new Complex(-68, 0)},
+                {new Complex(-4, 0), new Complex(24, 0), new Complex(0, -41)}
+            });
+
+            //action
+            CMatrix[] QR = CMatrix.QRDecomposition(m);
+            CMatrix Q = QR[0];
+            CMatrix R = QR[1];
+
+            //assert
+            Q.IsUnitary(TOL).Should().BeTrue("Q is not unitary");
+            R.IsUpperTrapeze.Should().BeTrue("R is not upper trapeze");
+            CMatrix.FuzzyEquals(m, Q * R, TOL).Should().BeTrue();
         }
 
         [Test]
@@ -84,7 +104,7 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 CMatrix c = CMatrix.Divide(a, b);
 
                 //assert
-                CMatrix.Equals(c * b, a, TOL).Should().BeTrue();
+                CMatrix.FuzzyEquals(c * b, a, TOL).Should().BeTrue();
             }
         }
 
@@ -105,7 +125,7 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 CMatrix sq = CMatrix.Sqrt(m);
 
                 //assert
-                CMatrix.Equals(sq * sq, m, TOL).Should().BeTrue();
+                CMatrix.FuzzyEquals(sq * sq, m, TOL).Should().BeTrue();
             }
         }
 
@@ -127,7 +147,7 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 CMatrix inv_m = CMatrix.Inverse(m);
 
                 //assert
-                CMatrix.Equals(m * inv_m, identity, TOL).Should().BeTrue();
+                CMatrix.FuzzyEquals(m * inv_m, identity, TOL).Should().BeTrue();
             }
         }
 
@@ -150,7 +170,7 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 CMatrix x = CMatrix.Solve(a, b);
 
                 //assert
-                CMatrix.Equals(a * x, b, TOL).Should().BeTrue();
+                CMatrix.FuzzyEquals(a * x, b, TOL).Should().BeTrue();
             }
         }
 
@@ -173,7 +193,7 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 CMatrix test = poly.Evaluate(m);
 
                 //assert
-                CMatrix.Equals(test, zero, TOL).Should().BeTrue();
+                CMatrix.FuzzyEquals(test, zero, TOL).Should().BeTrue();
             }
         }
     }

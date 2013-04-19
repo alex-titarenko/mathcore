@@ -23,9 +23,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            Object x = LeftExpression.Evaluate();
-            Object y = RightExpression.Evaluate();
-            return new CMatrix(CoordSysConverter.CartesianToPolar(ConvertEx.AsDouble(x), ConvertEx.AsDouble(y)));
+            double x = LeftExpression.EvaluateAsDouble();
+            double y = RightExpression.EvaluateAsDouble();
+            return new CMatrix(CoordSysConverter.CartesianToPolar(x, y));
         }
     }
 
@@ -43,9 +43,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            Object r = LeftExpression.Evaluate();
-            Object theta = RightExpression.Evaluate();
-            return new CMatrix(CoordSysConverter.PolarToCartesian(ConvertEx.AsDouble(r), ConvertEx.AsDouble(theta)));
+            double r = LeftExpression.EvaluateAsDouble();
+            double theta = RightExpression.EvaluateAsDouble();
+            return new CMatrix(CoordSysConverter.PolarToCartesian(r, theta));
         }
     }
 
@@ -63,10 +63,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            Object x = FirstExpression.Evaluate();
-            Object y = SecondExpression.Evaluate();
-            Object z = ThirdExpression.Evaluate();
-            return new CMatrix(CoordSysConverter.CartesianToSpherical(ConvertEx.AsDouble(x), ConvertEx.AsDouble(y), ConvertEx.AsDouble(z)));
+            double x = FirstExpression.EvaluateAsDouble();
+            double y = SecondExpression.EvaluateAsDouble();
+            double z = ThirdExpression.EvaluateAsDouble();
+            return new CMatrix(CoordSysConverter.CartesianToSpherical(x, y, z));
         }
     }
 
@@ -84,10 +84,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            Object r = FirstExpression.Evaluate();
-            Object theta = SecondExpression.Evaluate();
-            Object phi = ThirdExpression.Evaluate();
-            return new CMatrix(CoordSysConverter.SphericalToCartesian(ConvertEx.AsDouble(r), ConvertEx.AsDouble(theta), ConvertEx.AsDouble(phi)));
+            double r = FirstExpression.EvaluateAsDouble();
+            double theta = SecondExpression.EvaluateAsDouble();
+            double phi = ThirdExpression.EvaluateAsDouble();
+            return new CMatrix(CoordSysConverter.SphericalToCartesian(r, theta, phi));
         }
     }
 
@@ -105,17 +105,17 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            Object x = FirstExpression.Evaluate();
-            Object y = SecondExpression.Evaluate();
-            Object z = ThirdExpression.Evaluate();
-            return new CMatrix(CoordSysConverter.CartesianToCylindrical(ConvertEx.AsDouble(x), ConvertEx.AsDouble(y), ConvertEx.AsDouble(z)));
+            double x = FirstExpression.EvaluateAsDouble();
+            double y = SecondExpression.EvaluateAsDouble();
+            double z = ThirdExpression.EvaluateAsDouble();
+            return new CMatrix(CoordSysConverter.CartesianToCylindrical(x, y, z));
         }
     }
 
     [DisplayName("Cylindrical to Cartesian")]
     [Category(Categories.Graphing)]
     [Description("Transforms cylindrical coordinates to Cartesian.")]
-    [FunctionSignature("cyl2cart", "real r", "real theta, real z")]
+    [FunctionSignature("cyl2cart", "real r", "real theta", "real z")]
     [ExampleUsage("cyl2cart(9.2195444572928889, -0.21866894587394195, 3)", "{9; -2; 3}")]
     public class CylindricalToCartesianFuncExpression : TernaryExpression<Object>
     {
@@ -126,10 +126,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            Object r = FirstExpression.Evaluate();
-            Object theta = SecondExpression.Evaluate();
-            Object z = ThirdExpression.Evaluate();
-            return new CMatrix(CoordSysConverter.CylindricalToCartesian(ConvertEx.AsDouble(r), ConvertEx.AsDouble(theta), ConvertEx.AsDouble(z)));
+            double r = FirstExpression.EvaluateAsDouble();
+            double theta = SecondExpression.EvaluateAsDouble();
+            double z = ThirdExpression.EvaluateAsDouble();
+            return new CMatrix(CoordSysConverter.CylindricalToCartesian(r, theta, z));
         }
     }
 }

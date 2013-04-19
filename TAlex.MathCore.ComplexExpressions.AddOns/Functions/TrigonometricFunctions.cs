@@ -25,7 +25,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return Complex.Sin(ConvertEx.AsComplex(SubExpr.Evaluate()));
+            return Complex.Sin(SubExpression.EvaluateAsComplex());
         }
     }
 
@@ -44,7 +44,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return Complex.Cos(ConvertEx.AsComplex(SubExpr.Evaluate()));
+            return Complex.Cos(SubExpression.EvaluateAsComplex());
         }
     }
 
@@ -63,7 +63,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return Complex.Tan(ConvertEx.AsComplex(SubExpr.Evaluate()));
+            return Complex.Tan(SubExpression.EvaluateAsComplex());
         }
     }
 }

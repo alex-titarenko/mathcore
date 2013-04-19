@@ -293,7 +293,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
             public override object Evaluate()
             {
-                object value = SubExpr.Evaluate();
+                object value = SubExpression.Evaluate();
 
                 if (value is Complex)
                     return Complex.Negate((Complex)value);

@@ -63,7 +63,7 @@ namespace Test
             CMatrix actual = (CMatrix)expr.Evaluate();
 
             //assert
-            actual.Should().Be(expected);
+            CMatrix.Equals(actual, expected).Should().BeTrue();
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Test
             CMatrix actual = (CMatrix)expr.Evaluate();
 
             //assert
-            actual.Should().Be(expected);
+            CMatrix.Equals(actual, expected).Should().BeTrue();
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Test
             CMatrix actual = (CMatrix)expr.Evaluate();
 
             //assert
-            actual.Should().Be(expected);
+            CMatrix.FuzzyEquals(actual, expected, Machine.Epsilon).Should().BeTrue();
         }
 
         [TestCase("{1, 2; 3, 8; 1; -0.8}")]

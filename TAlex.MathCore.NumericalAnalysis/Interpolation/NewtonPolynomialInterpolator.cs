@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace TAlex.MathCore.NumericalAnalysis.Interpolation
@@ -18,7 +19,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Interpolation
         /// <exception cref="System.ArgumentException">
         /// The length of the array xValues does not match the length of the array yValues.
         /// </exception>
-        public NewtonPolynomialInterpolator(double[] xValues, double[] yValues)
+        public NewtonPolynomialInterpolator(IList<double> xValues, IList<double> yValues)
             : base(xValues, yValues)
         {
         }

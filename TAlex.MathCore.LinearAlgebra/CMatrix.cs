@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Globalization;
+using System.Collections.Generic;
 
 
 namespace TAlex.MathCore.LinearAlgebra
@@ -9,7 +10,7 @@ namespace TAlex.MathCore.LinearAlgebra
     /// Represents a general complex matrix.
     /// </summary>
     [Serializable]
-    public class CMatrix : ICloneable, IFormattable
+    public class CMatrix : ICloneable, IFormattable, IEnumerable<Complex>
     {
         #region Fields
 
@@ -242,18 +243,6 @@ namespace TAlex.MathCore.LinearAlgebra
             get
             {
                 return (this * Adjoint == Adjoint * this);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value that indicates whether the matrix is unitary
-        /// (the conjugate transposition matrix is equal to its inverse matrix).
-        /// </summary>
-        public bool IsUnitary
-        {
-            get
-            {
-                return (IsSquare && Adjoint * this == Identity(RowCount));
             }
         }
 
@@ -1178,7 +1167,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (m.IsReal && m.IsOrthogonal)
                 return m.Transpose;
-            else if (m.IsUnitary)
+            else if (m.IsUnitary())
                 return m.Adjoint;
 
             int n = m.ColumnCount;
@@ -1864,18 +1853,31 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <returns>True if the m1 and m2 parameters have the same value; otherwise, false.</returns>
         public static bool Equals(CMatrix m1, CMatrix m2)
         {
-            return Equals(m1, m2, 10E-12);
+            if ((m1.RowCount != m2.RowCount) || (m1.ColumnCount != m2.ColumnCount))
+                return false;
+
+            for (int i = 0; i < m1.RowCount; i++)
+            {
+                for (int j = 0; j < m1.ColumnCount; j++)
+                {
+                    if (m1[i, j] != m2[i, j])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         /// <summary>
         /// Returns the value indicating whether two instances
-        /// of complex matrix are equal with the specified tolerance.
+        /// of complex matrix are equal with the specified relative tolerance.
         /// </summary>
         /// <param name="m1">The first complex matrix to compare.</param>
         /// <param name="m2">The second complex matrix to compare.</param>
         /// <param name="TOL">The tolerance.</param>
         /// <returns>True if the m1 and m2 parameters have the same value with tolerance TOL; otherwise, false.</returns>
-        public static bool Equals(CMatrix m1, CMatrix m2, double TOL)
+        public static bool FuzzyEquals(CMatrix m1, CMatrix m2, double relativeTolerance)
         {
             if ((m1.RowCount != m2.RowCount) || (m1.ColumnCount != m2.ColumnCount))
                 return false;
@@ -1884,7 +1886,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 for (int j = 0; j < m1.ColumnCount; j++)
                 {
-                    if (!((Math.Abs(m1[i, j].Re - m2[i, j].Re) < TOL) && (Math.Abs(m1[i, j].Im - m2[i, j].Im) < TOL)))
+                    if (!NumericUtil.FuzzyEquals(m1[i, j], m2[i, j], relativeTolerance))
                         return false;
                 }
             }
@@ -2487,6 +2489,29 @@ namespace TAlex.MathCore.LinearAlgebra
             }
         }
 
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is unitary
+        /// (the conjugate transposition matrix is equal to its inverse matrix).
+        /// </summary>
+        /// <returns>true if the matrix is unitary; otherwise false;</returns>
+        public bool IsUnitary()
+        {
+            return (IsSquare && Equals(Adjoint * this, Identity(RowCount)));
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is unitary
+        /// (the conjugate transposition matrix is equal to its inverse matrix).
+        /// </summary>
+        /// <param name="relativeTolerance">A real number that represents a relative tolerance.</param>
+        /// <returns>true if the matrix is unitary; otherwise false;</returns>
+        public bool IsUnitary(double relativeTolerance)
+        {
+            return (IsSquare && FuzzyEquals(Adjoint * this, Identity(RowCount), relativeTolerance));
+        }
+
+
         /// <summary>
         /// Copies the elements of the complex matrix to a new complex array.
         /// </summary>
@@ -2844,6 +2869,96 @@ namespace TAlex.MathCore.LinearAlgebra
         public static implicit operator CMatrix(double[,] array)
         {
             return new CMatrix(array);
+        }
+
+        #endregion
+
+
+        #region IEnumerable<Complex> Members
+
+        IEnumerator<Complex> IEnumerable<Complex>.GetEnumerator()
+        {
+            return new CMatrixEnumerator(this);
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return new CMatrixEnumerator(this);
+        }
+        
+        #endregion
+    }
+
+    public class CMatrixEnumerator : IEnumerator<Complex>
+    {
+        private int _currRow;
+        private int _currCol;
+        private CMatrix _matrix;
+
+        public CMatrixEnumerator(CMatrix matrix)
+        {
+            _matrix = matrix;
+            Reset();
+        }
+
+
+        #region IEnumerator<Complex> Members
+
+        public Complex Current
+        {
+            get
+            {
+                return _matrix[_currRow, _currCol];
+            }
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+        }
+
+        #endregion
+
+        #region IEnumerator Members
+
+        object System.Collections.IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+        public bool MoveNext()
+        {
+            if (_currCol >= _matrix.ColumnCount - 1 && _currRow >= _matrix.RowCount - 1)
+            {
+                return false;
+            }
+
+            if (_currCol >= _matrix.ColumnCount - 1)
+            {
+                _currRow++;
+                _currCol = 0;
+            }
+            else
+            {
+                _currCol++;
+            }
+            return true;
+        }
+
+        public void Reset()
+        {
+            _currRow = 0;
+            _currCol = -1;
         }
 
         #endregion

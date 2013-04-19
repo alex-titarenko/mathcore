@@ -117,27 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EXC_INVALID_CAST" xml:space="preserve">
-    <value>Unable to cast object of type '{0}' to type '{1}'</value>
-    <comment>{0} - source type, {1} - target type</comment>
+  <data name="EXC_INVALID_OBJECT_TYPE" xml:space="preserve">
+    <value>Invalid object type. Expected type '{0}' but found '{1}'.</value>
+    <comment>{0} - expected type, {1} - actual type</comment>
   </data>
-  <data name="EXC_INVALID_FORMAT_COMPLEX" xml:space="preserve">
-    <value>Invalid format of the complex number.</value>
+  <data name="EXC_VALUE_NOT_COMPLEX_NUMBER" xml:space="preserve">
+    <value>The value '{0}' is not a complex number.</value>
+    <comment>{0} - value</comment>
   </data>
-  <data name="EXC_INVALID_NUMBER_FORMAT" xml:space="preserve">
-    <value>The number {0} contains an invalid character '{1}'</value>
-    <comment>{0} - number, {1} - invalid character.</comment>
+  <data name="EXC_VALUE_NOT_INTEGER" xml:space="preserve">
+    <value>The value '{0}' is not an integer.</value>
+    <comment>{0} - value</comment>
   </data>
-  <data name="EXC_POLY_INCCORECT_FORMAT" xml:space="preserve">
-    <value>Incorrect format of complex polynomial.</value>
-  </data>
-  <data name="EXC_POLY_MISMATCH_VAR_NAMES" xml:space="preserve">
-    <value>Polynomial can't contains variables with different names.</value>
-  </data>
-  <data name="EXC_STRING_NOT_EMPTY" xml:space="preserve">
-    <value>String should not be empty.</value>
-  </data>
-  <data name="EXC_STRING_NOT_NULL" xml:space="preserve">
-    <value>String should not be null reference.</value>
+  <data name="EXC_VALUE_NOT_REAL" xml:space="preserve">
+    <value>The value '{0}' is not real.</value>
+    <comment>{0} - value</comment>
   </data>
 </root>

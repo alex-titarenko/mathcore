@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace TAlex.MathCore.NumericalAnalysis.Interpolation
@@ -21,7 +22,7 @@ namespace TAlex.MathCore.NumericalAnalysis.Interpolation
         /// <exception cref="System.ArgumentException">
         /// Elements of xValues are not sorted in ascending order.
         /// </exception>
-        public LinearInterpolator(double[] xValues, double[] yValues)
+        public LinearInterpolator(IList<double> xValues, IList<double> yValues)
             : base(xValues, yValues)
         {
             for (int i = 0; i < n - 1; i++)
