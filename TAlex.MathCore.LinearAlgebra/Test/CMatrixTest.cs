@@ -111,22 +111,21 @@ namespace TAlex.MathCore.LinearAlgebra.Test
         [Test]
         public void SqrtTest()
         {
-            int size = 10;
-            int n = 5000;
-            double TOL = 10E-11;
-
-            CMatrix m = new CMatrix(size, size);
-
-            for (int idx = 0; idx < n; idx++)
+            //arrange
+            double TOL = 10E-14;
+            CMatrix m = new CMatrix(new Complex[,]
             {
-                _rand.Fill(m, -1000, 1000, 3);
+                {new Complex(12, -3), new Complex(-51, 0), -Complex.I, new Complex(2, -8)},
+                {new Complex(6, 0), new Complex(-2, 167), new Complex(-68, 0), new Complex(0, 5.3)},
+                {new Complex(-4, 0), new Complex(24, 0), new Complex(0, -41), new Complex(2, 8.8)},
+                {new Complex(15, 0), new Complex(24, 20), new Complex(-2.5, -41), new Complex(0, 0)}
+            });
 
-                //action
-                CMatrix sq = CMatrix.Sqrt(m);
+            //action
+            CMatrix sq = CMatrix.Sqrt(m);
 
-                //assert
-                CMatrix.FuzzyEquals(sq * sq, m, TOL).Should().BeTrue();
-            }
+            //assert
+            CMatrix.FuzzyEquals(sq * sq, m, TOL).Should().BeTrue();
         }
 
         [Test]
