@@ -235,18 +235,6 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         /// <summary>
-        /// Gets a value that indicates whether the matrix is normal
-        /// (the matrix is normal if it commutes with its conjugate transpose).
-        /// </summary>
-        public bool IsNormal
-        {
-            get
-            {
-                return (this * Adjoint == Adjoint * this);
-            }
-        }
-
-        /// <summary>
         /// Gets a value that indicates whether the matrix is real
         /// (the matrix consisting only of real entries).
         /// </summary>
@@ -293,18 +281,6 @@ namespace TAlex.MathCore.LinearAlgebra
             get
             {
                 return (RowCount == ColumnCount);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value that indicates whether the matrix is hermitian
-        /// (the square matrix with complex entries which is equal to its own conjugate transpose).
-        /// </summary>
-        public bool IsHermitian
-        {
-            get
-            {
-                return (IsSquare && Adjoint == this);
             }
         }
 
@@ -356,30 +332,6 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         /// <summary>
-        /// Gets a value that indicates whether the matrix is singular
-        /// (the matrix that is not invertible).
-        /// </summary>
-        public bool IsSingular
-        {
-            get
-            {
-                return IsSquare && (Determ(this) == Complex.Zero) ? true : false;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value that indicates whether the matrix is orthogonal
-        /// (the transposition matrix is equal to its inverse matrix).
-        /// </summary>
-        public bool IsOrthogonal
-        {
-            get
-            {
-                return IsSquare && this * Transpose == Identity(RowCount);
-            }
-        }
-
-        /// <summary>
         /// Gets a value that indicates whether the matrix consisting only of zeros and ones.
         /// </summary>
         public bool IsZeroOneMatrix
@@ -396,18 +348,6 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         /// <summary>
-        /// Gets a value that indicates whether the matrix is involutary
-        /// (the matrix that is its own inverse).
-        /// </summary>
-        public bool IsInvolutary
-        {
-            get
-            {
-                return (IsSquare && this * this == Identity(RowCount));
-            }
-        }
-
-        /// <summary>
         /// Gets a value that indicates whether the matrix is permutation of the identity matrix.
         /// </summary>
         public bool IsPermutation
@@ -415,28 +355,6 @@ namespace TAlex.MathCore.LinearAlgebra
             get
             {
                 return (IsSquare && IsZeroOneMatrix && Multiply(this, Transpose) == Identity(RowCount));
-            }
-        }
-
-        /// <summary>
-        /// Gets a value that indicates whether the matrix is symmetric
-        /// (the square matrix, that is equal to its transpose).
-        /// </summary>
-        public bool IsSymmetric
-        {
-            get
-            {
-                if (!IsSquare) return false;
-
-                for (int i = 0; i < RowCount; i++)
-                {
-                    for (int j = 0; j < ColumnCount; j++)
-                    {
-                        if (this[i, j] != this[j, i])
-                            return false;
-                    }
-                }
-                return true;
             }
         }
 
@@ -1165,7 +1083,7 @@ namespace TAlex.MathCore.LinearAlgebra
             if (!m.IsSquare)
                 throw new MatrixSizeMismatchException("Cannot invert non-square matrix.");
 
-            if (m.IsReal && m.IsOrthogonal)
+            if (m.IsReal && m.IsOrthogonal())
                 return m.Transpose;
             else if (m.IsUnitary())
                 return m.Adjoint;
@@ -1515,7 +1433,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <exception cref="System.ArithmeticException">The matrix m is not positive definite.</exception>
         public static CMatrix CholeskyDecomposition(CMatrix m)
         {
-            if (!m.IsHermitian)
+            if (!m.IsHermitian())
                 throw new ArgumentException("The matrix must be hermitian.");
 
             CMatrix L = new CMatrix(m.RowCount, m.ColumnCount);
@@ -2489,6 +2407,109 @@ namespace TAlex.MathCore.LinearAlgebra
             }
         }
 
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is symmetric
+        /// (the square matrix, that is equal to its transpose).
+        /// </summary>
+        /// <returns>true if the matrix is symmetric; otherwise false;</returns>
+        public bool IsSymmetric()
+        {
+            if (!IsSquare) return false;
+
+            for (int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < ColumnCount; j++)
+                {
+                    if (this[i, j] != this[j, i])
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is symmetric
+        /// (the square matrix, that is equal to its transpose).
+        /// </summary>
+        /// <param name="relativeTolerance">A real number that represents a relative tolerance.</param>
+        /// <returns>true if the matrix is symmetric; otherwise false;</returns>
+        public bool IsSymmetric(double relativeTolerance)
+        {
+            if (!IsSquare) return false;
+
+            for (int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < ColumnCount; j++)
+                {
+                    if (!NumericUtil.FuzzyEquals(this[i, j], this[j, i], relativeTolerance))
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is normal
+        /// (the matrix is normal if it commutes with its conjugate transpose).
+        /// </summary>
+        /// <returns>true if the matrix is normal; otherwise false;</returns>
+        public bool IsNormal()
+        {
+            return CMatrix.Equals(this * Adjoint, Adjoint * this);
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is normal
+        /// (the matrix is normal if it commutes with its conjugate transpose).
+        /// </summary>
+        /// <param name="relativeTolerance">A real number that represents a relative tolerance.</param>
+        /// <returns>true if the matrix is normal; otherwise false;</returns>
+        public bool IsNormal(double relativeTolerance)
+        {
+            return CMatrix.FuzzyEquals(this * Adjoint, Adjoint * this, relativeTolerance);
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is hermitian
+        /// (the square matrix with complex entries which is equal to its own conjugate transpose).
+        /// </summary>
+        /// <returns>true if the matrix is hermitian; otherwise false;</returns>
+        public bool IsHermitian()
+        {
+            return (IsSquare && CMatrix.Equals(Adjoint, this));
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is hermitian
+        /// (the square matrix with complex entries which is equal to its own conjugate transpose).
+        /// </summary>
+        /// <param name="relativeTolerance">A real number that represents a relative tolerance.</param>
+        /// <returns>true if the matrix is hermitian; otherwise false;</returns>
+        public bool IsHermitian(double relativeTolerance)
+        {
+            return (IsSquare && CMatrix.FuzzyEquals(Adjoint, this, relativeTolerance));
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is orthogonal
+        /// (the transposition matrix is equal to its inverse matrix).
+        /// </summary>
+        /// <returns>true if the matrix is orthogonal; otherwise false;</returns>
+        public bool IsOrthogonal()
+        {
+            return IsSquare && CMatrix.Equals(this * Transpose, Identity(RowCount));
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is orthogonal
+        /// (the transposition matrix is equal to its inverse matrix).
+        /// </summary>
+        /// <param name="relativeTolerance">A real number that represents a relative tolerance.</param>
+        /// <returns>true if the matrix is orthogonal; otherwise false;</returns>
+        public bool IsOrthogonal(double relativeTolerance)
+        {
+            return IsSquare && CMatrix.FuzzyEquals(this * Transpose, Identity(RowCount), relativeTolerance);
+        }
 
         /// <summary>
         /// Returns a value that indicates whether the matrix is unitary
@@ -2511,6 +2532,47 @@ namespace TAlex.MathCore.LinearAlgebra
             return (IsSquare && FuzzyEquals(Adjoint * this, Identity(RowCount), relativeTolerance));
         }
 
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is singular
+        /// (the matrix that is not invertible).
+        /// </summary>
+        /// <returns>true if the matrix is singular; otherwise false;</returns>
+        public bool IsSingular()
+        {
+            return IsSquare && (Determ(this) == Complex.Zero);
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is singular
+        /// (the matrix that is not invertible).
+        /// </summary>
+        /// <param name="TOL">A real number that represents a tolerance.</param>
+        /// <returns>true if the matrix is singular; otherwise false;</returns>
+        public bool IsSingular(double TOL)
+        {
+            return IsSquare && NumericUtil.FuzzyEquals(Determ(this), Complex.Zero, TOL);
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is involutary
+        /// (the matrix that is its own inverse).
+        /// </summary>
+        /// <returns>true if the matrix is involutary; otherwise false;</returns>
+        public bool IsInvolutary()
+        {
+            return (IsSquare && CMatrix.Equals(this * this, Identity(RowCount)));
+        }
+
+        /// <summary>
+        /// Returns a value that indicates whether the matrix is involutary
+        /// (the matrix that is its own inverse).
+        /// </summary>
+        /// <param name="relativeTolerance">A real number that represents a relative tolerance.</param>
+        /// <returns>true if the matrix is involutary; otherwise false;</returns>
+        public bool IsInvolutary(double relativeTolerance)
+        {
+            return (IsSquare && CMatrix.FuzzyEquals(this * this, Identity(RowCount), relativeTolerance));
+        }
 
         /// <summary>
         /// Copies the elements of the complex matrix to a new complex array.
@@ -2893,7 +2955,7 @@ namespace TAlex.MathCore.LinearAlgebra
         #endregion
     }
 
-    public class CMatrixEnumerator : IEnumerator<Complex>
+    internal class CMatrixEnumerator : IEnumerator<Complex>
     {
         private int _currRow;
         private int _currCol;
