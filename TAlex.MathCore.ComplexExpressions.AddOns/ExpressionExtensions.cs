@@ -51,8 +51,30 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
         {
             Object o = expression.Evaluate();
 
-            if (o is CMatrix) return AsDoubleArray((CMatrix)o);
-            throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_OBJECT_TYPE, "double array", o.GetType()));
+            if (o is CMatrix)
+            {
+                CMatrix matrix = (CMatrix)o;
+                if (matrix.IsVector && matrix.IsReal)
+                {
+                    return matrix.Select(x => (double)x).ToArray();
+                }
+            }
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_OBJECT_TYPE, "real array", o.GetType().Name));
+        }
+
+        public static IList<double> EvaluateAsExpandableDoubleArray(this Expression<Object> expression)
+        {
+            Object o = expression.Evaluate();
+
+            if (o is CMatrix)
+            {
+                CMatrix matrix = (CMatrix)o;
+                if (matrix.IsReal)
+                {
+                    return matrix.Select(x => (double)x).ToArray();
+                }
+            }
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_OBJECT_TYPE, "real matrix", o.GetType().Name));
         }
 
         #endregion
@@ -70,18 +92,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
         {
             if (c.IsReal) return c.Re;
             throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_REAL, c));
-        }
-
-        private static double[] AsDoubleArray(CMatrix matrix)
-        {
-            if (matrix.IsVector && matrix.IsReal)
-            {
-                return matrix.Select(x => (double)x).ToArray();
-            }
-            else
-            {
-                throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_OBJECT_TYPE, "double array", matrix.GetType()));
-            }
         }
 
         #endregion

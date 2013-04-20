@@ -269,4 +269,99 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     #endregion
+
+    [DisplayName("Median")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the median of the elements of the matrix.")]
+    [FunctionSignature("median", "real matrix m")]
+    [ExampleUsage("median({2; 1; 5; 8; -11})", "2")]
+    [ExampleUsage("median({1, 5; -1.2, 16})", "3")]
+    public class MedianFuncExpression : UnaryExpression<Object>
+    {
+        public MedianFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.Median(SubExpression.EvaluateAsExpandableDoubleArray());
+        }
+    }
+
+    [DisplayName("Mean")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the arithmetic mean of the elements of the complex matrix.")]
+    [FunctionSignature("mean", "complex matrix m")]
+    [ExampleUsage("mean({2i; -1; 2.2; 0.6; -11})", "-1.84 + 0.4i")]
+    [ExampleUsage("mean({6, 5; -1.2 + 13i, 16})", "6.45 + 3.25i")]
+    public class MeanFuncExpression : UnaryExpression<Object>
+    {
+        public MeanFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.Mean(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Geometric mean")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the geometric mean of the elements of the positive real matrix.")]
+    [FunctionSignature("gmean", "real matrix m")]
+    [ExampleUsage("gmean({2; 26; 2.2; 1; 1.1})", "2.63004840706915")]
+    [ExampleUsage("gmean({0, 5; 1.2, 16})", "0")]
+    public class GeometricMeanFuncExpression : UnaryExpression<Object>
+    {
+        public GeometricMeanFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.GeometricMean(SubExpression.EvaluateAsExpandableDoubleArray());
+        }
+    }
+
+    [DisplayName("Harmonic mean")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the harmonic mean of the elements of the positive real matrix.")]
+    [FunctionSignature("hmean", "real matrix m")]
+    [ExampleUsage("hmean({2; 26; 2.2; 1; 1.1})", "1.72289156626506")]
+    [ExampleUsage("hmean({1, 5; 1.2, 16})", "1.90854870775348")]
+    public class HarmonicMeanFuncExpression : UnaryExpression<Object>
+    {
+        public HarmonicMeanFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.HarmonicMean(SubExpression.EvaluateAsExpandableDoubleArray());
+        }
+    }
+
+    [DisplayName("Mode")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the harmonic mean of the elements of the positive real matrix.")]
+    [FunctionSignature("mode", "complex matrix m")]
+    [ExampleUsage("mode({-2; 33; 22.2i; 15; 33})", "33")]
+    [ExampleUsage("mode({1, 5; 1, 16})", "1")]
+    public class ModeFuncExpression : UnaryExpression<Object>
+    {
+        public ModeFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.Mode(SubExpression.EvaluateAsCMatrix());
+        }
+    }
 }

@@ -17,16 +17,15 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The median of the elements of v.</returns>
-        public static double Median(double[] v)
+        public static double Median(IEnumerable<double> v)
         {
-            v = (double[])v.Clone();
+            List<double> ordered_v = new List<double>(v);
+            ordered_v.Sort();
 
-            Array.Sort<double>(v);
-
-            if ((v.Length & 1) != 0)
-                return v[v.Length / 2];
+            if ((ordered_v.Count & 1) != 0)
+                return ordered_v[ordered_v.Count / 2];
             else
-                return (v[v.Length / 2 - 1] + v[v.Length / 2]) / 2.0;
+                return (ordered_v[ordered_v.Count / 2 - 1] + ordered_v[ordered_v.Count / 2]) / 2.0;
         }
 
         /// <summary>
@@ -34,16 +33,18 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The arithmetic mean of the elements of v.</returns>
-        public static double Mean(ICollection<double> v)
+        public static double Mean(IEnumerable<double> v)
         {
+            int count = 0;
             double sum = 0.0;
 
             foreach (double item in v)
             {
                 sum += item;
+                count++;
             }
 
-            return sum / v.Count;
+            return sum / count;
         }
 
         /// <summary>
@@ -51,15 +52,17 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The arithmetic mean of the elements of v.</returns>
-        public static Complex Mean(ICollection<Complex> v)
+        public static Complex Mean(IEnumerable<Complex> v)
         {
+            int count = 0;
             Complex sum = Complex.Zero;
 
             foreach (Complex item in v)
             {
                 sum += item;
+                count++;
             }
-            return sum / v.Count;
+            return sum / count;
         }
 
         /// <summary>
@@ -116,24 +119,23 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The value of mode of the elements of v is not unique.
         /// </exception>
-        public static double Mode(double[] v)
+        public static double Mode(IEnumerable<double> v)
         {
-            v = (double[])v.Clone();
+            List<double> elems = new List<double>(v);
+            elems.Sort();
 
-            Array.Sort<double>(v);
-
-            double result = v[0];
+            double result = elems[0];
             int maxCount = 0;
             int repeats = 0;
 
             int i = 0;
 
-            while (i < v.Length)
+            while (i < elems.Count)
             {
                 int count = 1;
-                double value = v[i++];
+                double value = elems[i++];
 
-                while (i < v.Length && value == v[i])
+                while (i < elems.Count && value == elems[i])
                 {
                     count++;
                     i++;
@@ -147,7 +149,7 @@ namespace TAlex.MathCore.Statistics
                 {
                     maxCount = count;
                     repeats = 0;
-                    result = v[i - 1];
+                    result = elems[i - 1];
                 }
             }
 
@@ -165,24 +167,23 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The value of mode of the elements of v is not unique.
         /// </exception>
-        public static Complex Mode(Complex[] v)
+        public static Complex Mode(IEnumerable<Complex> v)
         {
-            v = (Complex[])v.Clone();
+            List<Complex> elems = new List<Complex>(v);
+            elems.Sort(new ComplexComparer());
 
-            Array.Sort<Complex>(v, new ComplexComparer());
-
-            Complex result = v[0];
+            Complex result = elems[0];
             int maxCount = 0;
             int repeats = 0;
 
             int i = 0;
 
-            while (i < v.Length)
+            while (i < elems.Count)
             {
                 int count = 1;
-                Complex value = v[i++];
+                Complex value = elems[i++];
 
-                while (i < v.Length && value == v[i])
+                while (i < elems.Count && value == elems[i])
                 {
                     count++;
                     i++;
@@ -196,7 +197,7 @@ namespace TAlex.MathCore.Statistics
                 {
                     maxCount = count;
                     repeats = 0;
-                    result = v[i - 1];
+                    result = elems[i - 1];
                 }
             }
 
