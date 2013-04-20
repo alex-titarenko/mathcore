@@ -14,6 +14,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 
         public string Result { get; set; }
 
+        public bool CanMultipleResults { get; set; }
+
         #endregion
 
         #region Constructors
@@ -22,6 +24,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
         {
             Expression = expression;
             Result = result;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override string ToString()
+        {
+            return String.Format("{0} = {1}", Expression, Result);
         }
 
         #endregion

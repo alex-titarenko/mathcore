@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace TAlex.MathCore.Statistics.Distributions
@@ -95,9 +96,9 @@ namespace TAlex.MathCore.Statistics.Distributions
         /// A <see cref="T:System.Random"/> object used to generate the random variables.
         /// </param>
         /// <param name="v">An array of real numbers.</param>
-        public void GetRandomVariables(Random random, double[] v)
+        public void GetRandomVariables(Random random, IList<double> v)
         {
-            for (int i = 0; i < v.Length; i++)
+            for (int i = 0; i < v.Count; i++)
             {
                 v[i] = GetRandomVariable(random);
             }

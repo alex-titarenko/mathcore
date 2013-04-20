@@ -12,6 +12,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 
         public string Result { get; set; }
 
+        public bool CanMultipleResults { get; set; }
+
         #endregion
 
         #region Constructors

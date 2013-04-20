@@ -56,7 +56,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
         }
 
         #endregion
-       
+
+        #region Helpers
 
         private static int AsInt32(Complex c)
         {
@@ -82,5 +83,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
                 throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_OBJECT_TYPE, "double array", matrix.GetType()));
             }
         }
+
+        #endregion
     }
 }

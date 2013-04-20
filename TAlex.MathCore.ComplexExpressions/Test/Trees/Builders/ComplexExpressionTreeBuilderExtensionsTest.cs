@@ -108,11 +108,14 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
 
                     //assert
                     (actual is Complex || actual is CMatrix).Should().BeTrue();
-                    
-                    IFormattable formatedResult = (IFormattable)actual;
-                    formatedResult.ToString(null, CultureInfo.InvariantCulture).Replace(" ", String.Empty)
-                        .Should().Be(exampleUsage.Result.Replace(" ", String.Empty),
-                        "Example usage contains inccorect result. Target type: {0}", item.FunctionType);
+
+                    if (!exampleUsage.CanMultipleResults)
+                    {
+                        IFormattable formatedResult = (IFormattable)actual;
+                        formatedResult.ToString(null, CultureInfo.InvariantCulture).Replace(" ", String.Empty)
+                            .Should().Be(exampleUsage.Result.Replace(" ", String.Empty),
+                            "Example usage contains inccorect result. Target type: {0}", item.FunctionType);
+                    }
                 }
             }
         }
