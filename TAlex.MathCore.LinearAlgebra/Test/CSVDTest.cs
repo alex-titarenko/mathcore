@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System;
 using TAlex.MathCore.LinearAlgebra;
-using TAlex.MathCore.LinearAlgebra.Test.Helpers;
 
 
 namespace TAlex.MathCore.LinearAlgebra.Test
@@ -10,34 +9,29 @@ namespace TAlex.MathCore.LinearAlgebra.Test
     [TestFixture]
     public class CSVDTest
     {
-        private RandomGenerator _rand = new RandomGenerator();
-
-
         [Test]
         public void SingularValueDecompositionTest()
         {
-            int rowCount = 10;
-            int columnCount = 10;
-            int n = 5000;
-            double TOL = 10E-11;
-
-            CMatrix m = new CMatrix(rowCount, columnCount);
-
-            for (int idx = 0; idx < n; idx++)
+            //arrange
+            const double TOL = 10E-14;
+            CMatrix m = new CMatrix(new Complex[,]
             {
-                _rand.Fill(m, -1000, 1000, 3);
+                {new Complex(12, -3), new Complex(-51, 0), -Complex.I, new Complex(2, -8)},
+                {new Complex(6, 0), new Complex(-2, 167), new Complex(-68, 0), new Complex(0, 5.3)},
+                {new Complex(-4, 0), new Complex(24, 0), new Complex(0, -41), new Complex(2, 8.8)},
+                {new Complex(15, 0), new Complex(24, 20), new Complex(-2.5, -41), new Complex(0, 0)}
+            });
 
-                //action
-                CSVD svd = new CSVD(m);
-                CMatrix u = svd.U;
-                CMatrix s = svd.S;
-                CMatrix vh = svd.VH;
+            //action
+            CSVD svd = new CSVD(m);
+            CMatrix u = svd.U;
+            CMatrix s = svd.S;
+            CMatrix vh = svd.VH;
 
-                //assert
-                u.IsUnitary(TOL).Should().BeTrue("U is not unitary");
-                vh.IsUnitary(TOL).Should().BeTrue("VH is not unitary");
-                CMatrix.FuzzyEquals(m, u * s * vh, TOL).Should().BeTrue();
-            }
+            //assert
+            u.IsUnitary(TOL).Should().BeTrue("U is not unitary");
+            vh.IsUnitary(TOL).Should().BeTrue("VH is not unitary");
+            CMatrix.FuzzyEquals(m, u * s * vh, TOL).Should().BeTrue();
         }
     }
 }

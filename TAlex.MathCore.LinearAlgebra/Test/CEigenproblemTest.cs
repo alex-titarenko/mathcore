@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System;
 using TAlex.MathCore.LinearAlgebra;
-using TAlex.MathCore.LinearAlgebra.Test.Helpers;
 
 
 namespace TAlex.MathCore.LinearAlgebra.Test
@@ -10,38 +9,43 @@ namespace TAlex.MathCore.LinearAlgebra.Test
     [TestFixture]
     public class CEigenproblemTest
     {
-        private RandomGenerator _rand = new RandomGenerator();
+        private CMatrix _m;
+
+
+        [SetUp]
+        public void SetUp()
+        {
+            _m = new CMatrix(new Complex[,]
+            {
+                {new Complex(12, -3), new Complex(-51, 0), -Complex.I, new Complex(2, -8)},
+                {new Complex(6, 0), new Complex(-2, 167), new Complex(-68, 0), new Complex(0, 5.3)},
+                {new Complex(-4, 0), new Complex(24, 0), new Complex(0, -41), new Complex(2, 8.8)},
+                {new Complex(15, 0), new Complex(24, 20), new Complex(-2.5, -41), new Complex(0, 0)}
+            });
+        }
 
 
         [Test]
         public void EigenSystemTest()
         {
-            int size = 10;
-            int n = 5000;
-            double TOL = 10E-11;
-
-            CMatrix m = new CMatrix(size, size);
+            //arrange
+            int size = _m.RowCount;
+            double TOL = 10E-13;
             CMatrix identity = CMatrix.Identity(size);
 
-            for (int idx = 0; idx < n; idx++)
+            //action
+            CEigenproblem eigen = new CEigenproblem(_m, true);
+            CMatrix eigenVals = eigen.Eigenvalues;
+            CMatrix eigenVecs = eigen.Eigenvectors;
+
+            //assert
+            for (int i = 0; i < size; i++)
             {
-                _rand.Fill(m, -1000, 1000, 3);
-
-                //action
-                CEigenproblem eigen = new CEigenproblem(m, true);
-                CMatrix eigenVals = eigen.Eigenvalues;
-                CMatrix eigenVecs = eigen.Eigenvectors;
-
-                //assert
-                for (int i = 0; i < size; i++)
+                CMatrix v = (_m - eigenVals[i] * identity) * eigenVecs.GetColumn(i);
+                
+                foreach (Complex elem in v)
                 {
-                    CMatrix v = (m - eigenVals[i] * identity) * eigenVecs.GetColumn(i);
-
-                    for (int j = 0; j < v.Length; j++)
-                    {
-                        if (Math.Abs(v[j].Re) >= TOL || Math.Abs(v[j].Im) >= TOL)
-                            Assert.Fail("v: {0}", v);
-                    }
+                    NumericUtil.FuzzyEquals(Complex.Abs(elem), 0, TOL).Should().BeTrue();
                 }
             }
         }
@@ -49,33 +53,25 @@ namespace TAlex.MathCore.LinearAlgebra.Test
         [Test]
         public void LeftEigenSystemTest()
         {
-            int size = 10;
-            int n = 5000;
-            double TOL = 10E-11;
-
-            CMatrix m = new CMatrix(size, size);
+            //arrange
+            int size = _m.RowCount;
+            double TOL = 10E-14;
             CMatrix identity = CMatrix.Identity(size);
 
-            for (int idx = 0; idx < n; idx++)
+            //action
+            CEigenproblem eigen = new CEigenproblem(_m, false, true);
+            CMatrix eigenVals = eigen.Eigenvalues;
+            CMatrix eigenVecs = eigen.LeftEigenvectors;
+
+            //assert
+            for (int i = 0; i < size; i++)
             {
-                _rand.Fill(m, -1000, 1000, 3);
+                CMatrix eigenVec = eigenVecs.GetColumn(i).Adjoint;
+                CMatrix v = eigenVec * _m - eigenVals[i] * eigenVec;
 
-                //action
-                CEigenproblem eigen = new CEigenproblem(m, false, true);
-                CMatrix eigenVals = eigen.Eigenvalues;
-                CMatrix eigenVecs = eigen.LeftEigenvectors;
-
-                //assert
-                for (int i = 0; i < size; i++)
+                foreach (Complex elem in v)
                 {
-                    CMatrix eigenVec = eigenVecs.GetColumn(i).Adjoint;
-                    CMatrix v = eigenVec * m - eigenVals[i] * eigenVec;
-
-                    for (int j = 0; j < v.Length; j++)
-                    {
-                        if (Math.Abs(v[0, j].Re) >= TOL || Math.Abs(v[0, j].Im) >= TOL)
-                            Assert.Fail("v: {0}", v);
-                    }
+                    NumericUtil.FuzzyEquals(Complex.Abs(elem), 0, TOL).Should().BeTrue();
                 }
             }
         }

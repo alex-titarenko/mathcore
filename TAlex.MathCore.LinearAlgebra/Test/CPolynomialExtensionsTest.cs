@@ -3,7 +3,6 @@ using NUnit.Framework;
 using System;
 using TAlex.MathCore;
 using TAlex.MathCore.LinearAlgebra;
-using TAlex.MathCore.LinearAlgebra.Test.Helpers;
 
 
 namespace TAlex.MathCore.LinearAlgebra.Test
@@ -11,34 +10,30 @@ namespace TAlex.MathCore.LinearAlgebra.Test
     [TestFixture]
     public class CPolynomialExtensionsTest
     {
-        private RandomGenerator _rand = new RandomGenerator();
-
-
         [Test]
         public void CompanionMatrixRootsFindingTest()
         {
-            int size = 5;
-            int n = 10000;
-            double TOL = 10E-7;
-
-            CPolynomial poly = new CPolynomial(size);
-
-            for (int idx = 0; idx < n; idx++)
+            //arrange
+            double TOL = 10E-10;
+            CPolynomial poly = new CPolynomial(new Complex[]
             {
-                _rand.Fill(poly, -100, 100, 1);
-                
-                Complex[] roots = poly.CompanionMatrixRootsFinding();
+                new Complex(122, 14),
+                new Complex(0, 2.2),
+                new Complex(14.22, -18.44),
+                new Complex(1130, 0),
+                new Complex(14, 14),
+                new Complex(18, 0.2)
+            });
 
-                for (int i = 0; i < roots.Length; i++)
-                {
-                    Complex p = poly.Evaluate(roots[i]);
+            //action
+            Complex[] roots = poly.CompanionMatrixRootsFinding();
 
-                    //assert
-                    Complex.Abs(p).Should().BeLessThan(TOL);
-                }
+            //assert
+            foreach (Complex root in roots)
+            {
+                Complex p = poly.Evaluate(root);
+                Complex.Abs(p).Should().BeLessThan(TOL);
             }
-
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
     }
 }

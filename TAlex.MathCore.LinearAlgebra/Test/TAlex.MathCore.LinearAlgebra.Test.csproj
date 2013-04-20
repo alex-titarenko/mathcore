@@ -58,7 +58,6 @@
     <Compile Include="CMatrixTest.cs" />
     <Compile Include="CPolynomialExtensionsTest.cs" />
     <Compile Include="CSVDTest.cs" />
-    <Compile Include="Helpers\RandomGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

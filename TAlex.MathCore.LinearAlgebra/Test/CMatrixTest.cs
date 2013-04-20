@@ -3,7 +3,6 @@ using NUnit.Framework;
 using System;
 using TAlex.MathCore;
 using TAlex.MathCore.LinearAlgebra;
-using TAlex.MathCore.LinearAlgebra.Test.Helpers;
 
 
 namespace TAlex.MathCore.LinearAlgebra.Test
@@ -11,101 +10,76 @@ namespace TAlex.MathCore.LinearAlgebra.Test
     [TestFixture]
     public class CMatrixTest
     {
-        private RandomGenerator _rand = new RandomGenerator();
+        private CMatrix _m;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _m = new CMatrix(new Complex[,]
+            {
+                {new Complex(12, -3), new Complex(-51, 0), -Complex.I, new Complex(2, -8)},
+                {new Complex(6, 0), new Complex(-2, 167), new Complex(-68, 0), new Complex(0, 5.3)},
+                {new Complex(-4, 0), new Complex(24, 0), new Complex(0, -41), new Complex(2, 8.8)},
+                {new Complex(15, 0), new Complex(24, 20), new Complex(-2.5, -41), new Complex(0, 0)}
+            });
+        }
 
 
         [Test]
         public void LUPDecompositionTest()
         {
-            int size = 10;
-            int n = 5000;
-            double TOL = 10E-12;
-
-            CMatrix m = new CMatrix(size, size);
-            CMatrix identity = CMatrix.Identity(size);
-
-            for (int idx = 0; idx < n; idx++)
-            {
-                _rand.Fill(m, -1000, 1000, 3);
-
-                //action
-                CMatrix[] LUP = CMatrix.LUPDecomposition(m);
-                CMatrix P = LUP[0];
-                CMatrix L = LUP[1];
-                CMatrix U = LUP[2];
-
-                //assert
-                CMatrix.FuzzyEquals(P * m, L * U, TOL).Should().BeTrue();
-            }
-        }
-
-        [Test]
-        public void QRDecompositionTest_Real()
-        {
             //arrange
             double TOL = 10E-15;
-            CMatrix m = new CMatrix(new Complex[,]
-            {
-                {12, -51, 4},
-                {6, 167, -68},
-                {-4, 24, -41}
-            });
+            int size = _m.RowCount;
+            CMatrix identity = CMatrix.Identity(size);
 
             //action
-            CMatrix[] QR = CMatrix.QRDecomposition(m);
-            CMatrix Q = QR[0];
-            CMatrix R = QR[1];
+            CMatrix[] LUP = CMatrix.LUPDecomposition(_m);
+            CMatrix P = LUP[0];
+            CMatrix L = LUP[1];
+            CMatrix U = LUP[2];
 
             //assert
-            Q.IsUnitary(TOL).Should().BeTrue("Q is not unitary");
-            R.IsUpperTrapeze.Should().BeTrue("R is not upper trapeze");
-            CMatrix.FuzzyEquals(m, Q * R, TOL).Should().BeTrue();
+            L.IsLowerTriangular.Should().BeTrue();
+            U.IsUpperTriangular.Should().BeTrue();
+            CMatrix.FuzzyEquals(P * _m, L * U, TOL).Should().BeTrue();
         }
 
         [Test]
-        public void QRDecompositionTest_Complex()
+        public void QRDecompositionTest()
         {
             //arrange
             double TOL = 10E-14;
-            CMatrix m = new CMatrix(new Complex[,]
-            {
-                {new Complex(12, -3), new Complex(-51, 0), -Complex.I},
-                {new Complex(6, 0), new Complex(-2, 167), new Complex(-68, 0)},
-                {new Complex(-4, 0), new Complex(24, 0), new Complex(0, -41)}
-            });
 
             //action
-            CMatrix[] QR = CMatrix.QRDecomposition(m);
+            CMatrix[] QR = CMatrix.QRDecomposition(_m);
             CMatrix Q = QR[0];
             CMatrix R = QR[1];
 
             //assert
             Q.IsUnitary(TOL).Should().BeTrue("Q is not unitary");
             R.IsUpperTrapeze.Should().BeTrue("R is not upper trapeze");
-            CMatrix.FuzzyEquals(m, Q * R, TOL).Should().BeTrue();
+            CMatrix.FuzzyEquals(_m, Q * R, TOL).Should().BeTrue();
         }
 
         [Test]
         public void DivTest()
         {
-            int size = 10;
-            int n = 5000;
-            double TOL = 10E-10;
-
-            CMatrix a = new CMatrix(size, size);
-            CMatrix b = new CMatrix(size, size);
-
-            for (int idx = 0; idx < n; idx++)
+            //arrange
+            double TOL = 10E-14;
+            CMatrix m2 = new CMatrix(new Complex[,]
             {
-                _rand.Fill(a, -1000, 1000, 3);
-                _rand.Fill(b, -1000, 1000, 3);
+                {new Complex(122, 5.8), new Complex(0, 0), new Complex(2, 24), new Complex(0, -8)},
+                {new Complex(16, 0), new Complex(164, 167), new Complex(0.25, 0.4), new Complex(10, -5)},
+                {new Complex(-44, 2.28), new Complex(2.4, 5.6), new Complex(0, 4.1), new Complex(-2, 0)},
+                {new Complex(185, -14), new Complex(2.4, 2), new Complex(25.14, 39.5), new Complex(122, 122)}
+            });
 
-                //action
-                CMatrix c = CMatrix.Divide(a, b);
+            //action
+            CMatrix c = CMatrix.Divide(_m, m2);
 
-                //assert
-                CMatrix.FuzzyEquals(c * b, a, TOL).Should().BeTrue();
-            }
+            //assert
+            CMatrix.FuzzyEquals(c * m2, _m, TOL).Should().BeTrue();
         }
 
         [Test]
@@ -113,87 +87,58 @@ namespace TAlex.MathCore.LinearAlgebra.Test
         {
             //arrange
             double TOL = 10E-14;
-            CMatrix m = new CMatrix(new Complex[,]
-            {
-                {new Complex(12, -3), new Complex(-51, 0), -Complex.I, new Complex(2, -8)},
-                {new Complex(6, 0), new Complex(-2, 167), new Complex(-68, 0), new Complex(0, 5.3)},
-                {new Complex(-4, 0), new Complex(24, 0), new Complex(0, -41), new Complex(2, 8.8)},
-                {new Complex(15, 0), new Complex(24, 20), new Complex(-2.5, -41), new Complex(0, 0)}
-            });
 
             //action
-            CMatrix sq = CMatrix.Sqrt(m);
+            CMatrix sq = CMatrix.Sqrt(_m);
 
             //assert
-            CMatrix.FuzzyEquals(sq * sq, m, TOL).Should().BeTrue();
+            CMatrix.FuzzyEquals(sq * sq, _m, TOL).Should().BeTrue();
         }
 
         [Test]
         public void InverseTest()
         {
-            int size = 10;
-            int n = 5000;
-            double TOL = 10E-12;
+            //arrange
+            const double TOL = 10E-16;
+            CMatrix identity = CMatrix.Identity(_m.RowCount);
 
-            CMatrix m = new CMatrix(size, size);
-            CMatrix identity = CMatrix.Identity(size);
+            //action
+            CMatrix inv_m = CMatrix.Inverse(_m);
 
-            for (int idx = 0; idx < n; idx++)
-            {
-                _rand.Fill(m, -10000, 10000, 3);
-
-                //action
-                CMatrix inv_m = CMatrix.Inverse(m);
-
-                //assert
-                CMatrix.FuzzyEquals(m * inv_m, identity, TOL).Should().BeTrue();
-            }
+            //assert
+            CMatrix.FuzzyEquals(_m * inv_m, identity, TOL).Should().BeTrue();
         }
 
         [Test]
         public void SolveTest()
         {
-            int size = 10;
-            int n = 10000;
-            double TOL = 10E-10;
-
-            CMatrix a = new CMatrix(size, size);
-            CMatrix b = new CMatrix(size);
-
-            for (int idx = 0; idx < n; idx++)
+            //assert
+            double TOL = 10E-15;
+            CMatrix b = new CMatrix(new Complex[]
             {
-                _rand.Fill(a, -1000, 1000, 3);
-                _rand.Fill(b, -1000, 1000, 3);
+                new Complex(3, 5), new Complex(-8.5, 0), new Complex(0.5, -144), new Complex(0, 2)
+            });
 
-                //action
-                CMatrix x = CMatrix.Solve(a, b);
+            //action
+            CMatrix x = CMatrix.Solve(_m, b);
 
-                //assert
-                CMatrix.FuzzyEquals(a * x, b, TOL).Should().BeTrue();
-            }
+            //assert
+            CMatrix.FuzzyEquals(_m * x, b, TOL).Should().BeTrue();
         }
 
         [Test]
         public void CharacteristicPolynomialTest()
         {
-            int size = 4;
-            int n = 5000;
-            double TOL = 10E-5;
+            //arrange
+            double TOL = 10E-7;
+            CMatrix zero = new CMatrix(_m.RowCount, _m.ColumnCount);
 
-            CMatrix m = new CMatrix(size, size);
-            CMatrix zero = new CMatrix(size, size);
+            //action
+            CPolynomial poly = CMatrix.CharacteristicPolynomial(_m);
+            CMatrix test = poly.Evaluate(_m);
 
-            for (int idx = 0; idx < n; idx++)
-            {
-                _rand.Fill(m, -100, 100, 0);
-
-                //action
-                CPolynomial poly = CMatrix.CharacteristicPolynomial(m);
-                CMatrix test = poly.Evaluate(m);
-
-                //assert
-                CMatrix.FuzzyEquals(test, zero, TOL).Should().BeTrue();
-            }
+            //assert
+            CMatrix.FuzzyEquals(test, zero, TOL).Should().BeTrue();
         }
     }
 }
