@@ -46,7 +46,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.ComplexNumbers)]
     [Description("Calculates the argument of a complex number.")]
     [FunctionSignature("arg", "complex value")]
-    [ExampleUsage("arg(2 + 3i)", "0.98279372324732905")]
+    [ExampleUsage("arg(2 + 3i)", "0.982793723247329")]
     [ExampleUsage("arg(0)", "NaN")]
     public class ArgumentFuncExpression : UnaryExpression<Object>
     {

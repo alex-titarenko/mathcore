@@ -13,7 +13,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.Graphing)]
     [Description("Transforms Cartesian coordinates to polar.")]
     [FunctionSignature("cart2pol", "real x", "real y")]
-    [ExampleUsage("cart2pol(9, -2)", "{9.2195444572928889; -0.21866894587394195}")]
+    [ExampleUsage("cart2pol(9, -2)", "{9.21954445729289; -0.218668945873942}")]
     public class CartesianToPolarFuncExpression : BinaryExpression<Object>
     {
         public CartesianToPolarFuncExpression(Expression<Object> xExpression, Expression<Object> yExpression)
@@ -53,7 +53,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.Graphing)]
     [Description("Transforms Cartesian coordinates to spherical.")]
     [FunctionSignature("cart2sph", "real x", "real y", "real z")]
-    [ExampleUsage("cart2sph(9, -2, 3)", "{9.6953597148326587; -0.21866894587394195; 1.2562065842346306}")]
+    [ExampleUsage("cart2sph(9, -2, 3)", "{9.69535971483266; -0.218668945873942; 1.25620658423463}")]
     public class CartesianToSphericalFuncExpression : TernaryExpression<Object>
     {
         public CartesianToSphericalFuncExpression(Expression<Object> xExpression, Expression<Object> yExpression, Expression<Object> zExpression)
@@ -95,7 +95,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.Graphing)]
     [Description("Transforms Cartesian coordinates to cylindrical.")]
     [FunctionSignature("cart2cyl", "real x", "real y", "real z")]
-    [ExampleUsage("cart2cyl(9, -2, 3)", "{9.2195444572928889; -0.21866894587394195; 3}")]
+    [ExampleUsage("cart2cyl(9, -2, 3)", "{9.21954445729289; -0.218668945873942; 3}")]
     public class CartesianToCylindricalFuncExpression : TernaryExpression<Object>
     {
         public CartesianToCylindricalFuncExpression(Expression<Object> xExpression, Expression<Object> yExpression, Expression<Object> zExpression)

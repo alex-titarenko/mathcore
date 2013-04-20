@@ -14,6 +14,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.Interpolation)]
     [Description("Calculates the interpolated value at specified value using linear interpolation.")]
     [FunctionSignature("linterp", "real vector xValues", "real vector yValues", "real x")]
+    [ExampleUsage("linterp({1; 2; 5; 8}, {3; 12; -6; 0}, 7)", "-2")]
     public class LinearInterpolationFuncExpression : TernaryExpression<Object>
     {
         public LinearInterpolationFuncExpression(Expression<Object> xValuesExpression, Expression<Object> yValuesExpression, Expression<Object> xExpression)
@@ -36,6 +37,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.Interpolation)]
     [Description("Calculates the interpolated value at specified value using Newton's polynomial interpolation.")]
     [FunctionSignature("interp", "real vector xValues", "real vector yValues", "real x")]
+    [ExampleUsage("interp({1; 2; 5; 8}, {3; 12; -6; 0}, 5.5)", "-9.84375")]
     public class PolynomialInterpolationFuncExpression : TernaryExpression<Object>
     {
         public PolynomialInterpolationFuncExpression(Expression<Object> xValuesExpression, Expression<Object> yValuesExpression, Expression<Object> xExpression)

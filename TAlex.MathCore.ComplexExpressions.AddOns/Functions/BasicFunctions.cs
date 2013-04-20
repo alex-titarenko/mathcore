@@ -12,8 +12,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Category(Categories.Basic)]
     [Description("Calculates sign of a complex number.")]
     [FunctionSignature("sign", "complex value")]
-    [ExampleUsage("sing(12.8)", "1")]
-    [ExampleUsage("sing(-5)", "-1")]
+    [ExampleUsage("sign(12.8)", "1")]
+    [ExampleUsage("sign(-5)", "-1")]
     public class SignFuncExpression : UnaryExpression<Object>
     {
         public SignFuncExpression(Expression<Object> subExpression)
