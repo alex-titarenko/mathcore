@@ -121,6 +121,10 @@
     <value>Invalid object type. Expected type '{0}' but found '{1}'.</value>
     <comment>{0} - expected type, {1} - actual type</comment>
   </data>
+  <data name="EXC_VALUE_NOT_COMPLEX_MATRIX" xml:space="preserve">
+    <value>The value '{0}' is not a complex matrix.</value>
+    <comment>{0} - value</comment>
+  </data>
   <data name="EXC_VALUE_NOT_COMPLEX_NUMBER" xml:space="preserve">
     <value>The value '{0}' is not a complex number.</value>
     <comment>{0} - value</comment>

@@ -70,6 +70,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a complex matrix..
+        /// </summary>
+        internal static string EXC_VALUE_NOT_COMPLEX_MATRIX {
+            get {
+                return ResourceManager.GetString("EXC_VALUE_NOT_COMPLEX_MATRIX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a complex number..
         /// </summary>
         internal static string EXC_VALUE_NOT_COMPLEX_NUMBER {

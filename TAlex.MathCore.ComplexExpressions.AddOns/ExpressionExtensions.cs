@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.LinearAlgebra;
 
+
 namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
 {
     public static class ExpressionExtensions
@@ -14,58 +15,48 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
 
         public static int EvaluateAsInt32(this Expression<Object> expression)
         {
-            return AsInt32(expression.Evaluate());
-        }
+            Object o = expression.Evaluate();
 
-        public static double EvaluateAsDouble(this Expression<Object> expression)
-        {
-            return AsDouble(expression.Evaluate());
-        }
-
-        public static Complex EvaluateAsComplex(this Expression<Object> expression)
-        {
-            return AsComplex(expression.Evaluate());
-        }
-
-        //public static CMatrix EvaluateAsCMatrix(this Expression<Object> expression)
-        //{
-        //}
-
-        public static IList<double> EvaluateAsDoubleArray(this Expression<Object> expression)
-        {
-            return AsDoubleArray(expression.Evaluate());
-        }
-
-        #endregion
-
-
-        public static int AsInt32(object o)
-        {
             if (o is Int32) return (int)o;
             else if (o is Complex) return AsInt32((Complex)o);
             throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_INTEGER, o));
         }
 
-        public static double AsDouble(object o)
+        public static double EvaluateAsDouble(this Expression<Object> expression)
         {
+            Object o = expression.Evaluate();
+
             if (o is Double) return (double)o;
             else if (o is Complex) return AsDouble((Complex)o);
             throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_REAL, o));
         }
 
-        private static Complex AsComplex(object o)
+        public static Complex EvaluateAsComplex(this Expression<Object> expression)
         {
+            Object o = expression.Evaluate();
+
             if (o is Complex) return (Complex)o;
             throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_COMPLEX_NUMBER, o));
         }
 
-        private static double[] AsDoubleArray(object o)
+        public static CMatrix EvaluateAsCMatrix(this Expression<Object> expression)
         {
+            Object o = expression.Evaluate();
+
+            if (o is CMatrix) return (CMatrix)o;
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_COMPLEX_MATRIX, o));
+        }
+
+        public static IList<double> EvaluateAsDoubleArray(this Expression<Object> expression)
+        {
+            Object o = expression.Evaluate();
+
             if (o is CMatrix) return AsDoubleArray((CMatrix)o);
             throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_OBJECT_TYPE, "double array", o.GetType()));
         }
 
-        
+        #endregion
+       
 
         private static int AsInt32(Complex c)
         {
@@ -80,7 +71,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
             throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_REAL, c));
         }
 
-        private static double[] AsDoubleArray(this CMatrix matrix)
+        private static double[] AsDoubleArray(CMatrix matrix)
         {
             if (matrix.IsVector && matrix.IsReal)
             {
@@ -88,8 +79,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
             }
             else
             {
-                //TODO: Need to correct.
-                throw new ArgumentException();
+                throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_OBJECT_TYPE, "double array", matrix.GetType()));
             }
         }
     }
