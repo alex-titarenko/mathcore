@@ -212,22 +212,20 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The sample variance of the elements of v.</returns>
-        public static double SampleVariance(ICollection<double> v)
+        public static double SampleVariance(IEnumerable<double> v)
         {
-            if (v.Count == 1)
-            {
-                return 0.0;
-            }
-
+            int count = 0;
             double sum = 0.0;
             double mean = Mean(v);
 
             foreach (double item in v)
             {
                 sum += ExMath.Pow(item - mean, 2);
+                count++;
             }
 
-            return sum / (v.Count - 1);
+            if (count == 1) return 0.0;
+            return sum / (count - 1);
         }
 
         /// <summary>
@@ -235,22 +233,20 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The sample variance of the elements of v.</returns>
-        public static double SampleVariance(ICollection<Complex> v)
+        public static double SampleVariance(IEnumerable<Complex> v)
         {
-            if (v.Count == 1)
-            {
-                return 0.0;
-            }
-
+            int count = 0;
             double sum = 0.0;
             Complex mean = Mean(v);
 
             foreach (Complex item in v)
             {
                 sum += Complex.AbsSquared(item - mean);
+                count++;
             }
 
-            return sum / (v.Count - 1);
+            if (count == 1) return 0.0;
+            return sum / (count - 1);
         }
 
         /// <summary>
@@ -258,7 +254,7 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The square root of the sample variance of the elements of v.</returns>
-        public static double SampleStandardDeviation(ICollection<double> v)
+        public static double SampleStandardDeviation(IEnumerable<double> v)
         {
             return Math.Sqrt(SampleVariance(v));
         }
@@ -268,7 +264,7 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The square root of the sample variance of the elements of v.</returns>
-        public static double SampleStandardDeviation(ICollection<Complex> v)
+        public static double SampleStandardDeviation(IEnumerable<Complex> v)
         {
             return Math.Sqrt(SampleVariance(v));
         }
@@ -454,22 +450,19 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The population variance of the elements of v.</returns>
-        public static double PopulationVariance(ICollection<double> v)
+        public static double PopulationVariance(IEnumerable<double> v)
         {
-            if (v.Count == 1)
-            {
-                return 0.0;
-            }
-
+            int count = 0;
             double sum = 0.0;
             double mean = Mean(v);
 
             foreach (double item in v)
             {
                 sum += ExMath.Pow(item - mean, 2);
+                count++;
             }
 
-            return sum / v.Count;
+            return sum / count;
         }
 
         /// <summary>
@@ -477,22 +470,19 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The population variance of the elements of v.</returns>
-        public static double PopulationVariance(ICollection<Complex> v)
+        public static double PopulationVariance(IEnumerable<Complex> v)
         {
-            if (v.Count == 1)
-            {
-                return 0.0;
-            }
-
+            int count = 0;
             double sum = 0.0;
             Complex mean = Mean(v);
 
             foreach (Complex item in v)
             {
                 sum += Complex.AbsSquared(item - mean);
+                count++;
             }
 
-            return sum / v.Count;
+            return sum / count;
         }
 
         /// <summary>
@@ -500,7 +490,7 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The square root of the population variance of the elements of v.</returns>
-        public static double PopulationStandardDeviation(ICollection<double> v)
+        public static double PopulationStandardDeviation(IEnumerable<double> v)
         {
             return Math.Sqrt(PopulationVariance(v));
         }
@@ -510,7 +500,7 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The square root of the population variance of the elements of v.</returns>
-        public static double PopulationStandardDeviation(ICollection<Complex> v)
+        public static double PopulationStandardDeviation(IEnumerable<Complex> v)
         {
             return Math.Sqrt(PopulationVariance(v));
         }

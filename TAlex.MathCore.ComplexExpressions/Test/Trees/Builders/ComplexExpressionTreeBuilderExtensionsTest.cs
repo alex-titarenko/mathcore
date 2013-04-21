@@ -107,7 +107,7 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
                     object actual = tree.Evaluate();
 
                     //assert
-                    (actual is Complex || actual is CMatrix).Should().BeTrue();
+                    (actual is Complex || actual is CMatrix).Should().BeTrue("Result must have be only following types: Complex, Matrix.");
 
                     if (!exampleUsage.CanMultipleResults)
                     {

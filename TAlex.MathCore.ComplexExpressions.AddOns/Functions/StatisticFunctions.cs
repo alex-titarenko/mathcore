@@ -364,4 +364,85 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             return (Complex)MathStats.Mode(SubExpression.EvaluateAsCMatrix());
         }
     }
+
+
+    [DisplayName("Population variance")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the population variance of the elements of a complex matrix.")]
+    [FunctionSignature("pvar", "complex matrix m")]
+    [ExampleUsage("pvar({2; 3; 6; 8})", "5.6875")]
+    [ExampleUsage("pvar({-2i, 18; 3.8, 3 - 6i})", "54.42")]
+    [ExampleUsage("pvar({5})", "0")]
+    public class PopulationVarianceFuncExpression : UnaryExpression<Object>
+    {
+        public PopulationVarianceFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.PopulationVariance(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Sample variance")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the sample variance of the elements of a complex matrix.")]
+    [FunctionSignature("svar", "complex matrix m")]
+    [ExampleUsage("svar({2; -13; 0; 8})", "78.25")]
+    [ExampleUsage("svar({2, 2.8; -4.7, -2 - 3.5i})", "15.405")]
+    [ExampleUsage("svar({-8i})", "0")]
+    public class SampleVarianceFuncExpression : UnaryExpression<Object>
+    {
+        public SampleVarianceFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.SampleVariance(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Population std. deviation")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the square root of the population variance of the elements of a complex matrix.")]
+    [FunctionSignature("pstdev", "complex matrix m")]
+    [ExampleUsage("pstdev({2; 3; 6; 8})", "2.38484800354236")]
+    [ExampleUsage("pstdev({-2i, 18; 3.8, 3 - 6i})", "7.3769912566032")]
+    [ExampleUsage("pstdev({5})", "0")]
+    public class PopulationStandardDeviationFuncExpression : UnaryExpression<Object>
+    {
+        public PopulationStandardDeviationFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.PopulationStandardDeviation(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Sample std. deviation")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the square root of the sample variance of the elements of a complex matrix.")]
+    [FunctionSignature("sstdev", "complex matrix m")]
+    [ExampleUsage("sstdev({2; -13; 0; 8})", "8.84590300647707")]
+    [ExampleUsage("sstdev({2, 2.8; -4.7, -2 - 3.5i})", "3.92492038135807")]
+    [ExampleUsage("sstdev({12})", "0")]
+    public class SampleStandardDeviationFuncExpression : UnaryExpression<Object>
+    {
+        public SampleStandardDeviationFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)MathStats.SampleStandardDeviation(SubExpression.EvaluateAsCMatrix());
+        }
+    }
 }
