@@ -615,26 +615,28 @@ namespace TAlex.MathCore.Statistics
         /// <param name="k">The order of the moment.</param>
         /// <returns>The moment of k-order of the elements of v.</returns>
         /// <exception cref="System.ArgumentException">The value of k less than one.</exception>
-        public static double PopulationMoment(ICollection<double> v, int k)
+        public static double PopulationMoment(IEnumerable<double> v, int k)
         {
             if (k < 1)
             {
                 throw new ArgumentException("The order of the moment must be greater than zero.");
             }
 
-            if (v.Count == 0)
+            if (!v.Any())
             {
                 return double.NaN;
             }
 
+            int count = 0;
             double sum = 0.0;
 
             foreach (double item in v)
             {
                 sum += ExMath.Pow(item, k);
+                count++;
             }
 
-            return sum / v.Count;
+            return sum / count;
         }
 
         /// <summary>
@@ -644,26 +646,28 @@ namespace TAlex.MathCore.Statistics
         /// <param name="k">The order of the moment.</param>
         /// <returns>The moment of k-order of the elements of v.</returns>
         /// <exception cref="System.ArgumentException">The value of k less than one.</exception>
-        public static Complex PopulationMoment(ICollection<Complex> v, int k)
+        public static Complex PopulationMoment(IEnumerable<Complex> v, int k)
         {
             if (k < 1)
             {
                 throw new ArgumentException("The order of the moment must be greater than zero.");
             }
 
-            if (v.Count == 0)
+            if (!v.Any())
             {
                 return Complex.NaN;
             }
 
-            Complex sum = 0.0;
+            int count = 0;
+            Complex sum = Complex.Zero;
 
             foreach (Complex item in v)
             {
                 sum += Complex.Pow(item, k);
+                count++;
             }
 
-            return sum / v.Count;
+            return sum / count;
         }
 
         /// <summary>
@@ -673,14 +677,14 @@ namespace TAlex.MathCore.Statistics
         /// <param name="k">The order of the central moment.</param>
         /// <returns>The central moment of k-order of the elements of v.</returns>
         /// <exception cref="System.ArgumentException">The value of k less than one.</exception>
-        public static double PopulationCentralMoment(ICollection<double> v, int k)
+        public static double PopulationCentralMoment(IEnumerable<double> v, int k)
         {
             if (k < 1)
             {
                 throw new ArgumentException("The order of the central moment must be greater than zero.");
             }
 
-            if (v.Count == 0)
+            if (!v.Any())
             {
                 return double.NaN;
             }
@@ -690,15 +694,17 @@ namespace TAlex.MathCore.Statistics
                 return 0.0;
             }
 
+            int count = 0;
             double mean = Mean(v);
             double sum = 0.0;
 
             foreach (double item in v)
             {
                 sum += ExMath.Pow(item - mean, k);
+                count++;
             }
 
-            return sum / v.Count;
+            return sum / count;
         }
 
         /// <summary>
@@ -708,14 +714,14 @@ namespace TAlex.MathCore.Statistics
         /// <param name="k">The order of the central moment.</param>
         /// <returns>The central moment of k-order of the elements of v.</returns>
         /// <exception cref="System.ArgumentException">The value of k less than one.</exception>
-        public static Complex PopulationCentralMoment(ICollection<Complex> v, int k)
+        public static Complex PopulationCentralMoment(IEnumerable<Complex> v, int k)
         {
             if (k < 1)
             {
                 throw new ArgumentException("The order of the central moment must be greater than zero.");
             }
 
-            if (v.Count == 0)
+            if (!v.Any())
             {
                 return Complex.NaN;
             }
@@ -725,15 +731,17 @@ namespace TAlex.MathCore.Statistics
                 return Complex.Zero;
             }
 
+            int count = 0;
             Complex mean = Mean(v);
-            Complex sum = 0.0;
+            Complex sum = Complex.Zero;
 
             foreach (Complex item in v)
             {
                 sum += Complex.Pow(item - mean, k);
+                count++;
             }
 
-            return sum / v.Count;
+            return sum / count;
         }
 
         /// <summary>
@@ -1085,9 +1093,9 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The array containing the frequencies of occurrence of the values of v.</returns>
-        public static double[] Histogram(double[] v)
+        public static double[] Histogram(ICollection<double> v)
         {
-            int intervals = (int)Math.Round(1 + Math.Log(v.Length, 2));
+            int intervals = (int)Math.Round(1 + Math.Log(v.Count, 2));
             return Histogram(v, intervals);
         }
 
@@ -1097,14 +1105,14 @@ namespace TAlex.MathCore.Statistics
         /// <param name="v">An array of real numbers.</param>
         /// <param name="intervals">An integer number representing intervals count.</param>
         /// <returns>The array containing the frequencies of occurrence of the values of v in intervals.</returns>
-        public static double[] Histogram(double[] v, int intervals)
+        public static double[] Histogram(IEnumerable<double> v, int intervals)
         {
-            v = (double[])v.Clone();
-            Array.Sort(v);
+            List<double> ordered_v = new List<double>(v);
+            ordered_v.Sort();
 
-            int n = v.Length;
-            double min = v[0];
-            double max = v[n - 1];
+            int n = ordered_v.Count;
+            double min = ordered_v[0];
+            double max = ordered_v[n - 1];
 
             int k = intervals;
             double h = (max - min) / k;
@@ -1117,7 +1125,7 @@ namespace TAlex.MathCore.Statistics
                 int count = 0;
                 double endp = min + (i + 1) * h;
 
-                while (j < n && v[j] <= endp)
+                while (j < n && ordered_v[j] <= endp)
                 {
                     count++;
                     j++;
@@ -1138,19 +1146,19 @@ namespace TAlex.MathCore.Statistics
         /// <exception cref="System.ArgumentException">
         /// The elements of intervals are not sorted in ascending order.
         /// </exception>
-        public static double[] Histogram(double[] v, double[] intervals)
+        public static double[] Histogram(IEnumerable<double> v, IList<double> intervals)
         {
-            v = (double[])v.Clone();
-            Array.Sort(v);
+            List<double> ordered_v = new List<double>(v);
+            ordered_v.Sort();
 
-            int n = v.Length;
+            int n = ordered_v.Count;
 
-            int k = intervals.Length - 1;
+            int k = intervals.Count - 1;
             double[] frequencies = new double[k];
 
             int j = 0;
 
-            while (j < n && v[j] < intervals[0])
+            while (j < n && ordered_v[j] < intervals[0])
             {
                 j++;
             }
@@ -1165,7 +1173,7 @@ namespace TAlex.MathCore.Statistics
                 int count = 0;
                 double endp = intervals[i + 1];
 
-                while (j < n && v[j] < endp)
+                while (j < n && ordered_v[j] < endp)
                 {
                     count++;
                     j++;
@@ -1174,7 +1182,7 @@ namespace TAlex.MathCore.Statistics
                 frequencies[i] = count / (double)n;
             }
 
-            while (j < n && v[j] == intervals[k])
+            while (j < n && ordered_v[j] == intervals[k])
             {
                 frequencies[k - 1] += 1.0 / n;
                 j++;

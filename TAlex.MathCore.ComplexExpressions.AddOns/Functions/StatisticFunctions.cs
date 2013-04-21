@@ -521,4 +521,217 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             return MathStats.SampleKurtosis(SubExpression.EvaluateAsCMatrix());
         }
     }
+
+    [DisplayName("Moment")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the moment of a specific order of the elements of a complex matrix.")]
+    [FunctionSignature("moment", "complex matrix m", "integer order")]
+    [ExampleUsage("moment({-14; 13; 2; -66}, 2)", "1181.25")]
+    [ExampleUsage("moment({-22, 2 - 18.4i; 0, 3}, 3)", "-3161.09 + 1502.176i")]
+    public class MomentFuncExpression : BinaryExpression<Object>
+    {
+        public MomentFuncExpression(Expression<Object> mExpression, Expression<Object> orderExpression)
+            : base(mExpression, orderExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            CMatrix m = LeftExpression.EvaluateAsCMatrix();
+            int order = RightExpression.EvaluateAsInt32();
+
+            return MathStats.PopulationMoment(m, order);
+        }
+    }
+
+    [DisplayName("Central moment")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the central moment of a specific order of the elements of a complex matrix.")]
+    [FunctionSignature("cmoment", "complex matrix m", "integer order")]
+    [ExampleUsage("cmoment({-14; 13; 2; -66}, 2)", "917.1875")]
+    [ExampleUsage("cmoment({-22, 2 - 18.4i; 0, 3}, 3)", "-2016.09375 + 1510.341i")]
+    public class CentralMomentFuncExpression : BinaryExpression<Object>
+    {
+        public CentralMomentFuncExpression(Expression<Object> mExpression, Expression<Object> orderExpression)
+            : base(mExpression, orderExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            CMatrix m = LeftExpression.EvaluateAsCMatrix();
+            int order = RightExpression.EvaluateAsInt32();
+
+            return MathStats.PopulationCentralMoment(m, order);
+        }
+    }
+
+
+    [DisplayName("Population covariance")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the population covariance of two sets of values.")]
+    [FunctionSignature("pcov", "complex matrix m1", "complex matrix m2")]
+    [ExampleUsage("pcov({-14; 13; 2; -66}, {1; 1.4; -111; 5.5})", "-564.04375")]
+    [ExampleUsage("pcov({-22, 2 - 18.4i; 0, 3}, {2.4i, 3.3; 44, -0.2})", "54.30375 + 49.635i")]
+    public class PopulationCovarianceFuncExpression : BinaryExpression<Object>
+    {
+        public PopulationCovarianceFuncExpression(Expression<Object> m1Expression, Expression<Object> m2Expression)
+            : base(m1Expression, m2Expression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            IList<Complex> m1 = LeftExpression.EvaluateAsExpandableComplexArray();
+            IList<Complex> m2 = RightExpression.EvaluateAsExpandableComplexArray();
+
+            return MathStats.PopulationCovariance(m1, m2);
+        }
+    }
+    
+    [DisplayName("Sample covariance")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the sample covariance of two sets of values.")]
+    [FunctionSignature("scov", "complex matrix m1", "complex matrix m2")]
+    [ExampleUsage("scov({-14; 13; 2; -66}, {1; 1.4; -111; 6.6})", "-770.3")]
+    [ExampleUsage("scov({-22, 2 - 18.4i; 0, 3}, {2.4i, 3.3; 44, -0.2})", "72.405 + 66.18i")]
+    public class SampleCovarianceFuncExpression : BinaryExpression<Object>
+    {
+        public SampleCovarianceFuncExpression(Expression<Object> m1Expression, Expression<Object> m2Expression)
+            : base(m1Expression, m2Expression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            IList<Complex> m1 = LeftExpression.EvaluateAsExpandableComplexArray();
+            IList<Complex> m2 = RightExpression.EvaluateAsExpandableComplexArray();
+
+            return MathStats.SampleCovariance(m1, m2);
+        }
+    }
+
+    [DisplayName("Correlation")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the Pearson correlation of two sets of values.")]
+    [FunctionSignature("corr", "complex matrix m1", "complex matrix m2")]
+    [ExampleUsage("corr({-14; 13; 2; -66}, {1; 1.4; -111; 6.6})", "-0.3860576577199")]
+    [ExampleUsage("corr({-22, 2 - 18.4i; 0, 3}, {-21, 2.5 - 18.4i; 3, 2})", "0.993950652653727 + 0.0102431643927006i")]
+    public class CorrelationFuncExpression : BinaryExpression<Object>
+    {
+        public CorrelationFuncExpression(Expression<Object> m1Expression, Expression<Object> m2Expression)
+            : base(m1Expression, m2Expression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            IList<Complex> m1 = LeftExpression.EvaluateAsExpandableComplexArray();
+            IList<Complex> m2 = RightExpression.EvaluateAsExpandableComplexArray();
+
+            return MathStats.Correlation(m1, m2);
+        }
+    }
+
+
+    [DisplayName("Sum")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the sum of the elements of a complex matrix.")]
+    [FunctionSignature("sum", "complex matrix m")]
+    [ExampleUsage("sum({-12; 15; 2; 6.6})", "11.6")]
+    [ExampleUsage("sum({-14i, 2 - 0.2i; 2, 3 - 3i})", "7 - 17.2i")]
+    public class SumFuncExpression : UnaryExpression<Object>
+    {
+        public SumFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return MathStats.Sum(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Sum of squares")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the sum of squares of the elements of a complex matrix.")]
+    [FunctionSignature("sumsq", "complex matrix m")]
+    [ExampleUsage("sumsq({-12; 15; 2; 6.6})", "416.56")]
+    [ExampleUsage("sumsq({-14i, 2 - 0.2i; 2, 3 - 3i})", "-188.04 - 18.8i")]
+    public class SumOfSquaresFuncExpression : UnaryExpression<Object>
+    {
+        public SumOfSquaresFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return MathStats.SumOfSquares(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Product")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the product of the elements of a complex matrix.")]
+    [FunctionSignature("prod", "complex matrix m")]
+    [ExampleUsage("prod({-12; 15; 2; 6.6})", "-2376")]
+    [ExampleUsage("prod({-12; 15; 0; 6.6})", "0")]
+    [ExampleUsage("prod({-14i, 2 - 0.2i; 2, 3 - 3i})", "-184.8 - 151.2i")]
+    public class ProductFuncExpression : UnaryExpression<Object>
+    {
+        public ProductFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return MathStats.Product(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+
+    [DisplayName("Histogram")]
+    [Category(Categories.Statistics)]
+    [Description("Returns an array containing the frequencies of occurrence of values in specified intervals.")]
+    [FunctionSignature("hist", "real vector v")]
+    [FunctionSignature("hist", "real vector v", "integer intvals")]
+    [FunctionSignature("hist", "real vector v", "real vector intvals")]
+    [ExampleUsage("hist({15; 28; 6.6; 6; -12})", "{0.2; 0.4; 0.4}")]
+    [ExampleUsage("hist({-12; -3; 6.6; -10}, 2)", "{0.75; 0.25}")]
+    [ExampleUsage("hist({-12; 15; 0; 6.6}, {-15; 5; 30})", "{0.5; 0.5}")]
+    public class HistogramFuncExpression : BinaryExpression<Object>
+    {
+        public HistogramFuncExpression(Expression<Object> vExpression)
+            : this(vExpression, null)
+        {
+        }
+
+        public HistogramFuncExpression(Expression<Object> vExpression, Expression<Object> intvalsExpression)
+            : base(vExpression, intvalsExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            IList<double> v = LeftExpression.EvaluateAsDoubleArray();
+
+            if (RightExpression == null)
+            {
+                return new CMatrix(MathStats.Histogram(v));
+            }
+            else
+            {
+                object intvals = RightExpression.Evaluate();
+                if (intvals is Complex)
+                    return new CMatrix(MathStats.Histogram(v, ExpressionExtensions.AsInt32((Complex)intvals)));
+                else if (intvals is CMatrix)
+                    return new CMatrix(MathStats.Histogram(v, ExpressionExtensions.AsDoubleArray((CMatrix)intvals)));
+                else
+                    throw ExceptionHelper.ThrowWrongArgumentType(intvals);
+            }
+        }
+    }
 }
