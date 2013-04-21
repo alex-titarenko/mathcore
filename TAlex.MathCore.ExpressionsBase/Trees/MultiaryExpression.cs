@@ -8,7 +8,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
     {
         #region Fields
 
-        public ICollection<Expression<T>> Expressions;
+        public IList<Expression<T>> Expressions;
 
         #endregion
 
