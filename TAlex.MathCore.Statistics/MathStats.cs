@@ -274,16 +274,11 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The sample skewness of the elements of v.</returns>
-        public static double SampleSkewness(ICollection<double> v)
+        public static double SampleSkewness(IEnumerable<double> v)
         {
-            if (v.Count < 3)
-            {
-                return double.NaN;
-            }
-
-            int n = v.Count;
             double mean = Mean(v);
 
+            int count = 0;
             double sumcube = 0.0;
             double sumsq = 0.0;
 
@@ -293,10 +288,13 @@ namespace TAlex.MathCore.Statistics
                 double sq = c * c;
                 sumcube += sq * c;
                 sumsq += sq;
+                count++;
             }
 
-            double Stdev = Math.Sqrt(sumsq / (n - 1));
-            return (n * sumcube) / ((n - 1.0) * (n - 2.0) * ExMath.Pow(Stdev, 3));
+            if (count < 3) return double.NaN;
+
+            double Stdev = Math.Sqrt(sumsq / (count - 1));
+            return (count * sumcube) / ((count - 1.0) * (count - 2.0) * ExMath.Pow(Stdev, 3));
         }
 
         /// <summary>
@@ -304,16 +302,11 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The sample skewness of the elements of v.</returns>
-        public static Complex SampleSkewness(ICollection<Complex> v)
+        public static Complex SampleSkewness(IEnumerable<Complex> v)
         {
-            if (v.Count < 3)
-            {
-                return Complex.NaN;
-            }
-
-            int n = v.Count;
             Complex mean = Mean(v);
 
+            int count = 0;
             Complex sumcube = Complex.Zero;
             Complex sumsq = Complex.Zero;
 
@@ -323,10 +316,13 @@ namespace TAlex.MathCore.Statistics
                 Complex sq = c * c;
                 sumcube += sq * c;
                 sumsq += sq;
+                count++;
             }
 
-            Complex Stdev = Complex.Sqrt(sumsq / (n - 1));
-            return (n * sumcube) / ((n - 1.0) * (n - 2.0) * Complex.Pow(Stdev, 3));
+            if (count < 3) return Complex.NaN;
+
+            Complex Stdev = Complex.Sqrt(sumsq / (count - 1));
+            return (count * sumcube) / ((count - 1.0) * (count - 2.0) * Complex.Pow(Stdev, 3));
         }
 
         /// <summary>
@@ -334,16 +330,11 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The sample kurtosis of the elements of v.</returns>
-        public static double SampleKurtosis(ICollection<double> v)
+        public static double SampleKurtosis(IEnumerable<double> v)
         {
-            if (v.Count < 4)
-            {
-                return double.NaN;
-            }
-
-            int n = v.Count;
             double mean = Mean(v);
 
+            int count = 0;
             double num = 0.0;
             double sumsq = 0.0;
 
@@ -353,11 +344,14 @@ namespace TAlex.MathCore.Statistics
                 double sq = c * c;
                 num += sq * sq;
                 sumsq += sq;
+                count++;
             }
 
-            double Stdev4 = ExMath.Pow(sumsq / (n - 1), 2);
-            return (n * (n + 1.0) / ((n - 1.0) * (n - 2.0) * (n - 3.0))) * (num / Stdev4) -
-                3 * ((n - 1.0) * (n - 1.0)) / ((n - 2.0) * (n - 3.0));
+            if (count < 4) return double.NaN;
+
+            double Stdev4 = ExMath.Pow(sumsq / (count - 1), 2);
+            return (count * (count + 1.0) / ((count - 1.0) * (count - 2.0) * (count - 3.0))) * (num / Stdev4) -
+                3 * ((count - 1.0) * (count - 1.0)) / ((count - 2.0) * (count - 3.0));
         }
 
         /// <summary>
@@ -365,16 +359,11 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The sample kurtosis of the elements of v.</returns>
-        public static Complex SampleKurtosis(ICollection<Complex> v)
+        public static Complex SampleKurtosis(IEnumerable<Complex> v)
         {
-            if (v.Count < 4)
-            {
-                return Complex.NaN;
-            }
-
-            int n = v.Count;
             Complex mean = Mean(v);
 
+            int count = 0;
             Complex num = Complex.Zero;
             Complex sumsq = Complex.Zero;
 
@@ -384,11 +373,14 @@ namespace TAlex.MathCore.Statistics
                 Complex sq = c * c;
                 num += sq * sq;
                 sumsq += sq;
+                count++;
             }
 
-            Complex Stdev4 = Complex.Pow(sumsq / (n - 1), 2);
-            return (n * (n + 1.0) / ((n - 1.0) * (n - 2.0) * (n - 3.0))) * (num / Stdev4) -
-                3 * ((n - 1.0) * (n - 1.0)) / ((n - 2.0) * (n - 3.0));            
+            if (count < 4) return Complex.NaN;
+
+            Complex Stdev4 = Complex.Pow(sumsq / (count - 1), 2);
+            return (count * (count + 1.0) / ((count - 1.0) * (count - 2.0) * (count - 3.0))) * (num / Stdev4) -
+                3 * ((count - 1.0) * (count - 1.0)) / ((count - 2.0) * (count - 3.0));            
         }
 
         /// <summary>
@@ -510,16 +502,11 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The population skewness of the elements of v.</returns>
-        public static double PopulationSkewness(ICollection<double> v)
+        public static double PopulationSkewness(IEnumerable<double> v)
         {
-            if (v.Count < 3)
-            {
-                return double.NaN;
-            }
-
-            int n = v.Count;
             double mean = Mean(v);
 
+            int count = 0;
             double sumcube = 0.0;
             double sumsq = 0.0;
 
@@ -529,10 +516,13 @@ namespace TAlex.MathCore.Statistics
                 double sq = c * c;
                 sumcube += sq * c;
                 sumsq += sq;
+                count++;
             }
 
-            double stdev = Math.Sqrt(sumsq / n);
-            return (sumcube / n) / ExMath.Pow(stdev, 3);
+            if (count < 3) return double.NaN;
+
+            double stdev = Math.Sqrt(sumsq / count);
+            return (sumcube / count) / ExMath.Pow(stdev, 3);
         }
 
         /// <summary>
@@ -540,16 +530,11 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The population skewness of the elements of v.</returns>
-        public static Complex PopulationSkewness(ICollection<Complex> v)
+        public static Complex PopulationSkewness(IEnumerable<Complex> v)
         {
-            if (v.Count < 3)
-            {
-                return Complex.NaN;
-            }
-
-            int n = v.Count;
             Complex mean = Mean(v);
 
+            int count = 0;
             Complex sumcube = Complex.Zero;
             Complex sumsq = Complex.Zero;
 
@@ -559,10 +544,12 @@ namespace TAlex.MathCore.Statistics
                 Complex sq = c * c;
                 sumcube += sq * c;
                 sumsq += sq;
+                count++;
             }
 
-            Complex stdev = Complex.Sqrt(sumsq / n);
-            return (sumcube / n) / Complex.Pow(stdev, 3);
+            if (count < 3) return Complex.NaN;
+            Complex stdev = Complex.Sqrt(sumsq / count);
+            return (sumcube / count) / Complex.Pow(stdev, 3);
         }
 
         /// <summary>
@@ -570,16 +557,11 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of real numbers.</param>
         /// <returns>The population kurtosis of the elements of v.</returns>
-        public static double PopulationKurtosis(ICollection<double> v)
+        public static double PopulationKurtosis(IEnumerable<double> v)
         {
-            if (v.Count < 4)
-            {
-                return double.NaN;
-            }
-
-            int n = v.Count;
             double mean = Mean(v);
 
+            int count = 0;
             double num = 0.0;
             double sumsq = 0.0;
 
@@ -589,10 +571,13 @@ namespace TAlex.MathCore.Statistics
                 double sq = c * c;
                 num += sq * sq;
                 sumsq += sq;
+                count++;
             }
 
-            double Stdev4 = ExMath.Pow(sumsq / n, 2);
-            return (num / n) / Stdev4 - 3;
+            if (count < 4) return double.NaN;
+
+            double Stdev4 = ExMath.Pow(sumsq / count, 2);
+            return (num / count) / Stdev4 - 3;
         }
 
         /// <summary>
@@ -600,16 +585,11 @@ namespace TAlex.MathCore.Statistics
         /// </summary>
         /// <param name="v">An array of complex numbers.</param>
         /// <returns>The population kurtosis of the elements of v.</returns>
-        public static Complex PopulationKurtosis(ICollection<Complex> v)
+        public static Complex PopulationKurtosis(IEnumerable<Complex> v)
         {
-            if (v.Count < 4)
-            {
-                return Complex.NaN;
-            }
-
-            int n = v.Count;
             Complex mean = Mean(v);
 
+            int count = 0;
             Complex num = Complex.Zero;
             Complex sumsq = 0.0;
 
@@ -619,10 +599,13 @@ namespace TAlex.MathCore.Statistics
                 Complex sq = c * c;
                 num += sq * sq;
                 sumsq += sq;
+                count++;
             }
 
-            Complex Stdev4 = Complex.Pow(sumsq / n, 2);
-            return (num / n) / Stdev4 - 3;
+            if (count < 4) return Complex.NaN;
+
+            Complex Stdev4 = Complex.Pow(sumsq / count, 2);
+            return (num / count) / Stdev4 - 3;
         }
 
         /// <summary>

@@ -445,4 +445,80 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             return (Complex)MathStats.SampleStandardDeviation(SubExpression.EvaluateAsCMatrix());
         }
     }
+
+    [DisplayName("Population skewness")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the population skewness of the elements of a complex matrix.")]
+    [FunctionSignature("pskew", "complex matrix m")]
+    [ExampleUsage("pskew({2.2; -6; 0; 6})", "-0.349105920180674")]
+    [ExampleUsage("pskew({-2i, 18; 3.8, 3 - 6i})", "1.32062163212182 - 0.023737045200059i")]
+    public class PopulationSkewnessFuncExpression : UnaryExpression<Object>
+    {
+        public PopulationSkewnessFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return MathStats.PopulationSkewness(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Sample skewness")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the sample skewness of the elements of a complex matrix.")]
+    [FunctionSignature("sskew", "complex matrix m")]
+    [ExampleUsage("sskew({0.4; -6; 4; 6})", "-0.984814784355962")]
+    [ExampleUsage("sskew({-4i + 5, 1.3; 13.1, 3 - 6i})", "4.03612644357173 + 0.295132430675187i")]
+    public class SampleSkewnessFuncExpression : UnaryExpression<Object>
+    {
+        public SampleSkewnessFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return MathStats.SampleSkewness(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Population kurtosis")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the population kurtosis of the elements of a complex matrix.")]
+    [FunctionSignature("pkurt", "complex matrix m")]
+    [ExampleUsage("pkurt({-14; 13; 2; -66})", "-0.928968973993598")]
+    [ExampleUsage("pkurt({-22, 2 - 18.4i; 0, 3})", "-1.81674986052611 + 2.79477015182896i")]
+    public class PopulationKurtosisFuncExpression : UnaryExpression<Object>
+    {
+        public PopulationKurtosisFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return MathStats.PopulationKurtosis(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Sample kurtosis")]
+    [Category(Categories.Statistics)]
+    [Description("Calculates the sample kurtosis of the elements of a complex matrix.")]
+    [FunctionSignature("skurt", "complex matrix m")]
+    [ExampleUsage("skurt({-14; 13; 2; -66})", "2.03273269504801")]
+    [ExampleUsage("skurt({-22, 2 - 18.4i; 0, 3})", "-4.62562395394586 + 20.9607761387172i")]
+    public class SampleKurtosisFuncExpression : UnaryExpression<Object>
+    {
+        public SampleKurtosisFuncExpression(Expression<Object> mExpression)
+            : base(mExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return MathStats.SampleKurtosis(SubExpression.EvaluateAsCMatrix());
+        }
+    }
 }
