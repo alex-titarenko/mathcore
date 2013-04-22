@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.LinearAlgebra;
 
 
@@ -76,6 +77,19 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
         public static IList<Complex> EvaluateAsExpandableComplexArray(this Expression<Object> expression)
         {
             return new List<Complex>(EvaluateAsCMatrix(expression));
+        }
+
+
+        public static Func<T, T> EvaluateAsFunction<T>(this Expression<Object> expression, Expression<Object> var)
+        {
+            VariableExpression<Object> varExpr = var as VariableExpression<Object>;
+            if (varExpr == null)
+            {
+                throw new ArgumentException();
+            }
+
+            Func<Object, Object> tempFunc = ParametricFunctionCreator.CreateOneParametricFunction<Object>(expression, varExpr.VariableName);
+            return x => (T)tempFunc(x);
         }
 
         #endregion
