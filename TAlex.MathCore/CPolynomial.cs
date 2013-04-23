@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 using System.Globalization;
 using System.Xml.Serialization;
 using System.Xml;
@@ -107,21 +108,18 @@ namespace TAlex.MathCore
         /// Initializes a complex polynomial from a real array.
         /// </summary>
         /// <param name="data">One-dimensional real array.</param>
-        public CPolynomial(double[] data)
+        public CPolynomial(IEnumerable<double> data)
         {
-            _coeffs = new Complex[data.Length];
-
-            for (int i = 0; i < data.Length; i++)
-                _coeffs[i] = data[i];
+            _coeffs = data.Select(x => (Complex)x).ToArray();
         }
 
         /// <summary>
         /// Initializes a complex polynomial from a complex array.
         /// </summary>
         /// <param name="data">One-dimensional complex array.</param>
-        public CPolynomial(Complex[] data)
+        public CPolynomial(IEnumerable<Complex> data)
         {
-            _coeffs = (Complex[])data.Clone();
+            _coeffs = data.ToArray();
         }
 
         #endregion

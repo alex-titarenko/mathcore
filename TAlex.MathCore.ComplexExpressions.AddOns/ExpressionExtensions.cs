@@ -48,6 +48,17 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
             throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_COMPLEX_MATRIX, o));
         }
 
+        public static CPolynomial EvaluateAsCPolynomial(this Expression<Object> expression)
+        {
+            CMatrix matrix = EvaluateAsCMatrix(expression);
+
+            if (matrix.IsVector)
+                return new CPolynomial(matrix);
+            else
+                // TODO
+                throw new ArgumentException();
+        }
+
         public static IList<double> EvaluateAsDoubleArray(this Expression<Object> expression)
         {
             Object o = expression.Evaluate();
@@ -85,6 +96,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
             VariableExpression<Object> varExpr = var as VariableExpression<Object>;
             if (varExpr == null)
             {
+                // TODO:
                 throw new ArgumentException();
             }
 
