@@ -112,6 +112,19 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
             return x => (T)tempFunc(x);
         }
 
+        public static Func<double, double> EvaluateAsDoubleFunction(this Expression<Object> expression, Expression<Object> var)
+        {
+            VariableExpression<Object> varExpr = var as VariableExpression<Object>;
+            if (varExpr == null)
+            {
+                // TODO:
+                throw new ArgumentException();
+            }
+
+            Func<Object, Object> tempFunc = ParametricFunctionCreator.CreateOneParametricFunction<Object>(expression, varExpr.VariableName);
+            return x => (double)(Complex)tempFunc((Complex)x);
+        }
+
         #endregion
 
         #region Helpers
