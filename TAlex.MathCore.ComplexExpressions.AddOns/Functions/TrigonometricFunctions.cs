@@ -16,9 +16,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Description("Calculates sine of a complex number.")]
     [FunctionSignature("sin", "complex value")]
     [ExampleUsage("sin(0)", "0")]
-    public class SinFuncExpression : UnaryExpression<Object>
+    public class SineFuncExpression : UnaryExpression<Object>
     {
-        public SinFuncExpression(Expression<Object> subExpression)
+        public SineFuncExpression(Expression<Object> subExpression)
             : base(subExpression)
         {
         }
@@ -35,9 +35,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Description("Calculates cosine of a complex number.")]
     [FunctionSignature("cos", "complex value")]
     [ExampleUsage("cos(0)", "1")]
-    public class CosFuncExpression : UnaryExpression<Object>
+    public class CosineFuncExpression : UnaryExpression<Object>
     {
-        public CosFuncExpression(Expression<Object> subExpression)
+        public CosineFuncExpression(Expression<Object> subExpression)
             : base(subExpression)
         {
         }
@@ -54,9 +54,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Description("Calculates tangent of a complex number.")]
     [FunctionSignature("tan", "complex value")]
     [ExampleUsage("tan(0)", "0")]
-    public class TanFuncExpression : UnaryExpression<Object>
+    public class TangentFuncExpression : UnaryExpression<Object>
     {
-        public TanFuncExpression(Expression<Object> subExpression)
+        public TangentFuncExpression(Expression<Object> subExpression)
             : base(subExpression)
         {
         }
@@ -64,6 +64,63 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         public override object Evaluate()
         {
             return Complex.Tan(SubExpression.EvaluateAsComplex());
+        }
+    }
+
+    [DisplayName("Cotangent")]
+    [Category(Categories.Trigonometric)]
+    [Section("Trigonometry")]
+    [Description("Calculates cotangent of a complex number.")]
+    [FunctionSignature("cot", "complex value")]
+    [ExampleUsage("cot(pi / 4)", "1")]
+    public class CotangentFuncExpression : UnaryExpression<Object>
+    {
+        public CotangentFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Cot(SubExpression.EvaluateAsComplex());
+        }
+    }
+
+    [DisplayName("Secant")]
+    [Category(Categories.Trigonometric)]
+    [Section("Trigonometry")]
+    [Description("Calculates secant of a complex number.")]
+    [FunctionSignature("sec", "complex value")]
+    [ExampleUsage("sec(pi / 3)", "2")]
+    public class SecantFuncExpression : UnaryExpression<Object>
+    {
+        public SecantFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Sec(SubExpression.EvaluateAsComplex());
+        }
+    }
+
+    [DisplayName("Cosecant")]
+    [Category(Categories.Trigonometric)]
+    [Section("Trigonometry")]
+    [Description("Calculates cosecant of a complex number.")]
+    [FunctionSignature("csc", "complex value")]
+    [ExampleUsage("csc(pi / 6)", "2")]
+    public class CosecantFuncExpression : UnaryExpression<Object>
+    {
+        public CosecantFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Csc(SubExpression.EvaluateAsComplex());
         }
     }
 }
