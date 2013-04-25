@@ -90,6 +90,14 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
             return new List<Complex>(EvaluateAsCMatrix(expression));
         }
 
+        public static IList<Complex> EvaluateAsComplexVector(this Expression<Object> expression)
+        {
+            CMatrix matrix = EvaluateAsCMatrix(expression);
+            if (matrix.IsVector) return new List<Complex>(matrix);
+
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_OBJECT_TYPE, "complex vector", matrix.GetType().Name));
+        }
+
 
         public static Func<T, T> EvaluateAsFunction<T>(this Expression<Object> expression, Expression<Object> var)
         {

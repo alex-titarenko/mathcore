@@ -133,9 +133,9 @@ namespace TAlex.MathCore
         /// </summary>
         /// <param name="roots">An array of complex roots.</param>
         /// <returns>The complex polynomial with the specified roots.</returns>
-        public static CPolynomial FromRoots(params Complex[] roots)
+        public static CPolynomial FromRoots(IList<Complex> roots)
         {
-            int n = roots.Length;
+            int n = roots.Count;
             CPolynomial result = new CPolynomial(n + 1);
             result[n] = 1.0;
 
@@ -482,12 +482,12 @@ namespace TAlex.MathCore
         /// </param>
         /// <returns>The interpolating polynomial for the specified nodes.</returns>
         /// <exception cref="System.ArgumentException">The arrays xValues and yValues have different lengths.</exception>
-        public static CPolynomial InterpolatingPolynomial(double[] xValues, double[] yValues)
+        public static CPolynomial InterpolatingPolynomial(IList<double> xValues, IList<double> yValues)
         {
-            if (xValues.Length != yValues.Length)
+            if (xValues.Count != yValues.Count)
                 throw new ArgumentException("The arrays of abscissas and ordinates have different lengths.");
 
-            int n = xValues.Length;
+            int n = xValues.Count;
 
             CPolynomial L = new CPolynomial(n);
 
