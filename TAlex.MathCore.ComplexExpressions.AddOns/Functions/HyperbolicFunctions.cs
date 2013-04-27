@@ -11,7 +11,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
     [DisplayName("Sine")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the hyperbolic sine of a complex number.")]
     [FunctionSignature("sinh", "complex value")]
@@ -30,7 +30,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Cosine")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the hyperbolic cosine of a complex number.")]
     [FunctionSignature("cosh", "complex value")]
@@ -49,7 +49,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Tangent")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the hyperbolic tangent of a complex number.")]
     [FunctionSignature("tanh", "complex value")]
@@ -68,7 +68,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Cotangent")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the hyperbolic cotangent of a complex number.")]
     [FunctionSignature("coth", "complex value")]
@@ -87,7 +87,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Secant")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the hyperbolic secant of a complex number.")]
     [FunctionSignature("sech", "complex value")]
@@ -106,7 +106,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Cosecant")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the hyperbolic cosecant of a complex number.")]
     [FunctionSignature("csch", "complex value")]
@@ -127,7 +127,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
 
     [DisplayName("Inverse sine")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the inverse hyperbolic sine of a complex number.")]
     [FunctionSignature("asinh", "complex value")]
@@ -146,7 +146,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Inverse cosine")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the inverse hyperbolic cosine of a complex number.")]
     [FunctionSignature("acosh", "complex value")]
@@ -165,7 +165,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Inverse tangent")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the inverse hyperbolic tangent of a complex number.")]
     [FunctionSignature("atanh", "complex value")]
@@ -184,7 +184,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Inverse cotangent")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the inverse hyperbolic cotangent of a complex number.")]
     [FunctionSignature("acoth", "complex value")]
@@ -203,7 +203,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Inverse secant")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the inverse hyperbolic secant of a complex number.")]
     [FunctionSignature("asech", "complex value")]
@@ -222,7 +222,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Inverse cosecant")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Section("Trigonometry")]
     [Description("Calculates the inverse hyperbolic cosecant of a complex number.")]
     [FunctionSignature("acsch", "complex value")]
@@ -243,7 +243,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
 
     [DisplayName("Sine cardinal")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Description("Calculates the hyperbolic sine cardinal (sinh(x) / x) of a complex number.")]
     [FunctionSignature("sinhc", "complex value")]
     [ExampleUsage("sinhc(0)", "1")]
@@ -262,7 +262,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     }
 
     [DisplayName("Tangent cardinal")]
-    [Category(Categories.Trigonometric)]
+    [Category(Categories.Hyperbolic)]
     [Description("Calculates the hyperbolic tangent cardinal (tanh(x) / x) of a complex number.")]
     [FunctionSignature("tanhc", "complex value")]
     [ExampleUsage("tanhc(0)", "1")]
