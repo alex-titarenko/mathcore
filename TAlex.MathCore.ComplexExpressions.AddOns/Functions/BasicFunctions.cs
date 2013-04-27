@@ -68,8 +68,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
                 return Complex.Inverse((Complex)value);
             else if (value is CMatrix)
                 return CMatrix.Inverse((CMatrix)value);
-            else
-                throw ExceptionHelper.ThrowWrongArgumentType(value);
+
+            throw ExceptionHelper.ThrowWrongArgumentType(value);
         }
     }
 
@@ -96,8 +96,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
                 return Complex.Pow((Complex)value, 2);
             else if (value is CMatrix)
                 return CMatrix.Pow((CMatrix)value, 2);
-            else
-                throw ExceptionHelper.ThrowWrongArgumentType(value);
+
+            throw ExceptionHelper.ThrowWrongArgumentType(value);
         }
     }
 
@@ -124,8 +124,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
                 return Complex.Pow((Complex)value, 3);
             else if (value is CMatrix)
                 return CMatrix.Pow((CMatrix)value, 3);
-            else
-                throw ExceptionHelper.ThrowWrongArgumentType(value);
+
+            throw ExceptionHelper.ThrowWrongArgumentType(value);
         }
     }
 
@@ -151,8 +151,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
                 return Complex.Sqrt((Complex)value);
             else if (value is CMatrix)
                 return CMatrix.Sqrt((CMatrix)value);
-            else
-                throw ExceptionHelper.ThrowWrongArgumentType(value);
+
+            throw ExceptionHelper.ThrowWrongArgumentType(value);
         }
     }
 
