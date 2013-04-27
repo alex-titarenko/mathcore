@@ -300,4 +300,138 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             return Complex.Cvs(SubExpression.EvaluateAsComplex());
         }
     }
+
+    [DisplayName("Haversine")]
+    [Category(Categories.Trigonometric)]
+    [Description("Calculates the haversine ((1 - cos(x)) / 2) of a complex number.")]
+    [FunctionSignature("hav", "complex value")]
+    [ExampleUsage("hav(pi / 2)", "0.5")]
+    public class HaversineFuncExpression : UnaryExpression<Object>
+    {
+        public HaversineFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Hav(SubExpression.EvaluateAsComplex());
+        }
+    }
+
+    [DisplayName("Exsecant")]
+    [Category(Categories.Trigonometric)]
+    [Description("Calculates the exsecant (sec(x) - 1) of a complex number.")]
+    [FunctionSignature("exsec", "complex value")]
+    [ExampleUsage("exsec(pi)", "-2")]
+    public class ExsecantFuncExpression : UnaryExpression<Object>
+    {
+        public ExsecantFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Exsec(SubExpression.EvaluateAsComplex());
+        }
+    }
+
+    [DisplayName("Excosecant")]
+    [Category(Categories.Trigonometric)]
+    [Description("Calculates the excosecant (csc(x) - 1) of a complex number.")]
+    [FunctionSignature("excsc", "complex value")]
+    [ExampleUsage("excsc(pi / 2)", "0")]
+    public class ExcosecantFuncExpression : UnaryExpression<Object>
+    {
+        public ExcosecantFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Excsc(SubExpression.EvaluateAsComplex());
+        }
+    }
+
+
+
+    [DisplayName("Sine cardinal")]
+    [Category(Categories.Trigonometric)]
+    [Description("Calculates the sine cardinal (sin(x) / x) of a complex number.")]
+    [FunctionSignature("sinc", "complex value")]
+    [ExampleUsage("sinc(0)", "1")]
+    [ExampleUsage("sinc(1)", "0.841470984807897")]
+    public class SineCardinalFuncExpression : UnaryExpression<Object>
+    {
+        public SineCardinalFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Sinc(SubExpression.EvaluateAsComplex());
+        }
+    }
+
+    [DisplayName("Tangent cardinal")]
+    [Category(Categories.Trigonometric)]
+    [Description("Calculates the tangent cardinal (tan(x) / x) of a complex number.")]
+    [FunctionSignature("tanc", "complex value")]
+    [ExampleUsage("tanc(0)", "1")]
+    [ExampleUsage("tanc(1)", "1.5574077246549")]
+    public class TangentCardinalFuncExpression : UnaryExpression<Object>
+    {
+        public TangentCardinalFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return Complex.Tanc(SubExpression.EvaluateAsComplex());
+        }
+    }
+
+
+
+    [DisplayName("Degrees to radians")]
+    [Category(Categories.Trigonometric)]
+    [Description("Calculates the value of the angle in radians converted from degrees.")]
+    [FunctionSignature("rad", "real degree")]
+    [ExampleUsage("rad(90)", "1.5707963267949")]
+    [ExampleUsage("rad(180)", "3.14159265358979")]
+    public class DegreesToRadiansFuncExpression : UnaryExpression<Object>
+    {
+        public DegreesToRadiansFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)ExMath.ToRadians(SubExpression.EvaluateAsDouble());
+        }
+    }
+
+    [DisplayName("Radians to degrees")]
+    [Category(Categories.Trigonometric)]
+    [Description("Calculates the value of the angle in degrees converted from radians.")]
+    [FunctionSignature("deg", "real radian")]
+    [ExampleUsage("deg(pi / 2)", "90")]
+    [ExampleUsage("deg(pi)", "180")]
+    public class RadiansToDegreesFuncExpression : UnaryExpression<Object>
+    {
+        public RadiansToDegreesFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)ExMath.ToDegrees(SubExpression.EvaluateAsDouble());
+        }
+    }
 }
