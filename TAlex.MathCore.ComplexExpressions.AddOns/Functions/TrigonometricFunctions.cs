@@ -12,7 +12,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
     [DisplayName("Sine")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the sine of a complex number.")]
     [FunctionSignature("sin", "complex value")]
     [ExampleUsage("sin(0)", "0")]
@@ -31,7 +30,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cosine")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the cosine of a complex number.")]
     [FunctionSignature("cos", "complex value")]
     [ExampleUsage("cos(0)", "1")]
@@ -50,7 +48,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Tangent")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the tangent of a complex number.")]
     [FunctionSignature("tan", "complex value")]
     [ExampleUsage("tan(0)", "0")]
@@ -69,7 +66,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cotangent")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the cotangent of a complex number.")]
     [FunctionSignature("cot", "complex value")]
     [ExampleUsage("cot(pi / 4)", "1")]
@@ -88,7 +84,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Secant")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the secant of a complex number.")]
     [FunctionSignature("sec", "complex value")]
     [ExampleUsage("sec(pi / 3)", "2")]
@@ -107,7 +102,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cosecant")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the cosecant of a complex number.")]
     [FunctionSignature("csc", "complex value")]
     [ExampleUsage("csc(pi / 6)", "2")]
@@ -128,7 +122,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse sine")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the inverse sine of a complex number.")]
     [FunctionSignature("asin", "complex value")]
     [ExampleUsage("asin(0)", "0")]
@@ -147,7 +140,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse cosine")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the inverse cosine of a complex number.")]
     [FunctionSignature("acos", "complex value")]
     [ExampleUsage("acos(1)", "0")]
@@ -166,7 +158,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse tangent")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the inverse tangent of a complex number.")]
     [FunctionSignature("atan", "complex value")]
     [ExampleUsage("atan(0)", "0")]
@@ -185,7 +176,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse cotangent")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the inverse cotangent of a complex number.")]
     [FunctionSignature("acot", "complex value")]
     [ExampleUsage("acot(1)", "0.785398163397448")]
@@ -204,7 +194,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse secant")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the inverse secant of a complex number.")]
     [FunctionSignature("asec", "complex value")]
     [ExampleUsage("asec(2)", "1.0471975511966")]
@@ -223,7 +212,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse cosecant")]
     [Category(Categories.Trigonometric)]
-    [Section("Trigonometry")]
     [Description("Calculates the inverse cosecant of a complex number.")]
     [FunctionSignature("acsc", "complex value")]
     [ExampleUsage("acsc(2)", "0.523598775598299")]
