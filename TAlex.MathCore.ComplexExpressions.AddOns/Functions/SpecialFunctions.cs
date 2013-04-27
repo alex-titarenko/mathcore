@@ -132,4 +132,43 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             return (Complex)NumberTheory.LCM(Expressions.Select(x => x.EvaluateAsInt64()).ToArray());
         }
     }
+
+
+    [DisplayName("Error function")]
+    [Category(Categories.SpecialFunctions)]
+    [Description("Calculates the value of error function for the specified real argument.")]
+    [FunctionSignature("erf", "real value")]
+    [ExampleUsage("erf(0)", "0")]
+    [ExampleUsage("erf(1)", "0.842700792949715")]
+    public class ErrorFuncExpression : UnaryExpression<Object>
+    {
+        public ErrorFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)ProbabilityIntegrals.Erf(SubExpression.EvaluateAsDouble());
+        }
+    }
+
+    [DisplayName("Complementary error function")]
+    [Category(Categories.SpecialFunctions)]
+    [Description("Calculates the value of complementary error function for the specified real argument.")]
+    [FunctionSignature("erfc", "real value")]
+    [ExampleUsage("erfc(0)", "1")]
+    [ExampleUsage("erfc(1)", "0.157299207050285")]
+    public class ComplementaryErrorFuncExpression : UnaryExpression<Object>
+    {
+        public ComplementaryErrorFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)ProbabilityIntegrals.Erfc(SubExpression.EvaluateAsDouble());
+        }
+    }
 }

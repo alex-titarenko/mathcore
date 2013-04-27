@@ -77,6 +77,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="x">A real number.</param>
         /// <returns>The sine integral of x.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static double SinIntegral(double x)
         {
             if (x < 0.0)
@@ -123,6 +124,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="c">A complex number.</param>
         /// <returns>The sine integral of c.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static Complex SinIntegral(Complex c)
         {
             if (c.IsReal)
@@ -177,6 +179,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="x">A real number.</param>
         /// <returns>The cosine integral of x.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static double CosIntegral(double x)
         {
             if (x < 0.0)
@@ -223,6 +226,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="c">A complex number.</param>
         /// <returns>The cosine integral of c.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static Complex CosIntegral(Complex c)
         {
             if (c.IsReal && c.Re >= 0.0)
@@ -277,6 +281,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="x">A real number.</param>
         /// <returns>The hyperbolic sine integral of x.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static double SinhIntegral(double x)
         {
             return SinIntegral(new Complex(0.0, x)).Im;
@@ -287,6 +292,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="c">A complex number.</param>
         /// <returns>The hyperbolic sine integral of c.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static Complex SinhIntegral(Complex c)
         {
             return -Complex.I * SinIntegral(Complex.I * c);
@@ -297,6 +303,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="x">A real number.</param>
         /// <returns>The hyperbolic cosine integral of x.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static double CoshIntegral(double x)
         {
             return (CosIntegral(new Complex(0.0, x)) + Math.Log(x) - Complex.Log(new Complex(0.0, x))).Re;
@@ -307,6 +314,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="c">A complex number.</param>
         /// <returns>The hyperbolic cosine integral of c.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static Complex CoshIntegral(Complex c)
         {
             return CosIntegral(Complex.I * c) + Complex.Log(c) - Complex.Log(Complex.I * c);
@@ -317,6 +325,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="x">A real number.</param>
         /// <returns>The exponential integral of x.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static double ExpIntegral(double x)
         {
             double origin = -5.0;
@@ -365,6 +374,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="c">A complex number.</param>
         /// <returns>The exponential integral of c.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static Complex ExpIntegral(Complex c)
         {
             if (c.IsReal)
@@ -421,6 +431,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="x">A real number.</param>
         /// <returns>The logarithmic integral of x.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static double LogIntegral(double x)
         {
             return ExpIntegral(Math.Log(x));
@@ -431,6 +442,7 @@ namespace TAlex.MathCore.SpecialFunctions
         /// </summary>
         /// <param name="c">A complex number.</param>
         /// <returns>The logarithmic integral of c.</returns>
+        [Obsolete("Does not provide accurate results for some arguments.")]
         public static Complex LogIntegral(Complex c)
         {
             return ExpIntegral(Complex.Log(c));

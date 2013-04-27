@@ -10,10 +10,10 @@ namespace TAlex.MathCore.SpecialFunctions
     {
         #region Fields
 
-        private const double _intval1 = 0.46875;
-        private const double _intval2 = 4.0;
+        private const double Intval1 = 0.46875;
+        private const double Intval2 = 4.0;
 
-        private const double _maxArgVal = 26.5583093100796414;
+        private const double MaxArgVal = 26.5583093100796414;
 
         /// <summary>
         /// Coefficients for approximation to erf in first interval.
@@ -93,35 +93,12 @@ namespace TAlex.MathCore.SpecialFunctions
         /// <returns>The value of the error function for x.</returns>
         public static double Erf(double x)
         {
-            if (Math.Abs(x) > _maxArgVal)
+            if (Math.Abs(x) > MaxArgVal)
             {
                 return (x > 0.0) ? 1.0 : -1.0;
             }
 
-            if (Math.Abs(x) <= _intval1)
-            {
-                return x * RationalFunc(erf_p, erf_q, x * x);
-            }
-
-            return 1.0 - Erfc(x);
-        }
-
-        /// <summary>
-        /// Returns the value of error function for the specified argument.
-        /// </summary>
-        /// <param name="x">A complex number.</param>
-        /// <returns>The value of the error function for x.</returns>
-        /// <remarks>
-        /// Erf(z) ~ 1 - GammaRegularized(1/2, z^2)
-        /// </remarks>
-        public static Complex Erf(Complex x)
-        {
-            if (x.IsReal)
-            {
-                return Erf(x.Re);
-            }
-
-            if (Complex.Abs(x) <= _intval1)
+            if (Math.Abs(x) <= Intval1)
             {
                 return x * RationalFunc(erf_p, erf_q, x * x);
             }
@@ -132,21 +109,10 @@ namespace TAlex.MathCore.SpecialFunctions
         /// <summary>
         /// Returns the value of two-argument error function for the specified arguments.
         /// </summary>
-        /// <param name="x0">The first complex number.</param>
-        /// <param name="x1">The second complex number.</param>
+        /// <param name="x0">The first real number.</param>
+        /// <param name="x1">The second real number.</param>
         /// <returns>The value of two-argument error function for x0 and x1.</returns>
         public static double Erf(double x0, double x1)
-        {
-            return Erf(x1) - Erf(x0);
-        }
-
-        /// <summary>
-        /// Returns the value of two-argument error function for the specified arguments.
-        /// </summary>
-        /// <param name="x0">The first complex number.</param>
-        /// <param name="x1">The second complex number.</param>
-        /// <returns>The value of two-argument error function for x0 and x1.</returns>
-        public static Complex Erf(Complex x0, Complex x1)
         {
             return Erf(x1) - Erf(x0);
         }
@@ -160,12 +126,12 @@ namespace TAlex.MathCore.SpecialFunctions
         {
             double absx = Math.Abs(x);
 
-            if (absx > _maxArgVal)
+            if (absx > MaxArgVal)
             {
                 return (x > 0.0) ? 0.0 : 2.0;
             }
 
-            if (absx <= _intval1)
+            if (absx <= Intval1)
             {
                 return 1.0 - Erf(x);
             }
@@ -175,7 +141,7 @@ namespace TAlex.MathCore.SpecialFunctions
                 return 2.0 - Erfc(-x);
             }
 
-            if (absx <= _intval2)
+            if (absx <= Intval2)
             {
                 return Math.Exp(-(x * x)) * RationalFunc(erfc_p1, erfc_q1, x);
             }
@@ -189,54 +155,6 @@ namespace TAlex.MathCore.SpecialFunctions
             }
         }
 
-        /// <summary>
-        /// Returns the value of complementary error function for the specified argument.
-        /// </summary>
-        /// <param name="x">A complex number.</param>
-        /// <returns>The value of the complementary error function for x.</returns>
-        public static Complex Erfc(Complex x)
-        {
-            if (x.IsReal)
-            {
-                return Erfc(x.Re);
-            }
-
-            double absx = Complex.Abs(x);
-
-            if (absx <= _intval1)
-            {
-                return 1.0 - Erf(x);
-            }
-
-            if (Complex.Sign(x) < 0)
-            {
-                return 2.0 - Erfc(-x);
-            }
-
-            if (absx <= _intval2)
-            {
-                Complex result = Complex.Exp(-(x * x)) * RationalFunc(erfc_p1, erfc_q1, x);
-
-                if (x.IsImaginary)
-                    return new Complex(1.0, result.Im);
-                else
-                    return result;
-            }
-            else
-            {
-                Complex xsq = x * x;
-                Complex invxsq = Complex.Inverse(xsq);
-                Complex R = RationalFunc(erfc_p2, erfc_q2, invxsq);
-                Complex t = 1.0 / ExMath.SqrtPi + invxsq * R;
-
-                Complex result = Complex.Exp(-xsq) / x * (t - Complex.Truncate(t));
-
-                if (x.IsImaginary && Math.Abs(x.Im) < 6.447290721054759554)
-                    return new Complex(1.0, result.Im);
-                else
-                    return result;
-            }
-        }
 
         private static double RationalFunc(double[] numerator, double[] denominator, double value)
         {
@@ -248,25 +166,6 @@ namespace TAlex.MathCore.SpecialFunctions
             }
 
             double denval = 0.0;
-
-            for (int i = denominator.Length - 1; i >= 0; i--)
-            {
-                denval = denval * value + denominator[i];
-            }
-
-            return numval / denval;
-        }
-
-        private static Complex RationalFunc(double[] numerator, double[] denominator, Complex value)
-        {
-            Complex numval = Complex.Zero;
-
-            for (int i = numerator.Length - 1; i >= 0; i--)
-            {
-                numval = numval * value + numerator[i];
-            }
-
-            Complex denval = Complex.Zero;
 
             for (int i = denominator.Length - 1; i >= 0; i--)
             {

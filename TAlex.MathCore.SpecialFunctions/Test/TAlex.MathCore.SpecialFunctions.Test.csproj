@@ -54,10 +54,22 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ExponentialIntegralsTest.cs" />
+    <Compile Include="ProbabilityIntegralsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\TAlex.MathCore\TAlex.MathCore.csproj">
+      <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
+      <Name>TAlex.MathCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TAlex.MathCore.SpecialFunctions.csproj">
+      <Project>{4cbe910e-5ade-46e5-abf9-f6c51c4f8533}</Project>
+      <Name>TAlex.MathCore.SpecialFunctions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
