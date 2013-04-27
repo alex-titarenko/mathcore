@@ -23,6 +23,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
             throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_INTEGER, o));
         }
 
+        public static long EvaluateAsInt64(this Expression<Object> expression)
+        {
+            Object o = expression.Evaluate();
+
+            if (o is Int32) return (long)o;
+            else if (o is Complex) return AsInt64((Complex)o);
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_INTEGER, o));
+        }
+
         public static double EvaluateAsDouble(this Expression<Object> expression)
         {
             Object o = expression.Evaluate();
@@ -133,6 +142,13 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
         {
             if (c.IsReal && ExMath.IsInt32(c.Re))
                 return (int)c.Re;
+            throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_INTEGER, c));
+        }
+
+        public static long AsInt64(Complex c)
+        {
+            if (c.IsReal && ExMath.IsInt64(c.Re))
+                return (long)c.Re;
             throw new ArgumentException(String.Format(Properties.Resources.EXC_VALUE_NOT_INTEGER, c));
         }
 
