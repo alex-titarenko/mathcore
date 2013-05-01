@@ -329,4 +329,229 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             return CMatrix.Trace(SubExpression.EvaluateAsCMatrix());
         }
     }
+
+    [DisplayName("Rank")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the number of linearly independent rows.")]
+    [FunctionSignature("rank", "complex matrix m")]
+    [ExampleUsage("rank({1, 2, 1; -2, -3, 1; 3, 5, 0})", "2")]
+    public class RankFuncExpression : UnaryExpression<Object>
+    {
+        public RankFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)CMatrix.Rank(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+
+
+    [DisplayName("Determinant")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates determinant of the complex square matrix.")]
+    [FunctionSignature("det", "complex matrix m")]
+    [ExampleUsage("det({-2, 2, 3; -1, 1, 3; 2, 0, -1})", "6")]
+    public class DeterminantFuncExpression : UnaryExpression<Object>
+    {
+        public DeterminantFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.Determ(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Linear system solve")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the solution of the linear system.")]
+    [FunctionSignature("lsolve", "complex matrix a", "complex vector b")]
+    [ExampleUsage("lsolve({3, 2, -1; 2, -2, 4; -1, 1/2, -1}, {1; -2; 0})", "{1; -2; -2}")]
+    public class LinearSolveFuncExpression : BinaryExpression<Object>
+    {
+        public LinearSolveFuncExpression(Expression<Object> aExpression, Expression<Object> bExpression)
+            : base(aExpression, bExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.Solve(LeftExpression.EvaluateAsCMatrix(), RightExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Pseudo inverse")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the Moore-Penrose inverse (pseudoinverse) of the complex matrix.")]
+    [FunctionSignature("pinv", "complex matrix m")]
+    [ExampleUsage("pinv({-8, 0, 1; 7, 9, 7})", "{-0.117933723196881, 0.00682261208576995; 0.0477582846003899, 0.0633528265107213; 0.0565302144249513, 0.0545808966861599}")]
+    public class PseudoInverseExpression : UnaryExpression<Object>
+    {
+        public PseudoInverseExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.PseudoInverse(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+
+
+    [DisplayName("Dot product")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the vector dot product of two column vectors.")]
+    [FunctionSignature("dot", "complex vector v1", "complex vector v2")]
+    [ExampleUsage("dot({2; 5; -8}, {16; 3i; 2})", "16 + 15i")]
+    public class DotProductFuncExpression : BinaryExpression<Object>
+    {
+        public DotProductFuncExpression(Expression<Object> v1Expression, Expression<Object> v2Expression)
+            : base(v1Expression, v2Expression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.DotProduct(LeftExpression.EvaluateAsCMatrix(), RightExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Cross product")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the vector cross product of two column vectors.")]
+    [FunctionSignature("cross", "complex vector v1", "complex vector v2")]
+    [ExampleUsage("cross({2; 5; -8}, {16; 3i; 2})", "{10 + 24i; -132; -80 + 6i}")]
+    public class CrossProductFuncExpression : BinaryExpression<Object>
+    {
+        public CrossProductFuncExpression(Expression<Object> v1Expression, Expression<Object> v2Expression)
+            : base(v1Expression, v2Expression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.CrossProduct(LeftExpression.EvaluateAsCMatrix(), RightExpression.EvaluateAsCMatrix());
+        }
+    }
+
+
+
+    [DisplayName("One norm")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the maximum absolute column sum norm (also known as taxi norm).")]
+    [FunctionSignature("onenorm", "complex matrix m")]
+    [ExampleUsage("onenorm({-2, 2, 3; -1, 1, 3; 2, 0, -1})", "7")]
+    public class OneNormFuncExpression : UnaryExpression<Object>
+    {
+        public OneNormFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)CMatrix.OneNorm(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Infinity norm")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the maximum absolute row sum norm (also known as max norm).")]
+    [FunctionSignature("infnorm", "complex matrix m")]
+    [ExampleUsage("infnorm({-2, 5, 3; -1, 1, 3; 2, 0, -1})", "10")]
+    public class InfinityNormFuncExpression : UnaryExpression<Object>
+    {
+        public InfinityNormFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)CMatrix.InfinityNorm(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Frobenius norm")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the Frobenius norm of a complex matrix.")]
+    [FunctionSignature("fronorm", "complex matrix m")]
+    [ExampleUsage("fronorm({2, 4; 4, 0})", "6")]
+    public class FrobeniusNormFuncExpression : UnaryExpression<Object>
+    {
+        public FrobeniusNormFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)CMatrix.FrobeniusNorm(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("P-norm")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the p-norm of a complex matrix.")]
+    [FunctionSignature("pnorm", "complex matrix m", "real p")]
+    [ExampleUsage("pnorm({2, 4; 4, 0}, 2)", "6")]
+    [ExampleUsage("pnorm({4, 0, 2; 2, 3, 1; 1, 2, 2}, 3)", "5")]
+    public class PNormFuncExpression : BinaryExpression<Object>
+    {
+        public PNormFuncExpression(Expression<Object> mExpression, Expression<Object> pExpression)
+            : base(mExpression, pExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return (Complex)CMatrix.PNorm(LeftExpression.EvaluateAsCMatrix(), RightExpression.EvaluateAsDouble());
+        }
+    }
+
+
+
+    [DisplayName("Cofactor")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the signed minor of the complex square matrix.")]
+    [FunctionSignature("cofactor", "complex matrix m", "integer rowIndex", "integer colIndex")]
+    [ExampleUsage("cofactor({1, 4, 7; 3, 0, 5; -1, 9, 11}, 1, 2)", "-13")]
+    public class CofactorFuncExpression : TernaryExpression<Object>
+    {
+        public CofactorFuncExpression(Expression<Object> mExpression, Expression<Object> rowExpression, Expression<Object> colExpression)
+            : base(mExpression, rowExpression, colExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.Cofactor(FirstExpression.EvaluateAsCMatrix(), SecondExpression.EvaluateAsInt32(), ThirdExpression.EvaluateAsInt32());
+        }
+    }
+
+    [DisplayName("Minor")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the determinant of some smaller square matrix, cut down from the matrix by removing one or more of its rows or columns.")]
+    [FunctionSignature("minor", "complex matrix m", "integer rowIndex", "integer colIndex")]
+    [ExampleUsage("minor({1, 4, 7; 3, 0, 5; -1, 9, 11}, 1, 2)", "13")]
+    public class MinorFuncExpression : TernaryExpression<Object>
+    {
+        public MinorFuncExpression(Expression<Object> mExpression, Expression<Object> rowExpression, Expression<Object> colExpression)
+            : base(mExpression, rowExpression, colExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.Minor(FirstExpression.EvaluateAsCMatrix(), SecondExpression.EvaluateAsInt32(), ThirdExpression.EvaluateAsInt32());
+        }
+    }
 }
