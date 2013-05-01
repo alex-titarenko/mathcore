@@ -93,6 +93,42 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
         }
 
         [Test]
+        public void AllFunctionsTest_ShouldContainsSignaturesWithCorrectArgTypes()
+        {
+            //arrange
+            IList<string> supportedTypes = new List<string>
+            {
+                "integer",
+                "real",
+                "complex",
+                "real matrix",
+                "complex matrix",
+                "real vector",
+                "complex vector",
+                "variable",
+                "expression",
+                String.Empty
+            };
+
+            //action
+            var metadata = FunctionFactory.GetMetadata();
+
+            foreach (var item in metadata)
+            {
+                foreach (var signature in item.Signatures)
+                {
+                    foreach (var argument in signature.Arguments)
+                    {
+                        //assert
+                        argument.Type.Should().BeOneOf(supportedTypes,
+                            String.Format("Function '{0}' contains signature with invalid argument type '{1}'",
+                            item.FunctionType, argument.Type));
+                    }
+                }
+            }
+        }
+
+        [Test]
         public void AllFunctionsTest_ShouldContainsCorrectedExampleUsages()
         {
             //action
