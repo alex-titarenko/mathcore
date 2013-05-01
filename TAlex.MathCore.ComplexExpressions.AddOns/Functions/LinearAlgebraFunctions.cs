@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.MathCore.LinearAlgebra;
@@ -552,6 +551,44 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         public override object Evaluate()
         {
             return CMatrix.Minor(FirstExpression.EvaluateAsCMatrix(), SecondExpression.EvaluateAsInt32(), ThirdExpression.EvaluateAsInt32());
+        }
+    }
+
+
+
+    [DisplayName("Eigenvalues")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the vector whose elements are the eigenvalues of the complex square matrix.")]
+    [FunctionSignature("eigvals", "complex matrix m")]
+    [ExampleUsage("eigvals({2, 0, 0; 0, 3, 4; 0, 4, 9})", "{11; 1; 2}")]
+    public class EigenvaluesFuncExpression : UnaryExpression<Object>
+    {
+        public EigenvaluesFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.Eigenvalues(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Eigenvectors")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the matrix containing all normalized eigenvectors of the matrix.")]
+    [FunctionSignature("eigvecs", "complex matrix m")]
+    [ExampleUsage("eigvecs({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{1, 0.447213595499958, 0; 0, 0.894427190999916, 0; 0, 0, 1}")]
+    public class EigenvectorsFuncExpression : UnaryExpression<Object>
+    {
+        public EigenvectorsFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.Eigenvectors(SubExpression.EvaluateAsCMatrix());
         }
     }
 }
