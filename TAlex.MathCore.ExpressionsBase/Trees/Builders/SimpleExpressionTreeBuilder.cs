@@ -9,14 +9,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 {
     public abstract class SimpleExpressionTreeBuilder<T> : IExpressionTreeBuilder<T>
     {
-        #region Fields
-
-        protected IEnumerator<Token> Tokens;
-        protected IDictionary<string, VariableExpression<T>> Variables;
-        protected object SyncRoot = new object();
-
-        #endregion
-
         #region Properties
 
         public IExpressionTokenizer Tokenizer { get; set; }
@@ -25,7 +17,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         public IFunctionFactory<T> FunctionFactory { get; set; }
 
-        public IDictionary<string, Func<Expression<T>>> UnaryOperatorHandlers { get; set; }
+        public IDictionary<string, Func<IEnumerator<Token>, IDictionary<string, VariableExpression<T>>, Expression<T>>> UnaryOperatorHandlers { get; set; }
 
         #endregion
 
@@ -35,15 +27,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         {
             Tokenizer = new StandardExpressionTokenizer();
 
-            UnaryOperatorHandlers = new Dictionary<string, Func<Expression<T>>>
+            UnaryOperatorHandlers = new Dictionary<string, Func<IEnumerator<Token>, IDictionary<string, VariableExpression<T>>, Expression<T>>>
             {
-                { "-", () => CreateUnaryMinusExpression(Pow()) },
-                { "+", () => new UnaryPlusExpression<T>(Pow()) },
-                { "(", () => {
-                    Expression<T> bracketsSubExpr = AddSub();
-                    if (Tokens.Current.Value == ")")
+                { "-", (tokens, vars) => CreateUnaryMinusExpression(Pow(tokens, vars)) },
+                { "+", (tokens, vars) => new UnaryPlusExpression<T>(Pow(tokens, vars)) },
+                { "(", (tokens, vars) => {
+                    Expression<T> bracketsSubExpr = AddSub(tokens, vars);
+                    if (tokens.Current.Value == ")")
                     {
-                        Tokens.MoveNext();
+                        tokens.MoveNext();
                         return bracketsSubExpr;
                     }
                     else
@@ -56,25 +48,25 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         #region Methods
 
-        protected virtual Expression<T> AddSub()
+        protected virtual Expression<T> AddSub(IEnumerator<Token> tokens, IDictionary<string, VariableExpression<T>> variables)
         {
-            Expression<T> left = MultDiv();
+            Expression<T> left = MultDiv(tokens, variables);
 
             while (true)
             {
-                switch (Tokens.Current.Value)
+                switch (tokens.Current.Value)
                 {
                     case "+":
                         BinaryExpression<T> add = CreateAddExpression();
                         add.LeftExpression = left;
-                        add.RightExpression = MultDiv();
+                        add.RightExpression = MultDiv(tokens, variables);
                         left = add;
                         break;
 
                     case "-":
                         BinaryExpression<T> sub = CreateSubExpression();
                         sub.LeftExpression = left;
-                        sub.RightExpression = MultDiv();
+                        sub.RightExpression = MultDiv(tokens, variables);
                         left = sub;
                         break;
 
@@ -84,25 +76,25 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             }
         }
 
-        protected virtual Expression<T> MultDiv()
+        protected virtual Expression<T> MultDiv(IEnumerator<Token> tokens, IDictionary<string, VariableExpression<T>> variables)
         {
-            Expression<T> left = Pow();
+            Expression<T> left = Pow(tokens, variables);
 
             while (true)
             {
-                switch (Tokens.Current.Value)
+                switch (tokens.Current.Value)
                 {
                     case "*":
                         BinaryExpression<T> mult = CreateMultExpression();
                         mult.LeftExpression = left;
-                        mult.RightExpression = Pow();
+                        mult.RightExpression = Pow(tokens, variables);
                         left = mult;
                         break;
 
                     case "/":
                         BinaryExpression<T> div = CreateDivExpression();
                         div.LeftExpression = left;
-                        div.RightExpression = Pow();
+                        div.RightExpression = Pow(tokens, variables);
                         left = div;
                         break;
 
@@ -112,17 +104,17 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             }
         }
 
-        protected virtual Expression<T> Pow()
+        protected virtual Expression<T> Pow(IEnumerator<Token> tokens, IDictionary<string, VariableExpression<T>> variables)
         {
-            Expression<T> left = Unary();
+            Expression<T> left = Unary(tokens, variables);
 
             while (true)
             {
-                if (Tokens.Current.Value == "^" || Tokens.Current.Value == "**")
+                if (tokens.Current.Value == "^" || tokens.Current.Value == "**")
                 {
                     BinaryExpression<T> pow = CreatePowExpression();
                     pow.LeftExpression = left;
-                    pow.RightExpression = Pow();
+                    pow.RightExpression = Pow(tokens, variables);
                     left = pow;
                 }
                 else
@@ -132,57 +124,57 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             }
         }
 
-        protected virtual Expression<T> Unary()
+        protected virtual Expression<T> Unary(IEnumerator<Token> tokens, IDictionary<string, VariableExpression<T>> variables)
         {
-            Tokens.MoveNext();
+            tokens.MoveNext();
 
-            switch (Tokens.Current.TokenType)
+            switch (tokens.Current.TokenType)
             {
                 case TokenType.Scalar:
-                    ScalarExpression<T> subExpr = ParseScalarValue(Tokens.Current.Value);
-                    Tokens.MoveNext();
+                    ScalarExpression<T> subExpr = ParseScalarValue(tokens.Current.Value);
+                    tokens.MoveNext();
                     return subExpr;
 
                 case TokenType.Identifier:
-                    string identifierName = Tokens.Current.Value;
-                    Tokens.MoveNext();
+                    string identifierName = tokens.Current.Value;
+                    tokens.MoveNext();
 
                     ConstantExpression<T> consExpr = ConstantFactory.CreateConstant(identifierName);
                     if (consExpr != null) return consExpr;
 
                     VariableExpression<T> varExpr = null;
-                    if (!Variables.TryGetValue(identifierName, out varExpr))
+                    if (!variables.TryGetValue(identifierName, out varExpr))
                     {
                         varExpr = new VariableExpression<T>(identifierName);
-                        Variables.Add(identifierName, varExpr);
+                        variables.Add(identifierName, varExpr);
                     }
                     return varExpr;
 
                 case TokenType.Operator:
-                    Func<Expression<T>> func;
-                    if (UnaryOperatorHandlers.TryGetValue(Tokens.Current.Value, out func))
-                        return func();
+                    Func<IEnumerator<Token>, IDictionary<string, VariableExpression<T>>, Expression<T>> func;
+                    if (UnaryOperatorHandlers.TryGetValue(tokens.Current.Value, out func))
+                        return func(tokens, variables);
                     else
-                        throw new SyntaxException(String.Format("Incorrect operator \"{0}\".", Tokens.Current.Value));
+                        throw new SyntaxException(String.Format("Incorrect operator \"{0}\".", tokens.Current.Value));
 
                 case TokenType.Function:
-                    string funcName = Tokens.Current.Value;
+                    string funcName = tokens.Current.Value;
                     IList<Expression<T>> args = new List<Expression<T>>();
 
-                    Tokens.MoveNext();
-                    if (Tokens.Current.Value != "(")
+                    tokens.MoveNext();
+                    if (tokens.Current.Value != "(")
                         throw ThrowExpectedException("(");
 
-                    args.Add(AddSub());
-                    while (Tokens.Current.Value != ")" && Tokens.Current.Value == ",")
+                    args.Add(AddSub(tokens, variables));
+                    while (tokens.Current.Value != ")" && tokens.Current.Value == ",")
                     {
-                        args.Add(AddSub());
+                        args.Add(AddSub(tokens, variables));
                     }
 
-                    if (Tokens.Current.Value != ")")
+                    if (tokens.Current.Value != ")")
                         throw ThrowExpectedException(")");
 
-                    Tokens.MoveNext();
+                    tokens.MoveNext();
                     return FunctionFactory.CreateFunction(funcName, args.ToArray());
 
                 default:
@@ -220,18 +212,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         public Expression<T> BuildTree(string expression)
         {
-            lock (SyncRoot)
-            {
-                Tokens = Tokenizer.GetTokens(expression).GetEnumerator();   
-                Variables = new Dictionary<string, VariableExpression<T>>();
+            IEnumerator<Token> tokens = Tokenizer.GetTokens(expression).GetEnumerator();
+            IDictionary<string, VariableExpression<T>> Variables = new Dictionary<string, VariableExpression<T>>();
 
-                Expression<T> result = AddSub();
+            Expression<T> result = AddSub(tokens, Variables);
 
-                if (Tokens.MoveNext())
-                    throw new SyntaxException();
+            if (tokens.MoveNext())
+                throw new SyntaxException();
 
-                return result;
-            }
+            return result;
         }
 
         #endregion

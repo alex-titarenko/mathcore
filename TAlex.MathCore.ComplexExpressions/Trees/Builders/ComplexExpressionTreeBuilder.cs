@@ -63,25 +63,25 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         }
 
 
-        private Expression<Object> HandleMatrixBracket()
+        private Expression<Object> HandleMatrixBracket(IEnumerator<Token> tokens, IDictionary<string, VariableExpression<Object>> vars)
         {
-            Expression<Object> value = AddSub();
+            Expression<Object> value = AddSub(tokens, vars);
 
-            if (Tokens.Current.Value == "}")
+            if (tokens.Current.Value == "}")
             {
-                Tokens.MoveNext();
+                tokens.MoveNext();
                 return new CMatrixExpression(1, value);
             }
-            else if (Tokens.Current.Value == "," || Tokens.Current.Value == ";")
+            else if (tokens.Current.Value == "," || tokens.Current.Value == ";")
             {
                 int? stride = null;
                 int currLineLenght = 1;
                 List<Expression<Object>> m = new List<Expression<Object>>();
                 m.Add(value);
 
-                while (Tokens.Current.Value != "}" && (Tokens.Current.Value == "," || Tokens.Current.Value == ";"))
+                while (tokens.Current.Value != "}" && (tokens.Current.Value == "," || tokens.Current.Value == ";"))
                 {
-                    if (Tokens.Current.Value == ";")
+                    if (tokens.Current.Value == ";")
                     {
                         if (!stride.HasValue) stride = currLineLenght;
                         else if (stride != currLineLenght) throw new MatrixSizeMismatchException();
@@ -93,14 +93,14 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                         if (currLineLenght > stride) throw new MatrixSizeMismatchException();
                     }
 
-                    value = AddSub();
+                    value = AddSub(tokens, vars);
                     m.Add(value);
                 }
 
-                if (Tokens.Current.Value != "}")
+                if (tokens.Current.Value != "}")
                     throw new SyntaxException("\"}\" expected.");
 
-                Tokens.MoveNext();
+                tokens.MoveNext();
                 return new CMatrixExpression(stride ?? m.Count, m.ToArray());
             }
             else
