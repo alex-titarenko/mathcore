@@ -265,7 +265,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Floor")]
     [Category(Categories.Basic)]
-    [Section(Sections.Rouding)]
+    [Section(Sections.TruncationAndRoundOff)]
     [Description("Calculates the largest complex integer less than or equal to the specified complex number.")]
     [FunctionSignature("floor", "complex value")]
     [ExampleUsage("floor(3.6)", "3")]
@@ -286,7 +286,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Ceiling")]
     [Category(Categories.Basic)]
-    [Section(Sections.Rouding)]
+    [Section(Sections.TruncationAndRoundOff)]
     [Description("Calculates the smallest complex integer greater than or equal to the specified complex number.")]
     [FunctionSignature("ceil", "complex value")]
     [ExampleUsage("ceil(3.6)", "4")]
@@ -307,7 +307,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Round")]
     [Category(Categories.Basic)]
-    [Section(Sections.Rouding)]
+    [Section(Sections.TruncationAndRoundOff)]
     [Description("Rounds a complex value to the nearest integer.")]
     [FunctionSignature("round", "complex value")]
     [FunctionSignature("round", "complex value", "integer digits")]
@@ -337,7 +337,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Truncate")]
     [Category(Categories.Basic)]
-    [Section(Sections.Rouding)]
+    [Section(Sections.TruncationAndRoundOff)]
     [Description("Calculates the integral part of a specified complex number.")]
     [FunctionSignature("trunc", "complex value")]
     [ExampleUsage("trunc(3.6)", "3")]

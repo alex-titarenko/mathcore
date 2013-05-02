@@ -46,6 +46,7 @@
     <Compile Include="Functions\BasicFunctions.cs" />
     <Compile Include="Functions\CalculusFunctions.cs" />
     <Compile Include="Functions\ComplexNumberFunctions.cs" />
+    <Compile Include="Functions\DistributionFunctions.cs" />
     <Compile Include="Functions\GraphingFunctions.cs" />
     <Compile Include="Functions\HyperbolicFunctions.cs" />
     <Compile Include="Functions\InterpolationFunctions.cs" />

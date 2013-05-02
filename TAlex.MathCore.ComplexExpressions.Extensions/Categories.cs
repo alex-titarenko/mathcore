@@ -12,6 +12,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
         public const string ComplexNumbers = "Complex numbers";
         public const string Graphing = "Graphing";
         public const string Interpolation = "Interpolation";
+        public const string Distributions = "Distributions";
         public const string Statistics = "Statistics";
         public const string Calculus = "Calculus";
         public const string Polynomials = "Polynomials";

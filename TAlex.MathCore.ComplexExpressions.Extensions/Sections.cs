@@ -9,15 +9,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
     internal static class Sections
     {
         public const string NumParts = "Number Parts";
-        public const string Rouding = "Rounding";
+        public const string TruncationAndRoundOff = "Truncation and Round-Off";
 
         public const string PolarCoords = "Polar coords";
         public const string SphericalCoords = "Spherical coords";
         public const string CylindricalCoords = "Cylindrical coords";
 
-        public const string UniformDistribution = "Uniform distribution";
-        public const string NormalDistribution = "Normal distribution";
-        public const string ExponentialDistribution = "Exponential distribution";
+        public const string UniformDistribution = "Uniform";
+        public const string NormalDistribution = "Normal";
+        public const string ExponentialDistribution = "Exponential";
 
         public const string Averages = "Averages";
         public const string Moments = "Moments";
