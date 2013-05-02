@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ComplexExpre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ComplexExpressions.Test", "TAlex.MathCore.ComplexExpressions\Test\TAlex.MathCore.ComplexExpressions.Test.csproj", "{C22015BF-B7B1-410C-90B9-05424FBD7F4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ComplexExpressions.Extensions", "TAlex.MathCore.ComplexExpressions.AddOns\TAlex.MathCore.ComplexExpressions.Extensions.csproj", "{E1C14CD2-671A-4181-B59E-C64DCA742B11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ComplexExpressions.Extensions", "TAlex.MathCore.ComplexExpressions.Extensions\TAlex.MathCore.ComplexExpressions.Extensions.csproj", "{E1C14CD2-671A-4181-B59E-C64DCA742B11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
