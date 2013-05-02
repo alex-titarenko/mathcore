@@ -139,11 +139,16 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
                 foreach (var exampleUsage in item.ExampleUsages)
                 {
                     //action
+                    int zeroThreshold = 14;
+                    int complexThreshold = 10;
                     Expression<Object> tree = ExpressionTreeBuilder.BuildTree(exampleUsage.Expression);
                     object actual = tree.Evaluate();
 
                     //assert
                     (actual is Complex || actual is CMatrix).Should().BeTrue("Result must have be only following types: Complex, Matrix.");
+
+                    if (actual is Complex) actual = NumericUtil.ComplexZeroThreshold((Complex)actual, complexThreshold, zeroThreshold);
+                    if (actual is CMatrix) actual = NumericUtilExtensions.ComplexZeroThreshold((CMatrix)actual, complexThreshold, zeroThreshold);
 
                     if (!exampleUsage.CanMultipleResults)
                     {

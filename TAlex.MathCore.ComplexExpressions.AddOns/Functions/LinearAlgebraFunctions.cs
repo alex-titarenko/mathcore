@@ -591,4 +591,134 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             return CMatrix.Eigenvectors(SubExpression.EvaluateAsCMatrix());
         }
     }
+
+    [DisplayName("Left eigenvectors")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the matrix containing all normalized left eigenvectors of the matrix.")]
+    [FunctionSignature("leigvecs", "complex matrix m")]
+    [ExampleUsage("leigvecs({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{0.894427190999916, 0, 0; -0.447213595499958, 1, 0; 0, 0, 1}")]
+    public class LeftEigenvectorsFuncExpression : UnaryExpression<Object>
+    {
+        public LeftEigenvectorsFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.LeftEigenvectors(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("Singularvalues")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the vector whose elements are the singular values of the complex matrix.")]
+    [FunctionSignature("sngvals", "complex matrix m")]
+    [ExampleUsage("sngvals({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{3; 2.23606797749979; 0}")]
+    public class SingularvaluesFuncExpression : UnaryExpression<Object>
+    {
+        public SingularvaluesFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.Singularvalues(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+
+
+    [DisplayName("Characteristic polynomial")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the characteristic polynomial of the complex square matrix.")]
+    [FunctionSignature("char", "complex matrix m")]
+    [ExampleUsage("char({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{0; 6; -5; 1}")]
+    public class CharacteristicPolynomialFuncExpression : UnaryExpression<Object>
+    {
+        public CharacteristicPolynomialFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return new CMatrix(CMatrix.CharacteristicPolynomial(SubExpression.EvaluateAsCMatrix()).ToArray());
+        }
+    }
+
+
+
+    [DisplayName("Cholesky decomposition")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates Cholesky decomposition for hermitian positive definite matrix.")]
+    [FunctionSignature("chol", "complex matrix m")]
+    [ExampleUsage("chol({4, 12, -16; 12, 37, -43; -16, -43, 98})", "{2, 0, 0; 6, 1, 0; -8, 5, 3}")]
+    public class CholeskyDecompositionFuncExpression : UnaryExpression<Object>
+    {
+        public CholeskyDecompositionFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.CholeskyDecomposition(SubExpression.EvaluateAsCMatrix());
+        }
+    }
+
+    [DisplayName("LU decomposition")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates LU-decomposition with column pivoting for the complex square matrix. The resulting matrix includes three matrix: permutation matrix P, the lower and upper triangular matrices L, U.")]
+    [FunctionSignature("lu", "complex matrix m")]
+    [ExampleUsage("lu({2, 0, 0; 0, 3, 4; 0, 4, 9})", "{1, 0, 0, 1, 0, 0, 2, 0, 0; 0, 0, 1, 0, 1, 0, 0, 4, 9; 0, 1, 0, 0, 0.75, 1, 0, 0, -2.75}")]
+    public class LUPDecompositionFuncExpression : UnaryExpression<Object>
+    {
+        public LUPDecompositionFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.AugmentConcat(CMatrix.LUPDecomposition(SubExpression.EvaluateAsCMatrix()));
+        }
+    }
+
+    [DisplayName("QR decomposition")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates QR-decomposition for the complex matrix. The resulting matrix includes two matrices: The unitary matrix Q and upper triangular matrix R.")]
+    [FunctionSignature("qr", "complex matrix m")]
+    [ExampleUsage("qr({3, -6; 4, -8; 0, 1})", "{-0.6, 0, -0.8, -5, 10; -0.8, 0, 0.6, 0, 1; 0, 1, 0, 0, 0}")]
+    public class QRDecompositionFuncExpression : UnaryExpression<Object>
+    {
+        public QRDecompositionFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return CMatrix.AugmentConcat(CMatrix.QRDecomposition(SubExpression.EvaluateAsCMatrix()));
+        }
+    }
+
+    [DisplayName("SVD")]
+    [Category(Categories.LinearAlgebra)]
+    [Description("Calculates the singular value decomposition (the matrix formed by the horizontal concatenation of matrices U, S, VH).")]
+    [FunctionSignature("svd", "complex matrix m")]
+    [ExampleUsage("svd({3, 1, 1; -1, 3, 1})", "{-0.70710678118655, -0.707106781186545, 3.46410161513775, 0, 0, -0.408248290463867, -0.816496580927724, -0.408248290463863; -0.707106781186545, 0.70710678118655, 0, 3.16227766016838, 0, -0.894427190999914, 0.447213595499961, 0; 0, 0, 0, 0, 0, -0.182574185835055, -0.365148371670111, 0.912870929175277}")]
+    public class SVDecompositionFuncExpression : UnaryExpression<Object>
+    {
+        public SVDecompositionFuncExpression(Expression<Object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return new CSVD(SubExpression.EvaluateAsCMatrix()).SVD;
+        }
+    }
 }
