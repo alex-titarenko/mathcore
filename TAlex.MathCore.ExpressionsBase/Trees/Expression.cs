@@ -35,12 +35,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
         }
 
 
-        public virtual void FindVariable(string name, ref VariableExpression<T> var, ref bool isFound)
-        {
-        }
+        public abstract void FindVariable(string name, ref VariableExpression<T> var, ref bool isFound);
 
-        public virtual void FindAllVariables(IList<VariableExpression<T>> foundedVariables)
-        {
-        }
+        public abstract void FindAllVariables(IList<VariableExpression<T>> foundedVariables);
+
+        public abstract void ReplaceChild(Expression<T> oldExpression, Expression<T> newExpression);
     }
 }

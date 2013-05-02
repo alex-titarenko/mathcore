@@ -163,10 +163,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             }
 
             public RandomFuncExpression(Expression<double> minValueExpression, Expression<double> maxValueExpression)
-                //: base(expression)
+                : base(minValueExpression, maxValueExpression)
             {
-                LeftExpression = minValueExpression;
-                RightExpression = maxValueExpression;
             }
 
             public override double Evaluate()
@@ -282,10 +280,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         public class LogFreeBaseFuncExpression : BinaryExpression<double>
         {
             public LogFreeBaseFuncExpression(Expression<double> leftExpression, Expression<double> rightExpression)
-                //: base(subExpression)
+                : base(leftExpression, rightExpression)
             {
-                LeftExpression = leftExpression;
-                RightExpression = rightExpression;
             }
 
             public override double Evaluate()
@@ -394,14 +390,12 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             }
         }
 
-        [FunctionSignature("atan2")]
+        [FunctionSignature("atan2", "real y", "real x")]
         public class Atan2FuncExpression : BinaryExpression<double>
         {
             public Atan2FuncExpression(Expression<double> leftExpression, Expression<double> rightExpression)
-                //: base(subExpression)
+                : base(leftExpression, rightExpression)
             {
-                LeftExpression = leftExpression;
-                RightExpression = rightExpression;
             }
 
             public override double Evaluate()

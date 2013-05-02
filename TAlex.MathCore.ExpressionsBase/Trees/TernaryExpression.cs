@@ -51,6 +51,24 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
             ThirdExpression.FindAllVariables(foundedVariables);
         }
 
+        public override void ReplaceChild(Expression<T> oldExpression, Expression<T> newExpression)
+        {
+            if (FirstExpression == oldExpression)
+                FirstExpression = newExpression;
+            else
+                FirstExpression.ReplaceChild(oldExpression, newExpression);
+
+            if (SecondExpression == oldExpression)
+                SecondExpression = newExpression;
+            else
+                SecondExpression.ReplaceChild(oldExpression, newExpression);
+
+            if (ThirdExpression == oldExpression)
+                ThirdExpression = newExpression;
+            else
+                ThirdExpression.ReplaceChild(oldExpression, newExpression);
+        }
+
         #endregion
     }
 }

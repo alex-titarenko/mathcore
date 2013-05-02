@@ -64,5 +64,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
                 foundedVariables.Add(this);
             }
         }
+
+        public override void ReplaceChild(Expression<T> oldExpression, Expression<T> newExpression)
+        {
+        }
     }
 }

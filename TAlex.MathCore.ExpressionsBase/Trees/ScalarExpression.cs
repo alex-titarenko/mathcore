@@ -18,6 +18,19 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
         }
 
 
+        public override void FindVariable(string name, ref VariableExpression<T> var, ref bool isFound)
+        {
+        }
+
+        public override void FindAllVariables(System.Collections.Generic.IList<VariableExpression<T>> foundedVariables)
+        {
+        }
+
+        public override void ReplaceChild(Expression<T> oldExpression, Expression<T> newExpression)
+        {
+        }
+
+
         public override string ToString()
         {
             return Scalar.ToString();

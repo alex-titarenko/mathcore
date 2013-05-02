@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
@@ -38,7 +37,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     {
                         return (Expression<T>)Activator.CreateInstance(pair.Value, args);
                     }
-                    catch (Exception exc)
+                    catch (Exception)
                     {
                     }
                 }
