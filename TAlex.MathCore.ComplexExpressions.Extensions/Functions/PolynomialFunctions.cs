@@ -144,8 +144,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
+
+
     [DisplayName("Addition")]
     [Category(Categories.Polynomials)]
+    [Section(Sections.PolynomialOperations)]
     [Description("Adds two complex polynomials.")]
     [FunctionSignature("polyadd", "complex vector poly1", "complex vector poly2")]
     [ExampleUsage("polyadd({3; 5; -6i}, {2; -6; 16})", "{5; -1; 16 - 6i}")]
@@ -168,6 +171,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Subtraction")]
     [Category(Categories.Polynomials)]
+    [Section(Sections.PolynomialOperations)]
     [Description("Subtracts one complex polynomial from another.")]
     [FunctionSignature("polysub", "complex vector poly1", "complex vector poly2")]
     [ExampleUsage("polysub({3; 5; -6i}, {2; -6; 16})", "{1; 11; -16 - 6i}")]
@@ -190,6 +194,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Multiplication")]
     [Category(Categories.Polynomials)]
+    [Section(Sections.PolynomialOperations)]
     [Description("Multiplies two complex polynomials.")]
     [FunctionSignature("polymul", "complex vector poly1", "complex vector poly2")]
     [ExampleUsage("polymul({3; 5; -6i}, {2; -6; 16})", "{6; -8; 18 - 12i; 80 + 36i; -96i}")]
@@ -212,6 +217,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Division")]
     [Category(Categories.Polynomials)]
+    [Section(Sections.PolynomialOperations)]
     [Description("Divides two complex polynomials.")]
     [FunctionSignature("polydiv", "complex vector poly1", "complex vector poly2")]
     [ExampleUsage("polydiv({3; 5; -6i}, {3; -5})", "{-1 + 0.72i; 1.2i}")]
@@ -234,6 +240,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Remainder")]
     [Category(Categories.Polynomials)]
+    [Section(Sections.PolynomialOperations)]
     [Description("Calculates the remainder of dividing the first polynomial in the second.")]
     [FunctionSignature("polyrem", "complex vector poly1", "complex vector poly2")]
     [ExampleUsage("polyrem({3; 5; -6i}, {3; -5})", "{6 - 2.16i}")]

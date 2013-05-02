@@ -14,6 +14,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
     [DisplayName("Integration")]
     [Category(Categories.Calculus)]
+    [Section(Sections.Integration)]
     [Description("Calculates the numerical value of the definite integral complex function of one variable using adaptive method.")]
     [FunctionSignature("integ", "expression expr", "real a", "real b", "variable var")]
     [ExampleUsage("integ(sin(x), 0, pi, x)", "2")]
@@ -38,8 +39,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
+
+
     [DisplayName("1st derivation")]
     [Category(Categories.Calculus)]
+    [Section(Sections.Derivation)]
     [Description("Calculates the value of the central derivative of the first order.")]
     [FunctionSignature("derive", "expression expr", "complex x", "variable var")]
     [ExampleUsage("derive(sin(x), pi/2, x)", "0")]
@@ -61,6 +65,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("2nd derivation")]
     [Category(Categories.Calculus)]
+    [Section(Sections.Derivation)]
     [Description("Calculates the value of the central derivative of the second order.")]
     [FunctionSignature("derive2", "expression expr", "complex x", "variable var")]
     [ExampleUsage("derive2(e^x, 1, x)", "2.71828182845911")]
@@ -82,6 +87,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("3rd derivation")]
     [Category(Categories.Calculus)]
+    [Section(Sections.Derivation)]
     [Description("Calculates the value of the central derivative of the third order.")]
     [FunctionSignature("derive3", "expression expr", "complex x", "variable var")]
     [ExampleUsage("derive3(1 + x^2, 1, x)", "0")]
@@ -103,6 +109,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("4th derivation")]
     [Category(Categories.Calculus)]
+    [Section(Sections.Derivation)]
     [Description("Calculates the value of the central derivative of the fourth order.")]
     [FunctionSignature("derive4", "expression expr", "complex x", "variable var")]
     [ExampleUsage("derive4(sin(x^2), 2, x)", "-59.1602336374673")]
@@ -122,8 +129,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
+
+
     [DisplayName("Summation of a sequance")]
     [Category(Categories.Calculus)]
+    [Section(Sections.Sequence)]
     [Description("Calculates the sum of a sequence using initial value m and end value n.")]
     [FunctionSignature("sums", "expression expr", "integer m", "integer n", "variable var")]
     [ExampleUsage("sums(x^2/2, 2, 3, x)", "6.5")]
@@ -147,6 +157,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Product of a sequance")]
     [Category(Categories.Calculus)]
+    [Section(Sections.Sequence)]
     [Description("Calculates the product of a sequence using initial value m and end value n.")]
     [FunctionSignature("prods", "expression expr", "integer m", "integer n", "variable var")]
     [ExampleUsage("prods(x^2 / 2, 2, 3, x)", "9")]

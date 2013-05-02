@@ -122,6 +122,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse sine")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.InverseFunctions)]
     [Description("Calculates the inverse sine of a complex number.")]
     [FunctionSignature("asin", "complex value")]
     [ExampleUsage("asin(0)", "0")]
@@ -140,6 +141,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse cosine")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.InverseFunctions)]
     [Description("Calculates the inverse cosine of a complex number.")]
     [FunctionSignature("acos", "complex value")]
     [ExampleUsage("acos(1)", "0")]
@@ -158,6 +160,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse tangent")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.InverseFunctions)]
     [Description("Calculates the inverse tangent of a complex number.")]
     [FunctionSignature("atan", "complex value")]
     [ExampleUsage("atan(0)", "0")]
@@ -176,6 +179,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse cotangent")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.InverseFunctions)]
     [Description("Calculates the inverse cotangent of a complex number.")]
     [FunctionSignature("acot", "complex value")]
     [ExampleUsage("acot(1)", "0.785398163397448")]
@@ -194,6 +198,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse secant")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.InverseFunctions)]
     [Description("Calculates the inverse secant of a complex number.")]
     [FunctionSignature("asec", "complex value")]
     [ExampleUsage("asec(2)", "1.0471975511966")]
@@ -212,6 +217,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Inverse cosecant")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.InverseFunctions)]
     [Description("Calculates the inverse cosecant of a complex number.")]
     [FunctionSignature("acsc", "complex value")]
     [ExampleUsage("acsc(2)", "0.523598775598299")]
@@ -232,6 +238,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Angle")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.Angle)]
     [Description("Calculates the angle whose tangent is the quotient of two specified numbers.")]
     [FunctionSignature("atan2", "real y", "real x")]
     [ExampleUsage("atan2(4, 3)", "0.927295218001612")]
@@ -255,6 +262,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Versine")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.RareFunctions)]
     [Description("Calculates the versine (1 - cos(x)) of a complex number.")]
     [FunctionSignature("vers", "complex value")]
     [ExampleUsage("vers(pi)", "2")]
@@ -273,6 +281,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Coversine")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.RareFunctions)]
     [Description("Calculates the coversine (1 - sin(x)) of a complex number.")]
     [FunctionSignature("cvs", "complex value")]
     [ExampleUsage("cvs(pi)", "1")]
@@ -291,6 +300,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Haversine")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.RareFunctions)]
     [Description("Calculates the haversine ((1 - cos(x)) / 2) of a complex number.")]
     [FunctionSignature("hav", "complex value")]
     [ExampleUsage("hav(pi / 2)", "0.5")]
@@ -309,6 +319,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Exsecant")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.RareFunctions)]
     [Description("Calculates the exsecant (sec(x) - 1) of a complex number.")]
     [FunctionSignature("exsec", "complex value")]
     [ExampleUsage("exsec(pi)", "-2")]
@@ -327,6 +338,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Excosecant")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.RareFunctions)]
     [Description("Calculates the excosecant (csc(x) - 1) of a complex number.")]
     [FunctionSignature("excsc", "complex value")]
     [ExampleUsage("excsc(pi / 2)", "0")]
@@ -347,6 +359,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Sine cardinal")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.CardinalFunctions)]
     [Description("Calculates the sine cardinal (sin(x) / x) of a complex number.")]
     [FunctionSignature("sinc", "complex value")]
     [ExampleUsage("sinc(0)", "1")]
@@ -366,6 +379,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Tangent cardinal")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.CardinalFunctions)]
     [Description("Calculates the tangent cardinal (tan(x) / x) of a complex number.")]
     [FunctionSignature("tanc", "complex value")]
     [ExampleUsage("tanc(0)", "1")]
@@ -387,6 +401,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Degrees to radians")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.AngleConversion)]
     [Description("Calculates the value of the angle in radians converted from degrees.")]
     [FunctionSignature("rad", "real degree")]
     [ExampleUsage("rad(90)", "1.5707963267949")]
@@ -406,6 +421,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Radians to degrees")]
     [Category(Categories.Trigonometric)]
+    [Section(Sections.AngleConversion)]
     [Description("Calculates the value of the angle in degrees converted from radians.")]
     [FunctionSignature("deg", "real radian")]
     [ExampleUsage("deg(pi / 2)", "90")]

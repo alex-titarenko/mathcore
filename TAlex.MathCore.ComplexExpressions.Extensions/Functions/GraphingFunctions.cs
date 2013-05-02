@@ -11,6 +11,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
     [DisplayName("Cartesian to polar")]
     [Category(Categories.Graphing)]
+    [Section(Sections.PolarCoords)]
     [Description("Transforms Cartesian coordinates to polar.")]
     [FunctionSignature("cart2pol", "real x", "real y")]
     [ExampleUsage("cart2pol(9, -2)", "{9.21954445729289; -0.218668945873942}")]
@@ -31,6 +32,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Polar to Cartesian")]
     [Category(Categories.Graphing)]
+    [Section(Sections.PolarCoords)]
     [Description("Transforms polar coordinates to Cartesian.")]
     [FunctionSignature("pol2cart", "real r", "real theta")]
     [ExampleUsage("pol2cart(9.2195444572928889, -0.21866894587394195)", "{9; -2}")]
@@ -51,6 +53,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cartesian to spherical")]
     [Category(Categories.Graphing)]
+    [Section(Sections.SphericalCoords)]
     [Description("Transforms Cartesian coordinates to spherical.")]
     [FunctionSignature("cart2sph", "real x", "real y", "real z")]
     [ExampleUsage("cart2sph(9, -2, 3)", "{9.69535971483266; -0.218668945873942; 1.25620658423463}")]
@@ -72,6 +75,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Spherical to Cartesian")]
     [Category(Categories.Graphing)]
+    [Section(Sections.SphericalCoords)]
     [Description("Transforms spherical coordinates to Cartesian.")]
     [FunctionSignature("sph2cart", "real r", "real theta", "real phi")]
     [ExampleUsage("sph2cart(9.6953597148326587, -0.21866894587394195, 1.2562065842346306)", "{9; -2; 3}")]
@@ -93,6 +97,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cartesian to cylindrical")]
     [Category(Categories.Graphing)]
+    [Section(Sections.CylindricalCoords)]
     [Description("Transforms Cartesian coordinates to cylindrical.")]
     [FunctionSignature("cart2cyl", "real x", "real y", "real z")]
     [ExampleUsage("cart2cyl(9, -2, 3)", "{9.21954445729289; -0.218668945873942; 3}")]
@@ -114,6 +119,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cylindrical to Cartesian")]
     [Category(Categories.Graphing)]
+    [Section(Sections.CylindricalCoords)]
     [Description("Transforms cylindrical coordinates to Cartesian.")]
     [FunctionSignature("cyl2cart", "real r", "real theta", "real z")]
     [ExampleUsage("cyl2cart(9.2195444572928889, -0.21866894587394195, 3)", "{9; -2; 3}")]

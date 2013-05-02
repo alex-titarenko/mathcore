@@ -12,6 +12,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
     [DisplayName("Matrix")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Creates new empty complex matrix with specified count of rows and columns.")]
     [FunctionSignature("matrix", "integer rows", "integer cols")]
     [ExampleUsage("matrix(2, 3)", "{0,0,0; 0,0,0}")]
@@ -30,6 +31,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Diagonal")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Returns a column vector containing the main diagonal of the complex square matrix, or returns a complex square matrix containing on its main diagonal the elements of the column vector.")]
     [FunctionSignature("diag", "complex matrix m")]
     [FunctionSignature("diag", "complex vector v")]
@@ -50,6 +52,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Identity")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Creates the identity matrix of the specified size.")]
     [FunctionSignature("identity", "integer n")]
     [ExampleUsage("identity(2)", "{1, 0; 0, 1}")]
@@ -69,6 +72,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Augment concat")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Returns a complex matrix formed by horizontal concatenating of the matrices.")]
     [FunctionSignature("augment", "complex matrix m1", "complex matrix m2", "...")]
     [ExampleUsage("augment({1; 2}, {3; 5}, {10; 20})", "{1, 3, 10; 2, 5, 20}")]
@@ -88,6 +92,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Stack concat")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Returns a complex matrix formed by vertical concatenating of the matrices.")]
     [FunctionSignature("stack", "complex matrix m1", "complex matrix m2", "...")]
     [ExampleUsage("stack({1; 2}, {3; 5}, {10; 20})", "{1; 2; 3; 5; 10; 20}")]
@@ -107,6 +112,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Submatrix")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Returns the specified submatrix.")]
     [FunctionSignature("submatrix", "complex matrix m", "integer r1", "integer r2", "integer c1", "integer c2")]
     [ExampleUsage("submatrix({1, 2, 3; 4, 5, 6}, 1, 1, 1, 2)", "{5, 6}")]
@@ -131,6 +137,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Get row")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Returns the specified row of the matrix using zero based index.")]
     [FunctionSignature("row", "complex matrix m", "integer rowIndex")]
     [ExampleUsage("row({1, 2, 3; 4, 5, 6}, 1)", "{4, 5, 6}")]
@@ -149,6 +156,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Get column")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Returns the specified column of the matrix using zero based index.")]
     [FunctionSignature("col", "complex matrix m", "integer colIndex")]
     [ExampleUsage("col({1, 2; 3, 4; 5, 6}, 1)", "{2; 4; 6}")]
@@ -167,6 +175,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Get element")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Creation)]
     [Description("Returns the element of complex vector or matrix using zero based indexes.")]
     [FunctionSignature("elem", "complex matrix m", "integer rowIndex")]
     [FunctionSignature("elem", "complex matrix m", "integer rowIndex", "integer colIndex")]
@@ -199,6 +208,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Index of last element")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Returns the index of last element of a complex vector.")]
     [FunctionSignature("last", "complex vector v")]
     [ExampleUsage("last({1; 2; 3; 5; 15})", "4")]
@@ -217,6 +227,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Length")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Returns the number of elements of the complex matrix.")]
     [FunctionSignature("length", "complex matrix m")]
     [ExampleUsage("length({1, 3, 5; 8, 13, -21})", "6")]
@@ -236,6 +247,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Row count")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Returns the number of rows of the complex matrix.")]
     [FunctionSignature("rows", "complex matrix m")]
     [ExampleUsage("rows({1, 3, 5; 8, 13, -21})", "2")]
@@ -255,6 +267,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Column count")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Returns the number of columns of the complex matrix.")]
     [FunctionSignature("cols", "complex matrix m")]
     [ExampleUsage("cols({1, 3, 5; 8, 13, -21})", "3")]
@@ -274,6 +287,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Maximum")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Returns the maximum element of the complex matrix.")]
     [FunctionSignature("max", "complex matrix m")]
     [ExampleUsage("max({0, 2, -248; 16, 14, 5})", "16")]
@@ -293,6 +307,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Minimum")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Returns the minimum element of the complex matrix.")]
     [FunctionSignature("min", "complex matrix m")]
     [ExampleUsage("min({0, 2, -248; 16, 14, 5})", "-248")]
@@ -313,6 +328,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Trace")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Returns trace (sum of diagonal elements) of the complex square matrix.")]
     [FunctionSignature("tr", "complex matrix m")]
     [ExampleUsage("tr({1, 2; 3, 4})", "5")]
@@ -331,6 +347,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Rank")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Calculates the number of linearly independent rows.")]
     [FunctionSignature("rank", "complex matrix m")]
     [ExampleUsage("rank({1, 2, 1; -2, -3, 1; 3, 5, 0})", "2")]
@@ -347,10 +364,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
-
-
     [DisplayName("Determinant")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
     [Description("Calculates determinant of the complex square matrix.")]
     [FunctionSignature("det", "complex matrix m")]
     [ExampleUsage("det({-2, 2, 3; -1, 1, 3; 2, 0, -1})", "6")]
@@ -367,8 +383,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
+
+
     [DisplayName("Linear system solve")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.SolveAndInverse)]
     [Description("Calculates the solution of the linear system.")]
     [FunctionSignature("lsolve", "complex matrix a", "complex vector b")]
     [ExampleUsage("lsolve({3, 2, -1; 2, -2, 4; -1, 1/2, -1}, {1; -2; 0})", "{1; -2; -2}")]
@@ -387,6 +406,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Pseudo inverse")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.SolveAndInverse)]
     [Description("Calculates the Moore-Penrose inverse (pseudoinverse) of the complex matrix.")]
     [FunctionSignature("pinv", "complex matrix m")]
     [ExampleUsage("pinv({-8, 0, 1; 7, 9, 7})", "{-0.117933723196881, 0.00682261208576995; 0.0477582846003899, 0.0633528265107213; 0.0565302144249513, 0.0545808966861599}")]
@@ -407,6 +427,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Dot product")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Products)]
     [Description("Calculates the vector dot product of two column vectors.")]
     [FunctionSignature("dot", "complex vector v1", "complex vector v2")]
     [ExampleUsage("dot({2; 5; -8}, {16; 3i; 2})", "16 + 15i")]
@@ -425,6 +446,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cross product")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Products)]
     [Description("Calculates the vector cross product of two column vectors.")]
     [FunctionSignature("cross", "complex vector v1", "complex vector v2")]
     [ExampleUsage("cross({2; 5; -8}, {16; 3i; 2})", "{10 + 24i; -132; -80 + 6i}")]
@@ -445,6 +467,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("One norm")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Norms)]
     [Description("Calculates the maximum absolute column sum norm (also known as taxi norm).")]
     [FunctionSignature("onenorm", "complex matrix m")]
     [ExampleUsage("onenorm({-2, 2, 3; -1, 1, 3; 2, 0, -1})", "7")]
@@ -463,6 +486,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Infinity norm")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Norms)]
     [Description("Calculates the maximum absolute row sum norm (also known as max norm).")]
     [FunctionSignature("infnorm", "complex matrix m")]
     [ExampleUsage("infnorm({-2, 5, 3; -1, 1, 3; 2, 0, -1})", "10")]
@@ -481,6 +505,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Frobenius norm")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Norms)]
     [Description("Calculates the Frobenius norm of a complex matrix.")]
     [FunctionSignature("fronorm", "complex matrix m")]
     [ExampleUsage("fronorm({2, 4; 4, 0})", "6")]
@@ -499,6 +524,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("P-norm")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Norms)]
     [Description("Calculates the p-norm of a complex matrix.")]
     [FunctionSignature("pnorm", "complex matrix m", "real p")]
     [ExampleUsage("pnorm({2, 4; 4, 0}, 2)", "6")]
@@ -520,6 +546,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cofactor")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Minor)]
     [Description("Calculates the signed minor of the complex square matrix.")]
     [FunctionSignature("cofactor", "complex matrix m", "integer rowIndex", "integer colIndex")]
     [ExampleUsage("cofactor({1, 4, 7; 3, 0, 5; -1, 9, 11}, 1, 2)", "-13")]
@@ -538,6 +565,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Minor")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Minor)]
     [Description("Calculates the determinant of some smaller square matrix, cut down from the matrix by removing one or more of its rows or columns.")]
     [FunctionSignature("minor", "complex matrix m", "integer rowIndex", "integer colIndex")]
     [ExampleUsage("minor({1, 4, 7; 3, 0, 5; -1, 9, 11}, 1, 2)", "13")]
@@ -558,6 +586,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Eigenvalues")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.EigenSystem)]
     [Description("Calculates the vector whose elements are the eigenvalues of the complex square matrix.")]
     [FunctionSignature("eigvals", "complex matrix m")]
     [ExampleUsage("eigvals({2, 0, 0; 0, 3, 4; 0, 4, 9})", "{11; 1; 2}")]
@@ -576,6 +605,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Eigenvectors")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.EigenSystem)]
     [Description("Calculates the matrix containing all normalized eigenvectors of the matrix.")]
     [FunctionSignature("eigvecs", "complex matrix m")]
     [ExampleUsage("eigvecs({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{1, 0.447213595499958, 0; 0, 0.894427190999916, 0; 0, 0, 1}")]
@@ -594,6 +624,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Left eigenvectors")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.EigenSystem)]
     [Description("Calculates the matrix containing all normalized left eigenvectors of the matrix.")]
     [FunctionSignature("leigvecs", "complex matrix m")]
     [ExampleUsage("leigvecs({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{0.894427190999916, 0, 0; -0.447213595499958, 1, 0; 0, 0, 1}")]
@@ -612,6 +643,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Singularvalues")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.EigenSystem)]
     [Description("Calculates the vector whose elements are the singular values of the complex matrix.")]
     [FunctionSignature("sngvals", "complex matrix m")]
     [ExampleUsage("sngvals({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{3; 2.23606797749979; 0}")]
@@ -632,6 +664,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Characteristic polynomial")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.CharacteristicPolynomial)]
     [Description("Calculates the characteristic polynomial of the complex square matrix.")]
     [FunctionSignature("char", "complex matrix m")]
     [ExampleUsage("char({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{0; 6; -5; 1}")]
@@ -652,6 +685,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Cholesky decomposition")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Decompositions)]
     [Description("Calculates Cholesky decomposition for hermitian positive definite matrix.")]
     [FunctionSignature("chol", "complex matrix m")]
     [ExampleUsage("chol({4, 12, -16; 12, 37, -43; -16, -43, 98})", "{2, 0, 0; 6, 1, 0; -8, 5, 3}")]
@@ -670,6 +704,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("LU decomposition")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Decompositions)]
     [Description("Calculates LU-decomposition with column pivoting for the complex square matrix. The resulting matrix includes three matrix: permutation matrix P, the lower and upper triangular matrices L, U.")]
     [FunctionSignature("lu", "complex matrix m")]
     [ExampleUsage("lu({2, 0, 0; 0, 3, 4; 0, 4, 9})", "{1, 0, 0, 1, 0, 0, 2, 0, 0; 0, 0, 1, 0, 1, 0, 0, 4, 9; 0, 1, 0, 0, 0.75, 1, 0, 0, -2.75}")]
@@ -688,6 +723,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("QR decomposition")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Decompositions)]
     [Description("Calculates QR-decomposition for the complex matrix. The resulting matrix includes two matrices: The unitary matrix Q and upper triangular matrix R.")]
     [FunctionSignature("qr", "complex matrix m")]
     [ExampleUsage("qr({3, -6; 4, -8; 0, 1})", "{-0.6, 0, -0.8, -5, 10; -0.8, 0, 0.6, 0, 1; 0, 1, 0, 0, 0}")]
@@ -706,6 +742,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("SVD")]
     [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Decompositions)]
     [Description("Calculates the singular value decomposition (the matrix formed by the horizontal concatenation of matrices U, S, VH).")]
     [FunctionSignature("svd", "complex matrix m")]
     [ExampleUsage("svd({3, 1, 1; -1, 3, 1})", "{-0.70710678118655, -0.707106781186545, 3.46410161513775, 0, 0, -0.408248290463867, -0.816496580927724, -0.408248290463863; -0.707106781186545, 0.70710678118655, 0, 3.16227766016838, 0, -0.894427190999914, 0.447213595499961, 0; 0, 0, 0, 0, 0, -0.182574185835055, -0.365148371670111, 0.912870929175277}")]

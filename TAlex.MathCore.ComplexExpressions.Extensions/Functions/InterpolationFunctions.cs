@@ -32,7 +32,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
-
     [DisplayName("Polynomial")]
     [Category(Categories.Interpolation)]
     [Description("Calculates the interpolated value at specified value using Newton's polynomial interpolation.")]

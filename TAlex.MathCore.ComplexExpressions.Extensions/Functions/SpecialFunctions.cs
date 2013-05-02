@@ -13,6 +13,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
     [DisplayName("Factorial")]
     [Category(Categories.SpecialFunctions)]
+    [Section(Sections.Combinatorics)]
     [Description("Calculates the factorial of a positive integer.")]
     [FunctionSignature("fact", "integer n")]
     [ExampleUsage("fact(0)", "1")]
@@ -33,6 +34,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Combinations")]
     [Category(Categories.SpecialFunctions)]
+    [Section(Sections.Combinatorics)]
     [Description("Calculates the number of ways of picking k unordered outcomes from n possibilities.")]
     [FunctionSignature("combin", "integer n", "integer k")]
     [ExampleUsage("combin(2, 1)", "2")]
@@ -53,6 +55,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Permutations")]
     [Category(Categories.SpecialFunctions)]
+    [Section(Sections.Combinatorics)]
     [Description("Calculates the number of ways of obtaining an ordered subset of k elements from a set of n elements.")]
     [FunctionSignature("permut", "integer n", "integer k")]
     [ExampleUsage("permut(2, 1)", "2")]
@@ -73,6 +76,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Fibonacci")]
     [Category(Categories.SpecialFunctions)]
+    [Section(Sections.Combinatorics)]
     [Description("Calculates the n-th Fibonacci number.")]
     [FunctionSignature("fib", "integer n")]
     [ExampleUsage("fib(0)", "0")]
@@ -95,6 +99,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Greatest common divisor")]
     [Category(Categories.SpecialFunctions)]
+    [Section(Sections.NumberTheory)]
     [Description("Calculates the greatest common divisor of a set of integer numbers.")]
     [FunctionSignature("gcd", "integer n1", "integer n2", "...")]
     [ExampleUsage("gcd(5, 2)", "1")]
@@ -115,6 +120,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Least common multiple")]
     [Category(Categories.SpecialFunctions)]
+    [Section(Sections.NumberTheory)]
     [Description("Calculates the least common multiple of a set of integer numbers.")]
     [FunctionSignature("lcm", "integer n1", "integer n2", "...")]
     [ExampleUsage("lcm(5, 2)", "10")]
@@ -136,6 +142,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Error function")]
     [Category(Categories.SpecialFunctions)]
+    [Section(Sections.ProbabilityIntegrals)]
     [Description("Calculates the value of error function for the specified real argument.")]
     [FunctionSignature("erf", "real value")]
     [ExampleUsage("erf(0)", "0")]
@@ -155,6 +162,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
     [DisplayName("Complementary error function")]
     [Category(Categories.SpecialFunctions)]
+    [Section(Sections.ProbabilityIntegrals)]
     [Description("Calculates the value of complementary error function for the specified real argument.")]
     [FunctionSignature("erfc", "real value")]
     [ExampleUsage("erfc(0)", "1")]
