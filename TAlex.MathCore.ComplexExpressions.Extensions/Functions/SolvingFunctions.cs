@@ -50,8 +50,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         public override object Evaluate()
         {
             Func<double, double> targetFunc = Expressions[0].EvaluateAsDoubleFunction(Expressions[3]);
-            double a = Expressions[1].EvaluateAsDouble();
-            double b = Expressions[2].EvaluateAsDouble();
+            double a = Expressions[1].EvaluateAsReal();
+            double b = Expressions[2].EvaluateAsReal();
 
             BrentEquationSolver solver = new BrentEquationSolver(targetFunc, a, b);
             return (Complex)solver.Solve();

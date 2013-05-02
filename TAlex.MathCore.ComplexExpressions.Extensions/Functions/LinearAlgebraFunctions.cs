@@ -512,7 +512,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return (Complex)CMatrix.PNorm(LeftExpression.EvaluateAsCMatrix(), RightExpression.EvaluateAsDouble());
+            return (Complex)CMatrix.PNorm(LeftExpression.EvaluateAsCMatrix(), RightExpression.EvaluateAsReal());
         }
     }
 

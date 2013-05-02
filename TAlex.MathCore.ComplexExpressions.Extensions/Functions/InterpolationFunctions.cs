@@ -24,9 +24,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            IList<double> xValues = FirstExpression.EvaluateAsDoubleArray();
-            IList<double> yValues = SecondExpression.EvaluateAsDoubleArray();
-            double x = ThirdExpression.EvaluateAsDouble();
+            IList<double> xValues = FirstExpression.EvaluateAsRealVector();
+            IList<double> yValues = SecondExpression.EvaluateAsRealVector();
+            double x = ThirdExpression.EvaluateAsReal();
             
             return (Complex)(new LinearInterpolator(xValues, yValues).Interpolate(x));
         }
@@ -47,9 +47,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            IList<double> xValues = FirstExpression.EvaluateAsDoubleArray();
-            IList<double> yValues = SecondExpression.EvaluateAsDoubleArray();
-            double x = ThirdExpression.EvaluateAsDouble();
+            IList<double> xValues = FirstExpression.EvaluateAsRealVector();
+            IList<double> yValues = SecondExpression.EvaluateAsRealVector();
+            double x = ThirdExpression.EvaluateAsReal();
 
             return (Complex)(new NewtonPolynomialInterpolator(xValues, yValues).Interpolate(x));
         }

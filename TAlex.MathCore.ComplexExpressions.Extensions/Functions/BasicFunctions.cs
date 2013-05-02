@@ -210,8 +210,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double x = LeftExpression.EvaluateAsDouble();
-            double y = RightExpression.EvaluateAsDouble();
+            double x = LeftExpression.EvaluateAsReal();
+            double y = RightExpression.EvaluateAsReal();
 
             return (Complex)(x % y);
         }

@@ -244,8 +244,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double y = LeftExpression.EvaluateAsDouble();
-            double x = RightExpression.EvaluateAsDouble();
+            double y = LeftExpression.EvaluateAsReal();
+            double x = RightExpression.EvaluateAsReal();
 
             return (Complex)Math.Atan2(y, x);
         }
@@ -400,7 +400,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return (Complex)ExMath.ToRadians(SubExpression.EvaluateAsDouble());
+            return (Complex)ExMath.ToRadians(SubExpression.EvaluateAsReal());
         }
     }
 
@@ -419,7 +419,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return (Complex)ExMath.ToDegrees(SubExpression.EvaluateAsDouble());
+            return (Complex)ExMath.ToDegrees(SubExpression.EvaluateAsReal());
         }
     }
 }

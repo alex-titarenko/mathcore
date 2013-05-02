@@ -11,6 +11,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         public static Func<T, T> CreateOneParametricFunction<T>(Expression<T> expression, string varName)
         {
             VariableExpression<T> variable = expression.FindVariable(varName);
+            if (variable == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, varName));
+
             OneParametricFunctionCreator<T> creator = new OneParametricFunctionCreator<T>(expression, variable);
 
             return creator.Evaluate;
@@ -19,7 +21,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         public static Func<T, T, T> CreateTwoParametricFunction<T>(Expression<T> expression, string firstVarName, string secondVarName)
         {
             VariableExpression<T> variable1 = expression.FindVariable(firstVarName);
+            if (variable1 == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, firstVarName));
+
             VariableExpression<T> variable2 = expression.FindVariable(secondVarName);
+            if (variable2 == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, secondVarName));
+
             TwoParametricFunctionCreator<T> creator = new TwoParametricFunctionCreator<T>(expression, variable1, variable2);
 
             return creator.Evaluate;

@@ -61,47 +61,20 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid object type. Expected type &apos;{0}&apos; but found &apos;{1}&apos;..
+        ///   Looks up a localized string similar to Invalid argument type. Expected &apos;{0}&apos; but found &apos;{1}&apos;..
         /// </summary>
-        internal static string EXC_INVALID_OBJECT_TYPE {
+        internal static string EXC_INVALID_ARG_TYPE {
             get {
-                return ResourceManager.GetString("EXC_INVALID_OBJECT_TYPE", resourceCulture);
+                return ResourceManager.GetString("EXC_INVALID_ARG_TYPE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a complex matrix..
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; has unsupported type..
         /// </summary>
-        internal static string EXC_VALUE_NOT_COMPLEX_MATRIX {
+        internal static string EXC_WRONG_ARG_TYPE {
             get {
-                return ResourceManager.GetString("EXC_VALUE_NOT_COMPLEX_MATRIX", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not a complex number..
-        /// </summary>
-        internal static string EXC_VALUE_NOT_COMPLEX_NUMBER {
-            get {
-                return ResourceManager.GetString("EXC_VALUE_NOT_COMPLEX_NUMBER", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not an integer..
-        /// </summary>
-        internal static string EXC_VALUE_NOT_INTEGER {
-            get {
-                return ResourceManager.GetString("EXC_VALUE_NOT_INTEGER", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The value &apos;{0}&apos; is not real..
-        /// </summary>
-        internal static string EXC_VALUE_NOT_REAL {
-            get {
-                return ResourceManager.GetString("EXC_VALUE_NOT_REAL", resourceCulture);
+                return ResourceManager.GetString("EXC_WRONG_ARG_TYPE", resourceCulture);
             }
         }
     }

@@ -136,4 +136,8 @@
     <value>Variable '{0}' is unassigned.</value>
     <comment>{0} - variable name</comment>
   </data>
+  <data name="EXC_VARIABLE_NOT_FOUND" xml:space="preserve">
+    <value>Variable '{0}' not found.</value>
+    <comment>{0} - variable name.</comment>
+  </data>
 </root>

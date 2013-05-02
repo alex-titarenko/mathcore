@@ -23,8 +23,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double x = LeftExpression.EvaluateAsDouble();
-            double y = RightExpression.EvaluateAsDouble();
+            double x = LeftExpression.EvaluateAsReal();
+            double y = RightExpression.EvaluateAsReal();
             return new CMatrix(CoordSysConverter.CartesianToPolar(x, y));
         }
     }
@@ -43,8 +43,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double r = LeftExpression.EvaluateAsDouble();
-            double theta = RightExpression.EvaluateAsDouble();
+            double r = LeftExpression.EvaluateAsReal();
+            double theta = RightExpression.EvaluateAsReal();
             return new CMatrix(CoordSysConverter.PolarToCartesian(r, theta));
         }
     }
@@ -63,9 +63,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double x = FirstExpression.EvaluateAsDouble();
-            double y = SecondExpression.EvaluateAsDouble();
-            double z = ThirdExpression.EvaluateAsDouble();
+            double x = FirstExpression.EvaluateAsReal();
+            double y = SecondExpression.EvaluateAsReal();
+            double z = ThirdExpression.EvaluateAsReal();
             return new CMatrix(CoordSysConverter.CartesianToSpherical(x, y, z));
         }
     }
@@ -84,9 +84,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double r = FirstExpression.EvaluateAsDouble();
-            double theta = SecondExpression.EvaluateAsDouble();
-            double phi = ThirdExpression.EvaluateAsDouble();
+            double r = FirstExpression.EvaluateAsReal();
+            double theta = SecondExpression.EvaluateAsReal();
+            double phi = ThirdExpression.EvaluateAsReal();
             return new CMatrix(CoordSysConverter.SphericalToCartesian(r, theta, phi));
         }
     }
@@ -105,9 +105,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double x = FirstExpression.EvaluateAsDouble();
-            double y = SecondExpression.EvaluateAsDouble();
-            double z = ThirdExpression.EvaluateAsDouble();
+            double x = FirstExpression.EvaluateAsReal();
+            double y = SecondExpression.EvaluateAsReal();
+            double z = ThirdExpression.EvaluateAsReal();
             return new CMatrix(CoordSysConverter.CartesianToCylindrical(x, y, z));
         }
     }
@@ -126,9 +126,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double r = FirstExpression.EvaluateAsDouble();
-            double theta = SecondExpression.EvaluateAsDouble();
-            double z = ThirdExpression.EvaluateAsDouble();
+            double r = FirstExpression.EvaluateAsReal();
+            double theta = SecondExpression.EvaluateAsReal();
+            double z = ThirdExpression.EvaluateAsReal();
             return new CMatrix(CoordSysConverter.CylindricalToCartesian(r, theta, z));
         }
     }

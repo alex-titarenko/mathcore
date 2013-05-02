@@ -117,24 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EXC_INVALID_OBJECT_TYPE" xml:space="preserve">
-    <value>Invalid object type. Expected type '{0}' but found '{1}'.</value>
+  <data name="EXC_INVALID_ARG_TYPE" xml:space="preserve">
+    <value>Invalid argument type. Expected '{0}' but found '{1}'.</value>
     <comment>{0} - expected type, {1} - actual type</comment>
   </data>
-  <data name="EXC_VALUE_NOT_COMPLEX_MATRIX" xml:space="preserve">
-    <value>The value '{0}' is not a complex matrix.</value>
-    <comment>{0} - value</comment>
-  </data>
-  <data name="EXC_VALUE_NOT_COMPLEX_NUMBER" xml:space="preserve">
-    <value>The value '{0}' is not a complex number.</value>
-    <comment>{0} - value</comment>
-  </data>
-  <data name="EXC_VALUE_NOT_INTEGER" xml:space="preserve">
-    <value>The value '{0}' is not an integer.</value>
-    <comment>{0} - value</comment>
-  </data>
-  <data name="EXC_VALUE_NOT_REAL" xml:space="preserve">
-    <value>The value '{0}' is not real.</value>
+  <data name="EXC_WRONG_ARG_TYPE" xml:space="preserve">
+    <value>The argument '{0}' has unsupported type.</value>
     <comment>{0} - value</comment>
   </data>
 </root>

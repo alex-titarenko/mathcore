@@ -118,8 +118,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            IList<double> xValues = LeftExpression.EvaluateAsDoubleArray();
-            IList<double> yValues = RightExpression.EvaluateAsDoubleArray();
+            IList<double> xValues = LeftExpression.EvaluateAsRealVector();
+            IList<double> yValues = RightExpression.EvaluateAsRealVector();
 
             return new CMatrix(CPolynomial.InterpolatingPolynomial(xValues, yValues).ToArray());
         }

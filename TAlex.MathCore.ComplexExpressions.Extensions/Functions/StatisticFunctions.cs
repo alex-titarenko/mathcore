@@ -30,9 +30,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double a = FirstExpression.EvaluateAsDouble();
-            double b = SecondExpression.EvaluateAsDouble();
-            double x = ThirdExpression.EvaluateAsDouble();
+            double a = FirstExpression.EvaluateAsReal();
+            double b = SecondExpression.EvaluateAsReal();
+            double x = ThirdExpression.EvaluateAsReal();
 
             return (Complex)new UniformDistribution(a, b).ProbabilityDensityFunction(x);
         }
@@ -54,9 +54,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double a = FirstExpression.EvaluateAsDouble();
-            double b = SecondExpression.EvaluateAsDouble();
-            double x = ThirdExpression.EvaluateAsDouble();
+            double a = FirstExpression.EvaluateAsReal();
+            double b = SecondExpression.EvaluateAsReal();
+            double x = ThirdExpression.EvaluateAsReal();
 
             return (Complex)new UniformDistribution(a, b).CumulativeDistributionFunction(x);
         }
@@ -80,8 +80,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double a = FirstExpression.EvaluateAsDouble();
-            double b = SecondExpression.EvaluateAsDouble();
+            double a = FirstExpression.EvaluateAsReal();
+            double b = SecondExpression.EvaluateAsReal();
             int count = ThirdExpression.EvaluateAsInt32();
 
             double[] v = new double[count];
@@ -114,8 +114,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double a = LeftExpression.EvaluateAsDouble();
-            double b = RightExpression.EvaluateAsDouble();
+            double a = LeftExpression.EvaluateAsReal();
+            double b = RightExpression.EvaluateAsReal();
 
             return (Complex)new UniformDistribution(a, b).GetRandomVariable(_random);
         }
@@ -137,9 +137,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double mean = FirstExpression.EvaluateAsDouble();
-            double stdev = SecondExpression.EvaluateAsDouble();
-            double x = ThirdExpression.EvaluateAsDouble();
+            double mean = FirstExpression.EvaluateAsReal();
+            double stdev = SecondExpression.EvaluateAsReal();
+            double x = ThirdExpression.EvaluateAsReal();
 
             return (Complex)new NormalDistribution(mean, stdev).ProbabilityDensityFunction(x);
         }
@@ -160,9 +160,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double mean = FirstExpression.EvaluateAsDouble();
-            double stdev = SecondExpression.EvaluateAsDouble();
-            double x = ThirdExpression.EvaluateAsDouble();
+            double mean = FirstExpression.EvaluateAsReal();
+            double stdev = SecondExpression.EvaluateAsReal();
+            double x = ThirdExpression.EvaluateAsReal();
 
             return (Complex)new NormalDistribution(mean, stdev).CumulativeDistributionFunction(x);
         }
@@ -186,8 +186,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double mean = FirstExpression.EvaluateAsDouble();
-            double stdev = SecondExpression.EvaluateAsDouble();
+            double mean = FirstExpression.EvaluateAsReal();
+            double stdev = SecondExpression.EvaluateAsReal();
             int count = ThirdExpression.EvaluateAsInt32();
 
             double[] v = new double[count];
@@ -212,8 +212,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double rate = LeftExpression.EvaluateAsDouble();
-            double x = RightExpression.EvaluateAsDouble();
+            double rate = LeftExpression.EvaluateAsReal();
+            double x = RightExpression.EvaluateAsReal();
 
             return (Complex)new ExponentialDistribution(rate).ProbabilityDensityFunction(x);
         }
@@ -234,8 +234,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double rate = LeftExpression.EvaluateAsDouble();
-            double x = RightExpression.EvaluateAsDouble();
+            double rate = LeftExpression.EvaluateAsReal();
+            double x = RightExpression.EvaluateAsReal();
 
             return (Complex)new ExponentialDistribution(rate).CumulativeDistributionFunction(x);
         }
@@ -259,7 +259,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            double rate = LeftExpression.EvaluateAsDouble();
+            double rate = LeftExpression.EvaluateAsReal();
             int count = RightExpression.EvaluateAsInt32();
 
             double[] v = new double[count];
@@ -716,7 +716,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            IList<double> v = LeftExpression.EvaluateAsDoubleArray();
+            IList<double> v = LeftExpression.EvaluateAsRealVector();
 
             if (RightExpression == null)
             {
@@ -728,7 +728,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
                 if (intvals is Complex)
                     return new CMatrix(MathStats.Histogram(v, ExpressionExtensions.AsInt32((Complex)intvals)));
                 else if (intvals is CMatrix)
-                    return new CMatrix(MathStats.Histogram(v, ExpressionExtensions.AsDoubleArray((CMatrix)intvals)));
+                    return new CMatrix(MathStats.Histogram(v, ExpressionExtensions.AsRealVector((CMatrix)intvals)));
                 else
                     throw ExceptionHelper.ThrowWrongArgumentType(intvals);
             }

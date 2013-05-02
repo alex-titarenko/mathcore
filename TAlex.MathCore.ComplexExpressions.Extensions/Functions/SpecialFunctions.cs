@@ -149,7 +149,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return (Complex)ProbabilityIntegrals.Erf(SubExpression.EvaluateAsDouble());
+            return (Complex)ProbabilityIntegrals.Erf(SubExpression.EvaluateAsReal());
         }
     }
 
@@ -168,7 +168,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return (Complex)ProbabilityIntegrals.Erfc(SubExpression.EvaluateAsDouble());
+            return (Complex)ProbabilityIntegrals.Erfc(SubExpression.EvaluateAsReal());
         }
     }
 }

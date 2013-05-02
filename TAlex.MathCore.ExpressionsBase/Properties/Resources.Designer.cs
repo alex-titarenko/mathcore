@@ -104,5 +104,14 @@ namespace TAlex.MathCore.ExpressionEvaluation.Properties {
                 return ResourceManager.GetString("EXC_UNASSIGNED_VARIABLE", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable &apos;{0}&apos; not found..
+        /// </summary>
+        internal static string EXC_VARIABLE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("EXC_VARIABLE_NOT_FOUND", resourceCulture);
+            }
+        }
     }
 }

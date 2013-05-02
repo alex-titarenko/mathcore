@@ -54,7 +54,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return Complex.Log(LeftExpression.EvaluateAsComplex(), RightExpression.EvaluateAsDouble());
+            return Complex.Log(LeftExpression.EvaluateAsComplex(), RightExpression.EvaluateAsReal());
         }
     }
 
