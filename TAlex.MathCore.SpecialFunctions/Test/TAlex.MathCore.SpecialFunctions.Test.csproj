@@ -54,7 +54,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ExponentialIntegralsTest.cs" />
     <Compile Include="ProbabilityIntegralsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

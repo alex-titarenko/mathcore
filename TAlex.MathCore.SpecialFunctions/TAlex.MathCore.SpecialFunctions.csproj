@@ -39,8 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExponentialIntegrals.cs" />
-    <Compile Include="GammaFunctions.cs" />
     <Compile Include="ProbabilityIntegrals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
