@@ -61,6 +61,15 @@ namespace TAlex.MathCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The array size is too large..
+        /// </summary>
+        internal static string EXC_ARRAY_SIZE_IS_TOO_LARGE {
+            get {
+                return ResourceManager.GetString("EXC_ARRAY_SIZE_IS_TOO_LARGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to cast object of type &apos;{0}&apos; to type &apos;{1}&apos;.
         /// </summary>
         internal static string EXC_INVALID_CAST {
@@ -84,6 +93,15 @@ namespace TAlex.MathCore.Properties {
         internal static string EXC_INVALID_NUMBER_FORMAT {
             get {
                 return ResourceManager.GetString("EXC_INVALID_NUMBER_FORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of iteration is too much..
+        /// </summary>
+        internal static string EXC_ITERATION_COUNT_IS_TOO_MUCH {
+            get {
+                return ResourceManager.GetString("EXC_ITERATION_COUNT_IS_TOO_MUCH", resourceCulture);
             }
         }
         

@@ -6,6 +6,7 @@ using System.Text;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.MathCore.LinearAlgebra;
+using TAlex.MathCore.Performance;
 
 
 namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
@@ -25,7 +26,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return new CMatrix(LeftExpression.EvaluateAsInt32(), RightExpression.EvaluateAsInt32());
+            int rows = LeftExpression.EvaluateAsInt32();
+            int cols = RightExpression.EvaluateAsInt32();
+            PerformanceManager.Current.EnsureAcceptableArraySize(rows * cols);
+
+            return new CMatrix(rows, cols);
         }
     }
 
@@ -66,7 +71,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            return CMatrix.Identity(SubExpression.EvaluateAsInt32());
+            int n = SubExpression.EvaluateAsInt32();
+            PerformanceManager.Current.EnsureAcceptableArraySize(n * n);
+
+            return CMatrix.Identity(n);
         }
     }
 

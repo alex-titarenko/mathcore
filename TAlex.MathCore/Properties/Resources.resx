@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EXC_ARRAY_SIZE_IS_TOO_LARGE" xml:space="preserve">
+    <value>The array size is too large.</value>
+  </data>
   <data name="EXC_INVALID_CAST" xml:space="preserve">
     <value>Unable to cast object of type '{0}' to type '{1}'</value>
     <comment>{0} - source type, {1} - target type</comment>
@@ -127,6 +130,9 @@
   <data name="EXC_INVALID_NUMBER_FORMAT" xml:space="preserve">
     <value>The number {0} contains an invalid character '{1}'</value>
     <comment>{0} - number, {1} - invalid character.</comment>
+  </data>
+  <data name="EXC_ITERATION_COUNT_IS_TOO_MUCH" xml:space="preserve">
+    <value>The number of iteration is too much.</value>
   </data>
   <data name="EXC_POLY_INCCORECT_FORMAT" xml:space="preserve">
     <value>Incorrect format of complex polynomial.</value>

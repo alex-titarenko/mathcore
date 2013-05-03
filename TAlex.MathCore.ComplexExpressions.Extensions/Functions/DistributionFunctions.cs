@@ -4,6 +4,7 @@ using System.ComponentModel;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.MathCore.LinearAlgebra;
+using TAlex.MathCore.Performance;
 using TAlex.MathCore.Statistics.Distributions;
 
 
@@ -81,6 +82,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             double a = FirstExpression.EvaluateAsReal();
             double b = SecondExpression.EvaluateAsReal();
             int count = ThirdExpression.EvaluateAsInt32();
+            PerformanceManager.Current.EnsureAcceptableArraySize(count);
 
             double[] v = new double[count];
             new UniformDistribution(a, b).GetRandomVariables(_random, v);
@@ -191,6 +193,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             double mean = FirstExpression.EvaluateAsReal();
             double stdev = SecondExpression.EvaluateAsReal();
             int count = ThirdExpression.EvaluateAsInt32();
+            PerformanceManager.Current.EnsureAcceptableArraySize(count);
 
             double[] v = new double[count];
             new NormalDistribution(mean, stdev).GetRandomVariables(_random, v);
@@ -266,6 +269,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         {
             double rate = LeftExpression.EvaluateAsReal();
             int count = RightExpression.EvaluateAsInt32();
+            PerformanceManager.Current.EnsureAcceptableArraySize(count);
 
             double[] v = new double[count];
             new ExponentialDistribution(rate).GetRandomVariables(_random, v);

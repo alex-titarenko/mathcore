@@ -9,6 +9,8 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.MathCore.NumericalAnalysis;
 using TAlex.MathCore.NumericalAnalysis.NumericalIntegration;
+using TAlex.MathCore.Performance;
+
 
 namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
@@ -150,6 +152,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             Func<Complex, Complex> targetFunc = Expressions[0].EvaluateAsFunction<Complex>(Expressions[3]);
             int m = Expressions[1].EvaluateAsInt32();
             int n = Expressions[2].EvaluateAsInt32();
+            PerformanceManager.Current.EnsureAcceptableIterationCount(Math.Abs(n - m));
 
             return Sequence.Summation(targetFunc, m, n);
         }
@@ -174,6 +177,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
             Func<Complex, Complex> targetFunc = Expressions[0].EvaluateAsFunction<Complex>(Expressions[3]);
             int m = Expressions[1].EvaluateAsInt32();
             int n = Expressions[2].EvaluateAsInt32();
+            PerformanceManager.Current.EnsureAcceptableIterationCount(Math.Abs(n - m));
 
             return Sequence.Product(targetFunc, m, n);
         }
