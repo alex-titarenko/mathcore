@@ -10,35 +10,37 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
     {
         public static Func<T, T> CreateOneParametricFunction<T>(Expression<T> expression, string varName)
         {
-            return CreateOneParametricFunction(expression, new VariableExpression<T>(varName));
-        }
-
-        public static Func<T, T> CreateOneParametricFunction<T>(Expression<T> expression, VariableExpression<T> var)
-        {
-            VariableExpression<T> variable = expression.FindVariable(var.VariableName);
-            if (variable == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, var.DisplayName));
+            VariableExpression<T> variable = expression.FindVariable(varName);
+            if (variable == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, varName));
 
             OneParametricFunctionCreator<T> creator = new OneParametricFunctionCreator<T>(expression, variable);
 
             return creator.Evaluate;
         }
 
+        public static Func<T, T> CreateOneParametricFunction<T>(Expression<T> expression, VariableExpression<T> var)
+        {
+            OneParametricFunctionCreator<T> creator = new OneParametricFunctionCreator<T>(expression, var);
+            return creator.Evaluate;
+        }
+
 
         public static Func<T, T, T> CreateTwoParametricFunction<T>(Expression<T> expression, string firstVarName, string secondVarName)
         {
-            return CreateTwoParametricFunction(expression, new VariableExpression<T>(firstVarName), new VariableExpression<T>(secondVarName));
+            VariableExpression<T> variable1 = expression.FindVariable(firstVarName);
+            if (variable1 == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, firstVarName));
+
+            VariableExpression<T> variable2 = expression.FindVariable(secondVarName);
+            if (variable2 == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, secondVarName));
+
+            TwoParametricFunctionCreator<T> creator = new TwoParametricFunctionCreator<T>(expression, variable1, variable2);
+
+            return creator.Evaluate;
         }
 
         public static Func<T, T, T> CreateTwoParametricFunction<T>(Expression<T> expression, VariableExpression<T> firstVar, VariableExpression<T> secondVar)
         {
-            VariableExpression<T> variable1 = expression.FindVariable(firstVar.VariableName);
-            if (variable1 == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, firstVar.DisplayName));
-
-            VariableExpression<T> variable2 = expression.FindVariable(secondVar.VariableName);
-            if (variable2 == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, secondVar.DisplayName));
-
-            TwoParametricFunctionCreator<T> creator = new TwoParametricFunctionCreator<T>(expression, variable1, variable2);
-
+            TwoParametricFunctionCreator<T> creator = new TwoParametricFunctionCreator<T>(expression, firstVar, secondVar);
             return creator.Evaluate;
         }
 
