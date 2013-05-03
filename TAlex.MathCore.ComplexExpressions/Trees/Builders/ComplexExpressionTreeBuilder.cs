@@ -275,7 +275,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 }
                 else if (left.IsSquare)
                 {
-                    return CMatrix.Pow(left, Convert.ToInt32(right));
+                    if (right.IsReal && ExMath.IsInt32(right.Re))
+                        return CMatrix.Pow(left, (int)right.Re);
+                    else
+                        throw new ArgumentException(Properties.Resources.EXC_MATRIX_NOT_INTEGER_POWER);
                 }
                 else
                 {

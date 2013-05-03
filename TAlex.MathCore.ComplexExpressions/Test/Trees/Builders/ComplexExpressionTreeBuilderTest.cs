@@ -100,6 +100,24 @@ namespace Test
             CMatrix.FuzzyEquals(actual, expected, Machine.Epsilon).Should().BeTrue();
         }
 
+        [Test]
+        public void EvaluateMatrixTest_RaiseToPower()
+        {
+            //arrange
+            const string s = "{1, 2; 3, 4} ^ 3";
+            CMatrix expected = new CMatrix(new Complex[,] {
+                { 37, 54 },
+                { 81, 118 }
+            });
+
+            //action
+            Expression<object> expr = TreeBuilder.BuildTree(s);
+            CMatrix actual = (CMatrix)expr.Evaluate();
+
+            //assert
+            CMatrix.FuzzyEquals(actual, expected, Machine.Epsilon).Should().BeTrue();
+        }
+
         [TestCase("{1, 2; 3, 8; 1; -0.8}")]
         [TestCase("{7;7,5,9}")]
         [TestCase("{7,2;7,5,9}")]

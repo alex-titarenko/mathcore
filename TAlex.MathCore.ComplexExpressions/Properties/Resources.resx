@@ -120,6 +120,9 @@
   <data name="EXC_MATRIX_MUST_BE_SQUARE_OR_VECTOR" xml:space="preserve">
     <value>The matrix must be square or column vector.</value>
   </data>
+  <data name="EXC_MATRIX_NOT_INTEGER_POWER" xml:space="preserve">
+    <value>The matrix can be raised only to integer power.</value>
+  </data>
   <data name="EXC_WRONG_TYPE_ARGUMENTS_OPERATION" xml:space="preserve">
     <value>Wrong type arguments operation '{0}'.</value>
     <comment>{0} - operator</comment>

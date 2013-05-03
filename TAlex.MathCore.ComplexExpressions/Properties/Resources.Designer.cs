@@ -70,6 +70,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The matrix can be raised only to integer power..
+        /// </summary>
+        internal static string EXC_MATRIX_NOT_INTEGER_POWER {
+            get {
+                return ResourceManager.GetString("EXC_MATRIX_NOT_INTEGER_POWER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wrong type arguments operation &apos;{0}&apos;..
         /// </summary>
         internal static string EXC_WRONG_TYPE_ARGUMENTS_OPERATION {
