@@ -13,6 +13,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 
         public readonly string VariableName;
 
+        public readonly string DisplayName;
+
         public T Value
         {
             get
@@ -29,8 +31,14 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 
 
         public VariableExpression(string variableName)
+            : this(variableName, variableName)
+        {
+        }
+
+        public VariableExpression(string variableName, string displayName)
         {
             VariableName = variableName;
+            DisplayName = displayName;
         }
 
         public override T Evaluate()
@@ -41,7 +49,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 
         public override string ToString()
         {
-            return VariableName;
+            return DisplayName;
         }
 
 

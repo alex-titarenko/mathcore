@@ -121,7 +121,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
                 throw ExceptionHelper.ThrowInvalidArgumentType("variable", var.Evaluate());
             }
 
-            Func<Object, Object> tempFunc = ParametricFunctionCreator.CreateOneParametricFunction<Object>(expression, varExpr.VariableName);
+            Func<Object, Object> tempFunc = ParametricFunctionCreator.CreateOneParametricFunction<Object>(expression, varExpr);
             return x => (T)tempFunc(x);
         }
 
@@ -133,7 +133,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions
                 throw ExceptionHelper.ThrowInvalidArgumentType("variable", var.Evaluate());
             }
 
-            Func<Object, Object> tempFunc = ParametricFunctionCreator.CreateOneParametricFunction<Object>(expression, varExpr.VariableName);
+            Func<Object, Object> tempFunc = ParametricFunctionCreator.CreateOneParametricFunction<Object>(expression, varExpr);
             return x => { Complex c = (Complex)tempFunc((Complex)x); return c.IsReal ? c.Re : Double.NaN; };
         }
 

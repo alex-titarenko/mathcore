@@ -68,7 +68,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     }
                     else
                     {
-                        throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_ARG_TYPE, "variable", oldVar.Evaluate()));
+                        throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_ARG_TYPE, "variable", args[varIndex].Evaluate()));
                     }
                 }
             }
@@ -76,7 +76,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         private VariableExpression<T> GetClosedVariable(VariableExpression<T> variable)
         {
-            return new VariableExpression<T>(String.Format("{0}__{1}", variable.VariableName, Guid.NewGuid()));
+            return new VariableExpression<T>(String.Format("{0}__{1}", variable.VariableName, Guid.NewGuid()), variable.DisplayName);
         }
 
         #endregion
