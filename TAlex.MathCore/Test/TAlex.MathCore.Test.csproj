@@ -61,6 +61,7 @@
     <Compile Include="FractionTest.cs" />
     <Compile Include="NumericUtilTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecialFunctions\CombinatoricsTest.cs" />
     <Compile Include="SpecialFunctions\NumberTheoryTest.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -53,15 +53,10 @@ namespace TAlex.MathCore.SpecialFunctions
             {
                 return _fact[n];
             }
-
-            double result = _fact[_len - 1];
-
-            for (int i = _len; i <= n; i++)
+            else
             {
-                result *= i;
+                return double.PositiveInfinity;
             }
-
-            return result;
         }
 
         /// <summary>
