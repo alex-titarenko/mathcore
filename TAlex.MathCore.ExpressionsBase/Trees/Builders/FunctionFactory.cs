@@ -68,7 +68,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     }
                     else
                     {
-                        throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_ARG_TYPE, "variable", args[varIndex].Evaluate()));
+                        throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_ARG_TYPE,
+                            "variable", args[varIndex].Evaluate().GetType().Name));
                     }
                 }
             }
