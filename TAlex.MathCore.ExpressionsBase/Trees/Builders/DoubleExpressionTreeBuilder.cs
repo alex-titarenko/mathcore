@@ -27,31 +27,27 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 }
             };
 
-            FunctionFactory = new FunctionFactory<double>()
-            {
-                Functions = new List<KeyValuePair<string, Type>>()
-                {
-                    new KeyValuePair<string, Type>("rnd", typeof(RandomFuncExpression)),
-                    new KeyValuePair<string, Type>("min", typeof(MinFuncExpression)),
-                    new KeyValuePair<string, Type>("max", typeof(MaxFuncExpression)),
-                    new KeyValuePair<string, Type>("abs", typeof(AbsFuncExpression)),
-                    new KeyValuePair<string, Type>("sqrt", typeof(SqrtFuncExpression)),
-                    new KeyValuePair<string, Type>("ln", typeof(LogFuncExpression)),
-                    new KeyValuePair<string, Type>("log", typeof(Log10FuncExpression)),
-                    new KeyValuePair<string, Type>("log", typeof(LogFreeBaseFuncExpression)),
-                    new KeyValuePair<string, Type>("exp", typeof(ExpFuncExpression)),
-                    new KeyValuePair<string, Type>("sin", typeof(SinFuncExpression)),
-                    new KeyValuePair<string, Type>("cos", typeof(CosFuncExpression)),
-                    new KeyValuePair<string, Type>("tan", typeof(TanFuncExpression)),
-                    new KeyValuePair<string, Type>("asin", typeof(AsinFuncExpression)),
-                    new KeyValuePair<string, Type>("acos", typeof(AcosFuncExpression)),
-                    new KeyValuePair<string, Type>("atan", typeof(AtanFuncExpression)),
-                    new KeyValuePair<string, Type>("atan2", typeof(Atan2FuncExpression)),
-                    new KeyValuePair<string, Type>("sinh", typeof(SinhFuncExpression)),
-                    new KeyValuePair<string, Type>("cosh", typeof(CoshFuncExpression)),
-                    new KeyValuePair<string, Type>("tanh", typeof(TanhFuncExpression)),
-                }
-            };
+            FunctionFactory<double> factory = new FunctionFactory<double>();
+            factory.Add("rnd", typeof(RandomFuncExpression));
+            factory.Add("min", typeof(MinFuncExpression));
+            factory.Add("max", typeof(MaxFuncExpression));
+            factory.Add("abs", typeof(AbsFuncExpression));
+            factory.Add("sqrt", typeof(SqrtFuncExpression));
+            factory.Add("ln", typeof(LogFuncExpression));
+            factory.Add("log", typeof(Log10FuncExpression));
+            factory.Add("log", typeof(LogFreeBaseFuncExpression));
+            factory.Add("exp", typeof(ExpFuncExpression));
+            factory.Add("sin", typeof(SinFuncExpression));
+            factory.Add("cos", typeof(CosFuncExpression));
+            factory.Add("tan", typeof(TanFuncExpression));
+            factory.Add("asin", typeof(AsinFuncExpression));
+            factory.Add("acos", typeof(AcosFuncExpression));
+            factory.Add("atan", typeof(AtanFuncExpression));
+            factory.Add("atan2", typeof(Atan2FuncExpression));
+            factory.Add("sinh", typeof(SinhFuncExpression));
+            factory.Add("cosh", typeof(CoshFuncExpression));
+            factory.Add("tanh", typeof(TanhFuncExpression));
+            FunctionFactory = factory;
         }
 
         #endregion

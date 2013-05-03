@@ -132,6 +132,10 @@
   <data name="EXC_INCORRECT_SYNTAX" xml:space="preserve">
     <value>Incorrect syntax of expression.</value>
   </data>
+  <data name="EXC_INVALID_ARG_TYPE" xml:space="preserve">
+    <value>Invalid argument type. Expected '{0}' but found '{1}'.</value>
+    <comment>{0} - expected type, {1} - actual type</comment>
+  </data>
   <data name="EXC_UNASSIGNED_VARIABLE" xml:space="preserve">
     <value>Variable '{0}' is unassigned.</value>
     <comment>{0} - variable name</comment>

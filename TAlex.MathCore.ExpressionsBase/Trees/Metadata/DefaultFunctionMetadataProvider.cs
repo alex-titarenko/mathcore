@@ -30,12 +30,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 
             foreach (var signature in functionType.GetCustomAttributes<FunctionSignatureAttribute>())
             {
-                functionMetadata.Signatures.Add(new FunctionSignature(signature.Name,
-                    signature.Arguments.Select(x =>
-                    {
-                        var parts = x.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                        return new FunctionSignature.Argument(String.Join(" ", parts.Take(parts.Length - 1)), parts.Last());
-                    })) { Description = signature.Description });
+                functionMetadata.Signatures.Add(GetFunctionSignatureMetadata(signature));
             }
 
             foreach (var exampleUsage in functionType.GetCustomAttributes<ExampleUsageAttribute>())
@@ -48,6 +43,35 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 
 
             return functionMetadata;
+        }
+
+        private FunctionSignature GetFunctionSignatureMetadata(FunctionSignatureAttribute signature)
+        {
+            IList<FunctionSignature.Argument> args = signature.Arguments.Select(x =>
+            {
+                var parts = x.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                string type = String.Join(" ", parts.Take(parts.Length - 1));
+                string name = parts.Last();
+
+                return new FunctionSignature.Argument(type, GetKnownArgType(type), name);
+            }).ToList();
+
+            return new FunctionSignature(signature.Name, args) { Description = signature.Description };
+        }
+
+        private FunctionSignature.KnownType GetKnownArgType(string type)
+        {
+            switch (type.ToUpper())
+            {
+                case "VARIABLE":
+                    return FunctionSignature.KnownType.Variable;
+
+                case "EXPRESSION":
+                    return FunctionSignature.KnownType.Expression;
+
+                default:
+                    return FunctionSignature.KnownType.Unknown;
+            }
         }
 
         #endregion

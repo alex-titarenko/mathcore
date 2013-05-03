@@ -97,6 +97,15 @@ namespace TAlex.MathCore.ExpressionEvaluation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid argument type. Expected &apos;{0}&apos; but found &apos;{1}&apos;..
+        /// </summary>
+        internal static string EXC_INVALID_ARG_TYPE {
+            get {
+                return ResourceManager.GetString("EXC_INVALID_ARG_TYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variable &apos;{0}&apos; is unassigned..
         /// </summary>
         internal static string EXC_UNASSIGNED_VARIABLE {

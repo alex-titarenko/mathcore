@@ -13,13 +13,13 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
     {
         public IFunctionMetadataProvider MetadataProvider { get; set; }
 
-        public IList<KeyValuePair<string, Type>> Functions { get; set; }
+        public IList<KeyValuePair<string, FunctionMetadata>> Functions { get; set; }
 
 
         public FunctionFactory()
         {
             MetadataProvider = new DefaultFunctionMetadataProvider();
-            Functions = new List<KeyValuePair<string, Type>>();
+            Functions = new List<KeyValuePair<string, FunctionMetadata>>();
         }
 
 
@@ -27,18 +27,17 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         public Expression<T> CreateFunction(string functionName, Expression<T>[] args)
         {
-            IEnumerable<KeyValuePair<string, Type>> targetFunctions = Functions.Where(x => x.Key == functionName);
+            IEnumerable<KeyValuePair<string, FunctionMetadata>> targetFunctions = Functions.Where(x => x.Key == functionName);
 
             if (targetFunctions.Any())
             {
-                foreach (KeyValuePair<string, Type> pair in targetFunctions)
+                foreach (KeyValuePair<string, FunctionMetadata> pair in targetFunctions)
                 {
-                    try
+                    FunctionSignature signature = pair.Value.GetAcceptableSignature(args.Length);
+                    if (signature != null)
                     {
-                        return (Expression<T>)Activator.CreateInstance(pair.Value, args);
-                    }
-                    catch (Exception)
-                    {
+                        ProcessingClosedVariables(signature, args);
+                        return (Expression<T>)Activator.CreateInstance(pair.Value.FunctionType, args);
                     }
                 }
 
@@ -48,17 +47,54 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             throw new SyntaxException(String.Format(Properties.Resources.EXC_FUNC_NOT_DEFINED, functionName));
         }
 
+        private void ProcessingClosedVariables(FunctionSignature signature, Expression<T>[] args)
+        {
+            var expressionArg = signature.Arguments.FirstOrDefault(x => x.KnownType == FunctionSignature.KnownType.Expression);
+            if (expressionArg != null)
+            {
+                int exprIndex = signature.Arguments.IndexOf(expressionArg);
+                Expression<T> expr = args[exprIndex];
+
+                foreach (var varArg in signature.Arguments.Where(x => x.KnownType == FunctionSignature.KnownType.Variable))
+                {
+                    int varIndex = signature.Arguments.IndexOf(varArg);
+                    VariableExpression<T> oldVar = args[varIndex] as VariableExpression<T>;
+
+                    if (oldVar != null)
+                    {
+                        VariableExpression<T> newVar = GetClosedVariable(oldVar);
+                        expr.ReplaceChild(oldVar, newVar);
+                        args[varIndex] = newVar;
+                    }
+                    else
+                    {
+                        throw new ArgumentException(String.Format(Properties.Resources.EXC_INVALID_ARG_TYPE, "variable", oldVar.Evaluate()));
+                    }
+                }
+            }
+        }
+
+        private VariableExpression<T> GetClosedVariable(VariableExpression<T> variable)
+        {
+            return new VariableExpression<T>(String.Format("{0}__{1}", variable.VariableName, Guid.NewGuid()));
+        }
+
         #endregion
 
         #region IFunctionsMetadataProvider Members
 
         public IEnumerable<FunctionMetadata> GetMetadata()
         {
-            return Functions.Select(x => MetadataProvider.GetMetadata(x.Value));
+            return Functions.Select(x => MetadataProvider.GetMetadata(x.Value.FunctionType));
         }
 
         #endregion
 
+
+        public virtual void Add(string name, Type functionType)
+        {
+            Functions.Add(new KeyValuePair<string, FunctionMetadata>(name, MetadataProvider.GetMetadata(functionType)));
+        }
 
         public virtual void AddFromAssemblies(IEnumerable<Assembly> assemblies)
         {
@@ -77,13 +113,13 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             AddFromAssemblies(assemblies);
         }
 
-        protected virtual IEnumerable<KeyValuePair<string, Type>> GetFunctionsFromAssembly(Assembly assembly)
+        protected virtual IEnumerable<KeyValuePair<string, FunctionMetadata>> GetFunctionsFromAssembly(Assembly assembly)
         {
             Type[] exportedTypes = assembly.GetExportedTypes();
             List<Type> fnTypes = exportedTypes
                 .Where(x => x.GetCustomAttributes<FunctionSignatureAttribute>().Any() && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
 
-            return fnTypes.SelectMany(x => x.GetCustomAttributes<FunctionSignatureAttribute>().Select(a => a.Name).Distinct().Select(name => new KeyValuePair<string, Type>(name, x)));
+            return fnTypes.SelectMany(x => x.GetCustomAttributes<FunctionSignatureAttribute>().Select(a => a.Name).Distinct().Select(name => new KeyValuePair<string, FunctionMetadata>(name, MetadataProvider.GetMetadata(x))));
         }
     }
 }

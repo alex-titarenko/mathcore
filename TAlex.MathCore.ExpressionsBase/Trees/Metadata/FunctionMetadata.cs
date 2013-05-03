@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 
@@ -35,6 +36,21 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
             FunctionType = functionType;
             Signatures = new List<FunctionSignature>();
             ExampleUsages = new List<ExampleUsage>();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public FunctionSignature GetAcceptableSignature(int argCount)
+        {
+            FunctionSignature signature = Signatures.FirstOrDefault(x => x.ArgumentCount == argCount);
+            if (signature == null)
+            {
+                signature = Signatures.FirstOrDefault(x => x.ArgumentCount == -1);
+            }
+
+            return signature;
         }
 
         #endregion
