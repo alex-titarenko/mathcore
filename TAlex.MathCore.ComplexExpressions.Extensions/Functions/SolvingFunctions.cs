@@ -11,7 +11,7 @@ using TAlex.MathCore.NumericalAnalysis.EquationSolvers;
 
 namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 {
-    [DisplayName("Finding Root")]
+    [DisplayName("Finding Root (Initial Guess)")]
     [Category(Categories.Solving)]
     [Description("Calculates the best approximation to the root of the nonlinear equation by initial guess using Muller's method.")]
     [FunctionSignature("root", "expression expr", "complex initGuess", "variable var")]
@@ -34,7 +34,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
-    [DisplayName("Finding Root")]
+    [DisplayName("Finding Root (Root Bracketing)")]
     [Category(Categories.Solving)]
     [Description("Calculates the best approximation to the root of the nonlinear equation by initial root bracketing using Brent's method.")]
     [FunctionSignature("root", "expression expr", "real lowerBound", "real upperBound", "variable var")]
