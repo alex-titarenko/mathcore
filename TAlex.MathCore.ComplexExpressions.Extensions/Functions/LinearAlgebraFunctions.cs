@@ -192,7 +192,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     public class ElementFuncExpression : TernaryExpression<Object>
     {
         public ElementFuncExpression(Expression<Object> mExpression, Expression<Object> rowIndexExpression)
-            : this(mExpression, rowIndexExpression, null)
+            : this(mExpression, rowIndexExpression, Expression<Object>.Null)
         {
         }
 
@@ -204,7 +204,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
 
         public override object Evaluate()
         {
-            if (ThirdExpression == null)
+            if (ThirdExpression == Expression<Object>.Null)
                 return FirstExpression.EvaluateAsCMatrix()[SecondExpression.EvaluateAsInt32()];
             else
                 return FirstExpression.EvaluateAsCMatrix()[SecondExpression.EvaluateAsInt32(), ThirdExpression.EvaluateAsInt32()];

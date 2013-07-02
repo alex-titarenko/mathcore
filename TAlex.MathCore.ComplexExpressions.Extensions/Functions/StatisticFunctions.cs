@@ -470,7 +470,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     public class HistogramFuncExpression : BinaryExpression<Object>
     {
         public HistogramFuncExpression(Expression<Object> vExpression)
-            : this(vExpression, null)
+            : this(vExpression, Expression<Object>.Null)
         {
         }
 
@@ -483,7 +483,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         {
             IList<double> v = LeftExpression.EvaluateAsRealVector();
 
-            if (RightExpression == null)
+            if (RightExpression == Expression<Object>.Null)
             {
                 return new CMatrix(MathStats.Histogram(v));
             }

@@ -12,6 +12,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
     /// <typeparam name="T">The type of the result of evaluating.</typeparam>
     public abstract class Expression<T> : IEvaluator<T>
     {
+        public static readonly Expression<T> Null = new NullExpression();
+
+
         #region IEvaluator<T> Members
 
         public abstract T Evaluate();
@@ -40,5 +43,35 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
         public abstract void FindAllVariables(IList<VariableExpression<T>> foundedVariables);
 
         public abstract void ReplaceChild(Expression<T> oldExpression, Expression<T> newExpression);
+
+
+        #region Nested Types
+
+        internal class NullExpression : Expression<T>
+        {
+            public override T Evaluate()
+            {
+                throw new NullReferenceException();
+            }
+
+            public override void FindAllVariables(IList<VariableExpression<T>> foundedVariables)
+            {
+            }
+
+            public override void FindVariable(string name, ref VariableExpression<T> var, ref bool isFound)
+            {
+            }
+
+            public override void ReplaceChild(Expression<T> oldExpression, Expression<T> newExpression)
+            {
+            }
+
+            public override string ToString()
+            {
+                return "NULL";
+            }
+        }
+
+        #endregion
     }
 }
