@@ -21,6 +21,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [FunctionSignature("integ", "expression expr", "real a", "real b", "variable var")]
     [ExampleUsage("integ(sin(x), 0, pi, x)", "2")]
     [ExampleUsage("integ(e^x, -inf, 0, x)", "1")]
+    [ExampleUsage("integ(x, 0, 10, x)", "50")]
     public class IntegrationFuncExpression : MultiaryExpression<Object>
     {
         protected ComplexIntegrator Integrator;

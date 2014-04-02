@@ -63,7 +63,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                     if (oldVar != null)
                     {
                         VariableExpression<T> newVar = GetClosedVariable(oldVar);
-                        expr.ReplaceChild(oldVar, newVar);
+                        if (expr is VariableExpression<T>)
+                            args[exprIndex] = newVar;
+                        else
+                            expr.ReplaceChild(oldVar, newVar);
                         args[varIndex] = newVar;
                     }
                     else
