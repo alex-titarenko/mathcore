@@ -11,9 +11,9 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         public static Func<T, T> CreateOneParametricFunction<T>(Expression<T> expression, string varName)
         {
             VariableExpression<T> variable = expression.FindVariable(varName);
-            OneParametricFunctionCreator<T> creator = new OneParametricFunctionCreator<T>(expression, variable);
-
-            return creator.Evaluate;
+            return (variable == null) ?
+                (Func<T, T>)new ZeroParametricFunctionCreator<T>(expression).Evaluate :
+                (Func<T, T>)new OneParametricFunctionCreator<T>(expression, variable).Evaluate;
         }
 
         public static Func<T, T> CreateOneParametricFunction<T>(Expression<T> expression, VariableExpression<T> var)
@@ -42,6 +42,23 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             return creator.Evaluate;
         }
 
+
+        private class ZeroParametricFunctionCreator<T>
+        {
+            public readonly Expression<T> Expression;
+
+
+            public ZeroParametricFunctionCreator(Expression<T> expression)
+            {
+                Expression = expression;
+            }
+
+
+            public T Evaluate(T arg)
+            {
+                return Expression.Evaluate();
+            }
+        }
 
         private class OneParametricFunctionCreator<T>
         {
