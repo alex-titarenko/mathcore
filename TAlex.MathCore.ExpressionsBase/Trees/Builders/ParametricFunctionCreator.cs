@@ -11,8 +11,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         public static Func<T, T> CreateOneParametricFunction<T>(Expression<T> expression, string varName)
         {
             VariableExpression<T> variable = expression.FindVariable(varName);
-            if (variable == null) throw new ArgumentException(String.Format(Properties.Resources.EXC_VARIABLE_NOT_FOUND, varName));
-
             OneParametricFunctionCreator<T> creator = new OneParametricFunctionCreator<T>(expression, variable);
 
             return creator.Evaluate;
