@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EXC_EMPTY_EXPRESSION" xml:space="preserve">
+    <value>The expression can't be empty.</value>
+  </data>
   <data name="EXC_EXPECTED" xml:space="preserve">
     <value>'{0}' expected.</value>
     <comment>{0} - symbol</comment>

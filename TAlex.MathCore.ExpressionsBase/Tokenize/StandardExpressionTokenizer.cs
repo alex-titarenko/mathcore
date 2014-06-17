@@ -30,7 +30,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Tokenize
         public IEnumerable<Token> GetTokens(string expression)
         {
             if (String.IsNullOrWhiteSpace(expression))
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException("expression", Properties.Resources.EXC_EMPTY_EXPRESSION);
 
             int idx = 0;
             int len = expression.Length;
