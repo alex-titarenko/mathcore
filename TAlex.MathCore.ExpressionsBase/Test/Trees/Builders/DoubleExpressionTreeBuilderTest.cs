@@ -153,7 +153,7 @@ namespace TAlex.MathCore.ExpressionsBase.Test.Trees.Builders
             Action action = () => ExpressionTreeBuilder.BuildTree(expression);
 
             //arrange
-            action.ShouldThrow<ArgumentNullException>();
+            action.ShouldThrow<Exception>();
         }
 
         [TestCase("3+")]

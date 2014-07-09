@@ -334,6 +334,44 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
+    [DisplayName("Transpose")]
+    [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
+    [Description("Returns transpose matrix (another matrix that is obtained by using rows from the first matrix as columns in the second matrix)")]
+    [FunctionSignature("tran", "complex matrix m")]
+    [ExampleUsage("tran({1, 2; 3, 4; 5, 6})", "{1, 3, 5; 2, 4, 6}")]
+    public class TransposeExpression : UnaryExpression<Object>
+    {
+        public TransposeExpression(Expression<object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return SubExpression.EvaluateAsCMatrix().Transpose;
+        }
+    }
+
+    [DisplayName("Conjugate Transpose")]
+    [Category(Categories.LinearAlgebra)]
+    [Section(Sections.Behaviors)]
+    [Description("Returns conjugate transpose matrix (matrix obtained from first matrix by taking the transpose and then taking the complex conjugate of each entry)")]
+    [FunctionSignature("adjoint", "complex matrix m")]
+    [ExampleUsage("adjoint({1 + 2i, 2;  22i, 4;  5 - 18i, 6})", "{1 - 2i, -22i, 5 + 18i; 2, 4, 6}")]
+    public class AdjointExression : UnaryExpression<Object>
+    {
+        public AdjointExression(Expression<object> subExpression)
+            : base(subExpression)
+        {
+        }
+
+        public override object Evaluate()
+        {
+            return SubExpression.EvaluateAsCMatrix().Adjoint;
+        }
+    }
+
     [DisplayName("Trace")]
     [Category(Categories.LinearAlgebra)]
     [Section(Sections.Behaviors)]
