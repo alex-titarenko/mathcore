@@ -353,7 +353,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
-    [DisplayName("Conjugate Transpose")]
+    [DisplayName("Conjugate transpose")]
     [Category(Categories.LinearAlgebra)]
     [Section(Sections.Behaviors)]
     [Description("Returns conjugate transpose matrix (matrix obtained from first matrix by taking the transpose and then taking the complex conjugate of each entry)")]
