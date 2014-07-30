@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TAlex.MathCore.ExpressionEvaluation.Extensions;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 
@@ -62,7 +63,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
                 Type[] exportedTypes = assembly.GetExportedTypes();
 
                 var constants = exportedTypes.Where(x => x.GetCustomAttribute<ConstantAttribute>() != null && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
-                constants.ForEach(x => Constants.Add(x.GetCustomAttribute<ConstantAttribute>().Name, x));
+
+                foreach (var x in constants)
+                {
+                    Constants.Add(x.GetCustomAttribute<ConstantAttribute>().Name, x);
+                }
             }
         }
 

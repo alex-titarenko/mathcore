@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using TAlex.MathCore.ExpressionEvaluation.Extensions;
 
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
@@ -28,7 +28,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
             var categoryAttr = constantType.GetCustomAttribute<CategoryAttribute>();
             constantMetadata.Category = categoryAttr != null ? categoryAttr.Category : null;
 
-            var descriptionAttr = constantType.GetCustomAttribute(typeof(DescriptionAttribute)) as DescriptionAttribute;
+            var descriptionAttr = constantType.GetCustomAttribute<DescriptionAttribute>();
             constantMetadata.Description = descriptionAttr != null ? descriptionAttr.Description : null;
 
 

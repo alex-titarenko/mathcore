@@ -9,8 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TAlex.MathCore.ExpressionEvaluation</RootNamespace>
     <AssemblyName>TAlex.MathCore.ExpressionsBase</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,15 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\CustomAttributeExtensions.cs" />
     <Compile Include="IEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -57,12 +54,15 @@
     <Compile Include="Trees\Builders\FunctionFactory.cs" />
     <Compile Include="Trees\Builders\IConstantFactory.cs" />
     <Compile Include="Trees\Builders\IFunctionFactory.cs" />
+    <Compile Include="Trees\Metadata\CategoryAttribute.cs" />
     <Compile Include="Trees\Metadata\DefaultConstantMetadataProvider.cs" />
     <Compile Include="Trees\Metadata\DefaultFunctionMetadataProvider.cs" />
     <Compile Include="Trees\Metadata\ConstantAttribute.cs" />
     <Compile Include="Trees\Builders\ConstantFlyweightFactory.cs" />
     <Compile Include="Trees\Builders\DoubleExpressionTreeBuilder.cs" />
     <Compile Include="Trees\Metadata\ConstantMetadata.cs" />
+    <Compile Include="Trees\Metadata\DescriptionAttribute.cs" />
+    <Compile Include="Trees\Metadata\DisplayNameAttribute.cs" />
     <Compile Include="Trees\Metadata\ExampleUsage.cs" />
     <Compile Include="Trees\Metadata\ExampleUsageAttribute.cs" />
     <Compile Include="Trees\Metadata\FunctionMetadata.cs" />
@@ -98,7 +98,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(SolutionDir).nuget\nuget.exe pack "$(ProjectPath)" -Prop Configuration=$(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>

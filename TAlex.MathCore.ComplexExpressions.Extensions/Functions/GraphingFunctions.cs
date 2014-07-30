@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 using TAlex.MathCore.Graphing;

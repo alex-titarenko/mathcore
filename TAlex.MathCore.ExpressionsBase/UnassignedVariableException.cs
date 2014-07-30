@@ -26,10 +26,5 @@ namespace TAlex.MathCore.ExpressionEvaluation
         {
             VariableName = variableName;
         }
-
-        public UnassignedVariableException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

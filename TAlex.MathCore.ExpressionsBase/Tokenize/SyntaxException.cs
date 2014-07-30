@@ -20,10 +20,5 @@ namespace TAlex.MathCore.ExpressionEvaluation.Tokenize
             : base(message, innerException)
         {
         }
-
-        public SyntaxException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

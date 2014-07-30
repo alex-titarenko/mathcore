@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TAlex.MathCore.ExpressionEvaluation.Extensions;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 

@@ -9,7 +9,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Tokenize
     {
         #region Properties
 
-        public readonly SortedSet<string> Operators;
+        public readonly List<string> Operators;
 
         #endregion
 
@@ -17,10 +17,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.Tokenize
 
         public StandardExpressionTokenizer()
         {
-            Operators = new SortedSet<string>(new OperatorComparer())
+            Operators = new List<string>
             {
                 "+", "-", "*", "/", "%", "^", "**", ",", ";", "(", ")", "{", "}", "[", "]", "<", "<=", ">", ">=", "<>", "==", "|", "||", "&", "&&", "<<", ">>", "!"
             };
+            Operators.Sort(new OperatorComparer());
         }
 
         #endregion

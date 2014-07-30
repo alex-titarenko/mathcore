@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using TAlex.MathCore.ExpressionEvaluation.Extensions;
 
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
@@ -25,7 +25,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
             var sectionAttr = functionType.GetCustomAttribute<SectionAttribute>();
             functionMetadata.Section = sectionAttr != null ? sectionAttr.Name : null;
 
-            var descriptionAttr = functionType.GetCustomAttribute(typeof(DescriptionAttribute)) as DescriptionAttribute;
+            var descriptionAttr = functionType.GetCustomAttribute<DescriptionAttribute>();
             functionMetadata.Description = descriptionAttr != null ? descriptionAttr.Description : null;
 
             foreach (var signature in functionType.GetCustomAttributes<FunctionSignatureAttribute>())

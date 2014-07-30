@@ -15,6 +15,8 @@ namespace TAlex.MathCore.Test
     [TestFixture]
     public class CPolynomialTest
     {
+        #region FromRoots
+
         [Test]
         public void FromRootsTest()
         {
@@ -32,6 +34,10 @@ namespace TAlex.MathCore.Test
                 Complex.Abs(p).Should().BeLessThan(TOL);
             }
         }
+
+        #endregion
+
+        #region FirstDerivative
 
         [Test]
         public void FirstDerivativeTest()
@@ -62,6 +68,10 @@ namespace TAlex.MathCore.Test
             actual.Should().Be(expected);
         }
 
+        #endregion
+
+        #region SecondDerivative
+
         [Test]
         public void SecondDerivativeTest()
         {
@@ -90,6 +100,10 @@ namespace TAlex.MathCore.Test
             //assert
             actual.Should().Be(expected);
         }
+
+        #endregion
+
+        #region NthDerivative
 
         [Test]
         public void NthDerivativeTest()
@@ -120,6 +134,10 @@ namespace TAlex.MathCore.Test
             actual.Should().Be(expected);
         }
 
+        #endregion
+
+        #region Antiderivative
+
         [Test]
         public void AntiderivativeTest()
         {
@@ -133,6 +151,10 @@ namespace TAlex.MathCore.Test
             //assert
             actual.Should().Be(expected);
         }
+
+        #endregion
+
+        #region DivBinom
 
         [Test]
         public void DivBinomTest()
@@ -153,6 +175,10 @@ namespace TAlex.MathCore.Test
             Complex.Abs(rtest).Should().BeLessOrEqualTo(TOL);
             q.Should().Be(qtest);
         }
+
+        #endregion
+
+        #region Div
 
         [Test]
         public void DivTest()
@@ -179,6 +205,10 @@ namespace TAlex.MathCore.Test
             qtest.Should().Be(q);
         }
 
+        #endregion
+
+        #region LaguerreRootsFinding
+
         [TestCase(3.6,0, 5,-32.436, -8,0, 0,0, 1000.01,-6.6)]
         public void LaguerreRootsFindingTest(params double[] nums)
         {
@@ -196,6 +226,10 @@ namespace TAlex.MathCore.Test
                 Complex.Abs(p).Should().BeLessOrEqualTo(TOL);
             }
         }
+
+        #endregion
+
+        #region InterpolatingPolynomial
 
         [Test]
         public void InterpolatingPolynomialTest()
@@ -216,6 +250,10 @@ namespace TAlex.MathCore.Test
             }
         }
 
+        #endregion
+
+        #region ToString
+
         [Test]
         public void ToStringTest()
         {
@@ -229,6 +267,10 @@ namespace TAlex.MathCore.Test
             //assert
             actual.Should().Be(expected);
         }
+
+        #endregion
+
+        #region Parse
 
         [Test]
         public void ParseTest_Success()
@@ -282,6 +324,19 @@ namespace TAlex.MathCore.Test
             actual.Should().Be(expected);
         }
 
+        [Test]
+        public void ParseTest_Success5()
+        {
+            //arrange
+            CPolynomial expected = new CPolynomial(new Complex[] { 3, new Complex(-4, 12.3), 1 });
+
+            //action
+            CPolynomial actual = CPolynomial.Parse("x+3 + x^2-(5-12.3i)*x");
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
         [TestCase("2*x+y")]
         [TestCase("2*x^3.5")]
         public void ParseTest_Fail(string s)
@@ -293,6 +348,9 @@ namespace TAlex.MathCore.Test
             action.ShouldThrow<FormatException>();
         }
 
+        #endregion
+
+        #region WriteXml
 
         [Test]
         public void WriteXmlTest_Serialize()
@@ -313,6 +371,10 @@ namespace TAlex.MathCore.Test
             sb.ToString().Should().Be(expected);
         }
 
+        #endregion
+
+        #region ReadXml
+
         [Test]
         public void ReadXmlTest_Deserialize()
         {
@@ -331,6 +393,9 @@ namespace TAlex.MathCore.Test
             //assert
             actual.Should().Be(expected);
         }
+
+        #endregion
+
 
 
         #region Helpers

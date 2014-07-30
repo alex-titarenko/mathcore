@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
