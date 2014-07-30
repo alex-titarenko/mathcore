@@ -151,7 +151,7 @@ namespace TAlex.MathCore.SpecialFunctions
                 double invxsq = 1.0 / xsq;
                 double R = RationalFunc(erfc_p2, erfc_q2, invxsq);
                 double t = 1.0 / ExMath.SqrtPi + invxsq * R;
-                return Math.Exp(-xsq) / x * (t - Math.Truncate(t));
+                return Math.Exp(-xsq) / x * (t - ExMath.Truncate(t));
             }
         }
 

@@ -1066,11 +1066,7 @@ namespace TAlex.MathCore
         /// </returns>
         public static Complex Truncate(Complex c)
         {
-            return new Complex
-            {
-                _real = (c.Re > 0) ? Math.Floor(c.Re) : Math.Ceiling(c.Re),
-                _imag = (c.Im > 0) ? Math.Floor(c.Im) : Math.Ceiling(c.Im)
-            };
+            return new Complex(ExMath.Truncate(c.Re), ExMath.Truncate(c.Im));
         }
 
         /// <summary>
