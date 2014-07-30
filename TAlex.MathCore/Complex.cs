@@ -12,7 +12,6 @@ namespace TAlex.MathCore
     /// <summary>
     /// Represents a complex number.
     /// </summary>
-    [Serializable]
     public struct Complex : IEquatable<Complex>, IFormattable, IXmlSerializable
     {
         #region Fields
@@ -21,7 +20,7 @@ namespace TAlex.MathCore
         private static readonly string _imAttrName = "Im";
         internal static readonly string ComplexPattern = @"(?<num>[-+]?[ \t]*[0-9.,]+[ij]?)(?<num>[ \t]*[-+][ \t]*[0-9.,]+[ij]?)*";
         private static readonly string _complexFullPattern = String.Format(@"^{0}$", ComplexPattern);
-        private static readonly Regex _complexRegex = new Regex(_complexFullPattern, RegexOptions.Compiled);
+        private static readonly Regex _complexRegex = new Regex(_complexFullPattern);
 
         /// <summary>
         /// The real part of the complex number.
@@ -1058,58 +1057,6 @@ namespace TAlex.MathCore
         }
 
         /// <summary>
-        /// Rounds a complex value to the nearest integer. A parameter specifies how
-        /// to round the value if it is midway between two other numbers.
-        /// </summary>
-        /// <param name="c">A complex number to be rounded.</param>
-        /// <param name="mode">Specification for how to round value if it is midway between two other numbers.</param>
-        /// <returns>
-        /// The integer nearest c. If c is halfway between two integers, one
-        /// of which is even and the other odd, then mode determines which of the two
-        /// is returned.
-        /// </returns>
-        /// <exception cref="System.ArgumentException">
-        /// mode is not a valid value of System.MidpointRounding.
-        /// </exception>
-        public static Complex Round(Complex c, MidpointRounding mode)
-        {
-            Complex complex;
-            complex._real = Math.Round(c._real, mode);
-            complex._imag = Math.Round(c._imag, mode);
-
-            return complex;
-        }
-
-        /// <summary>
-        /// Rounds a complex value to the specified complex number of fractional digits.
-        /// A parameter specifies how to round the value if it is
-        /// midway between two other numbers.
-        /// </summary>
-        /// <param name="c">A complex number to be rounded.</param>
-        /// <param name="digits">The number of fractional digits in the return value.</param>
-        /// <param name="mode">Specification for how to round value if it is midway between two other numbers.</param>
-        /// <returns>
-        /// The number nearest to c that has a number of fractional digits equal
-        /// to digits. If c is halfway between two numbers, one of which is even
-        /// and the other odd, then the mode parameter determines which number is returned.
-        /// If the precision of c is less than digits, then value is returned unchanged.
-        /// </returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// digits is less than 0 or greater than 15.
-        /// </exception>
-        /// <exception cref="System.ArgumentException">
-        /// mode is not a valid value of System.MidpointRounding.
-        /// </exception>
-        public static Complex Round(Complex c, int digits, MidpointRounding mode)
-        {
-            Complex complex;
-            complex._real = Math.Round(c._real, digits, mode);
-            complex._imag = Math.Round(c._imag, digits, mode);
-
-            return complex;
-        }
-
-        /// <summary>
         /// Returns the integral part of a specified complex number.
         /// </summary>
         /// <param name="c">A complex number to truncate.</param>
@@ -1119,11 +1066,11 @@ namespace TAlex.MathCore
         /// </returns>
         public static Complex Truncate(Complex c)
         {
-            Complex complex;
-            complex._real = Math.Truncate(c._real);
-            complex._imag = Math.Truncate(c._imag);
-
-            return complex;
+            return new Complex
+            {
+                _real = (c.Re > 0) ? Math.Floor(c.Re) : Math.Ceiling(c.Re),
+                _imag = (c.Im > 0) ? Math.Floor(c.Im) : Math.Ceiling(c.Im)
+            };
         }
 
         /// <summary>

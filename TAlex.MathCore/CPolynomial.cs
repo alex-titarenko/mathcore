@@ -13,8 +13,7 @@ namespace TAlex.MathCore
     /// <summary>
     /// Represents a complex polynomial.
     /// </summary>
-    [Serializable]
-    public class CPolynomial : ICloneable, IFormattable, IXmlSerializable
+    public class CPolynomial : IFormattable, IXmlSerializable
     {
         #region Fields
 
@@ -27,8 +26,8 @@ namespace TAlex.MathCore
         private static readonly string _polyFirstPartPattern = String.Format(_polyPartPattern, "?", Complex.ComplexPattern);
         private static readonly string _polyOtherPartsPattern = String.Format(_polyPartPattern, String.Empty, Complex.ComplexPattern);
         private static readonly string _polyPattern = String.Format(@"^(?<term>[ \t]*{0})(?<term>[ \t]*{1})*$", _polyFirstPartPattern, _polyOtherPartsPattern);
-        private static readonly Regex _polyRegex = new Regex(_polyPattern, RegexOptions.Compiled);
-        private static readonly Regex _polyPartRegex = new Regex(_polyFirstPartPattern, RegexOptions.Compiled);
+        private static readonly Regex _polyRegex = new Regex(_polyPattern);
+        private static readonly Regex _polyPartRegex = new Regex(_polyFirstPartPattern);
 
         #endregion
 
@@ -594,8 +593,8 @@ namespace TAlex.MathCore
 
             Match matchAll = _polyRegex.Match(str);
             if (!matchAll.Success) throw new FormatException(Properties.Resources.EXC_POLY_INCCORECT_FORMAT);
-
-            SortedDictionary<int, Complex> p = new SortedDictionary<int, Complex>();
+            
+            Dictionary<int, Complex> p = new Dictionary<int, Complex>();
 
             int maxExp = 0;
             foreach (Capture capture in matchAll.Groups["term"].Captures)
@@ -634,7 +633,7 @@ namespace TAlex.MathCore
 
             // Need to find the maximum degree and put here
             CPolynomial poly = new CPolynomial(maxExp + 1);
-            foreach (KeyValuePair<int, Complex> pair in p)
+            foreach (KeyValuePair<int, Complex> pair in p.OrderBy(x => x.Key))
             {
                 poly[pair.Key] = pair.Value;
             }
@@ -936,7 +935,7 @@ namespace TAlex.MathCore
             }
             else
             {
-                return nfi.NativeDigits[0];
+                return "0";
             }
         }
 
@@ -1165,7 +1164,7 @@ namespace TAlex.MathCore
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            string value = reader.ReadElementString();
+            string value = reader.ReadInnerXml();
             CPolynomial poly = Parse(value, CultureInfo.InvariantCulture);
             _coeffs = poly._coeffs;
         }

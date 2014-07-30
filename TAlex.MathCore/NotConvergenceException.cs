@@ -7,7 +7,6 @@ namespace TAlex.MathCore
     /// <summary>
     /// Represents errors that occur when the solution do not convergence.
     /// </summary>
-    [Serializable]
     public class NotConvergenceException : Exception
     {
         #region Constructors
@@ -36,24 +35,6 @@ namespace TAlex.MathCore
         /// </param>
         public NotConvergenceException(string message, Exception innerException) :
             base(message, innerException) { }
-
-        /// <summary>
-        /// Initializes a new instance of the NotConvergenceException class with serialized data.
-        /// </summary>
-        /// <param name="info">
-        /// The System.Runtime.Serialization.SerializationInfo that holds the serialized
-        /// object data about the exception being thrown.
-        /// </param>
-        /// <param name="context">
-        /// The System.Runtime.Serialization.StreamingContext that contains contextual
-        /// information about the source or destination.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">The info parameter is null.</exception>
-        /// <exception cref="System.Runtime.Serialization.SerializationException">
-        /// The class name is null or System.Exception.HResult is zero (0).
-        /// </exception>
-        public NotConvergenceException(SerializationInfo info, StreamingContext context) :
-            base(info, context) { }
 
         #endregion
     }

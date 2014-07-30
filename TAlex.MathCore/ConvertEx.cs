@@ -15,10 +15,10 @@ namespace TAlex.MathCore
 
         public static double ToDouble(string s, IFormatProvider formatProvider)
         {
-            if (s.Length > 1 && Char.IsLetter(s.Last()))
+            if (s.Length > 1 && Char.IsLetter(s[s.Length - 1]))
             {
                 int radix = 10;
-                char ch = s.Last();
+                char ch = s[s.Length - 1];
                 switch (ch)
                 {
                     case 'b': radix = 2; break;

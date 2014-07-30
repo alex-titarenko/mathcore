@@ -16,13 +16,6 @@ namespace TAlex.MathCore.Test
     public class CPolynomialTest
     {
         [Test]
-        public void Class_DecoratedWithSerializable()
-        {
-            //assert
-            typeof(CPolynomial).Should().BeDecoratedWith<SerializableAttribute>();
-        }
-
-        [Test]
         public void FromRootsTest()
         {
             //arrange

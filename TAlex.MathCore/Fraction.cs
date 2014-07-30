@@ -7,7 +7,6 @@ namespace TAlex.MathCore
     /// <summary>
     /// Represents a rational number.
     /// </summary>
-    [Serializable]
     public struct Fraction : IComparable, IFormattable, IComparable<Fraction>, IEquatable<Fraction>
     {
         #region Fields

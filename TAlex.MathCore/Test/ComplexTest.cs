@@ -13,13 +13,6 @@ namespace TAlex.MathCore.Test
     [TestFixture]
     public class ComplexTest
     {
-        [Test]
-        public void Class_DecoratedWithSerializable()
-        {
-            //assert
-            typeof(Complex).Should().BeDecoratedWith<SerializableAttribute>();
-        }
-
         [TestCase(3,5, -6,16, -3,21)]
         public void AddTest(double re1, double im1, double re2, double im2, double re3, double im3)
         {
