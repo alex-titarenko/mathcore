@@ -197,7 +197,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
             }
 
-            lapack.zgesdd(jobz, &m, &n, a, &lda, s, u, &ldu, vt, &ldvt, work, &lwork, rwork, iwork, &info);
+            lapack.zgesdd(jobz, &m, &n, a, &lda, s, u, &ldu, vt, &ldvt, work, &lwork, rwork, iwork, out info);
 
             if (info == 0) _succeded = true;
             else _succeded = false;

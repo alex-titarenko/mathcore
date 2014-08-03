@@ -170,7 +170,7 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             
             lapack.zgeevx("B", jobvl, jobvr, "N", &n, a, &lda, w, vl, &ldvl, vr, &ldvr, &ilo, &ihi, scale,
-                &abnrm, rconde, rcondv, work, &lwork, rwork, &info);
+                &abnrm, rconde, rcondv, work, &lwork, rwork, out info);
 
             if (info == 0) _succeded = true;
             else _succeded = false;

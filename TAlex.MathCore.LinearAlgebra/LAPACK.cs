@@ -24,9 +24,6 @@ namespace TAlex.MathCore.LinearAlgebra
         }
     }
 
-    internal class SuppressUnmanagedCodeSecurityAttribute : Attribute
-    {
-    }
 
     /// <summary>
     /// Represents the routines from the Linear Algebra PACKage 3.2.1.
@@ -271,7 +268,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         #region blas
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dcabs1(complex16* z)
         {
             //  Purpose
@@ -282,7 +279,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return Math.Abs(z.r) + Math.Abs(d_imag(z));
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dcopy(int* n, double* dx, int* incx, double* dy, int* incy)
         {
             //  Purpose
@@ -377,7 +374,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double ddot(int* n, double* dx, int* incx, double* dy, int* incy)
         {
             //  Purpose
@@ -469,7 +466,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dgemm(string transa, string transb, int* m, int* n, int* k,
             double* alpha, double* a, int* lda, double* b, int* ldb, double* beta, double* c, int* ldc)
         {
@@ -679,7 +676,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info != 0)
             {
-                xerbla("DGEMM ", &info);
+                xerbla("DGEMM ", info);
                 return 0;
             }
 
@@ -863,7 +860,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dnrm2(int* n, double* x, int* incx)
         {
             //  Purpose
@@ -935,7 +932,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int drot(int* n, double* dx, int* incx, double* dy, int* incy, double* c, double* s)
         {
             //  Purpose
@@ -1006,7 +1003,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dscal(int* n, double* da, double* dx, int* incx)
         {
             //  Purpose 
@@ -1085,7 +1082,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dswap(int* n, double* dx, int* incx, double* dy, int* incy)
         {
             //  Purpose
@@ -1187,7 +1184,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dzasum(int* n, complex16* zx, int* incx)
         {
             //  Purpose 
@@ -1249,7 +1246,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dznrm2(int* n, complex16* x, int* incx)
         {
             //  Purpose 
@@ -1343,7 +1340,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dzsum1(int* n, complex16* cx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -1430,7 +1427,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int idamax(int* n, double* dx, int* incx)
         {
             //  Purpose 
@@ -1506,7 +1503,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int izamax(int* n, complex16* zx, int* incx)
         {
             //  Purpose 
@@ -1589,7 +1586,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int izmax1(int* n, complex16* cx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -1693,7 +1690,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zaxpy(int* n, complex16* za, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
@@ -1782,7 +1779,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zcopy(int* n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
@@ -1862,7 +1859,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static void zdotc(complex16* ret_val, int* n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
@@ -1965,7 +1962,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static void zdotu(complex16* ret_val, int* n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
@@ -2068,7 +2065,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zdscal(int* n, double* da, complex16* zx, int* incx)
         {
             //  Purpose 
@@ -2141,7 +2138,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgemm(string transa, string transb, int* m, int* n, int* k,
             complex16* alpha, complex16* a, int* lda, complex16* b,
             int* ldb, complex16* beta, complex16* c, int* ldc)
@@ -2358,7 +2355,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info != 0)
             {
-                xerbla("ZGEMM ", &info);
+                xerbla("ZGEMM ", info);
                 return 0;
             }
 
@@ -2971,7 +2968,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgemv(string trans, int* m, int* n, complex16* alpha,
             complex16* a, int* lda, complex16* x, int* incx,
             complex16* beta, complex16* y, int* incy)
@@ -3114,7 +3111,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info != 0)
             {
-                xerbla("ZGEMV ", &info);
+                xerbla("ZGEMV ", info);
                 return 0;
             }
 
@@ -3425,7 +3422,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgerc(int* m, int* n, complex16* alpha,
             complex16* x, int* incx, complex16* y, int* incy,
             complex16* a, int* lda)
@@ -3539,7 +3536,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info != 0)
             {
-                xerbla("ZGERC ", &info);
+                xerbla("ZGERC ", info);
                 return 0;
             }
 
@@ -3650,7 +3647,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zscal(int* n, complex16* za, complex16* zx, int* incx)
         {
             //  Purpose 
@@ -3716,7 +3713,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zswap(int* n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
@@ -3802,7 +3799,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ztrmm(string side, string uplo, string transa, string diag,
             int* m, int* n, complex16* alpha, complex16* a, int* lda, complex16* b, int* ldb)
         {
@@ -3993,7 +3990,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info != 0)
             {
-                xerbla("ZTRMM ", &info);
+                xerbla("ZTRMM ", info);
                 return 0;
             }
 
@@ -4627,7 +4624,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ztrmv(string uplo, string trans, string diag, int* n,
             complex16* a, int* lda, complex16* x, int* incx)
         {
@@ -4765,7 +4762,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info != 0)
             {
-                xerbla("ZTRMV ", &info);
+                xerbla("ZTRMV ", info);
                 return 0;
             }
 
@@ -5321,7 +5318,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ztrsv(string uplo, string trans, string diag,
             int* n, complex16* a, int* lda, complex16* x, int* incx)
         {
@@ -5462,7 +5459,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info != 0)
             {
-                xerbla("ZTRSV ", &info);
+                xerbla("ZTRSV ", info);
                 return 0;
             }
 
@@ -5988,9 +5985,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
         #region Double precision real routines
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dbdsdc(string uplo, string compq, int* n, double* d, double* e,
-            double* u, int* ldu, double* vt, int* ldvt, double* q, int* iq, double* work, int* iwork, int* info)
+            double* u, int* ldu, double* vt, int* ldvt, double* q, int* iq, double* work, int* iwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -6155,7 +6152,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --iwork;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             iuplo = 0;
             if (lsame(uplo, "U"))
@@ -6184,29 +6181,29 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             if (iuplo == 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (icompq < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*ldu < 1 || icompq == 2 && *ldu < *n)
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldvt < 1 || icompq == 2 && *ldvt < *n)
             {
-                *info = -9;
+                info = -9;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DBDSDC", &i__1);
+                i__1 = -(info);
+                xerbla("DBDSDC", i__1);
                 return 0;
             }
 
@@ -6410,7 +6407,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             &iq[start + perm * *n], &q[start + (givnum + qstart - 2) * *n], &q[start + (ic + qstart - 2) * *n],
                             &q[start + (is_ + qstart - 2) * *n], &work[wstart], &iwork[1], info);
 
-                        if (*info != 0)
+                        if (info != 0)
                         {
                             return 0;
                         }
@@ -6486,9 +6483,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dbdsqr(string uplo, int* n, int* ncvt, int* nru, int* ncc, double* d,
-            double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int* ldc, double* work, int* info)
+            double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int* ldc, double* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -6678,45 +6675,45 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             lower = lsame(uplo, "L");
             if (!lsame(uplo, "U") && !lower)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*ncvt < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*nru < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ncc < 0)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < Math.Max(1, *n))
             {
-                *info = -9;
+                info = -9;
             }
             else if (*ldu < Math.Max(1, *nru))
             {
-                *info = -11;
+                info = -11;
             }
             else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < Math.Max(1, *n))
             {
-                *info = -13;
+                info = -13;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DBDSQR", &i__1);
+                i__1 = -(info);
+                xerbla("DBDSQR", i__1);
                 return 0;
             }
             if (*n == 0)
@@ -7386,13 +7383,13 @@ namespace TAlex.MathCore.LinearAlgebra
             // Maximum number of iterations exceeded, failure to converge
 
         L200:
-            *info = 0;
+            info = 0;
             i__1 = *n - 1;
             for (i = 1; i <= i__1; ++i)
             {
                 if (e[i] != 0.0)
                 {
-                    ++(*info);
+                    ++(info);
                 }
             }
 
@@ -7400,7 +7397,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static bool disnan(double* din)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -7425,7 +7422,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return double.IsNaN(*din);
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlabad(double* small, double* large)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -7471,7 +7468,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlacpy(string uplo, int* m, int* n, double* a, int* lda, double* b, int* ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -7570,7 +7567,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dladiv(double* a, double* b, double* c, double* d, double* p, double* q)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -7624,9 +7621,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlaed6(int* kniter, bool* orgati,
-            double* rho, double* d, double* z, double* finit, double* tau, int* info)
+            double* rho, double* d, double* z, double* finit, double* tau, out int info)
         {
             // System generated locals
             int i__1;
@@ -7719,7 +7716,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --d;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             if (*orgati)
             {
@@ -8006,7 +8003,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     ubd = *tau;
                 }
             }
-            *info = 1;
+            info = 1;
 
         L60:
             // Undo scaling
@@ -8019,7 +8016,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlamrg(int* n1, int* n2, double* a, int* dtrd1, int* dtrd2, int* index)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -8138,7 +8135,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dlanst(string norm, int* n, double* d, double* e)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -8272,7 +8269,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dlapy2(double* x, double* y)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -8319,7 +8316,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dlapy3(double* x, double* y, double* z)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -8377,7 +8374,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlartg(double* f, double* g, double* cs, double* sn, double* r)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -8545,7 +8542,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlas2(double* f, double* g, double* h, double* ssmin, double* ssmax)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -8670,9 +8667,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlascl(string type, int* kl, int* ku,
-            double* cfrom, double* cto, int* m, int* n, double* a, int* lda, int* info)
+            double* cfrom, double* cto, int* m, int* n, double* a, int* lda, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -8758,7 +8755,7 @@ namespace TAlex.MathCore.LinearAlgebra
             a -= a_offset;
 
             // Function Body 
-            *info = 0;
+            info = 0;
 
             if (lsame(type, "G"))
             {
@@ -8795,27 +8792,27 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (itype == -1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*cfrom == 0.0 || disnan(cfrom))
             {
-                *info = -4;
+                info = -4;
             }
             else if (disnan(cto))
             {
-                *info = -5;
+                info = -5;
             }
             else if (*m < 0)
             {
-                *info = -6;
+                info = -6;
             }
             else if (*n < 0 || itype == 4 && *n != *m || itype == 5 && *n != *m)
             {
-                *info = -7;
+                info = -7;
             }
             else if (itype <= 3 && *lda < Math.Max(1, *m))
             {
-                *info = -9;
+                info = -9;
             }
             else if (itype >= 4)
             {
@@ -8823,7 +8820,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__1 = *m - 1;
                 if (*kl < 0 || *kl > Math.Max(i__1, 0))
                 {
-                    *info = -2;
+                    info = -2;
                 }
                 else // if(complicated condition) 
                 {
@@ -8831,19 +8828,19 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__1 = *n - 1;
                     if (*ku < 0 || *ku > Math.Max(i__1, 0) || (itype == 4 || itype == 5) && *kl != *ku)
                     {
-                        *info = -3;
+                        info = -3;
                     }
                     else if (itype == 4 && *lda < *kl + 1 || itype == 5 && *lda < *ku + 1 || itype == 6 && *lda < (*kl << 1) + *ku + 1)
                     {
-                        *info = -9;
+                        info = -9;
                     }
                 }
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASCL", &i__1);
+                i__1 = -(info);
+                xerbla("DLASCL", i__1);
                 return 0;
             }
 
@@ -9028,9 +9025,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd0(int* n, int* sqre, double* d, double* e, double* u,
-            int* ldu, double* vt, int* ldvt, int* smlsiz, int* iwork, double* work, int* info)
+            int* ldu, double* vt, int* ldvt, int* smlsiz, int* iwork, double* work, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -9132,36 +9129,36 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             if (*n < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*sqre < 0 || *sqre > 1)
             {
-                *info = -2;
+                info = -2;
             }
 
             m = *n + *sqre;
 
             if (*ldu < *n)
             {
-                *info = -6;
+                info = -6;
             }
             else if (*ldvt < m)
             {
-                *info = -8;
+                info = -8;
             }
             else if (*smlsiz < 3)
             {
-                *info = -9;
+                info = -9;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASD0", &i__1);
+                i__1 = -(info);
+                xerbla("DLASD0", i__1);
                 return 0;
             }
 
@@ -9210,7 +9207,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 dlasdq("U", &sqrei, &nl, &nlp1, &nl, &ncc, &d[nlf], &e[nlf], &vt[nlf + nlf * vt_dim1],
                     ldvt, &u[nlf + nlf * u_dim1], ldu, &u[nlf + nlf * u_dim1], ldu, &work[1], info);
 
-                if (*info != 0)
+                if (info != 0)
                 {
                     return 0;
                 }
@@ -9236,7 +9233,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 dlasdq("U", &sqrei, &nr, &nrp1, &nr, &ncc, &d[nrf], &e[nrf], &vt[nrf + nrf * vt_dim1],
                     ldvt, &u[nrf + nrf * u_dim1], ldu, &u[nrf + nrf * u_dim1], ldu, &work[1], info);
 
-                if (*info != 0)
+                if (info != 0)
                 {
                     return 0;
                 }
@@ -9292,9 +9289,9 @@ namespace TAlex.MathCore.LinearAlgebra
                     beta = e[ic];
 
                     dlasd1(&nl, &nr, &sqrei, &d[nlf], &alpha, &beta, &u[nlf + nlf * u_dim1], ldu,
-                        &vt[nlf + nlf * vt_dim1], ldvt, &iwork[idxqc], &iwork[iwk], &work[1], info);
+                        &vt[nlf + nlf * vt_dim1], ldvt, &iwork[idxqc], &iwork[iwk], &work[1], ref info);
 
-                    if (*info != 0)
+                    if (info != 0)
                     {
                         return 0;
                     }
@@ -9304,9 +9301,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd1(int* nl, int* nr, int* sqre, double* d, double* alpha,
-            double* beta, double* u, int* ldu, double* vt, int* ldvt, int* idxq, int* iwork, double* work, int* info)
+            double* beta, double* u, int* ldu, double* vt, int* ldvt, int* idxq, int* iwork, double* work, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -9456,25 +9453,25 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             if (*nl < 1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*nr < 1)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*sqre < 0 || *sqre > 1)
             {
-                *info = -3;
+                info = -3;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASD1", &i__1);
+                i__1 = -(info);
+                xerbla("DLASD1", i__1);
                 return 0;
             }
 
@@ -9533,7 +9530,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 ldu, &work[iu2], &ldu2, &vt[vt_offset], ldvt, &work[ivt2],
                 &ldvt2, &iwork[idxc], &iwork[coltyp], &work[iz], info);
 
-            if (*info != 0)
+            if (info != 0)
             {
                 return 0;
             }
@@ -9551,11 +9548,11 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd2(int* nl, int* nr, int* sqre, int* k, double* d, double* z,
             double* alpha, double* beta, double* u, int* ldu, double* vt, int* ldvt, double* dsigma,
             double* u2, int* ldu2, double* vt2, int* ldvt2, int* idxp, int* idx, int* idxc, int* idxq,
-            int* coltyp, int* info)
+            int* coltyp, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -9756,19 +9753,19 @@ namespace TAlex.MathCore.LinearAlgebra
             --coltyp;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             if (*nl < 1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*nr < 1)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*sqre != 1 && *sqre != 0)
             {
-                *info = -3;
+                info = -3;
             }
 
             n = *nl + *nr + 1;
@@ -9776,25 +9773,25 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*ldu < n)
             {
-                *info = -10;
+                info = -10;
             }
             else if (*ldvt < m)
             {
-                *info = -12;
+                info = -12;
             }
             else if (*ldu2 < n)
             {
-                *info = -15;
+                info = -15;
             }
             else if (*ldvt2 < m)
             {
-                *info = -17;
+                info = -17;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASD2", &i__1);
+                i__1 = -(info);
+                xerbla("DLASD2", i__1);
                 return 0;
             }
 
@@ -10153,10 +10150,10 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd3(int* nl, int* nr, int* sqre, int* k, double* d, double* q,
             int* ldq, double* dsigma, double* u, int* ldu, double* u2, int* ldu2, double* vt,
-            int* ldvt, double* vt2, int* ldvt2, int* idxc, int* ctot, double* z, int* info)
+            int* ldvt, double* vt2, int* ldvt2, int* idxc, int* ctot, double* z, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -10318,19 +10315,19 @@ namespace TAlex.MathCore.LinearAlgebra
             --z;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             if (*nl < 1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*nr < 1)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*sqre != 1 && *sqre != 0)
             {
-                *info = -3;
+                info = -3;
             }
 
             n = *nl + *nr + 1;
@@ -10340,33 +10337,33 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*k < 1 || *k > n)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ldq < *k)
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldu < n)
             {
-                *info = -10;
+                info = -10;
             }
             else if (*ldu2 < n)
             {
-                *info = -12;
+                info = -12;
             }
             else if (*ldvt < m)
             {
-                *info = -14;
+                info = -14;
             }
             else if (*ldvt2 < m)
             {
-                *info = -16;
+                info = -16;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASD3", &i__1);
+                i__1 = -(info);
+                xerbla("DLASD3", i__1);
                 return 0;
             }
 
@@ -10434,7 +10431,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // If the zero finder fails, the computation is terminated.
 
-                if (*info != 0)
+                if (info != 0)
                 {
                     return 0;
                 }
@@ -10578,9 +10575,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd4(int* n, int* i, double* d, double* z,
-            double* delta, double* rho, double* sigma, double* work, int* info)
+            double* delta, double* rho, double* sigma, double* work, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -10705,7 +10702,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --d;
 
             // Function Body
-            *info = 0;
+            info = 0;
             if (*n == 1)
             {
                 // Presumably, I=1 upon entry
@@ -11021,7 +11018,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Return with INFO = 1, NITER = MAXIT and not converged
 
-                *info = 1;
+                info = 1;
                 goto L240;
 
                 // End for the case I = N
@@ -11302,7 +11299,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     dd[1] = delta[ii] * work[ii];
                     dd[2] = dtiip;
                     dlaed6(&niter, &orgati, &c, dd, zz, &w, &eta, info);
-                    if (*info != 0)
+                    if (info != 0)
                     {
                         goto L240;
                     }
@@ -11546,7 +11543,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         dd[2] = dtiip;
                         dlaed6(&niter, &orgati, &c, dd, zz, &w, &eta, info);
 
-                        if (*info != 0)
+                        if (info != 0)
                         {
                             goto L240;
                         }
@@ -11647,7 +11644,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Return with INFO = 1, NITER = MAXIT and not converged
 
-                *info = 1;
+                info = 1;
 
             }
 
@@ -11655,7 +11652,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd5(int* i, double* d, double* z,
             double* delta, double* rho, double* dsigma, double* work)
         {
@@ -11819,11 +11816,11 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd6(int* icompq, int* nl, int* nr, int* sqre, double* d, double* vf,
             double* vl, double* alpha, double* beta, int* idxq, int* perm, int* givptr, int* givcol,
             int* ldgcol, double* givnum, int* ldgnum, double* poles, double* difl, double* difr, double* z,
-            int* k, double* c, double* s, double* work, int* iwork, int* info)
+            int* k, double* c, double* s, double* work, int* iwork, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -12047,38 +12044,38 @@ namespace TAlex.MathCore.LinearAlgebra
             --iwork;
 
             // Function Body
-            *info = 0;
+            info = 0;
             n = *nl + *nr + 1;
             m = n + *sqre;
 
             if (*icompq < 0 || *icompq > 1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*nl < 1)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*nr < 1)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*sqre < 0 || *sqre > 1)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ldgcol < n)
             {
-                *info = -14;
+                info = -14;
             }
             else if (*ldgnum < n)
             {
-                *info = -16;
+                info = -16;
             }
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASD6", &i__1);
+                i__1 = -(info);
+                xerbla("DLASD6", i__1);
                 return 0;
             }
 
@@ -12148,11 +12145,11 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd7(int* icompq, int* nl, int* nr, int* sqre, int* k, double* d, double* z,
             double* zw, double* vf, double* vfw, double* vl, double* vlw, double* alpha, double* beta, double* dsigma,
             int* idx, int* idxp, int* idxq, int* perm, int* givptr, int* givcol, int* ldgcol, double* givnum,
-             int* ldgnum, double* c, double* s, int* info)
+             int* ldgnum, double* c, double* s, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -12340,39 +12337,39 @@ namespace TAlex.MathCore.LinearAlgebra
             givnum -= givnum_offset;
 
             // Function Body
-            *info = 0;
+            info = 0;
             n = *nl + *nr + 1;
             m = n + *sqre;
 
             if (*icompq < 0 || *icompq > 1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*nl < 1)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*nr < 1)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*sqre < 0 || *sqre > 1)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ldgcol < n)
             {
-                *info = -22;
+                info = -22;
             }
             else if (*ldgnum < n)
             {
-                *info = -24;
+                info = -24;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASD7", &i__1);
+                i__1 = -(info);
+                xerbla("DLASD7", i__1);
                 return 0;
             }
 
@@ -12659,9 +12656,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasd8(int* icompq, int* k, double* d, double* z, double* vf, double* vl,
-            double* difl, double* difr, int* lddifr, double* dsigma, double* work, int* info)
+            double* difl, double* difr, int* lddifr, double* dsigma, double* work, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -12781,25 +12778,25 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             if (*icompq < 0 || *icompq > 1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*k < 1)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*lddifr < *k)
             {
-                *info = -9;
+                info = -9;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASD8", &i__1);
+                i__1 = -(info);
+                xerbla("DLASD8", i__1);
                 return 0;
             }
 
@@ -12868,7 +12865,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // If the root finder fails, the computation is terminated.
 
-                if (*info != 0)
+                if (info != 0)
                 {
                     return 0;
                 }
@@ -12948,11 +12945,11 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasda(int* icompq, int* smlsiz, int* n, int* sqre, double* d, double* e,
             double* u, int* ldu, double* vt, int* k, double* difl, double* difr, double* z, double* poles,
             int* givptr, int* givcol, int* ldgcol, int* perm, double* givnum, double* c,
-            double* s, double* work, int* iwork, int* info)
+            double* s, double* work, int* iwork, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -13170,37 +13167,37 @@ namespace TAlex.MathCore.LinearAlgebra
             --iwork;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             if (*icompq < 0 || *icompq > 1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*smlsiz < 3)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*sqre < 0 || *sqre > 1)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ldu < *n + *sqre)
             {
-                *info = -8;
+                info = -8;
             }
             else if (*ldgcol < *n)
             {
-                *info = -17;
+                info = -17;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASDA", &i__1);
+                i__1 = -(info);
+                xerbla("DLASDA", i__1);
                 return 0;
             }
 
@@ -13286,7 +13283,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     dcopy(&nlp1, &vt[nlf + nlp1 * vt_dim1], &c__1, &work[vli], &c__1);
                 }
 
-                if (*info != 0)
+                if (info != 0)
                 {
                     return 0;
                 }
@@ -13327,7 +13324,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     dcopy(&nrp1, &vt[nrf + nrp1 * vt_dim1], &c__1, &work[vli], &c__1);
                 }
 
-                if (*info != 0)
+                if (info != 0)
                 {
                     return 0;
                 }
@@ -13401,7 +13398,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             &s[j], &work[nwork1], &iwork[iwk], info);
                     }
 
-                    if (*info != 0)
+                    if (info != 0)
                     {
                         return 0;
                     }
@@ -13411,7 +13408,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasdt(int* n, int* lvl, int* nd, int* inode, int* ndiml, int* ndimr, int* msub)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -13510,9 +13507,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasdq(string uplo, int* sqre, int* n, int* ncvt, int* nru, int* ncc, double* d,
-            double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int* ldc, double* work, int* info)
+            double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int* ldc, double* work, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -13664,7 +13661,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             iuplo = 0;
             if (lsame(uplo, "U"))
             {
@@ -13676,45 +13673,45 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             if (iuplo == 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*sqre < 0 || *sqre > 1)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*ncvt < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*nru < 0)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*ncc < 0)
             {
-                *info = -6;
+                info = -6;
             }
             else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < Math.Max(1, *n))
             {
-                *info = -10;
+                info = -10;
             }
             else if (*ldu < Math.Max(1, *nru))
             {
-                *info = -12;
+                info = -12;
             }
             else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < Math.Max(1, *n))
             {
-                *info = -14;
+                info = -14;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASDQ", &i__1);
+                i__1 = -(info);
+                xerbla("DLASDQ", i__1);
                 return 0;
             }
 
@@ -13875,7 +13872,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlaset(string uplo, int* m, int* n, double* alpha, double* beta, double* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -13995,8 +13992,8 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int dlasq1(int* n, double* d, double* e, double* work, int* info)
+        
+        public static int dlasq1(int* n, double* d, double* e, double* work, out int info)
         {
             //  -- LAPACK routine (version 3.2)                                    --
 
@@ -14078,12 +14075,12 @@ namespace TAlex.MathCore.LinearAlgebra
             --d;
 
             // Function Body
-            *info = 0;
+            info = 0;
             if (*n < 0)
             {
-                *info = -2;
-                i__1 = -(*info);
-                xerbla("DLASQ1", &i__1);
+                info = -2;
+                i__1 = -(info);
+                xerbla("DLASQ1", i__1);
                 return 0;
             }
             else if (*n == 0)
@@ -14160,7 +14157,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             dlasq2(n, &work[1], info);
 
-            if (*info == 0)
+            if (info == 0)
             {
                 i__1 = *n;
                 for (i = 1; i <= i__1; ++i)
@@ -14173,8 +14170,8 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int dlasq2(int* n, double* z, int* info)
+        
+        public static int dlasq2(int* n, double* z, out int info)
         {
             //  -- LAPACK routine (version 3.2)                                    --
 
@@ -14283,7 +14280,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --z;
 
             // Function Body
-            *info = 0;
+            info = 0;
             eps = dlamch("Precision");
             safmin = dlamch("Safe minimum");
             tol = eps * 100.0;
@@ -14293,8 +14290,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*n < 0)
             {
-                *info = -1;
-                xerbla("DLASQ2", &c__1);
+                info = -1;
+                xerbla("DLASQ2", c__1);
                 return 0;
             }
             else if (*n == 0)
@@ -14307,8 +14304,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (z[1] < 0.0)
                 {
-                    *info = -201;
-                    xerbla("DLASQ2", &c__2);
+                    info = -201;
+                    xerbla("DLASQ2", c__2);
                 }
                 return 0;
             }
@@ -14318,8 +14315,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (z[2] < 0.0 || z[3] < 0.0)
                 {
-                    *info = -2;
-                    xerbla("DLASQ2", &c__2);
+                    info = -2;
+                    xerbla("DLASQ2", c__2);
                     return 0;
                 }
                 else if (z[3] > z[1])
@@ -14364,14 +14361,14 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 if (z[k] < 0.0)
                 {
-                    *info = -(k + 200);
-                    xerbla("DLASQ2", &c__2);
+                    info = -(k + 200);
+                    xerbla("DLASQ2", c__2);
                     return 0;
                 }
                 else if (z[k + 1] < 0.0)
                 {
-                    *info = -(k + 201);
-                    xerbla("DLASQ2", &c__2);
+                    info = -(k + 201);
+                    xerbla("DLASQ2", c__2);
                     return 0;
                 }
                 d += z[k];
@@ -14392,8 +14389,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (z[(*n << 1) - 1] < 0.0)
             {
-                *info = -((*n << 1) + 199);
-                xerbla("DLASQ2", &c__2);
+                info = -((*n << 1) + 199);
+                xerbla("DLASQ2", c__2);
                 return 0;
             }
 
@@ -14578,7 +14575,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 if (sigma < 0.0)
                 {
-                    *info = 1;
+                    info = 1;
                     return 0;
                 }
 
@@ -14740,7 +14737,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                 }
 
-                *info = 2;
+                info = 2;
                 return 0;
 
                 // end IWHILB
@@ -14749,7 +14746,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 ;
             }
 
-            *info = 3;
+            info = 3;
             return 0;
 
             // end IWHILA
@@ -14787,7 +14784,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasq3(int* i0, int* n0, double* z, int* pp, double* dmin, double* sigma,
             double* desig, double* qmax, int* nfail, int* iter, int* ndiv, bool* ieee, int* ttype,
             double* dmin1, double* dmin2, double* dn, double* dn1, double* dn2, double* g, double* tau)
@@ -15125,7 +15122,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasq4(int* i0, int* n0, double* z, int* pp, int* n0in, double* dmin, double* dmin1,
             double* dmin2, double* dn, double* dn1, double* dn2, double* tau, int* ttype, double* g)
         {
@@ -15556,7 +15553,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasq5(int* i0, int* n0, double* z, int* pp, double* tau, double* dmin,
             double* dmin1, double* dmin2, double* dn, double* dnm1, double* dnm2, bool* ieee)
         {
@@ -15793,7 +15790,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasq6(int* i0, int* n0, double* z, int* pp, double* dmin,
             double* dmin1, double* dmin2, double* dn, double* dnm1, double* dnm2)
         {
@@ -15996,7 +15993,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasr(string side, string pivot, string direct,
             int* m, int* n, double* c, double* s, double* a, int* lda)
         {
@@ -16175,7 +16172,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info != 0)
             {
-                xerbla("DLASR ", &info);
+                xerbla("DLASR ", info);
                 return 0;
             }
 
@@ -16440,8 +16437,8 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int dlasrt(string id, int* n, double* d, int* info)
+        
+        public static int dlasrt(string id, int* n, double* d, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -16496,7 +16493,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --d;
 
             // Function Body
-            *info = 0;
+            info = 0;
             dir = -1;
             if (lsame(id, "D"))
             {
@@ -16508,17 +16505,17 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             if (dir == -1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("DLASRT", &i__1);
+                i__1 = -(info);
+                xerbla("DLASRT", i__1);
                 return 0;
             }
 
@@ -16733,7 +16730,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlassq(int* n, double* x, int* incx, double* scale, double* sumsq)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -16824,7 +16821,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int dlasv2(double* f, double* g, double* h,
             double* ssmin, double* ssmax, double* snr, double* csr, double* snl, double* csl)
         {
@@ -17090,7 +17087,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         #region Double precision complex routines
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zdrscl(int* n, double* sa, complex16* sx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -17190,9 +17187,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgebak(string job, string side, int* n, int* ilo,
-            int* ihi, double* scale, int* m, complex16* v, int* ldv, int* info)
+            int* ihi, double* scale, int* m, complex16* v, int* ldv, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -17270,40 +17267,40 @@ namespace TAlex.MathCore.LinearAlgebra
             rightv = lsame(side, "R");
             leftv = lsame(side, "L");
 
-            *info = 0;
+            info = 0;
             if (!lsame(job, "N") && !lsame(job, "P") && !lsame(job, "S") && !lsame(job, "B"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!rightv && !leftv)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*ilo < 1 || *ilo > Math.Max(1, *n))
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*m < 0)
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldv < Math.Max(1, *n))
             {
-                *info = -9;
+                info = -9;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEBAK", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEBAK", i__1);
                 return 0;
             }
 
@@ -17418,8 +17415,8 @@ namespace TAlex.MathCore.LinearAlgebra
             // End of ZGEBAK 
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int zgebal(string job, int* n, complex16* a, int* lda, int* ilo, int* ihi, double* scale, int* info)
+        
+        public static int zgebal(string job, int* n, complex16* a, int* lda, int* ilo, int* ihi, double* scale, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -17535,23 +17532,23 @@ namespace TAlex.MathCore.LinearAlgebra
             --scale;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             if (!lsame(job, "N") && !lsame(job, "P") && !lsame(job, "S") && !lsame(job, "B"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*lda < Math.Max(1, *n))
             {
-                *info = -4;
+                info = -4;
             }
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEBAL", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEBAL", i__1);
                 return 0;
             }
 
@@ -17819,9 +17816,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgebd2(int* m, int* n, complex16* a, int* lda,
-            double* d, double* e, complex16* tauq, complex16* taup, complex16* work, int* info)
+            double* d, double* e, complex16* tauq, complex16* taup, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -17960,24 +17957,24 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -4;
+                info = -4;
             }
 
-            if (*info < 0)
+            if (info < 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEBD2", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEBD2", i__1);
                 return 0;
             }
 
@@ -18157,9 +18154,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgebrd(int* m, int* n, complex16* a, int* lda, double* d,
-            double* e, complex16* tauq, complex16* taup, complex16* work, int* lwork, int* info)
+            double* e, complex16* tauq, complex16* taup, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -18317,7 +18314,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             // Computing MAX
             i__1 = 1;
             i__2 = ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
@@ -18330,15 +18327,15 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -4;
+                info = -4;
             }
             else // if(complicated condition)
             {
@@ -18346,14 +18343,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__1 = Math.Max(1, *m);
                 if (*lwork < Math.Max(i__1, *n) && !lquery)
                 {
-                    *info = -10;
+                    info = -10;
                 }
             }
 
-            if (*info < 0)
+            if (info < 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEBRD", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEBRD", i__1);
                 return 0;
             }
             else if (lquery)
@@ -18494,11 +18491,11 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgeevx(string balanc, string jobvl, string jobvr, string sense,
             int* n, complex16* a, int* lda, complex16* w, complex16* vl, int* ldvl,
             complex16* vr, int* ldvr, int* ilo, int* ihi, double* scale, double* abnrm,
-            double* rconde, double* rcondv, complex16* work, int* lwork, double* rwork, int* info)
+            double* rconde, double* rcondv, complex16* work, int* lwork, double* rwork, out int info)
         {
             //  -- LAPACK driver routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -18718,7 +18715,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --rwork;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             lquery = (*lwork == -1);
             wantvl = lsame(jobvl, "V");
             wantvr = lsame(jobvr, "V");
@@ -18729,35 +18726,35 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (!(lsame(balanc, "N") || lsame(balanc, "S") || lsame(balanc, "P") || lsame(balanc, "B")))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!wantvl && !lsame(jobvl, "N"))
             {
-                *info = -2;
+                info = -2;
             }
             else if (!wantvr && !lsame(jobvr, "N"))
             {
-                *info = -3;
+                info = -3;
             }
             else if (!(wntsnn || wntsne || wntsnb || wntsnv) || (wntsne || wntsnb) && !(wantvl && wantvr))
             {
-                *info = -4;
+                info = -4;
             }
             else if (*n < 0)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lda < Math.Max(1, *n))
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldvl < 1 || wantvl && *ldvl < *n)
             {
-                *info = -10;
+                info = -10;
             }
             else if (*ldvr < 1 || wantvr && *ldvr < *n)
             {
-                *info = -12;
+                info = -12;
             }
 
             //     Compute workspace 
@@ -18771,7 +18768,7 @@ namespace TAlex.MathCore.LinearAlgebra
             //       calculated below. HSWORK is computed assuming ILO=1 and IHI=N, 
             //       the worst case.) 
 
-            if (*info == 0)
+            if (info == 0)
             {
                 if (*n == 0)
                 {
@@ -18785,24 +18782,24 @@ namespace TAlex.MathCore.LinearAlgebra
                     if (wantvl)
                     {
                         zhseqr("S", "V", n, &c__1, n, &a[a_offset], lda, &w[1],
-                            &vl[vl_offset], ldvl, &work[1], &c_n1, info);
+                            &vl[vl_offset], ldvl, &work[1], &c_n1, ref info);
                     }
                     else if (wantvr)
                     {
                         zhseqr("S", "V", n, &c__1, n, &a[a_offset], lda, &w[1],
-                            &vr[vr_offset], ldvr, &work[1], &c_n1, info);
+                            &vr[vr_offset], ldvr, &work[1], &c_n1, ref info);
                     }
                     else
                     {
                         if (wntsnn)
                         {
                             zhseqr("E", "N", n, &c__1, n, &a[a_offset], lda, &w[1],
-                                &vr[vr_offset], ldvr, &work[1], &c_n1, info);
+                                &vr[vr_offset], ldvr, &work[1], &c_n1, ref info);
                         }
                         else
                         {
                             zhseqr("S", "N", n, &c__1, n, &a[a_offset], lda, &w[1],
-                                &vr[vr_offset], ldvr, &work[1], &c_n1, info);
+                                &vr[vr_offset], ldvr, &work[1], &c_n1, ref info);
                         }
                     }
 
@@ -18868,14 +18865,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (*lwork < minwrk && !lquery)
                 {
-                    *info = -20;
+                    info = -20;
                 }
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEEVX", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEEVX", i__1);
                 return 0;
             }
             else if (lquery)
@@ -18963,7 +18960,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 iwrk = itau;
                 i__1 = *lwork - iwrk + 1;
-                zhseqr("S", "V", n, ilo, ihi, &a[a_offset], lda, &w[1], &vl[vl_offset], ldvl, &work[iwrk], &i__1, info);
+                zhseqr("S", "V", n, ilo, ihi, &a[a_offset], lda, &w[1], &vl[vl_offset], ldvl, &work[iwrk], &i__1, ref info);
 
                 if (wantvr)
                 {
@@ -18995,7 +18992,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 iwrk = itau;
                 i__1 = *lwork - iwrk + 1;
-                zhseqr("S", "V", n, ilo, ihi, &a[a_offset], lda, &w[1], &vr[vr_offset], ldvr, &work[iwrk], &i__1, info);
+                zhseqr("S", "V", n, ilo, ihi, &a[a_offset], lda, &w[1], &vr[vr_offset], ldvr, &work[iwrk], &i__1, ref info);
 
             }
             else
@@ -19017,12 +19014,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 iwrk = itau;
                 i__1 = *lwork - iwrk + 1;
-                zhseqr(job, "N", n, ilo, ihi, &a[a_offset], lda, &w[1], &vr[vr_offset], ldvr, &work[iwrk], &i__1, info);
+                zhseqr(job, "N", n, ilo, ihi, &a[a_offset], lda, &w[1], &vr[vr_offset], ldvr, &work[iwrk], &i__1, ref info);
             }
 
             // If INFO > 0 from ZHSEQR, then quit 
 
-            if (*info > 0)
+            if (info > 0)
             {
                 goto L50;
             }
@@ -19149,15 +19146,15 @@ namespace TAlex.MathCore.LinearAlgebra
             L50:
             if (scalea)
             {
-                i__1 = *n - *info;
+                i__1 = *n - info;
 
                 // Computing MAX 
-                i__3 = *n - *info;
+                i__3 = *n - info;
                 i__2 = Math.Max(i__3, 1);
 
-                zlascl("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &w[*info + 1], &i__2, &ierr);
+                zlascl("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &w[info + 1], &i__2, &ierr);
 
-                if (*info == 0)
+                if (info == 0)
                 {
                     if ((wntsnv || wntsnb) && icond == 0)
                     {
@@ -19177,9 +19174,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgehd2(int* n, int* ilo, int* ihi, complex16* a, int* lda,
-            complex16* tau, complex16* work, int* info)
+            complex16* tau, complex16* work, ref int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -19280,29 +19277,29 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
 
             if (*n < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*ilo < 1 || *ilo > Math.Max(1, *n))
             {
-                *info = -2;
+                info = -2;
             }
             else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*lda < Math.Max(1, *n))
             {
-                *info = -5;
+                info = -5;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEHD2", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEHD2", i__1);
                 return 0;
             }
 
@@ -19346,9 +19343,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgehrd(int* n, int* ilo, int* ihi, complex16* a, int* lda,
-            complex16* tau, complex16* work, int* lwork, int* info)
+            complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -19475,7 +19472,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             // Computing MIN 
             i__1 = 64;
             i__2 = ilaenv(&c__1, "ZGEHRD", " ", n, ilo, ihi, &c_n1);
@@ -19488,29 +19485,29 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*n < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*ilo < 1 || *ilo > Math.Max(1, *n))
             {
-                *info = -2;
+                info = -2;
             }
             else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*lda < Math.Max(1, *n))
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lwork < Math.Max(1, *n) && !lquery)
             {
-                *info = -8;
+                info = -8;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEHRD", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEHRD", i__1);
                 return 0;
             }
             else if (lquery)
@@ -19685,8 +19682,8 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int zgelq2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* info)
+        
+        public static int zgelq2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -19760,24 +19757,24 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -4;
+                info = -4;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGELQ2", &i__1);
+                i__1 = -(info);
+                xerbla("ZGELQ2", i__1);
                 return 0;
             }
 
@@ -19824,8 +19821,8 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int zgelqf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, int* info)
+        
+        public static int zgelqf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -19918,7 +19915,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             nb = ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *m * nb;
             work[1].r = (double)lwkopt;
@@ -19927,25 +19924,25 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -4;
+                info = -4;
             }
             else if (*lwork < Math.Max(1, *m) && !lquery)
             {
-                *info = -7;
+                info = -7;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGELQF", &i__1);
+                i__1 = -(info);
+                xerbla("ZGELQF", i__1);
                 return 0;
             }
             else if (lquery)
@@ -20050,8 +20047,8 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int zgeqr2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* info)
+        
+        public static int zgeqr2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20129,23 +20126,23 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -4;
+                info = -4;
             }
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEQR2", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEQR2", i__1);
                 return 0;
             }
 
@@ -20193,8 +20190,8 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int zgeqrf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, int* info)
+        
+        public static int zgeqrf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20288,7 +20285,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             nb = ilaenv(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *n * nb;
             work[1].r = (double)lwkopt;
@@ -20297,25 +20294,25 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -4;
+                info = -4;
             }
             else if (*lwork < Math.Max(1, *n) && !lquery)
             {
-                *info = -7;
+                info = -7;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGEQRF", &i__1);
+                i__1 = -(info);
+                xerbla("ZGEQRF", i__1);
                 return 0;
             }
             else if (lquery)
@@ -20420,9 +20417,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zgesdd(string jobz, int* m, int* n, complex16* a, int* lda, double* s, complex16* u,
-            int* ldu, complex16* vt, int* ldvt, complex16* work, int* lwork, double* rwork, int* iwork, int* info)
+            int* ldu, complex16* vt, int* ldvt, complex16* work, int* lwork, double* rwork, int* iwork, out int info)
         {
             //  -- LAPACK driver routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20604,7 +20601,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --iwork;
 
             // Function Body
-            *info = 0;
+            info = 0;
             minmn = Math.Min(*m, *n);
             mnthr1 = (int)(minmn * 17.0 / 9.0);
             mnthr2 = (int)(minmn * 5.0 / 3.0);
@@ -20618,29 +20615,29 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (!(wntqa || wntqs || wntqo || wntqn))
             {
-                *info = -1;
+                info = -1;
             }
             else if (*m < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -5;
+                info = -5;
             }
             else if (*ldu < 1 || wntqas && *ldu < *m || wntqo && *m < *n && *ldu < *
               m)
             {
-                *info = -8;
+                info = -8;
             }
             else if (*ldvt < 1 || wntqa && *ldvt < *n || wntqs && *ldvt < minmn ||
               wntqo && *m >= *n && *ldvt < *n)
             {
-                *info = -10;
+                info = -10;
             }
 
             // Compute workspace
@@ -20651,7 +20648,7 @@ namespace TAlex.MathCore.LinearAlgebra
             //   real workspace. NB refers to the optimal block size for the
             //   immediately following subroutine, as returned by ILAENV.)
 
-            if (*info == 0 && *m > 0 && *n > 0)
+            if (info == 0 && *m > 0 && *n > 0)
             {
                 if (*m >= *n)
                 {
@@ -21017,22 +21014,22 @@ namespace TAlex.MathCore.LinearAlgebra
                 maxwrk = Math.Max(maxwrk, minwrk);
             }
 
-            if (*info == 0)
+            if (info == 0)
             {
                 work[1].r = (double)maxwrk;
                 work[1].i = 0.0;
                 if (*lwork < minwrk && *lwork != -1)
                 {
-                    *info = -13;
+                    info = -13;
                 }
             }
 
             // Quick returns
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZGESDD", &i__1);
+                i__1 = -(info);
+                xerbla("ZGESDD", i__1);
                 return 0;
             }
 
@@ -22542,7 +22539,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     dlascl("G", &c__0, &c__0, &bignum, &anrm, &minmn, &c__1, &s[1], &minmn, &ierr);
                 }
-                if (*info != 0 && anrm > bignum)
+                if (info != 0 && anrm > bignum)
                 {
                     i__1 = minmn - 1;
                     dlascl("G", &c__0, &c__0, &bignum, &anrm, &i__1, &c__1, &rwork[ie], &minmn, &ierr);
@@ -22551,7 +22548,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     dlascl("G", &c__0, &c__0, &smlnum, &anrm, &minmn, &c__1, &s[1], &minmn, &ierr);
                 }
-                if (*info != 0 && anrm < smlnum)
+                if (info != 0 && anrm < smlnum)
                 {
                     i__1 = minmn - 1;
                     dlascl("G", &c__0, &c__0, &smlnum, &anrm, &i__1, &c__1, &rwork[ie], &minmn, &ierr);
@@ -22566,10 +22563,10 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zhseqr(string job, string compz, int* n, int* ilo,
              int* ihi, complex16* h, int* ldh, complex16* w,
-            complex16* z, int* ldz, complex16* work, int* lwork, int* info)
+            complex16* z, int* ldz, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK driver routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
@@ -22839,47 +22836,47 @@ namespace TAlex.MathCore.LinearAlgebra
 
             lquery = *lwork == -1;
 
-            *info = 0;
+            info = 0;
             if (!lsame(job, "E") && !wantt)
             {
-                *info = -1;
+                info = -1;
             }
             else if (!lsame(compz, "N") && !wantz)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*ilo < 1 || *ilo > Math.Max(1, *n))
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*ldh < Math.Max(1, *n))
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldz < 1 || wantz && *ldz < Math.Max(1, *n))
             {
-                *info = -10;
+                info = -10;
             }
             else if (*lwork < Math.Max(1, *n) && !lquery)
             {
-                *info = -12;
+                info = -12;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
 
                 // ==== Quick return in case of invalid argument. ==== 
 
-                i__1 = -(*info);
-                xerbla("ZHSEQR", &i__1);
+                i__1 = -(info);
+                xerbla("ZHSEQR", i__1);
                 return 0;
 
             }
@@ -22965,12 +22962,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     zlahqr(&wantt, &wantz, n, ilo, ihi, &h[h_offset], ldh, &w[1], ilo, ihi, &z[z_offset], ldz, info);
 
-                    if (*info > 0)
+                    if (info > 0)
                     {
                         // ==== A rare ZLAHQR failure!  ZLAQR0 sometimes succeeds 
                         // .    when ZLAHQR fails. ==== 
 
-                        kbot = *info;
+                        kbot = info;
 
                         if (*n >= 49)
                         {
@@ -22998,7 +22995,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 49 - 49], &c__49);
                             zlaqr0(&wantt, &wantz, &c__49, ilo, &kbot, hl, &c__49,
                                 &w[1], ilo, ihi, &z[z_offset], ldz, workl, &c__49, info);
-                            if (wantt || *info != 0)
+                            if (wantt || info != 0)
                             {
                                 zlacpy("A", n, n, hl, &c__49, &h[h_offset], ldh);
                             }
@@ -23008,7 +23005,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // ==== Clear out the trash, if necessary. ==== 
 
-                if ((wantt || *info != 0) && *n > 2)
+                if ((wantt || info != 0) && *n > 2)
                 {
                     i__1 = *n - 2;
                     i__2 = *n - 2;
@@ -23034,7 +23031,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlabrd(int* m, int* n, int* nb, complex16* a, int* lda, double* d,
             double* e, complex16* tauq, complex16* taup, complex16* x, int* ldx, complex16* y, int* ldy)
         {
@@ -23491,7 +23488,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlacgv(int* n, complex16* x, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -23565,7 +23562,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlacn2(int* n, complex16* v, complex16* x, double* est, int* kase, int* isave)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -23851,7 +23848,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlacp2(string uplo, int* m, int* n, double* a, int* lda, complex16* b, int* ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -23964,7 +23961,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlacpy(string uplo, int* m, int* n, complex16* a, int* lda, complex16* b, int* ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -24075,7 +24072,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // End of ZLACPY 
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlacrm(int* m, int* n, complex16* a,
             int* lda, double* b, int* ldb, complex16* c, int* ldc, double* rwork)
         {
@@ -24215,7 +24212,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static void zladiv(complex16* ret_val, complex16* x, complex16* y)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -24260,9 +24257,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlaein(bool* rightv, bool* noinit, int* n, complex16* h, int* ldh, complex16* w,
-            complex16* v, complex16* b, int* ldb, double* rwork, double* eps3, double* smlnum, int* info)
+            complex16* v, complex16* b, int* ldb, double* rwork, double* eps3, double* smlnum, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -24359,7 +24356,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --rwork;
 
             // Function Body
-            *info = 0;
+            info = 0;
 
             // GROWTO is the threshold used in the acceptance test for an
             // eigenvector.
@@ -24670,7 +24667,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Failure to find eigenvector in N iterations.
 
-            *info = 1;
+            info = 1;
 
         L120:
 
@@ -24684,9 +24681,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlahqr(bool* wantt, bool* wantz, int* n, int* ilo, int* ihi, complex16* h, int* ldh,
-            complex16* w, int* iloz, int* ihiz, complex16* z, int* ldz, int* info)
+            complex16* w, int* iloz, int* ihiz, complex16* z, int* ldz, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
@@ -24841,7 +24838,7 @@ namespace TAlex.MathCore.LinearAlgebra
             z -= z_offset;
 
             // Function Body 
-            *info = 0;
+            info = 0;
 
             // Quick return if possible 
 
@@ -25608,7 +25605,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Failure to converge in remaining number of iterations 
 
-            *info = i;
+            info = i;
             return 0;
 
         L140:
@@ -25630,7 +25627,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlahr2(int* n, int* k, int* nb,
             complex16* a, int* lda, complex16* tau, complex16* t,
             int* ldt, complex16* y, int* ldy)
@@ -25928,7 +25925,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double zlange(string norm, int* m, int* n, complex16* a, int* lda, double* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -26088,7 +26085,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double zlanhs(string norm, int* n, complex16* a, int* lda, double* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -26261,11 +26258,11 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlaqr0(bool* wantt, bool* wantz, int* n,
             int* ilo, int* ihi, complex16* h, int* ldh,
             complex16* w, int* iloz, int* ihiz, complex16* z,
-            int* ldz, complex16* work, int* lwork, int* info)
+            int* ldz, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
@@ -26471,7 +26468,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
 
             // ==== Quick return for N = 0: nothing to do. ==== 
 
@@ -26500,7 +26497,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // ==== Hope for the best. ==== 
 
-                *info = 0;
+                info = 0;
 
                 // ==== Set up job flags for ILAENV. ==== 
 
@@ -27078,7 +27075,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // ==== Iteration limit exceeded.  Set INFO to show where 
                 // .    the problem occurred and exit. ==== 
 
-                *info = kbot;
+                info = kbot;
             L80:
                 ;
             }
@@ -27096,7 +27093,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlaqr1(int* n, complex16* h, int* ldh, complex16* s1, complex16* s2, complex16* v)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -27367,7 +27364,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlaqr2(bool* wantt, bool* wantz, int* n, int* ktop, int* kbot, int* nw, complex16* h,
             int* ldh, int* iloz, int* ihiz, complex16* z, int* ldz, int* ns, int* nd, complex16* sh,
             complex16* v, int* ldv, int* nh, complex16* t, int* ldt, int* nv, complex16* wv, int* ldwv,
@@ -27934,7 +27931,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlaqr3(bool* wantt, bool* wantz, int* n, int* ktop, int* kbot, int* nw, complex16* h,
             int* ldh, int* iloz, int* ihiz, complex16* z, int* ldz, int* ns, int* nd, complex16* sh,
             complex16* v, int* ldv, int* nh, complex16* t, int* ldt, int* nv, complex16* wv, int* ldwv,
@@ -28546,9 +28543,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlaqr4(bool* wantt, bool* wantz, int* n, int* ilo, int* ihi, complex16* h, int* ldh,
-            complex16* w, int* iloz, int* ihiz, complex16* z, int* ldz, complex16* work, int* lwork, int* info)
+            complex16* w, int* iloz, int* ihiz, complex16* z, int* ldz, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
@@ -28761,7 +28758,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
 
             // ==== Quick return for N = 0: nothing to do. ==== 
 
@@ -28790,7 +28787,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // ==== Hope for the best. ==== 
 
-                *info = 0;
+                info = 0;
 
                 // ==== Set up job flags for ILAENV. ==== 
 
@@ -29360,7 +29357,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // ==== Iteration limit exceeded.  Set INFO to show where 
                 // .    the problem occurred and exit. ==== 
 
-                *info = kbot;
+                info = kbot;
             L80:
                 ;
             }
@@ -29377,7 +29374,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlaqr5(bool* wantt, bool* wantz, int* kacc22,
             int* n, int* ktop, int* kbot, int* nshfts,
             complex16* s, complex16* h, int* ldh, int* iloz,
@@ -30891,7 +30888,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlarcm(int* m, int* n, double* a, int* lda,
             complex16* b, int* ldb, complex16* c, int* ldc, double* rwork)
         {
@@ -31030,7 +31027,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlarf(string side, int* m, int* n, complex16* v, int* incv,
             complex16* tau, complex16* c, int* ldc, complex16* work)
         {
@@ -31206,7 +31203,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlarfb(string side, string trans, string direct, string storev,
             int* m, int* n, int* k, complex16* v, int* ldv,
             complex16* t, int* ldt, complex16* c, int* ldc,
@@ -32010,7 +32007,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlarfg(int* n, complex16* alpha, complex16* x, int* incx, complex16* tau)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -32176,7 +32173,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlarfp(int* n, complex16* alpha, complex16* x, int* incx, complex16* tau)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -32420,7 +32417,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlarft(string direct, string storev, int* n, int* k,
             complex16* v, int* ldv, complex16* tau, complex16* t, int* ldt)
         {
@@ -32828,7 +32825,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlartg(complex16* f, complex16* g, double* cs, complex16* sn, complex16* r)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -33167,9 +33164,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlascl(string type, int* kl, int* ku, double* cfrom,
-            double* cto, int* m, int* n, complex16* a, int* lda, int* info)
+            double* cto, int* m, int* n, complex16* a, int* lda, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -33256,7 +33253,7 @@ namespace TAlex.MathCore.LinearAlgebra
             a -= a_offset;
 
             // Function Body 
-            *info = 0;
+            info = 0;
 
             if (lsame(type, "G"))
             {
@@ -33293,27 +33290,27 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (itype == -1)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*cfrom == 0.0 || disnan(cfrom))
             {
-                *info = -4;
+                info = -4;
             }
             else if (disnan(cto))
             {
-                *info = -5;
+                info = -5;
             }
             else if (*m < 0)
             {
-                *info = -6;
+                info = -6;
             }
             else if (*n < 0 || itype == 4 && *n != *m || itype == 5 && *n != *m)
             {
-                *info = -7;
+                info = -7;
             }
             else if (itype <= 3 && *lda < Math.Max(1, *m))
             {
-                *info = -9;
+                info = -9;
             }
             else if (itype >= 4)
             {
@@ -33321,7 +33318,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__1 = *m - 1;
                 if (*kl < 0 || *kl > Math.Max(i__1, 0))
                 {
-                    *info = -2;
+                    info = -2;
                 }
                 else // if(complicated condition) 
                 {
@@ -33329,19 +33326,19 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__1 = *n - 1;
                     if (*ku < 0 || *ku > Math.Max(i__1, 0) || (itype == 4 || itype == 5) && *kl != *ku)
                     {
-                        *info = -3;
+                        info = -3;
                     }
                     else if (itype == 4 && *lda < *kl + 1 || itype == 5 && *lda < *ku + 1 || itype == 6 && *lda < (*kl << 1) + *ku + 1)
                     {
-                        *info = -9;
+                        info = -9;
                     }
                 }
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZLASCL", &i__1);
+                i__1 = -(info);
+                xerbla("ZLASCL", i__1);
                 return 0;
             }
 
@@ -33571,7 +33568,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlaset(string uplo, int* m, int* n, complex16* alpha, complex16* beta, complex16* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -33709,7 +33706,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlassq(int* n, complex16* x, int* incx, double* scale, double* sumsq)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -33822,9 +33819,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zlatrs(string uplo, string trans, string diag, string normin,
-            int* n, complex16* a, int* lda, complex16* x, double* scale, double* cnorm, int* info)
+            int* n, complex16* a, int* lda, complex16* x, double* scale, double* cnorm, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -34021,7 +34018,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --cnorm;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             upper = lsame(uplo, "U");
             notran = lsame(trans, "N");
             nounit = lsame(diag, "N");
@@ -34030,33 +34027,33 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (!upper && !lsame(uplo, "L"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!notran && !lsame(trans, "T") && !lsame(trans, "C"))
             {
-                *info = -2;
+                info = -2;
             }
             else if (!nounit && !lsame(diag, "U"))
             {
-                *info = -3;
+                info = -3;
             }
             else if (!lsame(normin, "Y") && !lsame(normin, "N"))
             {
-                *info = -4;
+                info = -4;
             }
             else if (*n < 0)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lda < Math.Max(1, *n))
             {
-                *info = -7;
+                info = -7;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZLATRS", &i__1);
+                i__1 = -(info);
+                xerbla("ZLATRS", i__1);
                 return 0;
             }
 
@@ -35095,7 +35092,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zrot(int* n, complex16* cx, int* incx,
             complex16* cy, int* incy, double* c, complex16* s)
         {
@@ -35272,11 +35269,11 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ztrevc(string side, string howmny, bool* select,
             int* n, complex16* t, int* ldt, complex16* vl,
             int* ldvl, complex16* vr, int* ldvr, int* mm, int
-            * m, complex16* work, double* rwork, int* info)
+            * m, complex16* work, double* rwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -35467,40 +35464,40 @@ namespace TAlex.MathCore.LinearAlgebra
                 *m = *n;
             }
 
-            *info = 0;
+            info = 0;
             if (!rightv && !leftv)
             {
-                *info = -1;
+                info = -1;
             }
             else if (!allv && !over && !somev)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ldt < Math.Max(1, *n))
             {
-                *info = -6;
+                info = -6;
             }
             else if (*ldvl < 1 || leftv && *ldvl < *n)
             {
-                *info = -8;
+                info = -8;
             }
             else if (*ldvr < 1 || rightv && *ldvr < *n)
             {
-                *info = -10;
+                info = -10;
             }
             else if (*mm < *m)
             {
-                *info = -11;
+                info = -11;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZTREVC", &i__1);
+                i__1 = -(info);
+                xerbla("ZTREVC", i__1);
                 return 0;
             }
 
@@ -35812,9 +35809,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ztrexc(string compq, int* n, complex16* t,
-            int* ldt, complex16* q, int* ldq, int* ifst, int* ilst, int* info)
+            int* ldt, complex16* q, int* ldq, int* ifst, int* ilst, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -35892,38 +35889,38 @@ namespace TAlex.MathCore.LinearAlgebra
             q -= q_offset;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             wantq = lsame(compq, "V");
 
             if (!lsame(compq, "N") && !wantq)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*ldt < Math.Max(1, *n))
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ldq < 1 || wantq && *ldq < Math.Max(1, *n))
             {
-                *info = -6;
+                info = -6;
             }
             else if (*ifst < 1 || *ifst > *n)
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ilst < 1 || *ilst > *n)
             {
-                *info = -8;
+                info = -8;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZTREXC", &i__1);
+                i__1 = -(info);
+                xerbla("ZTREXC", i__1);
                 return 0;
             }
 
@@ -36006,12 +36003,12 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ztrsna(string job, string howmny, bool* select,
             int* n, complex16* t, int* ldt, complex16* vl,
             int* ldvl, complex16* vr, int* ldvr, double* s,
             double* sep, int* mm, int* m, complex16* work,
-            int* ldwork, double* rwork, int* info)
+            int* ldwork, double* rwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -36230,44 +36227,44 @@ namespace TAlex.MathCore.LinearAlgebra
                 *m = *n;
             }
 
-            *info = 0;
+            info = 0;
             if (!wants && !wantsp)
             {
-                *info = -1;
+                info = -1;
             }
             else if (!lsame(howmny, "A") && !somcon)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ldt < Math.Max(1, *n))
             {
-                *info = -6;
+                info = -6;
             }
             else if (*ldvl < 1 || wants && *ldvl < *n)
             {
-                *info = -8;
+                info = -8;
             }
             else if (*ldvr < 1 || wants && *ldvr < *n)
             {
-                *info = -10;
+                info = -10;
             }
             else if (*mm < *m)
             {
-                *info = -13;
+                info = -13;
             }
             else if (*ldwork < 1 || wantsp && *ldwork < *n)
             {
-                *info = -16;
+                info = -16;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZTRSNA", &i__1);
+                i__1 = -(info);
+                xerbla("ZTRSNA", i__1);
                 return 0;
             }
 
@@ -36423,9 +36420,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zung2r(int* m, int* n, int* k, complex16* a,
-            int* lda, complex16* tau, complex16* work, int* info)
+            int* lda, complex16* tau, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -36495,28 +36492,28 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0 || *n > *m)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*k < 0 || *k > *n)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -5;
+                info = -5;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNG2R", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNG2R", i__1);
                 return 0;
             }
 
@@ -36599,9 +36596,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zungbr(string vect, int* m, int* n, int* k,
-            complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, int* info)
+            complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -36711,38 +36708,38 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             wantq = lsame(vect, "Q");
             mn = Math.Min(*m, *n);
             lquery = *lwork == -1;
 
             if (!wantq && !lsame(vect, "P"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (*m < 0)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*n < 0 || wantq && (*n > *m || *n < Math.Min(*m, *k)) || !wantq && (
               *m > *n || *m < Math.Min(*n, *k)))
             {
-                *info = -3;
+                info = -3;
             }
             else if (*k < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -6;
+                info = -6;
             }
             else if (*lwork < Math.Max(1, mn) && !lquery)
             {
-                *info = -9;
+                info = -9;
             }
 
-            if (*info == 0)
+            if (info == 0)
             {
                 if (wantq)
                 {
@@ -36758,10 +36755,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 work[1].i = 0.0;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNGBR", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNGBR", i__1);
                 return 0;
             }
             else if (lquery)
@@ -36903,10 +36900,10 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zunghr(int* n, int* ilo, int* ihi,
             complex16* a, int* lda, complex16* tau, complex16*
-            work, int* lwork, int* info)
+            work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -36985,32 +36982,32 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             nh = *ihi - *ilo;
             lquery = *lwork == -1;
 
             if (*n < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*ilo < 1 || *ilo > Math.Max(1, *n))
             {
-                *info = -2;
+                info = -2;
             }
             else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*lda < Math.Max(1, *n))
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lwork < Math.Max(1, nh) && !lquery)
             {
-                *info = -8;
+                info = -8;
             }
 
-            if (*info == 0)
+            if (info == 0)
             {
                 nb = ilaenv(&c__1, "ZUNGQR", " ", &nh, &nh, &nh, &c_n1);
                 lwkopt = Math.Max(1, nh) * nb;
@@ -37018,10 +37015,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 work[1].i = 0.0;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNGHR", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNGHR", i__1);
                 return 0;
             }
             else if (lquery)
@@ -37128,9 +37125,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zungl2(int* m, int* n, int* k,
-            complex16* a, int* lda, complex16* tau, complex16* work, int* info)
+            complex16* a, int* lda, complex16* tau, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -37196,28 +37193,28 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < *m)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*k < 0 || *k > *m)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -5;
+                info = -5;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNGL2", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNGL2", i__1);
                 return 0;
             }
 
@@ -37305,9 +37302,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zunglq(int* m, int* n, int* k, complex16* a,
-            int* lda, complex16* tau, complex16* work, int* lwork, int* info)
+            int* lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -37392,7 +37389,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             nb = ilaenv(&c__1, "ZUNGLQ", " ", m, n, k, &c_n1);
             lwkopt = Math.Max(1, *m) * nb;
             work[1].r = (double)lwkopt;
@@ -37401,29 +37398,29 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < *m)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*k < 0 || *k > *m)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lwork < Math.Max(1, *m) && !lquery)
             {
-                *info = -8;
+                info = -8;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNGLQ", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNGLQ", i__1);
                 return 0;
             }
             else if (lquery)
@@ -37566,9 +37563,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zungqr(int* m, int* n, int* k, complex16* a,
-            int* lda, complex16* tau, complex16* work, int* lwork, int* info)
+            int* lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -37655,7 +37652,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             nb = ilaenv(&c__1, "ZUNGQR", " ", m, n, k, &c_n1);
             lwkopt = Math.Max(1, *n) * nb;
 
@@ -37666,29 +37663,29 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*m < 0)
             {
-                *info = -1;
+                info = -1;
             }
             else if (*n < 0 || *n > *m)
             {
-                *info = -2;
+                info = -2;
             }
             else if (*k < 0 || *k > *n)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*lda < Math.Max(1, *m))
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lwork < Math.Max(1, *n) && !lquery)
             {
-                *info = -8;
+                info = -8;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNGQR", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNGQR", i__1);
                 return 0;
             }
             else if (lquery)
@@ -37836,10 +37833,10 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zunm2r(string side, string trans, int* m, int* n,
             int* k, complex16* a, int* lda, complex16* tau,
-            complex16* c, int* ldc, complex16* work, int* info)
+            complex16* c, int* ldc, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -37946,7 +37943,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             left = lsame(side, "L");
             notran = lsame(trans, "N");
 
@@ -37963,37 +37960,37 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (!left && !lsame(side, "R"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!notran && !lsame(trans, "C"))
             {
-                *info = -2;
+                info = -2;
             }
             else if (*m < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*n < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*k < 0 || *k > nq)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lda < Math.Max(1, nq))
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldc < Math.Max(1, *m))
             {
-                *info = -10;
+                info = -10;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNM2R", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNM2R", i__1);
                 return 0;
             }
 
@@ -38082,10 +38079,10 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zunmbr(string vect, string side, string trans, int* m,
             int* n, int* k, complex16* a, int* lda, complex16* tau,
-            complex16* c, int* ldc, complex16* work, int* lwork, int* info)
+            complex16* c, int* ldc, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -38225,7 +38222,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             applyq = lsame(vect, "Q");
             left = lsame(side, "L");
             notran = lsame(trans, "N");
@@ -38251,27 +38248,27 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (!applyq && !lsame(vect, "P"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!left && !lsame(side, "R"))
             {
-                *info = -2;
+                info = -2;
             }
             else if (!notran && !lsame(trans, "C"))
             {
-                *info = -3;
+                info = -3;
             }
             else if (*m < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*n < 0)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*k < 0)
             {
-                *info = -6;
+                info = -6;
             }
             else // if(complicated condition)
             {
@@ -38280,19 +38277,19 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__2 = Math.Min(nq, *k);
                 if (applyq && *lda < Math.Max(1, nq) || !applyq && *lda < Math.Max(i__1, i__2))
                 {
-                    *info = -8;
+                    info = -8;
                 }
                 else if (*ldc < Math.Max(1, *m))
                 {
-                    *info = -11;
+                    info = -11;
                 }
                 else if (*lwork < Math.Max(1, nw) && !lquery)
                 {
-                    *info = -13;
+                    info = -13;
                 }
             }
 
-            if (*info == 0)
+            if (info == 0)
             {
                 if (nw > 0)
                 {
@@ -38341,10 +38338,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 work[1].i = 0.0;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNMBR", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNMBR", i__1);
                 return 0;
             }
             else if (lquery)
@@ -38442,11 +38439,11 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zunmhr(string side, string trans, int* m, int* n,
             int* ilo, int* ihi, complex16* a, int* lda,
             complex16* tau, complex16* c, int* ldc, complex16*
-            work, int* lwork, int* info)
+            work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -38564,7 +38561,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             nh = *ihi - *ilo;
             left = lsame(side, "L");
             lquery = *lwork == -1;
@@ -38584,42 +38581,42 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (!left && !lsame(side, "R"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!lsame(trans, "N") && !lsame(trans, "C"))
             {
-                *info = -2;
+                info = -2;
             }
             else if (*m < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*n < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*ilo < 1 || *ilo > Math.Max(1, nq))
             {
-                *info = -5;
+                info = -5;
             }
             else if (*ihi < Math.Min(*ilo, nq) || *ihi > nq)
             {
-                *info = -6;
+                info = -6;
             }
             else if (*lda < Math.Max(1, nq))
             {
-                *info = -8;
+                info = -8;
             }
             else if (*ldc < Math.Max(1, *m))
             {
-                *info = -11;
+                info = -11;
             }
             else if (*lwork < Math.Max(1, nw) && !lquery)
             {
-                *info = -13;
+                info = -13;
             }
 
-            if (*info == 0)
+            if (info == 0)
             {
                 if (left)
                     nb = ilaenv(&c__1, "ZUNMQR", side + trans, &nh, n, &nh, &c_n1);
@@ -38632,10 +38629,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 work[1].i = 0.0;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__2 = -(*info);
-                xerbla("ZUNMHR", &i__2);
+                i__2 = -(info);
+                xerbla("ZUNMHR", i__2);
                 return 0;
             }
             else if (lquery)
@@ -38676,9 +38673,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zunml2(string side, string trans, int* m, int* n, int* k,
-            complex16* a, int* lda, complex16* tau, complex16* c, int* ldc, complex16* work, int* info)
+            complex16* a, int* lda, complex16* tau, complex16* c, int* ldc, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -38782,7 +38779,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             left = lsame(side, "L");
             notran = lsame(trans, "N");
 
@@ -38798,37 +38795,37 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             if (!left && !lsame(side, "R"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!notran && !lsame(trans, "C"))
             {
-                *info = -2;
+                info = -2;
             }
             else if (*m < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*n < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*k < 0 || *k > nq)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lda < Math.Max(1, *k))
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldc < Math.Max(1, *m))
             {
-                *info = -10;
+                info = -10;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNML2", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNML2", i__1);
                 return 0;
             }
 
@@ -38926,9 +38923,9 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zunmlq(string side, string trans, int* m, int* n, int* k, complex16* a,
-            int* lda, complex16* tau, complex16* c, int* ldc, complex16* work, int* lwork, int* info)
+            int* lda, complex16* tau, complex16* c, int* ldc, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -39050,7 +39047,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body
-            *info = 0;
+            info = 0;
             left = lsame(side, "L");
             notran = lsame(trans, "N");
             lquery = *lwork == -1;
@@ -39070,38 +39067,38 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (!left && !lsame(side, "R"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!notran && !lsame(trans, "C"))
             {
-                *info = -2;
+                info = -2;
             }
             else if (*m < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*n < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*k < 0 || *k > nq)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lda < Math.Max(1, *k))
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldc < Math.Max(1, *m))
             {
-                *info = -10;
+                info = -10;
             }
             else if (*lwork < Math.Max(1, nw) && !lquery)
             {
-                *info = -12;
+                info = -12;
             }
 
-            if (*info == 0)
+            if (info == 0)
             {
                 // Determine the block size.  NB may be at most NBMAX, where NBMAX
                 // is used to define the local array T.
@@ -39114,10 +39111,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 work[1].i = 0.0;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNMLQ", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNMLQ", i__1);
                 return 0;
             }
             else if (lquery)
@@ -39237,10 +39234,10 @@ namespace TAlex.MathCore.LinearAlgebra
             return 0;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int zunmqr(string side, string trans, int* m, int* n,
             int* k, complex16* a, int* lda, complex16* tau,
-            complex16* c, int* ldc, complex16* work, int* lwork, int* info)
+            complex16* c, int* ldc, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -39361,7 +39358,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --work;
 
             // Function Body 
-            *info = 0;
+            info = 0;
             left = lsame(side, "L");
             notran = lsame(trans, "N");
             lquery = *lwork == -1;
@@ -39381,38 +39378,38 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (!left && !lsame(side, "R"))
             {
-                *info = -1;
+                info = -1;
             }
             else if (!notran && !lsame(trans, "C"))
             {
-                *info = -2;
+                info = -2;
             }
             else if (*m < 0)
             {
-                *info = -3;
+                info = -3;
             }
             else if (*n < 0)
             {
-                *info = -4;
+                info = -4;
             }
             else if (*k < 0 || *k > nq)
             {
-                *info = -5;
+                info = -5;
             }
             else if (*lda < Math.Max(1, nq))
             {
-                *info = -7;
+                info = -7;
             }
             else if (*ldc < Math.Max(1, *m))
             {
-                *info = -10;
+                info = -10;
             }
             else if (*lwork < Math.Max(1, nw) && !lquery)
             {
-                *info = -12;
+                info = -12;
             }
 
-            if (*info == 0)
+            if (info == 0)
             {
                 // Determine the block size.  NB may be at most NBMAX, where NBMAX 
                 // is used to define the local array T. 
@@ -39427,10 +39424,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 work[1].i = 0.0;
             }
 
-            if (*info != 0)
+            if (info != 0)
             {
-                i__1 = -(*info);
-                xerbla("ZUNMQR", &i__1);
+                i__1 = -(info);
+                xerbla("ZUNMQR", i__1);
                 return 0;
             }
             else if (lquery)
@@ -39548,7 +39545,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         #region Auxilary
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ilazlc(int* m, int* n, complex16* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2.1)                        -- 
@@ -39627,7 +39624,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ilazlr(int* m, int* n, complex16* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2.1)                        -- 
@@ -39774,7 +39771,7 @@ namespace TAlex.MathCore.LinearAlgebra
             }
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static double dlamc3(double* a, double* b)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -39800,7 +39797,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return *a + *b;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int ieeeck(int* ispec, float* zero, float* one)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -39953,7 +39950,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         private static int ilaenv(int* ispec, string name, string opts, int* n1, int* n2, int* n3, int* n4)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -40591,7 +40588,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static int iparmq(int* ispec, string name, string opts, int* n, int* ilo, int* ihi, int* lwork)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -40859,7 +40856,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return ret_val;
         }
 
-        [SuppressUnmanagedCodeSecurity]
+        
         public static bool lsame(string ca, string cb)
         {
             //  -- LAPACK auxiliary routine (version 3.1) -- 
@@ -40887,8 +40884,8 @@ namespace TAlex.MathCore.LinearAlgebra
             return Char.ToUpper(ca[0]) == Char.ToUpper(cb[0]);
         }
 
-        [SuppressUnmanagedCodeSecurity]
-        public static int xerbla(string srname, int* info)
+        
+        public static int xerbla(string srname, int info)
         {
             //  -- LAPACK auxiliary routine (preliminary version) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -40916,8 +40913,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // =====================================================================
 
-            Debug.WriteLine(String.Format("On entry to {0}, parameter number {1} had an illegal value.", srname, *info));
-            //throw new ArgumentException(String.Format("On entry to {0}, parameter number {1} had an illegal value.", srname, *info));
+            Debug.WriteLine(String.Format("On entry to {0}, parameter number {1} had an illegal value.", srname, info));
+            //throw new ArgumentException(String.Format("On entry to {0}, parameter number {1} had an illegal value.", srname, info));
 
             return 0;
         }
