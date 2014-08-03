@@ -133,7 +133,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// computing the Singular Value Decomposition of a general complex matrix.
         /// </summary>
         /// <param name="matrix">A general complex matrix.</param>
-        public unsafe CSVD(CMatrix matrix) : this(matrix, false)
+        public CSVD(CMatrix matrix) : this(matrix, false)
         {
         }
 
@@ -144,7 +144,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// </summary>
         /// <param name="matrix">A general complex matrix.</param>
         /// <param name="singularValuesOnly">A value that indicating whether only the singular values will be computed.</param>
-        public unsafe CSVD(CMatrix matrix, bool singularValuesOnly)
+        public CSVD(CMatrix matrix, bool singularValuesOnly)
         {
             int m = matrix.RowCount;
             int n = matrix.ColumnCount;
@@ -162,7 +162,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int lwork;
             int info;
 
-            complex16* u, vt;
+            complex16[] u, vt;
 
             if (singularValuesOnly)
             {
@@ -175,18 +175,18 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 jobz = "A";
                 lwork = ((min + 2) * min) + max;
-                complex16* temp1 = stackalloc complex16[m * m];
-                complex16* temp2 = stackalloc complex16[n * n];
+                complex16[] temp1 = new complex16[m * m];
+                complex16[] temp2 = new complex16[n * n];
                 u = temp1;
                 vt = temp2;
             }
 
-            complex16* a = stackalloc complex16[lda * n];
-            double* s = stackalloc double[Math.Min(m, n)];
+            complex16[] a = new complex16[lda * n];
+            double[] s = new double[Math.Min(m, n)];
             
-            complex16* work = stackalloc complex16[Math.Max(1, lwork)];
-            double* rwork = stackalloc double[(((min * 5) + 7) * min)];
-            int* iwork = stackalloc int[8 * Math.Min(m, n)];
+            complex16[] work = new complex16[Math.Max(1, lwork)];
+            double[] rwork = new double[(((min * 5) + 7) * min)];
+            int[] iwork = new int[8 * Math.Min(m, n)];
 
             for (int i = 0; i < m; i++)
             {

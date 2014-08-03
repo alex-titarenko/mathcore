@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace TAlex.MathCore.LinearAlgebra
 {
-    [NativeCppClass]
+    //[NativeCppClass]
     internal struct complex16
     {
         public double r;
@@ -24,6 +24,10 @@ namespace TAlex.MathCore.LinearAlgebra
         }
     }
 
+    internal class SuppressUnmanagedCodeSecurityAttribute : Attribute
+    {
+    }
+
     /// <summary>
     /// Represents the routines from the Linear Algebra PACKage 3.2.1.
     /// </summary>
@@ -31,26 +35,26 @@ namespace TAlex.MathCore.LinearAlgebra
     {
         #region libf2c
 
-        private static unsafe double d_imag(complex16* z)
+        private static double d_imag(complex16* z)
         {
-            return z->i;
+            return z.i;
         }
 
-        private static unsafe void d_cnjg(complex16* r, complex16* z)
+        private static void d_cnjg(complex16* r, complex16* z)
         {
-            double zi = z->i;
-            r->r = z->r;
-            r->i = -zi;
+            double zi = z.i;
+            r.r = z.r;
+            r.i = -zi;
         }
 
-        private static unsafe double d_sign(double* a, double* b)
+        private static double d_sign(double* a, double* b)
         {
             double x;
             x = (*a >= 0 ? *a : -*a);
             return (*b >= 0 ? x : -x);
         }
 
-        private static unsafe double f__cabs(double real, double imag)
+        private static double f__cabs(double real, double imag)
         {
             double temp;
 
@@ -72,17 +76,17 @@ namespace TAlex.MathCore.LinearAlgebra
             return temp;
         }
 
-        private static unsafe int i_nint(float* x)
+        private static int i_nint(float* x)
         {
             return (int)(*x >= 0 ? Math.Floor(*x + 0.5) : -Math.Floor(0.5 - *x));
         }
 
-        private static unsafe double pow_dd(double* ap, double* bp)
+        private static double pow_dd(double* ap, double* bp)
         {
             return Math.Pow(*ap, *bp);
         }
 
-        private static unsafe double pow_di(double* ap, int* bp)
+        private static double pow_di(double* ap, int* bp)
         {
             double pow, x;
             int n;
@@ -114,7 +118,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return pow;
         }
 
-        private static unsafe int pow_ii(int* ap, int* bp)
+        private static int pow_ii(int* ap, int* bp)
         {
             int pow, x, n;
             uint u;
@@ -145,7 +149,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return pow;
         }
 
-        private static unsafe void pow_zi(complex16* p, complex16* a, int* b)
+        private static void pow_zi(complex16* p, complex16* a, int* b)
         {
             // p = a**b  
 
@@ -172,8 +176,8 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else
             {
-                x.r = a->r;
-                x.i = a->i;
+                x.r = a.r;
+                x.i = a.i;
             }
 
             for (u = (uint)n; ; )
@@ -195,71 +199,71 @@ namespace TAlex.MathCore.LinearAlgebra
             }
 
         done:
-            p->i = q.i;
-            p->r = q.r;
+            p.i = q.i;
+            p.r = q.r;
         }
 
-        private static unsafe double z_abs(complex16* z)
+        private static double z_abs(complex16* z)
         {
-            return f__cabs(z->r, z->i);
+            return f__cabs(z.r, z.i);
         }
 
-        private static unsafe void z_div(complex16* c, complex16* a, complex16* b)
+        private static void z_div(complex16* c, complex16* a, complex16* b)
         {
             double ratio, den;
             double abr, abi, cr;
 
-            if ((abr = b->r) < 0.0)
+            if ((abr = b.r) < 0.0)
                 abr = -abr;
-            if ((abi = b->i) < 0.0)
+            if ((abi = b.i) < 0.0)
                 abi = -abi;
             if (abr <= abi)
             {
                 if (abi == 0)
                 {
-                    if (a->i != 0 || a->r != 0)
+                    if (a.i != 0 || a.r != 0)
                         abi = 1.0;
-                    c->i = c->r = abi / abr;
+                    c.i = c.r = abi / abr;
                     return;
                 }
-                ratio = b->r / b->i;
-                den = b->i * (1 + ratio * ratio);
-                cr = (a->r * ratio + a->i) / den;
-                c->i = (a->i * ratio - a->r) / den;
+                ratio = b.r / b.i;
+                den = b.i * (1 + ratio * ratio);
+                cr = (a.r * ratio + a.i) / den;
+                c.i = (a.i * ratio - a.r) / den;
             }
 
             else
             {
-                ratio = b->i / b->r;
-                den = b->r * (1 + ratio * ratio);
-                cr = (a->r + a->i * ratio) / den;
-                c->i = (a->i - a->r * ratio) / den;
+                ratio = b.i / b.r;
+                den = b.r * (1 + ratio * ratio);
+                cr = (a.r + a.i * ratio) / den;
+                c.i = (a.i - a.r * ratio) / den;
             }
 
-            c->r = cr;
+            c.r = cr;
         }
 
-        private static unsafe void z_sqrt(complex16* r, complex16* z)
+        private static void z_sqrt(complex16* r, complex16* z)
         {
-            double mag, zi = z->i, zr = z->r;
+            double mag, zi = z.i, zr = z.r;
 
             mag = f__cabs(zr, zi);
 
             if (mag == 0.0)
-                r->r = r->i = 0.0;
+                r.r = r.i = 0.0;
             else if (zr > 0)
             {
-                r->r = Math.Sqrt(0.5 * (mag + zr));
-                r->i = zi / r->r / 2;
+                r.r = Math.Sqrt(0.5 * (mag + zr));
+                r.i = zi / r.r / 2;
             }
             else
             {
-                r->i = Math.Sqrt(0.5 * (mag - zr));
+                r.i = Math.Sqrt(0.5 * (mag - zr));
 
                 if (zi < 0)
-                    r->i = -r->i;
+                    r.i = -r.i;
 
-                r->r = zi / r->i / 2;
+                r.r = zi / r.i / 2;
             }
         }
 
@@ -268,18 +272,18 @@ namespace TAlex.MathCore.LinearAlgebra
         #region blas
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dcabs1(complex16* z)
+        public static double dcabs1(complex16* z)
         {
             //  Purpose
             //  =======
 
             //  DCABS1 computes absolute value of a double complex number
 
-            return Math.Abs(z->r) + Math.Abs(d_imag(z));
+            return Math.Abs(z.r) + Math.Abs(d_imag(z));
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dcopy(int* n, double* dx, int* incx, double* dy, int* incy)
+        public static int dcopy(int* n, double* dx, int* incx, double* dy, int* incy)
         {
             //  Purpose
             //  =======
@@ -374,7 +378,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double ddot(int* n, double* dx, int* incx, double* dy, int* incy)
+        public static double ddot(int* n, double* dx, int* incx, double* dy, int* incy)
         {
             //  Purpose
             //  =======
@@ -466,7 +470,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dgemm(string transa, string transb, int* m, int* n, int* k,
+        public static int dgemm(string transa, string transb, int* m, int* n, int* k,
             double* alpha, double* a, int* lda, double* b, int* ldb, double* beta, double* c, int* ldc)
         {
             //  Purpose
@@ -860,7 +864,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dnrm2(int* n, double* x, int* incx)
+        public static double dnrm2(int* n, double* x, int* incx)
         {
             //  Purpose
             //  =======
@@ -932,7 +936,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int drot(int* n, double* dx, int* incx, double* dy, int* incy, double* c, double* s)
+        public static int drot(int* n, double* dx, int* incx, double* dy, int* incy, double* c, double* s)
         {
             //  Purpose
             //  =======
@@ -1003,7 +1007,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dscal(int* n, double* da, double* dx, int* incx)
+        public static int dscal(int* n, double* da, double* dx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1082,7 +1086,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dswap(int* n, double* dx, int* incx, double* dy, int* incy)
+        public static int dswap(int* n, double* dx, int* incx, double* dy, int* incy)
         {
             //  Purpose
             //  =======
@@ -1184,7 +1188,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dzasum(int* n, complex16* zx, int* incx)
+        public static double dzasum(int* n, complex16* zx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1246,7 +1250,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dznrm2(int* n, complex16* x, int* incx)
+        public static double dznrm2(int* n, complex16* x, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1340,7 +1344,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dzsum1(int* n, complex16* cx, int* incx)
+        public static double dzsum1(int* n, complex16* cx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -1427,7 +1431,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int idamax(int* n, double* dx, int* incx)
+        public static int idamax(int* n, double* dx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1503,7 +1507,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int izamax(int* n, complex16* zx, int* incx)
+        public static int izamax(int* n, complex16* zx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1586,7 +1590,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int izmax1(int* n, complex16* cx, int* incx)
+        public static int izmax1(int* n, complex16* cx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -1690,7 +1694,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zaxpy(int* n, complex16* za, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static int zaxpy(int* n, complex16* za, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -1743,8 +1747,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__2 = iy;
                 i__3 = iy;
                 i__4 = ix;
-                z__2.r = za->r * zx[i__4].r - za->i * zx[i__4].i;
-                z__2.i = za->r * zx[i__4].i + za->i * zx[i__4].r;
+                z__2.r = za.r * zx[i__4].r - za.i * zx[i__4].i;
+                z__2.i = za.r * zx[i__4].i + za.i * zx[i__4].r;
 
                 z__1.r = zy[i__3].r + z__2.r;
                 z__1.i = zy[i__3].i + z__2.i;
@@ -1765,8 +1769,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__2 = i;
                 i__3 = i;
                 i__4 = i;
-                z__2.r = za->r * zx[i__4].r - za->i * zx[i__4].i;
-                z__2.i = za->r * zx[i__4].i + za->i * zx[i__4].r;
+                z__2.r = za.r * zx[i__4].r - za.i * zx[i__4].i;
+                z__2.i = za.r * zx[i__4].i + za.i * zx[i__4].r;
 
                 z__1.r = zy[i__3].r + z__2.r;
                 z__1.i = zy[i__3].i + z__2.i;
@@ -1779,7 +1783,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zcopy(int* n, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static int zcopy(int* n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -1859,7 +1863,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe void zdotc(complex16* ret_val, int* n, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static void zdotc(complex16* ret_val, int* n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -1887,8 +1891,8 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body 
             ztemp.r = 0.0;
             ztemp.i = 0.0;
-            ret_val->r = 0.0;
-            ret_val->i = 0.0;
+            ret_val.r = 0.0;
+            ret_val.i = 0.0;
 
             if (*n <= 0)
             {
@@ -1932,8 +1936,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 iy += *incy;
             }
 
-            ret_val->r = ztemp.r;
-            ret_val->i = ztemp.i;
+            ret_val.r = ztemp.r;
+            ret_val.i = ztemp.i;
             return;
 
             // code for both increments equal to 1 
@@ -1955,14 +1959,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 ztemp.i = z__1.i;
             }
 
-            ret_val->r = ztemp.r;
-            ret_val->i = ztemp.i;
+            ret_val.r = ztemp.r;
+            ret_val.i = ztemp.i;
 
             return;
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe void zdotu(complex16* ret_val, int* n, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static void zdotu(complex16* ret_val, int* n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -1990,8 +1994,8 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body 
             ztemp.r = 0.0;
             ztemp.i = 0.0;
-            ret_val->r = 0.0;
-            ret_val->i = 0.0;
+            ret_val.r = 0.0;
+            ret_val.i = 0.0;
 
             if (*n <= 0)
             {
@@ -2035,8 +2039,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 iy += *incy;
             }
 
-            ret_val->r = ztemp.r;
-            ret_val->i = ztemp.i;
+            ret_val.r = ztemp.r;
+            ret_val.i = ztemp.i;
             return;
 
             // code for both increments equal to 1 
@@ -2058,14 +2062,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 ztemp.i = z__1.i;
             }
 
-            ret_val->r = ztemp.r;
-            ret_val->i = ztemp.i;
+            ret_val.r = ztemp.r;
+            ret_val.i = ztemp.i;
 
             return;
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zdscal(int* n, double* da, complex16* zx, int* incx)
+        public static int zdscal(int* n, double* da, complex16* zx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -2138,7 +2142,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgemm(string transa, string transb, int* m, int* n, int* k,
+        public static int zgemm(string transa, string transb, int* m, int* n, int* k,
             complex16* alpha, complex16* a, int* lda, complex16* b,
             int* ldb, complex16* beta, complex16* c, int* ldc)
         {
@@ -2360,16 +2364,16 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*m == 0 || *n == 0 || (alpha->r == 0.0 && alpha->i == 0.0 || *k == 0) && (beta->r == 1.0 && beta->i == 0.0))
+            if (*m == 0 || *n == 0 || (alpha.r == 0.0 && alpha.i == 0.0 || *k == 0) && (beta.r == 1.0 && beta.i == 0.0))
             {
                 return 0;
             }
 
             // And when  alpha.eq.zero. 
 
-            if (alpha->r == 0.0 && alpha->i == 0.0)
+            if (alpha.r == 0.0 && alpha.i == 0.0)
             {
-                if (beta->r == 0.0 && beta->i == 0.0)
+                if (beta.r == 0.0 && beta.i == 0.0)
                 {
                     i__1 = *n;
                     for (j = 1; j <= i__1; ++j)
@@ -2395,8 +2399,8 @@ namespace TAlex.MathCore.LinearAlgebra
                             i__3 = i + j * c_dim1;
                             i__4 = i + j * c_dim1;
 
-                            z__1.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                            z__1.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                            z__1.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                            z__1.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                             c[i__3].r = z__1.r;
                             c[i__3].i = z__1.i;
@@ -2417,7 +2421,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     for (j = 1; j <= i__1; ++j)
                     {
-                        if (beta->r == 0.0 && beta->i == 0.0)
+                        if (beta.r == 0.0 && beta.i == 0.0)
                         {
                             i__2 = *m;
                             for (i = 1; i <= i__2; ++i)
@@ -2428,7 +2432,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 c[i__3].i = 0.0;
                             }
                         }
-                        else if (beta->r != 1.0 || beta->i != 0.0)
+                        else if (beta.r != 1.0 || beta.i != 0.0)
                         {
                             i__2 = *m;
                             for (i = 1; i <= i__2; ++i)
@@ -2436,8 +2440,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 i__3 = i + j * c_dim1;
                                 i__4 = i + j * c_dim1;
 
-                                z__1.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__1.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__1.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__1.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2452,8 +2456,8 @@ namespace TAlex.MathCore.LinearAlgebra
                             {
                                 i__3 = l + j * b_dim1;
 
-                                z__1.r = alpha->r * b[i__3].r - alpha->i * b[i__3].i;
-                                z__1.i = alpha->r * b[i__3].i + alpha->i * b[i__3].r;
+                                z__1.r = alpha.r * b[i__3].r - alpha.i * b[i__3].i;
+                                z__1.i = alpha.r * b[i__3].i + alpha.i * b[i__3].r;
 
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
@@ -2508,12 +2512,12 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.i = z__1.i;
                             }
 
-                            if (beta->r == 0.0 && beta->i == 0.0)
+                            if (beta.r == 0.0 && beta.i == 0.0)
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__1.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__1.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__1.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__1.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2522,13 +2526,13 @@ namespace TAlex.MathCore.LinearAlgebra
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__2.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__2.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__2.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__2.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 i__4 = i + j * c_dim1;
 
-                                z__3.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__3.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__3.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__3.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 z__1.r = z__2.r + z__3.r;
                                 z__1.i = z__2.i + z__3.i;
@@ -2566,12 +2570,12 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
                             }
-                            if (beta->r == 0.0 && beta->i == 0.0)
+                            if (beta.r == 0.0 && beta.i == 0.0)
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__1.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__1.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__1.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__1.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2579,12 +2583,12 @@ namespace TAlex.MathCore.LinearAlgebra
                             else
                             {
                                 i__3 = i + j * c_dim1;
-                                z__2.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__2.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__2.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__2.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 i__4 = i + j * c_dim1;
-                                z__3.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__3.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__3.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__3.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 z__1.r = z__2.r + z__3.r;
                                 z__1.i = z__2.i + z__3.i;
@@ -2604,7 +2608,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__1 = *n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        if (beta->r == 0.0 && beta->i == 0.0)
+                        if (beta.r == 0.0 && beta.i == 0.0)
                         {
                             i__2 = *m;
                             for (i = 1; i <= i__2; ++i)
@@ -2614,7 +2618,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 c[i__3].i = 0.0;
                             }
                         }
-                        else if (beta->r != 1.0 || beta->i != 0.0)
+                        else if (beta.r != 1.0 || beta.i != 0.0)
                         {
                             i__2 = *m;
                             for (i = 1; i <= i__2; ++i)
@@ -2622,8 +2626,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 i__3 = i + j * c_dim1;
                                 i__4 = i + j * c_dim1;
 
-                                z__1.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__1.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__1.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__1.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2637,8 +2641,8 @@ namespace TAlex.MathCore.LinearAlgebra
                             {
                                 d_cnjg(&z__2, &b[j + l * b_dim1]);
 
-                                z__1.r = alpha->r * z__2.r - alpha->i * z__2.i;
-                                z__1.i = alpha->r * z__2.i + alpha->i * z__2.r;
+                                z__1.r = alpha.r * z__2.r - alpha.i * z__2.i;
+                                z__1.i = alpha.r * z__2.i + alpha.i * z__2.r;
 
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
@@ -2669,7 +2673,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__1 = *n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        if (beta->r == 0.0 && beta->i == 0.0)
+                        if (beta.r == 0.0 && beta.i == 0.0)
                         {
                             i__2 = *m;
                             for (i = 1; i <= i__2; ++i)
@@ -2679,7 +2683,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 c[i__3].i = 0.0;
                             }
                         }
-                        else if (beta->r != 1.0 || beta->i != 0.0)
+                        else if (beta.r != 1.0 || beta.i != 0.0)
                         {
                             i__2 = *m;
                             for (i = 1; i <= i__2; ++i)
@@ -2687,8 +2691,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 i__3 = i + j * c_dim1;
                                 i__4 = i + j * c_dim1;
 
-                                z__1.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__1.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__1.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__1.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2703,8 +2707,8 @@ namespace TAlex.MathCore.LinearAlgebra
                             {
                                 i__3 = j + l * b_dim1;
 
-                                z__1.r = alpha->r * b[i__3].r - alpha->i * b[i__3].i;
-                                z__1.i = alpha->r * b[i__3].i + alpha->i * b[i__3].r;
+                                z__1.r = alpha.r * b[i__3].r - alpha.i * b[i__3].i;
+                                z__1.i = alpha.r * b[i__3].i + alpha.i * b[i__3].r;
 
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
@@ -2759,12 +2763,12 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
                             }
-                            if (beta->r == 0.0 && beta->i == 0.0)
+                            if (beta.r == 0.0 && beta.i == 0.0)
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__1.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__1.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__1.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__1.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2772,12 +2776,12 @@ namespace TAlex.MathCore.LinearAlgebra
                             else
                             {
                                 i__3 = i + j * c_dim1;
-                                z__2.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__2.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__2.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__2.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 i__4 = i + j * c_dim1;
-                                z__3.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__3.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__3.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__3.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 z__1.r = z__2.r + z__3.r;
                                 z__1.i = z__2.i + z__3.i;
@@ -2815,12 +2819,12 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
                             }
-                            if (beta->r == 0.0 && beta->i == 0.0)
+                            if (beta.r == 0.0 && beta.i == 0.0)
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__1.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__1.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__1.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__1.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2828,12 +2832,12 @@ namespace TAlex.MathCore.LinearAlgebra
                             else
                             {
                                 i__3 = i + j * c_dim1;
-                                z__2.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__2.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__2.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__2.i = alpha.r * temp.i + alpha.i * temp.r;
                                 i__4 = i + j * c_dim1;
 
-                                z__3.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__3.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__3.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__3.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 z__1.r = z__2.r + z__3.r;
                                 z__1.i = z__2.i + z__3.i;
@@ -2874,12 +2878,12 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
                             }
-                            if (beta->r == 0.0 && beta->i == 0.0)
+                            if (beta.r == 0.0 && beta.i == 0.0)
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__1.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__1.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__1.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__1.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2888,12 +2892,12 @@ namespace TAlex.MathCore.LinearAlgebra
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__2.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__2.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__2.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__2.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 i__4 = i + j * c_dim1;
-                                z__3.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__3.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__3.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__3.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 z__1.r = z__2.r + z__3.r;
                                 z__1.i = z__2.i + z__3.i;
@@ -2932,12 +2936,12 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.i = z__1.i;
                             }
 
-                            if (beta->r == 0.0 && beta->i == 0.0)
+                            if (beta.r == 0.0 && beta.i == 0.0)
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__1.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__1.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__1.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__1.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 c[i__3].r = z__1.r;
                                 c[i__3].i = z__1.i;
@@ -2946,12 +2950,12 @@ namespace TAlex.MathCore.LinearAlgebra
                             {
                                 i__3 = i + j * c_dim1;
 
-                                z__2.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__2.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__2.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__2.i = alpha.r * temp.i + alpha.i * temp.r;
                                 i__4 = i + j * c_dim1;
 
-                                z__3.r = beta->r * c[i__4].r - beta->i * c[i__4].i;
-                                z__3.i = beta->r * c[i__4].i + beta->i * c[i__4].r;
+                                z__3.r = beta.r * c[i__4].r - beta.i * c[i__4].i;
+                                z__3.i = beta.r * c[i__4].i + beta.i * c[i__4].r;
 
                                 z__1.r = z__2.r + z__3.r;
                                 z__1.i = z__2.i + z__3.i;
@@ -2968,7 +2972,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgemv(string trans, int* m, int* n, complex16* alpha,
+        public static int zgemv(string trans, int* m, int* n, complex16* alpha,
             complex16* a, int* lda, complex16* x, int* incx,
             complex16* beta, complex16* y, int* incy)
         {
@@ -3116,7 +3120,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*m == 0 || *n == 0 || alpha->r == 0.0 && alpha->i == 0.0 && (beta->r == 1.0 && beta->i == 0.0))
+            if (*m == 0 || *n == 0 || alpha.r == 0.0 && alpha.i == 0.0 && (beta.r == 1.0 && beta.i == 0.0))
             {
                 return 0;
             }
@@ -3152,11 +3156,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // First form  y := beta*y. 
 
-            if (beta->r != 1.0 || beta->i != 0.0)
+            if (beta.r != 1.0 || beta.i != 0.0)
             {
                 if (*incy == 1)
                 {
-                    if (beta->r == 0.0 && beta->i == 0.0)
+                    if (beta.r == 0.0 && beta.i == 0.0)
                     {
                         i__1 = leny;
                         for (i = 1; i <= i__1; ++i)
@@ -3173,8 +3177,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         {
                             i__2 = i;
                             i__3 = i;
-                            z__1.r = beta->r * y[i__3].r - beta->i * y[i__3].i;
-                            z__1.i = beta->r * y[i__3].i + beta->i * y[i__3].r;
+                            z__1.r = beta.r * y[i__3].r - beta.i * y[i__3].i;
+                            z__1.i = beta.r * y[i__3].i + beta.i * y[i__3].r;
 
                             y[i__2].r = z__1.r;
                             y[i__2].i = z__1.i;
@@ -3184,7 +3188,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 else
                 {
                     iy = ky;
-                    if (beta->r == 0.0 && beta->i == 0.0)
+                    if (beta.r == 0.0 && beta.i == 0.0)
                     {
                         i__1 = leny;
                         for (i = 1; i <= i__1; ++i)
@@ -3202,8 +3206,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         {
                             i__2 = iy;
                             i__3 = iy;
-                            z__1.r = beta->r * y[i__3].r - beta->i * y[i__3].i;
-                            z__1.i = beta->r * y[i__3].i + beta->i * y[i__3].r;
+                            z__1.r = beta.r * y[i__3].r - beta.i * y[i__3].i;
+                            z__1.i = beta.r * y[i__3].i + beta.i * y[i__3].r;
 
                             y[i__2].r = z__1.r;
                             y[i__2].i = z__1.i;
@@ -3213,7 +3217,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
             }
 
-            if (alpha->r == 0.0 && alpha->i == 0.0)
+            if (alpha.r == 0.0 && alpha.i == 0.0)
             {
                 return 0;
             }
@@ -3232,8 +3236,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         if (x[i__2].r != 0.0 || x[i__2].i != 0.0)
                         {
                             i__2 = jx;
-                            z__1.r = alpha->r * x[i__2].r - alpha->i * x[i__2].i;
-                            z__1.i = alpha->r * x[i__2].i + alpha->i * x[i__2].r;
+                            z__1.r = alpha.r * x[i__2].r - alpha.i * x[i__2].i;
+                            z__1.i = alpha.r * x[i__2].i + alpha.i * x[i__2].r;
 
                             temp.r = z__1.r;
                             temp.i = z__1.i;
@@ -3267,8 +3271,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         if (x[i__2].r != 0.0 || x[i__2].i != 0.0)
                         {
                             i__2 = jx;
-                            z__1.r = alpha->r * x[i__2].r - alpha->i * x[i__2].i;
-                            z__1.i = alpha->r * x[i__2].i + alpha->i * x[i__2].r;
+                            z__1.r = alpha.r * x[i__2].r - alpha.i * x[i__2].i;
+                            z__1.i = alpha.r * x[i__2].i + alpha.i * x[i__2].r;
 
                             temp.r = z__1.r;
                             temp.i = z__1.i;
@@ -3346,8 +3350,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         i__2 = jy;
                         i__3 = jy;
-                        z__2.r = alpha->r * temp.r - alpha->i * temp.i;
-                        z__2.i = alpha->r * temp.i + alpha->i * temp.r;
+                        z__2.r = alpha.r * temp.r - alpha.i * temp.i;
+                        z__2.i = alpha.r * temp.i + alpha.i * temp.r;
                         z__1.r = y[i__3].r + z__2.r;
                         z__1.i = y[i__3].i + z__2.i;
 
@@ -3405,8 +3409,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__2 = jy;
                         i__3 = jy;
 
-                        z__2.r = alpha->r * temp.r - alpha->i * temp.i;
-                        z__2.i = alpha->r * temp.i + alpha->i * temp.r;
+                        z__2.r = alpha.r * temp.r - alpha.i * temp.i;
+                        z__2.i = alpha.r * temp.i + alpha.i * temp.r;
 
                         z__1.r = y[i__3].r + z__2.r;
                         z__1.i = y[i__3].i + z__2.i;
@@ -3422,7 +3426,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgerc(int* m, int* n, complex16* alpha,
+        public static int zgerc(int* m, int* n, complex16* alpha,
             complex16* x, int* incx, complex16* y, int* incy,
             complex16* a, int* lda)
         {
@@ -3541,7 +3545,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*m == 0 || *n == 0 || alpha->r == 0.0 && alpha->i == 0.0)
+            if (*m == 0 || *n == 0 || alpha.r == 0.0 && alpha.i == 0.0)
             {
                 return 0;
             }
@@ -3567,8 +3571,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         d_cnjg(&z__2, &y[jy]);
 
-                        z__1.r = alpha->r * z__2.r - alpha->i * z__2.i;
-                        z__1.i = alpha->r * z__2.i + alpha->i * z__2.r;
+                        z__1.r = alpha.r * z__2.r - alpha.i * z__2.i;
+                        z__1.i = alpha.r * z__2.i + alpha.i * z__2.r;
 
                         temp.r = z__1.r;
                         temp.i = z__1.i;
@@ -3613,8 +3617,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         d_cnjg(&z__2, &y[jy]);
 
-                        z__1.r = alpha->r * z__2.r - alpha->i * z__2.i;
-                        z__1.i = alpha->r * z__2.i + alpha->i * z__2.r;
+                        z__1.r = alpha.r * z__2.r - alpha.i * z__2.i;
+                        z__1.i = alpha.r * z__2.i + alpha.i * z__2.r;
 
                         temp.r = z__1.r;
                         temp.i = z__1.i;
@@ -3647,7 +3651,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zscal(int* n, complex16* za, complex16* zx, int* incx)
+        public static int zscal(int* n, complex16* za, complex16* zx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -3685,8 +3689,8 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 i__2 = ix;
                 i__3 = ix;
-                z__1.r = za->r * zx[i__3].r - za->i * zx[i__3].i;
-                z__1.i = za->r * zx[i__3].i + za->i * zx[i__3].r;
+                z__1.r = za.r * zx[i__3].r - za.i * zx[i__3].i;
+                z__1.i = za.r * zx[i__3].i + za.i * zx[i__3].r;
 
                 zx[i__2].r = z__1.r;
                 zx[i__2].i = z__1.i;
@@ -3702,8 +3706,8 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 i__2 = i;
                 i__3 = i;
-                z__1.r = za->r * zx[i__3].r - za->i * zx[i__3].i;
-                z__1.i = za->r * zx[i__3].i + za->i * zx[i__3].r;
+                z__1.r = za.r * zx[i__3].r - za.i * zx[i__3].i;
+                z__1.i = za.r * zx[i__3].i + za.i * zx[i__3].r;
 
                 zx[i__2].r = z__1.r;
                 zx[i__2].i = z__1.i;
@@ -3713,7 +3717,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zswap(int* n, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static int zswap(int* n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -3799,7 +3803,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ztrmm(string side, string uplo, string transa, string diag,
+        public static int ztrmm(string side, string uplo, string transa, string diag,
             int* m, int* n, complex16* alpha, complex16* a, int* lda, complex16* b, int* ldb)
         {
             //  Purpose 
@@ -4002,7 +4006,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // And when  alpha.eq.zero. 
 
-            if (alpha->r == 0.0 && alpha->i == 0.0)
+            if (alpha.r == 0.0 && alpha.i == 0.0)
             {
                 i__1 = *n;
                 for (j = 1; j <= i__1; ++j)
@@ -4038,8 +4042,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 if (b[i__3].r != 0.0 || b[i__3].i != 0.0)
                                 {
                                     i__3 = k + j * b_dim1;
-                                    z__1.r = alpha->r * b[i__3].r - alpha->i * b[i__3].i;
-                                    z__1.i = alpha->r * b[i__3].i + alpha->i * b[i__3].r;
+                                    z__1.r = alpha.r * b[i__3].r - alpha.i * b[i__3].i;
+                                    z__1.i = alpha.r * b[i__3].i + alpha.i * b[i__3].r;
 
                                     temp.r = z__1.r;
                                     temp.i = z__1.i;
@@ -4088,8 +4092,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 if (b[i__2].r != 0.0 || b[i__2].i != 0.0)
                                 {
                                     i__2 = k + j * b_dim1;
-                                    z__1.r = alpha->r * b[i__2].r - alpha->i * b[i__2].i;
-                                    z__1.i = alpha->r * b[i__2].i + alpha->i * b[i__2].r;
+                                    z__1.r = alpha.r * b[i__2].r - alpha.i * b[i__2].i;
+                                    z__1.i = alpha.r * b[i__2].i + alpha.i * b[i__2].r;
 
                                     temp.r = z__1.r;
                                     temp.i = z__1.i;
@@ -4206,8 +4210,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 }
                                 i__2 = i + j * b_dim1;
 
-                                z__1.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__1.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__1.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__1.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 b[i__2].r = z__1.r;
                                 b[i__2].i = z__1.i;
@@ -4286,8 +4290,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                                 i__3 = i + j * b_dim1;
 
-                                z__1.r = alpha->r * temp.r - alpha->i * temp.i;
-                                z__1.i = alpha->r * temp.i + alpha->i * temp.r;
+                                z__1.r = alpha.r * temp.r - alpha.i * temp.i;
+                                z__1.i = alpha.r * temp.i + alpha.i * temp.r;
 
                                 b[i__3].r = z__1.r;
                                 b[i__3].i = z__1.i;
@@ -4305,8 +4309,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         for (j = *n; j >= 1; --j)
                         {
-                            temp.r = alpha->r;
-                            temp.i = alpha->i;
+                            temp.r = alpha.r;
+                            temp.i = alpha.i;
 
                             if (nounit)
                             {
@@ -4341,8 +4345,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 {
                                     i__2 = k + j * a_dim1;
 
-                                    z__1.r = alpha->r * a[i__2].r - alpha->i * a[i__2].i;
-                                    z__1.i = alpha->r * a[i__2].i + alpha->i * a[i__2].r;
+                                    z__1.r = alpha.r * a[i__2].r - alpha.i * a[i__2].i;
+                                    z__1.i = alpha.r * a[i__2].i + alpha.i * a[i__2].r;
 
                                     temp.r = z__1.r;
                                     temp.i = z__1.i;
@@ -4371,8 +4375,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__1 = *n;
                         for (j = 1; j <= i__1; ++j)
                         {
-                            temp.r = alpha->r;
-                            temp.i = alpha->i;
+                            temp.r = alpha.r;
+                            temp.i = alpha.i;
 
                             if (nounit)
                             {
@@ -4403,8 +4407,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 if (a[i__3].r != 0.0 || a[i__3].i != 0.0)
                                 {
                                     i__3 = k + j * a_dim1;
-                                    z__1.r = alpha->r * a[i__3].r - alpha->i * a[i__3].i;
-                                    z__1.i = alpha->r * a[i__3].i + alpha->i * a[i__3].r;
+                                    z__1.r = alpha.r * a[i__3].r - alpha.i * a[i__3].i;
+                                    z__1.i = alpha.r * a[i__3].i + alpha.i * a[i__3].r;
 
                                     temp.r = z__1.r;
                                     temp.i = z__1.i;
@@ -4447,8 +4451,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                     if (noconj)
                                     {
                                         i__3 = j + k * a_dim1;
-                                        z__1.r = alpha->r * a[i__3].r - alpha->i * a[i__3].i;
-                                        z__1.i = alpha->r * a[i__3].i + alpha->i * a[i__3].r;
+                                        z__1.r = alpha.r * a[i__3].r - alpha.i * a[i__3].i;
+                                        z__1.i = alpha.r * a[i__3].i + alpha.i * a[i__3].r;
 
                                         temp.r = z__1.r;
                                         temp.i = z__1.i;
@@ -4457,8 +4461,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                     {
                                         d_cnjg(&z__2, &a[j + k * a_dim1]);
 
-                                        z__1.r = alpha->r * z__2.r - alpha->i * z__2.i;
-                                        z__1.i = alpha->r * z__2.i + alpha->i * z__2.r;
+                                        z__1.r = alpha.r * z__2.r - alpha.i * z__2.i;
+                                        z__1.i = alpha.r * z__2.i + alpha.i * z__2.r;
 
                                         temp.r = z__1.r;
                                         temp.i = z__1.i;
@@ -4483,8 +4487,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 }
                             }
 
-                            temp.r = alpha->r;
-                            temp.i = alpha->i;
+                            temp.r = alpha.r;
+                            temp.i = alpha.i;
 
                             if (nounit)
                             {
@@ -4539,8 +4543,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                     {
                                         i__2 = j + k * a_dim1;
 
-                                        z__1.r = alpha->r * a[i__2].r - alpha->i * a[i__2].i;
-                                        z__1.i = alpha->r * a[i__2].i + alpha->i * a[i__2].r;
+                                        z__1.r = alpha.r * a[i__2].r - alpha.i * a[i__2].i;
+                                        z__1.i = alpha.r * a[i__2].i + alpha.i * a[i__2].r;
 
                                         temp.r = z__1.r;
                                         temp.i = z__1.i;
@@ -4549,8 +4553,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                     {
                                         d_cnjg(&z__2, &a[j + k * a_dim1]);
 
-                                        z__1.r = alpha->r * z__2.r - alpha->i * z__2.i;
-                                        z__1.i = alpha->r * z__2.i + alpha->i * z__2.r;
+                                        z__1.r = alpha.r * z__2.r - alpha.i * z__2.i;
+                                        z__1.i = alpha.r * z__2.i + alpha.i * z__2.r;
 
                                         temp.r = z__1.r;
                                         temp.i = z__1.i;
@@ -4574,8 +4578,8 @@ namespace TAlex.MathCore.LinearAlgebra
                                 }
                             }
 
-                            temp.r = alpha->r;
-                            temp.i = alpha->i;
+                            temp.r = alpha.r;
+                            temp.i = alpha.i;
 
                             if (nounit)
                             {
@@ -4624,7 +4628,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ztrmv(string uplo, string trans, string diag, int* n,
+        public static int ztrmv(string uplo, string trans, string diag, int* n,
             complex16* a, int* lda, complex16* x, int* incx)
         {
             //  Purpose 
@@ -5318,7 +5322,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ztrsv(string uplo, string trans, string diag,
+        public static int ztrsv(string uplo, string trans, string diag,
             int* n, complex16* a, int* lda, complex16* x, int* incx)
         {
             //  Purpose 
@@ -5985,7 +5989,7 @@ namespace TAlex.MathCore.LinearAlgebra
         #region Double precision real routines
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dbdsdc(string uplo, string compq, int* n, double* d, double* e,
+        public static int dbdsdc(string uplo, string compq, int* n, double* d, double* e,
             double* u, int* ldu, double* vt, int* ldvt, double* q, int* iq, double* work, int* iwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -6483,7 +6487,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dbdsqr(string uplo, int* n, int* ncvt, int* nru, int* ncc, double* d,
+        public static int dbdsqr(string uplo, int* n, int* ncvt, int* nru, int* ncc, double* d,
             double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int* ldc, double* work, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -7397,7 +7401,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe bool disnan(double* din)
+        public static bool disnan(double* din)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -7422,7 +7426,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlabad(double* small, double* large)
+        public static int dlabad(double* small, double* large)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -7468,7 +7472,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlacpy(string uplo, int* m, int* n, double* a, int* lda, double* b, int* ldb)
+        public static int dlacpy(string uplo, int* m, int* n, double* a, int* lda, double* b, int* ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -7567,7 +7571,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dladiv(double* a, double* b, double* c, double* d, double* p, double* q)
+        public static int dladiv(double* a, double* b, double* c, double* d, double* p, double* q)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -7621,7 +7625,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlaed6(int* kniter, bool* orgati,
+        public static int dlaed6(int* kniter, bool* orgati,
             double* rho, double* d, double* z, double* finit, double* tau, int* info)
         {
             // System generated locals
@@ -7638,8 +7642,8 @@ namespace TAlex.MathCore.LinearAlgebra
             int niter;
             double small1, small2, sminv1, sminv2;
             double sclfac, erretm, sclinv = 0.0;
-            double* dscale = stackalloc double[3];
-            double* zscale = stackalloc double[3];
+            double[] dscale = new double[3];
+            double[] zscale = new double[3];
 
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -8016,7 +8020,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlamrg(int* n1, int* n2, double* a, int* dtrd1, int* dtrd2, int* index)
+        public static int dlamrg(int* n1, int* n2, double* a, int* dtrd1, int* dtrd2, int* index)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -8135,7 +8139,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dlanst(string norm, int* n, double* d, double* e)
+        public static double dlanst(string norm, int* n, double* d, double* e)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -8269,7 +8273,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dlapy2(double* x, double* y)
+        public static double dlapy2(double* x, double* y)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -8316,7 +8320,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dlapy3(double* x, double* y, double* z)
+        public static double dlapy3(double* x, double* y, double* z)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -8374,7 +8378,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlartg(double* f, double* g, double* cs, double* sn, double* r)
+        public static int dlartg(double* f, double* g, double* cs, double* sn, double* r)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -8542,7 +8546,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlas2(double* f, double* g, double* h, double* ssmin, double* ssmax)
+        public static int dlas2(double* f, double* g, double* h, double* ssmin, double* ssmax)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -8667,7 +8671,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlascl(string type, int* kl, int* ku,
+        public static int dlascl(string type, int* kl, int* ku,
             double* cfrom, double* cto, int* m, int* n, double* a, int* lda, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -9025,7 +9029,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd0(int* n, int* sqre, double* d, double* e, double* u,
+        public static int dlasd0(int* n, int* sqre, double* d, double* e, double* u,
             int* ldu, double* vt, int* ldvt, int* smlsiz, int* iwork, double* work, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -9301,7 +9305,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd1(int* nl, int* nr, int* sqre, double* d, double* alpha,
+        public static int dlasd1(int* nl, int* nr, int* sqre, double* d, double* alpha,
             double* beta, double* u, int* ldu, double* vt, int* ldvt, int* idxq, int* iwork, double* work, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -9548,7 +9552,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd2(int* nl, int* nr, int* sqre, int* k, double* d, double* z,
+        public static int dlasd2(int* nl, int* nr, int* sqre, int* k, double* d, double* z,
             double* alpha, double* beta, double* u, int* ldu, double* vt, int* ldvt, double* dsigma,
             double* u2, int* ldu2, double* vt2, int* ldvt2, int* idxp, int* idx, int* idxc, int* idxq,
             int* coltyp, int* info)
@@ -9723,9 +9727,9 @@ namespace TAlex.MathCore.LinearAlgebra
             int ct, jp;
             double eps, tau, tol;
             int nlp1, nlp2, idxi, idxj;
-            int* psm = stackalloc int[4];
+            int[] psm = new int[4];
             int idxjp;
-            int* ctot = stackalloc int[4];
+            int[] ctot = new int[4];
             int jprev = 0;
             double hlftol;
 
@@ -10150,7 +10154,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd3(int* nl, int* nr, int* sqre, int* k, double* d, double* q,
+        public static int dlasd3(int* nl, int* nr, int* sqre, int* k, double* d, double* q,
             int* ldq, double* dsigma, double* u, int* ldu, double* u2, int* ldu2, double* vt,
             int* ldvt, double* vt2, int* ldvt2, int* idxc, int* ctot, double* z, int* info)
         {
@@ -10575,7 +10579,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd4(int* n, int* i, double* d, double* z,
+        public static int dlasd4(int* n, int* i, double* d, double* z,
             double* delta, double* rho, double* sigma, double* work, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -10675,10 +10679,10 @@ namespace TAlex.MathCore.LinearAlgebra
             double a, b, c;
             int j;
             double w;
-            double* dd = stackalloc double[3];
+            double[] dd = new double[3];
             int ii;
             double dw;
-            double* zz = stackalloc double[3];
+            double[] zz = new double[3];
             int ip1;
             double eta, phi, eps, tau, psi;
             int iim1, iip1;
@@ -11652,7 +11656,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd5(int* i, double* d, double* z,
+        public static int dlasd5(int* i, double* d, double* z,
             double* delta, double* rho, double* dsigma, double* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -11816,7 +11820,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd6(int* icompq, int* nl, int* nr, int* sqre, double* d, double* vf,
+        public static int dlasd6(int* icompq, int* nl, int* nr, int* sqre, double* d, double* vf,
             double* vl, double* alpha, double* beta, int* idxq, int* perm, int* givptr, int* givcol,
             int* ldgcol, double* givnum, int* ldgnum, double* poles, double* difl, double* difr, double* z,
             int* k, double* c, double* s, double* work, int* iwork, int* info)
@@ -12145,7 +12149,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd7(int* icompq, int* nl, int* nr, int* sqre, int* k, double* d, double* z,
+        public static int dlasd7(int* icompq, int* nl, int* nr, int* sqre, int* k, double* d, double* z,
             double* zw, double* vf, double* vfw, double* vl, double* vlw, double* alpha, double* beta, double* dsigma,
             int* idx, int* idxp, int* idxq, int* perm, int* givptr, int* givcol, int* ldgcol, double* givnum,
              int* ldgnum, double* c, double* s, int* info)
@@ -12656,7 +12660,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasd8(int* icompq, int* k, double* d, double* z, double* vf, double* vl,
+        public static int dlasd8(int* icompq, int* k, double* d, double* z, double* vf, double* vl,
             double* difl, double* difr, int* lddifr, double* dsigma, double* work, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -12945,7 +12949,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasda(int* icompq, int* smlsiz, int* n, int* sqre, double* d, double* e,
+        public static int dlasda(int* icompq, int* smlsiz, int* n, int* sqre, double* d, double* e,
             double* u, int* ldu, double* vt, int* k, double* difl, double* difr, double* z, double* poles,
             int* givptr, int* givcol, int* ldgcol, int* perm, double* givnum, double* c,
             double* s, double* work, int* iwork, int* info)
@@ -13408,7 +13412,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasdt(int* n, int* lvl, int* nd, int* inode, int* ndiml, int* ndimr, int* msub)
+        public static int dlasdt(int* n, int* lvl, int* nd, int* inode, int* ndiml, int* ndimr, int* msub)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -13507,7 +13511,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasdq(string uplo, int* sqre, int* n, int* ncvt, int* nru, int* ncc, double* d,
+        public static int dlasdq(string uplo, int* sqre, int* n, int* ncvt, int* nru, int* ncc, double* d,
             double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int* ldc, double* work, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -13872,7 +13876,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlaset(string uplo, int* m, int* n, double* alpha, double* beta, double* a, int* lda)
+        public static int dlaset(string uplo, int* m, int* n, double* alpha, double* beta, double* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -13992,7 +13996,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasq1(int* n, double* d, double* e, double* work, int* info)
+        public static int dlasq1(int* n, double* d, double* e, double* work, int* info)
         {
             //  -- LAPACK routine (version 3.2)                                    --
 
@@ -14170,7 +14174,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasq2(int* n, double* z, int* info)
+        public static int dlasq2(int* n, double* z, int* info)
         {
             //  -- LAPACK routine (version 3.2)                                    --
 
@@ -14784,7 +14788,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasq3(int* i0, int* n0, double* z, int* pp, double* dmin, double* sigma,
+        public static int dlasq3(int* i0, int* n0, double* z, int* pp, double* dmin, double* sigma,
             double* desig, double* qmax, int* nfail, int* iter, int* ndiv, bool* ieee, int* ttype,
             double* dmin1, double* dmin2, double* dn, double* dn1, double* dn2, double* g, double* tau)
         {
@@ -15122,7 +15126,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasq4(int* i0, int* n0, double* z, int* pp, int* n0in, double* dmin, double* dmin1,
+        public static int dlasq4(int* i0, int* n0, double* z, int* pp, int* n0in, double* dmin, double* dmin1,
             double* dmin2, double* dn, double* dn1, double* dn2, double* tau, int* ttype, double* g)
         {
             //  -- LAPACK routine (version 3.2)                                    --
@@ -15553,7 +15557,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasq5(int* i0, int* n0, double* z, int* pp, double* tau, double* dmin,
+        public static int dlasq5(int* i0, int* n0, double* z, int* pp, double* tau, double* dmin,
             double* dmin1, double* dmin2, double* dn, double* dnm1, double* dnm2, bool* ieee)
         {
             //  -- LAPACK routine (version 3.2)                                    --
@@ -15790,7 +15794,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasq6(int* i0, int* n0, double* z, int* pp, double* dmin,
+        public static int dlasq6(int* i0, int* n0, double* z, int* pp, double* dmin,
             double* dmin1, double* dmin2, double* dn, double* dnm1, double* dnm2)
         {
             //  -- LAPACK routine (version 3.2)                                    --
@@ -15993,7 +15997,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasr(string side, string pivot, string direct,
+        public static int dlasr(string side, string pivot, string direct,
             int* m, int* n, double* c, double* s, double* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -16437,7 +16441,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasrt(string id, int* n, double* d, int* info)
+        public static int dlasrt(string id, int* n, double* d, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -16483,7 +16487,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int dir;
             double tmp;
             int endd;
-            int* stack = stackalloc int[64]; // was [2][32]
+            int[] stack = new int[64]; // was [2][32]
             double dmnmx;
             int start;
             int stkpnt;
@@ -16730,7 +16734,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlassq(int* n, double* x, int* incx, double* scale, double* sumsq)
+        public static int dlassq(int* n, double* x, int* incx, double* scale, double* sumsq)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -16821,7 +16825,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int dlasv2(double* f, double* g, double* h,
+        public static int dlasv2(double* f, double* g, double* h,
             double* ssmin, double* ssmax, double* snr, double* csr, double* snl, double* csl)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -17087,7 +17091,7 @@ namespace TAlex.MathCore.LinearAlgebra
         #region Double precision complex routines
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zdrscl(int* n, double* sa, complex16* sx, int* incx)
+        public static int zdrscl(int* n, double* sa, complex16* sx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -17187,7 +17191,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgebak(string job, string side, int* n, int* ilo,
+        public static int zgebak(string job, string side, int* n, int* ilo,
             int* ihi, double* scale, int* m, complex16* v, int* ldv, int* info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -17415,7 +17419,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgebal(string job, int* n, complex16* a, int* lda, int* ilo, int* ihi, double* scale, int* info)
+        public static int zgebal(string job, int* n, complex16* a, int* lda, int* ilo, int* ihi, double* scale, int* info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -17816,7 +17820,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgebd2(int* m, int* n, complex16* a, int* lda,
+        public static int zgebd2(int* m, int* n, complex16* a, int* lda,
             double* d, double* e, complex16* tauq, complex16* taup, complex16* work, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -18154,7 +18158,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgebrd(int* m, int* n, complex16* a, int* lda, double* d,
+        public static int zgebrd(int* m, int* n, complex16* a, int* lda, double* d,
             double* e, complex16* tauq, complex16* taup, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -18491,7 +18495,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgeevx(string balanc, string jobvl, string jobvr, string sense,
+        public static int zgeevx(string balanc, string jobvl, string jobvr, string sense,
             int* n, complex16* a, int* lda, complex16* w, complex16* vl, int* ldvl,
             complex16* vr, int* ldvr, int* ilo, int* ihi, double* scale, double* abnrm,
             double* rconde, double* rcondv, complex16* work, int* lwork, double* rwork, int* info)
@@ -18679,14 +18683,14 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, k;
             string job;
             double scl, eps;
-            double* dum = stackalloc double[1];
+            double[] dum = new double[1];
             complex16 tmp;
             string side = string.Empty;
             double anrm;
             int ierr, itau, iwrk, nout, icond;
             bool scalea;
             double cscale;
-            bool* select = stackalloc bool[1];
+            bool[] select = new bool[1];
             double bignum;
             int minwrk, maxwrk = 0;
             bool wantvl, wntsnb;
@@ -19174,7 +19178,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgehd2(int* n, int* ilo, int* ihi, complex16* a, int* lda,
+        public static int zgehd2(int* n, int* ilo, int* ihi, complex16* a, int* lda,
             complex16* tau, complex16* work, int* info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -19343,7 +19347,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgehrd(int* n, int* ilo, int* ihi, complex16* a, int* lda,
+        public static int zgehrd(int* n, int* ilo, int* ihi, complex16* a, int* lda,
             complex16* tau, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -19456,7 +19460,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Local variables 
             int i, j;
-            complex16* t = stackalloc complex16[4160]; // was [65][64] 
+            complex16[] t = new complex16[4160]; // was [65][64] 
             int ib;
             complex16 ei;
             int nb, nh, nx = 0, iws, nbmin, iinfo;
@@ -19682,7 +19686,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgelq2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* info)
+        public static int zgelq2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -19821,7 +19825,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgelqf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, int* info)
+        public static int zgelqf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20047,7 +20051,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgeqr2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* info)
+        public static int zgeqr2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20190,7 +20194,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgeqrf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, int* info)
+        public static int zgeqrf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20417,7 +20421,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zgesdd(string jobz, int* m, int* n, complex16* a, int* lda, double* s, complex16* u,
+        public static int zgesdd(string jobz, int* m, int* n, complex16* a, int* lda, double* s, complex16* u,
             int* ldu, complex16* vt, int* ldvt, complex16* work, int* lwork, double* rwork, int* iwork, int* info)
         {
             //  -- LAPACK driver routine (version 3.2) --
@@ -20564,11 +20568,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Local variables
             int i, ie = 0, il, ir, iu, blk;
-            double* dum = stackalloc double[1];
+            double[] dum = new double[1];
             double eps;
             int iru, ivt, iscl;
             double anrm;
-            int* idum = stackalloc int[1];
+            int[] idum = new int[1];
             int ierr, itau, irvt;
             int chunk = 0, minmn;
             int wrkbl, itaup, itauq;
@@ -22563,7 +22567,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zhseqr(string job, string compz, int* n, int* ilo,
+        public static int zhseqr(string job, string compz, int* n, int* ilo,
              int* ihi, complex16* h, int* ldh, complex16* w,
             complex16* z, int* ldz, complex16* work, int* lwork, int* info)
         {
@@ -22804,10 +22808,10 @@ namespace TAlex.MathCore.LinearAlgebra
             int c__49 = 49;
 
             // Local variables 
-            complex16* hl = stackalloc complex16[2401]; // was [49][49] 
+            complex16[] hl = new complex16[2401]; // was [49][49] 
             int kbot, nmin;
             bool initz;
-            complex16* workl = stackalloc complex16[49];
+            complex16[] workl = new complex16[49];
             bool wantt, wantz;
             bool lquery;
 
@@ -23031,7 +23035,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlabrd(int* m, int* n, int* nb, complex16* a, int* lda, double* d,
+        public static int zlabrd(int* m, int* n, int* nb, complex16* a, int* lda, double* d,
             double* e, complex16* tauq, complex16* taup, complex16* x, int* ldx, complex16* y, int* ldy)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -23488,7 +23492,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlacgv(int* n, complex16* x, int* incx)
+        public static int zlacgv(int* n, complex16* x, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -23562,7 +23566,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlacn2(int* n, complex16* v, complex16* x, double* est, int* kase, int* isave)
+        public static int zlacn2(int* n, complex16* v, complex16* x, double* est, int* kase, int* isave)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -23848,7 +23852,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlacp2(string uplo, int* m, int* n, double* a, int* lda, complex16* b, int* ldb)
+        public static int zlacp2(string uplo, int* m, int* n, double* a, int* lda, complex16* b, int* ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -23961,7 +23965,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlacpy(string uplo, int* m, int* n, complex16* a, int* lda, complex16* b, int* ldb)
+        public static int zlacpy(string uplo, int* m, int* n, complex16* a, int* lda, complex16* b, int* ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -24072,7 +24076,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlacrm(int* m, int* n, complex16* a,
+        public static int zlacrm(int* m, int* n, complex16* a,
             int* lda, double* b, int* ldb, complex16* c, int* ldc, double* rwork)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -24212,7 +24216,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe void zladiv(complex16* ret_val, complex16* x, complex16* y)
+        public static void zladiv(complex16* ret_val, complex16* x, complex16* y)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -24241,23 +24245,23 @@ namespace TAlex.MathCore.LinearAlgebra
             // Local variables 
             double zi, zr;
 
-            d__1 = x->r;
+            d__1 = x.r;
             d__2 = d_imag(x);
-            d__3 = y->r;
+            d__3 = y.r;
             d__4 = d_imag(y);
             dladiv(&d__1, &d__2, &d__3, &d__4, &zr, &zi);
 
             z__1.r = zr;
             z__1.i = zi;
 
-            ret_val->r = z__1.r;
-            ret_val->i = z__1.i;
+            ret_val.r = z__1.r;
+            ret_val.i = z__1.i;
 
             return;
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlaein(bool* rightv, bool* noinit, int* n, complex16* h, int* ldh, complex16* w,
+        public static int zlaein(bool* rightv, bool* noinit, int* n, complex16* h, int* ldh, complex16* w,
             complex16* v, complex16* b, int* ldb, double* rwork, double* eps3, double* smlnum, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -24386,8 +24390,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__2 = j + j * b_dim1;
                 i__3 = j + j * h_dim1;
 
-                z__1.r = h[i__3].r - w->r;
-                z__1.i = h[i__3].i - w->i;
+                z__1.r = h[i__3].r - w.r;
+                z__1.i = h[i__3].i - w.i;
 
                 b[i__2].r = z__1.r;
                 b[i__2].i = z__1.i;
@@ -24681,7 +24685,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlahqr(bool* wantt, bool* wantz, int* n, int* ilo, int* ihi, complex16* h, int* ldh,
+        public static int zlahqr(bool* wantt, bool* wantz, int* n, int* ilo, int* ihi, complex16* h, int* ldh,
             complex16* w, int* iloz, int* ihiz, complex16* z, int* ldz, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -24805,7 +24809,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j, k, l, m;
             double s;
             complex16 t, u, x, y;
-            complex16* v = stackalloc complex16[2];
+            complex16[] v = new complex16[2];
             int i1 = 0, i2 = 0;
             complex16 t1;
             double t2;
@@ -25627,7 +25631,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlahr2(int* n, int* k, int* nb,
+        public static int zlahr2(int* n, int* k, int* nb,
             complex16* a, int* lda, complex16* tau, complex16* t,
             int* ldt, complex16* y, int* ldy)
         {
@@ -25925,7 +25929,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double zlange(string norm, int* m, int* n, complex16* a, int* lda, double* work)
+        public static double zlange(string norm, int* m, int* n, complex16* a, int* lda, double* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -26085,7 +26089,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double zlanhs(string norm, int* n, complex16* a, int* lda, double* work)
+        public static double zlanhs(string norm, int* n, complex16* a, int* lda, double* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -26258,7 +26262,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlaqr0(bool* wantt, bool* wantz, int* n,
+        public static int zlaqr0(bool* wantt, bool* wantz, int* n,
             int* ilo, int* ihi, complex16* h, int* ldh,
             complex16* w, int* iloz, int* ihiz, complex16* z,
             int* ldz, complex16* work, int* lwork, int* info)
@@ -26447,7 +26451,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int inf, kdu, nho, nve, kwh, nsr, nwr, kwv, ndec = 0, ndfl, kbot, nmin;
             complex16 swap;
             int ktop;
-            complex16* zdum = stackalloc complex16[1]; // was [1][1] 
+            complex16[] zdum = new complex16[1]; // was [1][1] 
             int kacc22, itmax, nsmax, nwmax, kwtop;
             int nibble;
             string jbcmpz;
@@ -27093,7 +27097,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlaqr1(int* n, complex16* h, int* ldh, complex16* s1, complex16* s2, complex16* v)
+        public static int zlaqr1(int* n, complex16* h, int* ldh, complex16* s1, complex16* s2, complex16* v)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
@@ -27153,8 +27157,8 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 i__1 = h_dim1 + 1;
 
-                z__2.r = h[i__1].r - s2->r;
-                z__2.i = h[i__1].i - s2->i;
+                z__2.r = h[i__1].r - s2.r;
+                z__2.i = h[i__1].i - s2.i;
 
                 z__1.r = z__2.r;
                 z__1.i = z__2.i;
@@ -27188,13 +27192,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     i__2 = h_dim1 + 1;
 
-                    z__4.r = h[i__2].r - s1->r;
-                    z__4.i = h[i__2].i - s1->i;
+                    z__4.r = h[i__2].r - s1.r;
+                    z__4.i = h[i__2].i - s1.i;
 
                     i__3 = h_dim1 + 1;
 
-                    z__6.r = h[i__3].r - s2->r;
-                    z__6.i = h[i__3].i - s2->i;
+                    z__6.r = h[i__3].r - s2.r;
+                    z__6.i = h[i__3].i - s2.i;
 
                     z__5.r = z__6.r / s;
                     z__5.i = z__6.i / s;
@@ -27214,11 +27218,11 @@ namespace TAlex.MathCore.LinearAlgebra
                     z__4.r = h[i__1].r + h[i__2].r;
                     z__4.i = h[i__1].i + h[i__2].i;
 
-                    z__3.r = z__4.r - s1->r;
-                    z__3.i = z__4.i - s1->i;
+                    z__3.r = z__4.r - s1.r;
+                    z__3.i = z__4.i - s1.i;
 
-                    z__2.r = z__3.r - s2->r;
-                    z__2.i = z__3.i - s2->i;
+                    z__2.r = z__3.r - s2.r;
+                    z__2.i = z__3.i - s2.i;
 
                     z__1.r = h21s.r * z__2.r - h21s.i * z__2.i;
                     z__1.i = h21s.r * z__2.i + h21s.i * z__2.r;
@@ -27231,8 +27235,8 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 i__1 = h_dim1 + 1;
 
-                z__2.r = h[i__1].r - s2->r;
-                z__2.i = h[i__1].i - s2->i;
+                z__2.r = h[i__1].r - s2.r;
+                z__2.i = h[i__1].i - s2.i;
 
                 z__1.r = z__2.r;
                 z__1.i = z__2.i;
@@ -27274,13 +27278,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     i__1 = h_dim1 + 1;
 
-                    z__4.r = h[i__1].r - s1->r;
-                    z__4.i = h[i__1].i - s1->i;
+                    z__4.r = h[i__1].r - s1.r;
+                    z__4.i = h[i__1].i - s1.i;
 
                     i__2 = h_dim1 + 1;
 
-                    z__6.r = h[i__2].r - s2->r;
-                    z__6.i = h[i__2].i - s2->i;
+                    z__6.r = h[i__2].r - s2.r;
+                    z__6.i = h[i__2].i - s2.i;
 
                     z__5.r = z__6.r / s;
                     z__5.i = z__6.i / s;
@@ -27313,11 +27317,11 @@ namespace TAlex.MathCore.LinearAlgebra
                     z__5.r = h[i__1].r + h[i__2].r;
                     z__5.i = h[i__1].i + h[i__2].i;
 
-                    z__4.r = z__5.r - s1->r;
-                    z__4.i = z__5.i - s1->i;
+                    z__4.r = z__5.r - s1.r;
+                    z__4.i = z__5.i - s1.i;
 
-                    z__3.r = z__4.r - s2->r;
-                    z__3.i = z__4.i - s2->i;
+                    z__3.r = z__4.r - s2.r;
+                    z__3.i = z__4.i - s2.i;
 
                     z__2.r = h21s.r * z__3.r - h21s.i * z__3.i;
                     z__2.i = h21s.r * z__3.i + h21s.i * z__3.r;
@@ -27338,11 +27342,11 @@ namespace TAlex.MathCore.LinearAlgebra
                     z__5.r = h[i__1].r + h[i__2].r;
                     z__5.i = h[i__1].i + h[i__2].i;
 
-                    z__4.r = z__5.r - s1->r;
-                    z__4.i = z__5.i - s1->i;
+                    z__4.r = z__5.r - s1.r;
+                    z__4.i = z__5.i - s1.i;
 
-                    z__3.r = z__4.r - s2->r;
-                    z__3.i = z__4.i - s2->i;
+                    z__3.r = z__4.r - s2.r;
+                    z__3.i = z__4.i - s2.i;
 
                     z__2.r = h31s.r * z__3.r - h31s.i * z__3.i;
                     z__2.i = h31s.r * z__3.i + h31s.i * z__3.r;
@@ -27364,7 +27368,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlaqr2(bool* wantt, bool* wantz, int* n, int* ktop, int* kbot, int* nw, complex16* h,
+        public static int zlaqr2(bool* wantt, bool* wantz, int* n, int* ktop, int* kbot, int* nw, complex16* h,
             int* ldh, int* iloz, int* ihiz, complex16* z, int* ldz, int* ns, int* nd, complex16* sh,
             complex16* v, int* ldv, int* nh, complex16* t, int* ldt, int* nv, complex16* wv, int* ldwv,
             complex16* work, int* lwork)
@@ -27931,7 +27935,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlaqr3(bool* wantt, bool* wantz, int* n, int* ktop, int* kbot, int* nw, complex16* h,
+        public static int zlaqr3(bool* wantt, bool* wantz, int* n, int* ktop, int* kbot, int* nw, complex16* h,
             int* ldh, int* iloz, int* ihiz, complex16* z, int* ldz, int* ns, int* nd, complex16* sh,
             complex16* v, int* ldv, int* nh, complex16* t, int* ldt, int* nv, complex16* wv, int* ldwv,
             complex16* work, int* lwork)
@@ -28543,7 +28547,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlaqr4(bool* wantt, bool* wantz, int* n, int* ilo, int* ihi, complex16* h, int* ldh,
+        public static int zlaqr4(bool* wantt, bool* wantz, int* n, int* ilo, int* ihi, complex16* h, int* ldh,
             complex16* w, int* iloz, int* ihiz, complex16* z, int* ldz, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -28737,7 +28741,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int inf, kdu, nho, nve, kwh, nsr, nwr, kwv, ndec = 0, ndfl, kbot, nmin;
             complex16 swap;
             int ktop;
-            complex16* zdum = stackalloc complex16[1]; // was [1][1] 
+            complex16[] zdum = new complex16[1]; // was [1][1] 
             int kacc22, itmax, nsmax, nwmax, kwtop;
             int nibble;
             string jbcmpz;
@@ -29374,7 +29378,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlaqr5(bool* wantt, bool* wantz, int* kacc22,
+        public static int zlaqr5(bool* wantt, bool* wantz, int* kacc22,
             int* n, int* ktop, int* kbot, int* nshfts,
             complex16* s, complex16* h, int* ldh, int* iloz,
             int* ihiz, complex16* z, int* ldz, complex16* v,
@@ -29524,7 +29528,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int j, k, m, i2, j2, i4, j4, k1;
             double h11, h12, h21, h22;
             int m22, ns, nu;
-            complex16* vt = stackalloc complex16[3];
+            complex16[] vt = new complex16[3];
             double scl;
             int kdu, kms;
             double ulp;
@@ -30888,7 +30892,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlarcm(int* m, int* n, double* a, int* lda,
+        public static int zlarcm(int* m, int* n, double* a, int* lda,
             complex16* b, int* ldb, complex16* c, int* ldc, double* rwork)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -31027,7 +31031,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlarf(string side, int* m, int* n, complex16* v, int* incv,
+        public static int zlarf(string side, int* m, int* n, complex16* v, int* incv,
             complex16* tau, complex16* c, int* ldc, complex16* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -31116,7 +31120,7 @@ namespace TAlex.MathCore.LinearAlgebra
             lastv = 0;
             lastc = 0;
 
-            if (tau->r != 0.0 || tau->i != 0.0)
+            if (tau.r != 0.0 || tau.i != 0.0)
             {
                 // Set up variables for scanning V.  LASTV begins pointing to the end 
                 // of V. 
@@ -31174,8 +31178,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // C(1:lastv,1:lastc) := C(...) - v(1:lastv,1) * w(1:lastc,1)' 
 
-                    z__1.r = -tau->r;
-                    z__1.i = -tau->i;
+                    z__1.r = -tau.r;
+                    z__1.i = -tau.i;
                     zgerc(&lastv, &lastc, &z__1, &v[1], incv, &work[1], &c__1, &c[c_offset], ldc);
                 }
             }
@@ -31192,8 +31196,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // C(1:lastc,1:lastv) := C(...) - w(1:lastc,1) * v(1:lastv,1)' 
 
-                    z__1.r = -tau->r;
-                    z__1.i = -tau->i;
+                    z__1.r = -tau.r;
+                    z__1.i = -tau.i;
 
                     zgerc(&lastc, &lastv, &z__1, &work[1], &c__1, &v[1], incv, &c[c_offset], ldc);
                 }
@@ -31203,7 +31207,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlarfb(string side, string trans, string direct, string storev,
+        public static int zlarfb(string side, string trans, string direct, string storev,
             int* m, int* n, int* k, complex16* v, int* ldv,
             complex16* t, int* ldt, complex16* c, int* ldc,
             complex16* work, int* ldwork)
@@ -32007,7 +32011,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlarfg(int* n, complex16* alpha, complex16* x, int* incx, complex16* tau)
+        public static int zlarfg(int* n, complex16* alpha, complex16* x, int* incx, complex16* tau)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -32080,21 +32084,21 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body 
             if (*n <= 0)
             {
-                tau->r = 0.0;
-                tau->i = 0.0;
+                tau.r = 0.0;
+                tau.i = 0.0;
                 return 0;
             }
 
             i__1 = *n - 1;
             xnorm = dznrm2(&i__1, &x[1], incx);
-            alphr = alpha->r;
+            alphr = alpha.r;
             alphi = d_imag(alpha);
 
             if (xnorm == 0.0 && alphi == 0.0)
             {
                 // H  =  I 
-                tau->r = 0.0;
-                tau->i = 0.0;
+                tau.r = 0.0;
+                tau.i = 0.0;
             }
             else
             {
@@ -32130,8 +32134,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     z__1.r = alphr;
                     z__1.i = alphi;
 
-                    alpha->r = z__1.r;
-                    alpha->i = z__1.i;
+                    alpha.r = z__1.r;
+                    alpha.i = z__1.i;
 
                     d__1 = dlapy3(&alphr, &alphi, &xnorm);
                     beta = -d_sign(&d__1, &alphr);
@@ -32143,16 +32147,16 @@ namespace TAlex.MathCore.LinearAlgebra
                 z__1.r = d__1;
                 z__1.i = d__2;
 
-                tau->r = z__1.r;
-                tau->i = z__1.i;
+                tau.r = z__1.r;
+                tau.i = z__1.i;
 
-                z__2.r = alpha->r - beta;
-                z__2.i = alpha->i;
+                z__2.r = alpha.r - beta;
+                z__2.i = alpha.i;
 
                 zladiv(&z__1, &c_b5, &z__2);
 
-                alpha->r = z__1.r;
-                alpha->i = z__1.i;
+                alpha.r = z__1.r;
+                alpha.i = z__1.i;
                 i__1 = *n - 1;
 
                 zscal(&i__1, alpha, &x[1], incx);
@@ -32165,15 +32169,15 @@ namespace TAlex.MathCore.LinearAlgebra
                     beta *= safmin;
                 }
 
-                alpha->r = beta;
-                alpha->i = 0.0;
+                alpha.r = beta;
+                alpha.i = 0.0;
             }
 
             return 0;
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlarfp(int* n, complex16* alpha, complex16* x, int* incx, complex16* tau)
+        public static int zlarfp(int* n, complex16* alpha, complex16* x, int* incx, complex16* tau)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -32246,14 +32250,14 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body
             if (*n <= 0)
             {
-                tau->r = 0.0;
-                tau->i = 0.0;
+                tau.r = 0.0;
+                tau.i = 0.0;
                 return 0;
             }
 
             i__1 = *n - 1;
             xnorm = dznrm2(&i__1, &x[1], incx);
-            alphr = alpha->r;
+            alphr = alpha.r;
             alphi = d_imag(alpha);
 
             if (xnorm == 0.0 && alphi == 0.0)
@@ -32267,15 +32271,15 @@ namespace TAlex.MathCore.LinearAlgebra
                         // When TAU.eq.ZERO, the vector is special-cased to be
                         // all zeros in the application routines.  We do not need
                         // to clear it.
-                        tau->r = 0.0;
-                        tau->i = 0.0;
+                        tau.r = 0.0;
+                        tau.i = 0.0;
                     }
                     else
                     {
                         // However, the application routines rely on explicit
                         // zero checks when TAU.ne.ZERO, and we must clear X.
-                        tau->r = 2.0;
-                        tau->i = 0.0;
+                        tau.r = 2.0;
+                        tau.i = 0.0;
 
                         i__1 = *n - 1;
                         for (j = 1; j <= i__1; ++j)
@@ -32284,11 +32288,11 @@ namespace TAlex.MathCore.LinearAlgebra
                             x[i__2].r = 0.0;
                             x[i__2].i = 0.0;
                         }
-                        z__1.r = -alpha->r;
-                        z__1.i = -alpha->i;
+                        z__1.r = -alpha.r;
+                        z__1.i = -alpha.i;
 
-                        alpha->r = z__1.r;
-                        alpha->i = z__1.i;
+                        alpha.r = z__1.r;
+                        alpha.i = z__1.i;
                     }
                 }
                 else
@@ -32301,8 +32305,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     z__1.r = d__1;
                     z__1.i = d__2;
 
-                    tau->r = z__1.r;
-                    tau->i = z__1.i;
+                    tau.r = z__1.r;
+                    tau.i = z__1.i;
 
                     i__1 = *n - 1;
                     for (j = 1; j <= i__1; ++j)
@@ -32312,8 +32316,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         x[i__2].i = 0.0;
                     }
 
-                    alpha->r = xnorm;
-                    alpha->i = 0.0;
+                    alpha.r = xnorm;
+                    alpha.i = 0.0;
                 }
             }
             else
@@ -32348,34 +32352,34 @@ namespace TAlex.MathCore.LinearAlgebra
                     xnorm = dznrm2(&i__1, &x[1], incx);
                     z__1.r = alphr;
                     z__1.i = alphi;
-                    alpha->r = z__1.r;
-                    alpha->i = z__1.i;
+                    alpha.r = z__1.r;
+                    alpha.i = z__1.i;
                     d__1 = dlapy3(&alphr, &alphi, &xnorm);
                     beta = d_sign(&d__1, &alphr);
                 }
-                z__1.r = alpha->r + beta;
-                z__1.i = alpha->i;
+                z__1.r = alpha.r + beta;
+                z__1.i = alpha.i;
 
-                alpha->r = z__1.r;
-                alpha->i = z__1.i;
+                alpha.r = z__1.r;
+                alpha.i = z__1.i;
 
                 if (beta < 0.0)
                 {
                     beta = -beta;
 
-                    z__2.r = -alpha->r;
-                    z__2.i = -alpha->i;
+                    z__2.r = -alpha.r;
+                    z__2.i = -alpha.i;
 
                     z__1.r = z__2.r / beta;
                     z__1.i = z__2.i / beta;
 
-                    tau->r = z__1.r;
-                    tau->i = z__1.i;
+                    tau.r = z__1.r;
+                    tau.i = z__1.i;
                 }
                 else
                 {
-                    alphr = alphi * (alphi / alpha->r);
-                    alphr += xnorm * (xnorm / alpha->r);
+                    alphr = alphi * (alphi / alpha.r);
+                    alphr += xnorm * (xnorm / alpha.r);
 
                     d__1 = alphr / beta;
                     d__2 = -alphi / beta;
@@ -32383,21 +32387,21 @@ namespace TAlex.MathCore.LinearAlgebra
                     z__1.r = d__1;
                     z__1.i = d__2;
 
-                    tau->r = z__1.r;
-                    tau->i = z__1.i;
+                    tau.r = z__1.r;
+                    tau.i = z__1.i;
 
                     d__1 = -alphr;
 
                     z__1.r = d__1;
                     z__1.i = alphi;
 
-                    alpha->r = z__1.r;
-                    alpha->i = z__1.i;
+                    alpha.r = z__1.r;
+                    alpha.i = z__1.i;
                 }
                 zladiv(&z__1, &c_b5, alpha);
 
-                alpha->r = z__1.r;
-                alpha->i = z__1.i;
+                alpha.r = z__1.r;
+                alpha.i = z__1.i;
 
                 i__1 = *n - 1;
                 zscal(&i__1, alpha, &x[1], incx);
@@ -32409,15 +32413,15 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     beta *= safmin;
                 }
-                alpha->r = beta;
-                alpha->i = 0.0;
+                alpha.r = beta;
+                alpha.i = 0.0;
             }
 
             return 0;
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlarft(string direct, string storev, int* n, int* k,
+        public static int zlarft(string direct, string storev, int* n, int* k,
             complex16* v, int* ldv, complex16* tau, complex16* t, int* ldt)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -32825,7 +32829,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlartg(complex16* f, complex16* g, double* cs, complex16* sn, complex16* r)
+        public static int zlartg(complex16* f, complex16* g, double* cs, complex16* sn, complex16* r)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -32905,21 +32909,21 @@ namespace TAlex.MathCore.LinearAlgebra
             // Computing MAX 
             // Computing MAX 
 
-            d__7 = Math.Abs(f->r);
+            d__7 = Math.Abs(f.r);
             d__8 = Math.Abs(d_imag(f));
             // Computing MAX 
-            d__9 = Math.Abs(g->r);
+            d__9 = Math.Abs(g.r);
             d__10 = Math.Abs(d_imag(g));
 
             d__5 = Math.Max(d__7, d__8);
             d__6 = Math.Max(d__9, d__10);
             scale = Math.Max(d__5, d__6);
 
-            fs.r = f->r;
-            fs.i = f->i;
+            fs.r = f.r;
+            fs.i = f.i;
 
-            gs.r = g->r;
-            gs.i = g->i;
+            gs.r = g.r;
+            gs.i = g.i;
             count = 0;
 
             if (scale >= safmx2)
@@ -32947,14 +32951,14 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else if (scale <= safmn2)
             {
-                if (g->r == 0.0 && g->i == 0.0)
+                if (g.r == 0.0 && g.i == 0.0)
                 {
                     *cs = 1.0;
-                    sn->r = 0.0;
-                    sn->i = 0.0;
+                    sn.r = 0.0;
+                    sn.i = 0.0;
 
-                    r->r = f->r;
-                    r->i = f->i;
+                    r.r = f.r;
+                    r.i = f.i;
                     return 0;
                 }
             L20:
@@ -32994,15 +32998,15 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // This is a rare case: F is very small. 
 
-                if (f->r == 0.0 && f->i == 0.0)
+                if (f.r == 0.0 && f.i == 0.0)
                 {
                     *cs = 0.0;
-                    d__2 = g->r;
+                    d__2 = g.r;
                     d__3 = d_imag(g);
                     d__1 = dlapy2(&d__2, &d__3);
 
-                    r->r = d__1;
-                    r->i = 0.0;
+                    r.r = d__1;
+                    r.i = 0.0;
 
                     // Do complex/real division explicitly with two real divisions 
                     d__1 = gs.r;
@@ -33014,8 +33018,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     z__1.r = d__1;
                     z__1.i = d__2;
 
-                    sn->r = z__1.r;
-                    sn->i = z__1.i;
+                    sn.r = z__1.r;
+                    sn.i = z__1.i;
                     return 0;
                 }
 
@@ -33037,15 +33041,15 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Make sure abs(FF) = 1 
                 // Do complex/real division explicitly with 2 real divisions 
                 // Computing MAX 
-                d__3 = Math.Abs(f->r);
+                d__3 = Math.Abs(f.r);
                 d__4 = Math.Abs(d_imag(f));
 
                 if (Math.Max(d__3, d__4) > 1.0)
                 {
-                    d__1 = f->r;
+                    d__1 = f.r;
                     d__2 = d_imag(f);
                     d = dlapy2(&d__1, &d__2);
-                    d__1 = f->r / d;
+                    d__1 = f.r / d;
                     d__2 = d_imag(f) / d;
 
                     z__1.r = d__1;
@@ -33056,7 +33060,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 else
                 {
-                    dr = safmx2 * f->r;
+                    dr = safmx2 * f.r;
                     di = safmx2 * d_imag(f);
                     d = dlapy2(&dr, &di);
 
@@ -33079,20 +33083,20 @@ namespace TAlex.MathCore.LinearAlgebra
                 z__1.r = ff.r * z__2.r - ff.i * z__2.i;
                 z__1.i = ff.r * z__2.i + ff.i * z__2.r;
 
-                sn->r = z__1.r;
-                sn->i = z__1.i;
+                sn.r = z__1.r;
+                sn.i = z__1.i;
 
-                z__2.r = *cs * f->r;
-                z__2.i = *cs * f->i;
+                z__2.r = *cs * f.r;
+                z__2.i = *cs * f.i;
 
-                z__3.r = sn->r * g->r - sn->i * g->i;
-                z__3.i = sn->r * g->i + sn->i * g->r;
+                z__3.r = sn.r * g.r - sn.i * g.i;
+                z__3.i = sn.r * g.i + sn.i * g.r;
 
                 z__1.r = z__2.r + z__3.r;
                 z__1.i = z__2.i + z__3.i;
 
-                r->r = z__1.r;
-                r->i = z__1.i;
+                r.r = z__1.r;
+                r.i = z__1.i;
             }
             else
             {
@@ -33108,28 +33112,28 @@ namespace TAlex.MathCore.LinearAlgebra
                 z__1.r = d__1;
                 z__1.i = d__2;
 
-                r->r = z__1.r;
-                r->i = z__1.i;
+                r.r = z__1.r;
+                r.i = z__1.i;
 
                 *cs = 1.0 / f2s;
                 d = f2 + g2;
                 // Do complex/real division explicitly with two real divisions 
-                d__1 = r->r / d;
+                d__1 = r.r / d;
                 d__2 = d_imag(r) / d;
 
                 z__1.r = d__1;
                 z__1.i = d__2;
 
-                sn->r = z__1.r;
-                sn->i = z__1.i;
+                sn.r = z__1.r;
+                sn.i = z__1.i;
 
                 d_cnjg(&z__2, &gs);
 
-                z__1.r = sn->r * z__2.r - sn->i * z__2.i;
-                z__1.i = sn->r * z__2.i + sn->i * z__2.r;
+                z__1.r = sn.r * z__2.r - sn.i * z__2.i;
+                z__1.i = sn.r * z__2.i + sn.i * z__2.r;
 
-                sn->r = z__1.r;
-                sn->i = z__1.i;
+                sn.r = z__1.r;
+                sn.i = z__1.i;
 
                 if (count != 0)
                 {
@@ -33138,11 +33142,11 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__1 = count;
                         for (i = 1; i <= i__1; ++i)
                         {
-                            z__1.r = safmx2 * r->r;
-                            z__1.i = safmx2 * r->i;
+                            z__1.r = safmx2 * r.r;
+                            z__1.i = safmx2 * r.i;
 
-                            r->r = z__1.r;
-                            r->i = z__1.i;
+                            r.r = z__1.r;
+                            r.i = z__1.i;
                         }
                     }
                     else
@@ -33150,11 +33154,11 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__1 = -count;
                         for (i = 1; i <= i__1; ++i)
                         {
-                            z__1.r = safmn2 * r->r;
-                            z__1.i = safmn2 * r->i;
+                            z__1.r = safmn2 * r.r;
+                            z__1.i = safmn2 * r.i;
 
-                            r->r = z__1.r;
-                            r->i = z__1.i;
+                            r.r = z__1.r;
+                            r.i = z__1.i;
                         }
                     }
                 }
@@ -33164,7 +33168,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlascl(string type, int* kl, int* ku, double* cfrom,
+        public static int zlascl(string type, int* kl, int* ku, double* cfrom,
             double* cto, int* m, int* n, complex16* a, int* lda, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -33568,7 +33572,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlaset(string uplo, int* m, int* n, complex16* alpha, complex16* beta, complex16* a, int* lda)
+        public static int zlaset(string uplo, int* m, int* n, complex16* alpha, complex16* beta, complex16* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -33639,8 +33643,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
-                        a[i__3].r = alpha->r;
-                        a[i__3].i = alpha->i;
+                        a[i__3].r = alpha.r;
+                        a[i__3].i = alpha.i;
                     }
                 }
 
@@ -33648,8 +33652,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i + i * a_dim1;
-                    a[i__2].r = beta->r;
-                    a[i__2].i = beta->i;
+                    a[i__2].r = beta.r;
+                    a[i__2].i = beta.i;
                 }
             }
             else if (lsame(uplo, "L"))
@@ -33664,16 +33668,16 @@ namespace TAlex.MathCore.LinearAlgebra
                     for (i = j + 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
-                        a[i__3].r = alpha->r;
-                        a[i__3].i = alpha->i;
+                        a[i__3].r = alpha.r;
+                        a[i__3].i = alpha.i;
                     }
                 }
                 i__1 = Math.Min(*n, *m);
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i + i * a_dim1;
-                    a[i__2].r = beta->r;
-                    a[i__2].i = beta->i;
+                    a[i__2].r = beta.r;
+                    a[i__2].i = beta.i;
                 }
 
             }
@@ -33689,16 +33693,16 @@ namespace TAlex.MathCore.LinearAlgebra
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
-                        a[i__3].r = alpha->r;
-                        a[i__3].i = alpha->i;
+                        a[i__3].r = alpha.r;
+                        a[i__3].i = alpha.i;
                     }
                 }
                 i__1 = Math.Min(*m, *n);
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i + i * a_dim1;
-                    a[i__2].r = beta->r;
-                    a[i__2].i = beta->i;
+                    a[i__2].r = beta.r;
+                    a[i__2].i = beta.i;
                 }
             }
 
@@ -33706,7 +33710,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlassq(int* n, complex16* x, int* incx, double* scale, double* sumsq)
+        public static int zlassq(int* n, complex16* x, int* incx, double* scale, double* sumsq)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -33819,7 +33823,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zlatrs(string uplo, string trans, string diag, string normin,
+        public static int zlatrs(string uplo, string trans, string diag, string normin,
             int* n, complex16* a, int* lda, complex16* x, double* scale, double* cnorm, int* info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -35092,7 +35096,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zrot(int* n, complex16* cx, int* incx,
+        public static int zrot(int* n, complex16* cx, int* incx,
             complex16* cy, int* incy, double* c, complex16* s)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -35181,8 +35185,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 i__3 = iy;
 
-                z__3.r = s->r * cy[i__3].r - s->i * cy[i__3].i;
-                z__3.i = s->r * cy[i__3].i + s->i * cy[i__3].r;
+                z__3.r = s.r * cy[i__3].r - s.i * cy[i__3].i;
+                z__3.i = s.r * cy[i__3].i + s.i * cy[i__3].r;
 
                 z__1.r = z__2.r + z__3.r;
                 z__1.i = z__2.i + z__3.i;
@@ -35232,8 +35236,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 i__3 = i;
 
-                z__3.r = s->r * cy[i__3].r - s->i * cy[i__3].i;
-                z__3.i = s->r * cy[i__3].i + s->i * cy[i__3].r;
+                z__3.r = s.r * cy[i__3].r - s.i * cy[i__3].i;
+                z__3.i = s.r * cy[i__3].i + s.i * cy[i__3].r;
 
                 z__1.r = z__2.r + z__3.r;
                 z__1.i = z__2.i + z__3.i;
@@ -35269,7 +35273,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ztrevc(string side, string howmny, bool* select,
+        public static int ztrevc(string side, string howmny, bool* select,
             int* n, complex16* t, int* ldt, complex16* vl,
             int* ldvl, complex16* vr, int* ldvr, int* mm, int
             * m, complex16* work, double* rwork, int* info)
@@ -35809,7 +35813,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ztrexc(string compq, int* n, complex16* t,
+        public static int ztrexc(string compq, int* n, complex16* t,
             int* ldt, complex16* q, int* ldq, int* ifst, int* ilst, int* info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -36003,7 +36007,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ztrsna(string job, string howmny, bool* select,
+        public static int ztrsna(string job, string howmny, bool* select,
             int* n, complex16* t, int* ldt, complex16* vl,
             int* ldvl, complex16* vr, int* ldvr, double* s,
             double* sep, int* mm, int* m, complex16* work,
@@ -36169,8 +36173,8 @@ namespace TAlex.MathCore.LinearAlgebra
             int kase, ierr;
             complex16 prod;
             double lnrm, rnrm, scale;
-            int* isave = stackalloc int[3];
-            complex16* dummy = stackalloc complex16[1];
+            int[] isave = new int[3];
+            complex16[] dummy = new complex16[1];
             bool wants;
             double xnorm;
             double bignum;
@@ -36420,7 +36424,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zung2r(int* m, int* n, int* k, complex16* a,
+        public static int zung2r(int* m, int* n, int* k, complex16* a,
             int* lda, complex16* tau, complex16* work, int* info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -36596,7 +36600,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zungbr(string vect, int* m, int* n, int* k,
+        public static int zungbr(string vect, int* m, int* n, int* k,
             complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -36900,7 +36904,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zunghr(int* n, int* ilo, int* ihi,
+        public static int zunghr(int* n, int* ilo, int* ihi,
             complex16* a, int* lda, complex16* tau, complex16*
             work, int* lwork, int* info)
         {
@@ -37125,7 +37129,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zungl2(int* m, int* n, int* k,
+        public static int zungl2(int* m, int* n, int* k,
             complex16* a, int* lda, complex16* tau, complex16* work, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -37302,7 +37306,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zunglq(int* m, int* n, int* k, complex16* a,
+        public static int zunglq(int* m, int* n, int* k, complex16* a,
             int* lda, complex16* tau, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -37563,7 +37567,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zungqr(int* m, int* n, int* k, complex16* a,
+        public static int zungqr(int* m, int* n, int* k, complex16* a,
             int* lda, complex16* tau, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -37833,7 +37837,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zunm2r(string side, string trans, int* m, int* n,
+        public static int zunm2r(string side, string trans, int* m, int* n,
             int* k, complex16* a, int* lda, complex16* tau,
             complex16* c, int* ldc, complex16* work, int* info)
         {
@@ -38079,7 +38083,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zunmbr(string vect, string side, string trans, int* m,
+        public static int zunmbr(string vect, string side, string trans, int* m,
             int* n, int* k, complex16* a, int* lda, complex16* tau,
             complex16* c, int* ldc, complex16* work, int* lwork, int* info)
         {
@@ -38439,7 +38443,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zunmhr(string side, string trans, int* m, int* n,
+        public static int zunmhr(string side, string trans, int* m, int* n,
             int* ilo, int* ihi, complex16* a, int* lda,
             complex16* tau, complex16* c, int* ldc, complex16*
             work, int* lwork, int* info)
@@ -38673,7 +38677,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zunml2(string side, string trans, int* m, int* n, int* k,
+        public static int zunml2(string side, string trans, int* m, int* n, int* k,
             complex16* a, int* lda, complex16* tau, complex16* c, int* ldc, complex16* work, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -38923,7 +38927,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zunmlq(string side, string trans, int* m, int* n, int* k, complex16* a,
+        public static int zunmlq(string side, string trans, int* m, int* n, int* k, complex16* a,
             int* lda, complex16* tau, complex16* c, int* ldc, complex16* work, int* lwork, int* info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -39025,7 +39029,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Local variables
             int i;
-            complex16* t = stackalloc complex16[4160]; // was [65][64]
+            complex16[] t = new complex16[4160]; // was [65][64]
             int i1, i2, i3, ib, ic = 0, jc = 0, nb = 0, mi, ni, nq, nw, iws;
             bool left;
             int nbmin, iinfo;
@@ -39234,7 +39238,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int zunmqr(string side, string trans, int* m, int* n,
+        public static int zunmqr(string side, string trans, int* m, int* n,
             int* k, complex16* a, int* lda, complex16* tau,
             complex16* c, int* ldc, complex16* work, int* lwork, int* info)
         {
@@ -39337,7 +39341,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Local variables 
             int i;
-            complex16* t = stackalloc complex16[4160];	// was [65][64] 
+            complex16[] t = new complex16[4160];	// was [65][64] 
             int i1, i2, i3, ib, ic = 0, jc = 0, nb = 0, mi, ni, nq, nw, iws;
             bool left;
             int nbmin, iinfo;
@@ -39545,7 +39549,7 @@ namespace TAlex.MathCore.LinearAlgebra
         #region Auxilary
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ilazlc(int* m, int* n, complex16* a, int* lda)
+        public static int ilazlc(int* m, int* n, complex16* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2.1)                        -- 
 
@@ -39624,7 +39628,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ilazlr(int* m, int* n, complex16* a, int* lda)
+        public static int ilazlr(int* m, int* n, complex16* a, int* lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2.1)                        -- 
 
@@ -39771,7 +39775,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe double dlamc3(double* a, double* b)
+        public static double dlamc3(double* a, double* b)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -39797,7 +39801,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int ieeeck(int* ispec, float* zero, float* one)
+        public static int ieeeck(int* ispec, float* zero, float* one)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -39950,7 +39954,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        private static unsafe int ilaenv(int* ispec, string name, string opts, int* n1, int* n2, int* n3, int* n4)
+        private static int ilaenv(int* ispec, string name, string opts, int* n1, int* n2, int* n3, int* n4)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -40588,7 +40592,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int iparmq(int* ispec, string name, string opts, int* n, int* ilo, int* ihi, int* lwork)
+        public static int iparmq(int* ispec, string name, string opts, int* n, int* ilo, int* ihi, int* lwork)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -40856,7 +40860,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe bool lsame(string ca, string cb)
+        public static bool lsame(string ca, string cb)
         {
             //  -- LAPACK auxiliary routine (version 3.1) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -40884,7 +40888,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         [SuppressUnmanagedCodeSecurity]
-        public static unsafe int xerbla(string srname, int* info)
+        public static int xerbla(string srname, int* info)
         {
             //  -- LAPACK auxiliary routine (preliminary version) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..

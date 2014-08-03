@@ -9,8 +9,7 @@ namespace TAlex.MathCore.LinearAlgebra
     /// <summary>
     /// Represents a general complex matrix.
     /// </summary>
-    [Serializable]
-    public class CMatrix : ICloneable, IFormattable, IEnumerable<Complex>
+    public class CMatrix : IFormattable, IEnumerable<Complex>
     {
         #region Fields
 

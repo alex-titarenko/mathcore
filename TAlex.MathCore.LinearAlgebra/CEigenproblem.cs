@@ -86,7 +86,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// the eigenvalues and the right eigenvectors of a square complex matrix.
         /// </summary>
         /// <param name="matrix">A complex square matrix.</param>
-        public unsafe CEigenproblem(CMatrix matrix) : this(matrix, true, false)
+        public CEigenproblem(CMatrix matrix) : this(matrix, true, false)
         {
         }
 
@@ -96,7 +96,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// </summary>
         /// <param name="matrix">A complex square matrix.</param>
         /// <param name="rightEigenvectors">A value that indicating whether the right eigenvectors will be computed.</param>
-        public unsafe CEigenproblem(CMatrix matrix, bool rightEigenvectors) : this(matrix, rightEigenvectors, false)
+        public CEigenproblem(CMatrix matrix, bool rightEigenvectors) : this(matrix, rightEigenvectors, false)
         {
         }
 
@@ -107,7 +107,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <param name="matrix">A complex square matrix.</param>
         /// <param name="rightEigenvectors">A value that indicating whether the right eigenvectors will be computed.</param>
         /// <param name="leftEigenvectors">A value that indicating whether the left eigenvectors will be computed.</param>
-        public unsafe CEigenproblem(CMatrix matrix, bool rightEigenvectors, bool leftEigenvectors)
+        public CEigenproblem(CMatrix matrix, bool rightEigenvectors, bool leftEigenvectors)
         {
             if (!matrix.IsSquare)
                 throw new MatrixSizeMismatchException("The matrix must be square.");
@@ -121,21 +121,21 @@ namespace TAlex.MathCore.LinearAlgebra
             int lwork = n * 3;
             int info;
 
-            complex16* a = stackalloc complex16[lda * n];
-            complex16* w = stackalloc complex16[n];
-            complex16* vl, vr;
-            double* scale = stackalloc double[n];
-            double* rconde = stackalloc double[n];
-            double* rcondv = stackalloc double[n];
-            complex16* work = stackalloc complex16[Math.Max(1, lwork)];
-            double* rwork = stackalloc double[2 * n];
+            complex16[] a = new complex16[lda * n];
+            complex16[] w = new complex16[n];
+            complex16[] vl, vr;
+            double[] scale = new double[n];
+            double[] rconde = new double[n];
+            double[] rcondv = new double[n];
+            complex16[] work = new complex16[Math.Max(1, lwork)];
+            double[] rwork = new double[2 * n];
 
             if (rightEigenvectors)
             {
                 jobvr = "V";
                 ldvr = Math.Max(1, n);
 
-                complex16* temp = stackalloc complex16[ldvr * n];
+                complex16[] temp = new complex16[ldvr * n];
                 vr = temp;
             }
             else
@@ -150,7 +150,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 jobvl = "V";
                 ldvl = Math.Max(1, n);
 
-                complex16* temp = stackalloc complex16[ldvl * n];
+                complex16[] temp = new complex16[ldvl * n];
                 vl = temp;
             }
             else
