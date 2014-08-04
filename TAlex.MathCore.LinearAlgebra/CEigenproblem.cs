@@ -112,101 +112,101 @@ namespace TAlex.MathCore.LinearAlgebra
             if (!matrix.IsSquare)
                 throw new MatrixSizeMismatchException("The matrix must be square.");
 
-            string jobvl, jobvr;
-            int n = matrix.RowCount;
-            int lda = Math.Max(1, n);
-            int ldvl, ldvr;
-            int ilo, ihi;
-            double abnrm;
-            int lwork = n * 3;
-            int info;
+            //string jobvl, jobvr;
+            //int n = matrix.RowCount;
+            //int lda = Math.Max(1, n);
+            //int ldvl, ldvr;
+            //int ilo, ihi;
+            //double abnrm;
+            //int lwork = n * 3;
+            //int info;
 
-            complex16[] a = new complex16[lda * n];
-            complex16[] w = new complex16[n];
-            complex16[] vl, vr;
-            double[] scale = new double[n];
-            double[] rconde = new double[n];
-            double[] rcondv = new double[n];
-            complex16[] work = new complex16[Math.Max(1, lwork)];
-            double[] rwork = new double[2 * n];
+            //complex16[] a = new complex16[lda * n];
+            //complex16[] w = new complex16[n];
+            //complex16[] vl, vr;
+            //double[] scale = new double[n];
+            //double[] rconde = new double[n];
+            //double[] rcondv = new double[n];
+            //complex16[] work = new complex16[Math.Max(1, lwork)];
+            //double[] rwork = new double[2 * n];
 
-            if (rightEigenvectors)
-            {
-                jobvr = "V";
-                ldvr = Math.Max(1, n);
+            //if (rightEigenvectors)
+            //{
+            //    jobvr = "V";
+            //    ldvr = Math.Max(1, n);
 
-                complex16[] temp = new complex16[ldvr * n];
-                vr = temp;
-            }
-            else
-            {
-                jobvr = "N";
-                ldvr = 1;
-                vr = null;
-            }
+            //    complex16[] temp = new complex16[ldvr * n];
+            //    vr = temp;
+            //}
+            //else
+            //{
+            //    jobvr = "N";
+            //    ldvr = 1;
+            //    vr = null;
+            //}
 
-            if (leftEigenvectors)
-            {
-                jobvl = "V";
-                ldvl = Math.Max(1, n);
+            //if (leftEigenvectors)
+            //{
+            //    jobvl = "V";
+            //    ldvl = Math.Max(1, n);
 
-                complex16[] temp = new complex16[ldvl * n];
-                vl = temp;
-            }
-            else
-            {
-                jobvl = "N";
-                ldvl = 1;
-                vl = null;
-            }
+            //    complex16[] temp = new complex16[ldvl * n];
+            //    vl = temp;
+            //}
+            //else
+            //{
+            //    jobvl = "N";
+            //    ldvl = 1;
+            //    vl = null;
+            //}
 
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    Complex temp = matrix[i, j];
-                    a[i + j * n] = new complex16(temp.Re, temp.Im);
-                }
-            }
+            //for (int i = 0; i < n; i++)
+            //{
+            //    for (int j = 0; j < n; j++)
+            //    {
+            //        Complex temp = matrix[i, j];
+            //        a[i + j * n] = new complex16(temp.Re, temp.Im);
+            //    }
+            //}
             
-            lapack.zgeevx("B", jobvl, jobvr, "N", &n, a, &lda, w, vl, &ldvl, vr, &ldvr, &ilo, &ihi, scale,
-                &abnrm, rconde, rcondv, work, &lwork, rwork, out info);
+            //lapack.zgeevx("B", jobvl, jobvr, "N", n, a, lda, w, vl, ldvl, vr, ldvr, out ilo, out ihi, scale,
+            //    out abnrm, rconde, rcondv, work, lwork, rwork, out info);
 
-            if (info == 0) _succeded = true;
-            else _succeded = false;
+            //if (info == 0) _succeded = true;
+            //else _succeded = false;
 
-            _vals = new Complex[n];
+            //_vals = new Complex[n];
 
-            for (int i = 0; i < n; i++)
-                _vals[i] = new Complex(w[i].r, w[i].i);
+            //for (int i = 0; i < n; i++)
+            //    _vals[i] = new Complex(w[i].r, w[i].i);
 
-            if (rightEigenvectors)
-            {
-                _rightvecs = new CMatrix(n, n);
+            //if (rightEigenvectors)
+            //{
+            //    _rightvecs = new CMatrix(n, n);
 
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        complex16 temp = vr[i + j * n];
-                        _rightvecs[i, j] = new Complex(temp.r, temp.i);
-                    }
-                }
-            }
+            //    for (int i = 0; i < n; i++)
+            //    {
+            //        for (int j = 0; j < n; j++)
+            //        {
+            //            complex16 temp = vr[i + j * n];
+            //            _rightvecs[i, j] = new Complex(temp.r, temp.i);
+            //        }
+            //    }
+            //}
 
-            if (leftEigenvectors)
-            {
-                _leftvecs = new CMatrix(n, n);
+            //if (leftEigenvectors)
+            //{
+            //    _leftvecs = new CMatrix(n, n);
 
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        complex16 temp = vl[i + j * n];
-                        _leftvecs[i, j] = new Complex(temp.r, temp.i);
-                    }
-                }
-            }
+            //    for (int i = 0; i < n; i++)
+            //    {
+            //        for (int j = 0; j < n; j++)
+            //        {
+            //            complex16 temp = vl[i + j * n];
+            //            _leftvecs[i, j] = new Complex(temp.r, temp.i);
+            //        }
+            //    }
+            //}
         }
 
         #endregion

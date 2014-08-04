@@ -10,6 +10,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.LinearAlgebra;
 using System.Globalization;
+using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 
 namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
@@ -17,12 +18,13 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
     [TestFixture]
     public class ComplexExpressionTreeBuilderExtensionsTest
     {
-        protected FunctionFactory<Object> FunctionFactory;
-        protected ConstantFlyweightFactory<Object> ConstantFactory;
-        protected ComplexExpressionTreeBuilder ExpressionTreeBuilder;
+        protected static FunctionFactory<Object> FunctionFactory;
+        protected static ConstantFlyweightFactory<Object> ConstantFactory;
+        protected static ComplexExpressionTreeBuilder ExpressionTreeBuilder;
 
-        [SetUp]
-        public void SetUp()
+        protected static List<TestCaseData> FunctionsTestCasesData;
+
+        static ComplexExpressionTreeBuilderExtensionsTest()
         {
             var targetAssembly = typeof(TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Constants.CatalanConstantExpression).Assembly;
 
@@ -37,6 +39,13 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
                 ConstantFactory = ConstantFactory,
                 FunctionFactory = FunctionFactory
             };
+
+            FunctionsTestCasesData = FunctionFactory.GetMetadata().Select(x =>
+            {
+                var d = new TestCaseData(x);
+                d.SetName(String.Format("ShouldContainsCorrectedExampleUsages: {0}", x.DisplayName));
+                return d;
+            }).ToList();
         }
 
         [Test]
@@ -128,35 +137,30 @@ namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
             }
         }
 
-        [Test]
-        public void AllFunctionsTest_ShouldContainsCorrectedExampleUsages()
+        [Test, TestCaseSource("FunctionsTestCasesData")]
+        public void AllFunctionsTest_ShouldContainsCorrectedExampleUsages(FunctionMetadata item)
         {
             //action
-            var metadata = FunctionFactory.GetMetadata();
-
-            foreach (var item in metadata)
+            foreach (var exampleUsage in item.ExampleUsages)
             {
-                foreach (var exampleUsage in item.ExampleUsages)
+                //action
+                int zeroThreshold = 14;
+                int complexThreshold = 10;
+                Expression<Object> tree = ExpressionTreeBuilder.BuildTree(exampleUsage.Expression);
+                object actual = tree.Evaluate();
+
+                //assert
+                (actual is Complex || actual is CMatrix).Should().BeTrue("Result must have be only following types: Complex, Matrix.");
+
+                if (actual is Complex) actual = NumericUtil.ComplexZeroThreshold((Complex)actual, complexThreshold, zeroThreshold);
+                if (actual is CMatrix) actual = NumericUtilExtensions.ComplexZeroThreshold((CMatrix)actual, complexThreshold, zeroThreshold);
+
+                if (!exampleUsage.CanMultipleResults)
                 {
-                    //action
-                    int zeroThreshold = 14;
-                    int complexThreshold = 10;
-                    Expression<Object> tree = ExpressionTreeBuilder.BuildTree(exampleUsage.Expression);
-                    object actual = tree.Evaluate();
-
-                    //assert
-                    (actual is Complex || actual is CMatrix).Should().BeTrue("Result must have be only following types: Complex, Matrix.");
-
-                    if (actual is Complex) actual = NumericUtil.ComplexZeroThreshold((Complex)actual, complexThreshold, zeroThreshold);
-                    if (actual is CMatrix) actual = NumericUtilExtensions.ComplexZeroThreshold((CMatrix)actual, complexThreshold, zeroThreshold);
-
-                    if (!exampleUsage.CanMultipleResults)
-                    {
-                        IFormattable formatedResult = (IFormattable)actual;
-                        formatedResult.ToString(null, CultureInfo.InvariantCulture).Replace(" ", String.Empty)
-                            .Should().Be(exampleUsage.Result.Replace(" ", String.Empty),
-                            "Example usage contains inccorect result. Target type: {0}", item.FunctionType);
-                    }
+                    IFormattable formatedResult = (IFormattable)actual;
+                    formatedResult.ToString(null, CultureInfo.InvariantCulture).Replace(" ", String.Empty)
+                        .Should().Be(exampleUsage.Result.Replace(" ", String.Empty),
+                        "Example usage contains inccorect result. Target type: {0}", item.FunctionType);
                 }
             }
         }

@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 namespace TAlex.MathCore.LinearAlgebra
 {
-    //[NativeCppClass]
     internal struct complex16
     {
         public double r;
@@ -32,23 +31,23 @@ namespace TAlex.MathCore.LinearAlgebra
     {
         #region libf2c
 
-        private static double d_imag(complex16* z)
+        private static double d_imag(complex16 z)
         {
             return z.i;
         }
 
-        private static void d_cnjg(complex16* r, complex16* z)
+        private static void d_cnjg(out complex16 r, complex16 z)
         {
             double zi = z.i;
             r.r = z.r;
             r.i = -zi;
         }
 
-        private static double d_sign(double* a, double* b)
+        private static double d_sign(double a, double b)
         {
             double x;
-            x = (*a >= 0 ? *a : -*a);
-            return (*b >= 0 ? x : -x);
+            x = (a >= 0 ? a : -a);
+            return (b >= 0 ? x : -x);
         }
 
         private static double f__cabs(double real, double imag)
@@ -73,25 +72,25 @@ namespace TAlex.MathCore.LinearAlgebra
             return temp;
         }
 
-        private static int i_nint(float* x)
+        private static int i_nint(float x)
         {
-            return (int)(*x >= 0 ? Math.Floor(*x + 0.5) : -Math.Floor(0.5 - *x));
+            return (int)(x >= 0 ? Math.Floor(x + 0.5) : -Math.Floor(0.5 - x));
         }
 
-        private static double pow_dd(double* ap, double* bp)
+        private static double pow_dd(double ap, double bp)
         {
-            return Math.Pow(*ap, *bp);
+            return Math.Pow(ap, bp);
         }
 
-        private static double pow_di(double* ap, int* bp)
+        private static double pow_di(double ap, int bp)
         {
             double pow, x;
             int n;
             uint u;
 
             pow = 1;
-            x = *ap;
-            n = *bp;
+            x = ap;
+            n = bp;
 
             if (n != 0)
             {
@@ -115,13 +114,13 @@ namespace TAlex.MathCore.LinearAlgebra
             return pow;
         }
 
-        private static int pow_ii(int* ap, int* bp)
+        private static int pow_ii(int ap, int bp)
         {
             int pow, x, n;
             uint u;
 
-            x = *ap;
-            n = *bp;
+            x = ap;
+            n = bp;
 
             if (n <= 0)
             {
@@ -146,7 +145,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return pow;
         }
 
-        private static void pow_zi(complex16* p, complex16* a, int* b)
+        private static void pow_zi(out complex16 p, complex16 a, int b)
         {
             // p = a**b  
 
@@ -159,7 +158,7 @@ namespace TAlex.MathCore.LinearAlgebra
             one.r = 1.0;
             one.i = 0.0;
 
-            n = *b;
+            n = b;
             q.r = 1;
             q.i = 0;
 
@@ -169,7 +168,7 @@ namespace TAlex.MathCore.LinearAlgebra
             if (n < 0)
             {
                 n = -n;
-                z_div(&x, &one, a);
+                z_div(out x, one, a);
             }
             else
             {
@@ -200,12 +199,12 @@ namespace TAlex.MathCore.LinearAlgebra
             p.r = q.r;
         }
 
-        private static double z_abs(complex16* z)
+        private static double z_abs(complex16 z)
         {
             return f__cabs(z.r, z.i);
         }
 
-        private static void z_div(complex16* c, complex16* a, complex16* b)
+        private static void z_div(out complex16 c, complex16 a, complex16 b)
         {
             double ratio, den;
             double abr, abi, cr;
@@ -240,7 +239,7 @@ namespace TAlex.MathCore.LinearAlgebra
             c.r = cr;
         }
 
-        private static void z_sqrt(complex16* r, complex16* z)
+        private static void z_sqrt(out complex16 r, complex16 z)
         {
             double mag, zi = z.i, zr = z.r;
 
@@ -268,8 +267,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         #region blas
 
-        
-        public static double dcabs1(complex16* z)
+        public static double dcabs1(complex16 z)
         {
             //  Purpose
             //  =======
@@ -279,8 +277,7 @@ namespace TAlex.MathCore.LinearAlgebra
             return Math.Abs(z.r) + Math.Abs(d_imag(z));
         }
 
-        
-        public static int dcopy(int* n, double* dx, int* incx, double* dy, int* incy)
+        public static int dcopy(int n, double[] dx, int incx, double[] dy, int incy)
         {
             //  Purpose
             //  =======
@@ -301,12 +298,12 @@ namespace TAlex.MathCore.LinearAlgebra
             --dx;
 
             // Function Body
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
 
-            if (*incx == 1 && *incy == 1)
+            if (incx == 1 && incy == 1)
             {
                 goto L20;
             }
@@ -316,22 +313,22 @@ namespace TAlex.MathCore.LinearAlgebra
 
             ix = 1;
             iy = 1;
-            if (*incx < 0)
+            if (incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * incx + 1;
             }
 
-            if (*incy < 0)
+            if (incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * incy + 1;
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 dy[iy] = dx[ix];
-                ix += *incx;
-                iy += *incy;
+                ix += incx;
+                iy += incy;
             }
             return 0;
 
@@ -340,7 +337,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // clean-up loop
 
         L20:
-            m = *n % 7;
+            m = n % 7;
             if (m == 0)
             {
                 goto L40;
@@ -352,14 +349,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 dy[i] = dx[i];
             }
 
-            if (*n < 7)
+            if (n < 7)
             {
                 return 0;
             }
 
         L40:
             mp1 = m + 1;
-            i__1 = *n;
+            i__1 = n;
             for (i = mp1; i <= i__1; i += 7)
             {
                 dy[i] = dx[i];
@@ -375,7 +372,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double ddot(int* n, double* dx, int* incx, double* dy, int* incy)
+        public static double ddot(int n, double* dx, int* incx, double* dy, int* incy)
         {
             //  Purpose
             //  =======
@@ -400,7 +397,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body
             ret_val = 0.0;
             dtemp = 0.0;
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return ret_val;
             }
@@ -416,13 +413,13 @@ namespace TAlex.MathCore.LinearAlgebra
             iy = 1;
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 dtemp += dx[ix] * dy[iy];
@@ -437,7 +434,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // clean-up loop
 
         L20:
-            m = *n % 5;
+            m = n % 5;
             if (m == 0)
             {
                 goto L40;
@@ -447,14 +444,14 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 dtemp += dx[i] * dy[i];
             }
-            if (*n < 5)
+            if (n < 5)
             {
                 goto L60;
             }
 
         L40:
             mp1 = m + 1;
-            i__1 = *n;
+            i__1 = n;
             for (i = mp1; i <= i__1; i += 5)
             {
                 dtemp = dtemp + dx[i] * dy[i] + dx[i + 1] * dy[i + 1] +
@@ -467,8 +464,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dgemm(string transa, string transb, int* m, int* n, int* k,
-            double* alpha, double* a, int* lda, double* b, int* ldb, double* beta, double* c, int* ldc)
+        public static int dgemm(string transa, string transb, int m, int n, int* k,
+            double* alpha, double* a, int lda, double* b, int ldb, double* beta, double* c, int ldc)
         {
             //  Purpose
             //  =======
@@ -605,13 +602,13 @@ namespace TAlex.MathCore.LinearAlgebra
             int nrowa, nrowb;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
 
@@ -621,13 +618,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (nota)
             {
-                nrowa = *m;
+                nrowa = m;
                 ncola = *k;
             }
             else
             {
                 nrowa = *k;
-                ncola = *m;
+                ncola = m;
             }
             if (notb)
             {
@@ -635,7 +632,7 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else
             {
-                nrowb = *n;
+                nrowb = n;
             }
 
             // Test the input parameters.
@@ -649,11 +646,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 2;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = 3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = 4;
             }
@@ -661,15 +658,15 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 5;
             }
-            else if (*lda < Math.Max(1, nrowa))
+            else if (lda < Math.Max(1, nrowa))
             {
                 info = 8;
             }
-            else if (*ldb < Math.Max(1, nrowb))
+            else if (ldb < Math.Max(1, nrowb))
             {
                 info = 10;
             }
-            else if (*ldc < Math.Max(1, *m))
+            else if (ldc < Math.Max(1, m))
             {
                 info = 13;
             }
@@ -682,7 +679,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible.
 
-            if (*m == 0 || *n == 0 || (*alpha == 0.0 || *k == 0) && *beta == 1.0)
+            if (m == 0 || n == 0 || (*alpha == 0.0 || *k == 0) && *beta == 1.0)
             {
                 return 0;
             }
@@ -693,10 +690,10 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 if (*beta == 0.0)
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             c[i + j * c_dim1] = 0.0;
@@ -705,10 +702,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 else
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             c[i + j * c_dim1] = *beta * c[i + j * c_dim1];
@@ -726,12 +723,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Form  C := alpha*A*B + beta*C.
 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         if (*beta == 0.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 c[i + j * c_dim1] = 0.0;
@@ -739,7 +736,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                         else if (*beta != 1.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 c[i + j * c_dim1] = *beta * c[i + j * c_dim1];
@@ -751,7 +748,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             if (b[l + j * b_dim1] != 0.0)
                             {
                                 temp = *alpha * b[l + j * b_dim1];
-                                i__3 = *m;
+                                i__3 = m;
                                 for (i = 1; i <= i__3; ++i)
                                 {
                                     c[i + j * c_dim1] += temp * a[i + l * a_dim1];
@@ -764,10 +761,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Form  C := alpha*A'*B + beta*C
 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             temp = 0.0;
@@ -794,12 +791,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Form  C := alpha*A*B' + beta*C
 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         if (*beta == 0.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 c[i + j * c_dim1] = 0.0;
@@ -807,7 +804,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                         else if (*beta != 1.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 c[i + j * c_dim1] = *beta * c[i + j * c_dim1];
@@ -819,7 +816,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             if (b[j + l * b_dim1] != 0.0)
                             {
                                 temp = *alpha * b[j + l * b_dim1];
-                                i__3 = *m;
+                                i__3 = m;
                                 for (i = 1; i <= i__3; ++i)
                                 {
                                     c[i + j * c_dim1] += temp * a[i + l * a_dim1];
@@ -832,10 +829,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Form  C := alpha*A'*B' + beta*C
 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             temp = 0.0;
@@ -861,7 +858,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double dnrm2(int* n, double* x, int* incx)
+        public static double dnrm2(int n, double* x, int* incx)
         {
             //  Purpose
             //  =======
@@ -887,11 +884,11 @@ namespace TAlex.MathCore.LinearAlgebra
             --x;
 
             // Function Body
-            if (*n < 1 || *incx < 1)
+            if (n < 1 || *incx < 1)
             {
                 norm = 0.0;
             }
-            else if (*n == 1)
+            else if (n == 1)
             {
                 norm = Math.Abs(x[1]);
             }
@@ -903,7 +900,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // auxiliary routine:
                 // CALL DLASSQ( N, X, INCX, SCALE, SSQ )
 
-                i__1 = (*n - 1) * *incx + 1;
+                i__1 = (n - 1) * *incx + 1;
                 i__2 = *incx;
                 for (ix = 1; i__2 < 0 ? ix >= i__1 : ix <= i__1; ix += i__2)
                 {
@@ -933,7 +930,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int drot(int* n, double* dx, int* incx, double* dy, int* incy, double* c, double* s)
+        public static int drot(int n, double* dx, int* incx, double* dy, int* incy, double* c, double* s)
         {
             //  Purpose
             //  =======
@@ -954,7 +951,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --dx;
 
             // Function Body
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
@@ -970,15 +967,15 @@ namespace TAlex.MathCore.LinearAlgebra
             iy = 1;
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
 
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 dtemp = *c * dx[ix] + *s * dy[iy];
@@ -992,7 +989,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for both increments equal to 1
 
         L20:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 dtemp = *c * dx[i] + *s * dy[i];
@@ -1004,7 +1001,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dscal(int* n, double* da, double* dx, int* incx)
+        public static int dscal(int n, double* da, double* dx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1025,7 +1022,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --dx;
 
             // Function Body 
-            if (*n <= 0 || *incx <= 0)
+            if (n <= 0 || *incx <= 0)
             {
                 return 0;
             }
@@ -1036,7 +1033,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // code for increment not equal to 1 
 
-            nincx = *n * *incx;
+            nincx = n * *incx;
             i__1 = nincx;
             i__2 = *incx;
 
@@ -1052,7 +1049,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // clean-up loop 
 
         L20:
-            m = *n % 5;
+            m = n % 5;
             if (m == 0)
             {
                 goto L40;
@@ -1062,13 +1059,13 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 dx[i] = *da * dx[i];
             }
-            if (*n < 5)
+            if (n < 5)
             {
                 return 0;
             }
         L40:
             mp1 = m + 1;
-            i__2 = *n;
+            i__2 = n;
 
             for (i = mp1; i <= i__2; i += 5)
             {
@@ -1083,7 +1080,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dswap(int* n, double* dx, int* incx, double* dy, int* incy)
+        public static int dswap(int n, double* dx, int* incx, double* dy, int* incy)
         {
             //  Purpose
             //  =======
@@ -1105,7 +1102,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --dx;
 
             // Function Body
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
@@ -1121,15 +1118,15 @@ namespace TAlex.MathCore.LinearAlgebra
             iy = 1;
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
 
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 dtemp = dx[ix];
@@ -1146,7 +1143,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // clean-up loop
 
         L20:
-            m = *n % 3;
+            m = n % 3;
             if (m == 0)
             {
                 goto L40;
@@ -1160,14 +1157,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 dy[i] = dtemp;
             }
 
-            if (*n < 3)
+            if (n < 3)
             {
                 return 0;
             }
 
         L40:
             mp1 = m + 1;
-            i__1 = *n;
+            i__1 = n;
             for (i = mp1; i <= i__1; i += 3)
             {
                 dtemp = dx[i];
@@ -1185,7 +1182,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double dzasum(int* n, complex16* zx, int* incx)
+        public static double dzasum(int n, complex16* zx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1210,7 +1207,7 @@ namespace TAlex.MathCore.LinearAlgebra
             ret_val = 0.0;
             stemp = 0.0;
 
-            if (*n <= 0 || *incx <= 0)
+            if (n <= 0 || *incx <= 0)
             {
                 return ret_val;
             }
@@ -1222,7 +1219,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for increment not equal to 1 
 
             ix = 1;
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 stemp += dcabs1(&zx[ix]);
@@ -1235,7 +1232,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for increment equal to 1 
 
             L20:
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 1; i <= i__1; ++i)
             {
@@ -1247,7 +1244,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double dznrm2(int* n, complex16* x, int* incx)
+        public static double dznrm2(int n, complex16* x, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1274,7 +1271,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --x;
 
             // Function Body 
-            if (*n < 1 || *incx < 1)
+            if (n < 1 || *incx < 1)
             {
                 norm = 0.0;
             }
@@ -1287,7 +1284,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // auxiliary routine: 
                 // CALL ZLASSQ( N, X, INCX, SCALE, SSQ ) 
 
-                i__1 = (*n - 1) * *incx + 1;
+                i__1 = (n - 1) * *incx + 1;
                 i__2 = *incx;
 
                 for (ix = 1; i__2 < 0 ? ix >= i__1 : ix <= i__1; ix += i__2)
@@ -1341,7 +1338,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double dzsum1(int* n, complex16* cx, int* incx)
+        public static double dzsum1(int n, complex16* cx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -1387,7 +1384,7 @@ namespace TAlex.MathCore.LinearAlgebra
             ret_val = 0.0;
             stemp = 0.0;
 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return ret_val;
             }
@@ -1399,7 +1396,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // CODE FOR INCREMENT NOT EQUAL TO 1 
 
-            nincx = *n * *incx;
+            nincx = n * *incx;
             i__1 = nincx;
             i__2 = *incx;
 
@@ -1415,7 +1412,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // CODE FOR INCREMENT EQUAL TO 1 
 
         L20:
-            i__2 = *n;
+            i__2 = n;
             for (i = 1; i <= i__2; ++i)
             {
                 // NEXT LINE MODIFIED. 
@@ -1428,7 +1425,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int idamax(int* n, double* dx, int* incx)
+        public static int idamax(int n, double* dx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1451,12 +1448,12 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body 
             ret_val = 0;
 
-            if (*n < 1 || *incx <= 0)
+            if (n < 1 || *incx <= 0)
                 return ret_val;
 
             ret_val = 1;
 
-            if (*n == 1)
+            if (n == 1)
                 return ret_val;
 
             if (*incx == 1)
@@ -1467,7 +1464,7 @@ namespace TAlex.MathCore.LinearAlgebra
             ix = 1;
             dmax = Math.Abs(dx[1]);
             ix += *incx;
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 2; i <= i__1; ++i)
             {
@@ -1486,7 +1483,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             L20:
             dmax = Math.Abs(dx[1]);
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 2; i <= i__1; ++i)
             {
@@ -1504,7 +1501,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int izamax(int* n, complex16* zx, int* incx)
+        public static int izamax(int n, complex16* zx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -1526,13 +1523,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body 
             ret_val = 0;
-            if (*n < 1 || *incx <= 0)
+            if (n < 1 || *incx <= 0)
             {
                 return ret_val;
             }
             ret_val = 1;
 
-            if (*n == 1)
+            if (n == 1)
             {
                 return ret_val;
             }
@@ -1546,7 +1543,7 @@ namespace TAlex.MathCore.LinearAlgebra
             ix = 1;
             smax = dcabs1(&zx[1]);
             ix += *incx;
-            i__1 = *n;
+            i__1 = n;
             for (i = 2; i <= i__1; ++i)
             {
                 if (dcabs1(&zx[ix]) <= smax)
@@ -1567,7 +1564,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             L20:
             smax = dcabs1(&zx[1]);
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 2; i <= i__1; ++i)
             {
@@ -1587,7 +1584,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int izmax1(int* n, complex16* cx, int* incx)
+        public static int izmax1(int n, complex16* cx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -1630,13 +1627,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body 
             ret_val = 0;
-            if (*n < 1)
+            if (n < 1)
             {
                 return ret_val;
             }
 
             ret_val = 1;
-            if (*n == 1)
+            if (n == 1)
             {
                 return ret_val;
             }
@@ -1651,7 +1648,7 @@ namespace TAlex.MathCore.LinearAlgebra
             ix = 1;
             smax = z_abs(&cx[1]);
             ix += *incx;
-            i__1 = *n;
+            i__1 = n;
             for (i = 2; i <= i__1; ++i)
             {
                 if (z_abs(&cx[ix]) <= smax)
@@ -1672,7 +1669,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         L30:
             smax = z_abs(&cx[1]);
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 2; i <= i__1; ++i)
             {
@@ -1691,7 +1688,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zaxpy(int* n, complex16* za, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static int zaxpy(int n, complex16* za, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -1712,7 +1709,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --zx;
 
             // Function Body 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
@@ -1732,13 +1729,13 @@ namespace TAlex.MathCore.LinearAlgebra
             iy = 1;
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = iy;
@@ -1760,7 +1757,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for both increments equal to 1 
 
             L20:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = i;
@@ -1780,7 +1777,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zcopy(int* n, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static int zcopy(int n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -1800,7 +1797,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --zx;
 
             // Function Body 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
@@ -1818,15 +1815,15 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
 
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
 
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 1; i <= i__1; ++i)
             {
@@ -1845,7 +1842,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for both increments equal to 1 
 
             L20:
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 1; i <= i__1; ++i)
             {
@@ -1860,7 +1857,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static void zdotc(complex16* ret_val, int* n, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static void zdotc(complex16* ret_val, int n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -1891,7 +1888,7 @@ namespace TAlex.MathCore.LinearAlgebra
             ret_val.r = 0.0;
             ret_val.i = 0.0;
 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return;
             }
@@ -1907,13 +1904,13 @@ namespace TAlex.MathCore.LinearAlgebra
             iy = 1;
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 1; i <= i__1; ++i)
             {
@@ -1940,7 +1937,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for both increments equal to 1 
 
         L20:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 d_cnjg(&z__3, &zx[i]);
@@ -1963,7 +1960,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static void zdotu(complex16* ret_val, int* n, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static void zdotu(complex16* ret_val, int n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -1994,7 +1991,7 @@ namespace TAlex.MathCore.LinearAlgebra
             ret_val.r = 0.0;
             ret_val.i = 0.0;
 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return;
             }
@@ -2010,13 +2007,13 @@ namespace TAlex.MathCore.LinearAlgebra
             iy = 1;
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 1; i <= i__1; ++i)
             {
@@ -2043,7 +2040,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for both increments equal to 1 
 
         L20:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = i;
@@ -2066,7 +2063,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zdscal(int* n, double* da, complex16* zx, int* incx)
+        public static int zdscal(int n, double* da, complex16* zx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -2087,7 +2084,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --zx;
 
             // Function Body 
-            if (*n <= 0 || *incx <= 0)
+            if (n <= 0 || *incx <= 0)
             {
                 return 0;
             }
@@ -2100,7 +2097,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for increment not equal to 1 
 
             ix = 1;
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = ix;
@@ -2120,7 +2117,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for increment equal to 1 
 
             L20:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = i;
@@ -2139,9 +2136,9 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgemm(string transa, string transb, int* m, int* n, int* k,
-            complex16* alpha, complex16* a, int* lda, complex16* b,
-            int* ldb, complex16* beta, complex16* c, int* ldc)
+        public static int zgemm(string transa, string transb, int m, int n, int k,
+            complex16 alpha, complex16[] a, int lda, complex16[] b,
+            int ldb, complex16 beta, complex16[] c, int ldc)
         {
             //  Purpose 
             //  ======= 
@@ -2281,13 +2278,13 @@ namespace TAlex.MathCore.LinearAlgebra
             int nrowa, nrowb;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
 
@@ -2299,13 +2296,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (nota)
             {
-                nrowa = *m;
+                nrowa = m;
                 ncola = *k;
             }
             else
             {
                 nrowa = *k;
-                ncola = *m;
+                ncola = m;
             }
 
             if (notb)
@@ -2314,7 +2311,7 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else
             {
-                nrowb = *n;
+                nrowb = n;
             }
 
             // Test the input parameters. 
@@ -2328,11 +2325,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 2;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = 3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = 4;
             }
@@ -2340,15 +2337,15 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 5;
             }
-            else if (*lda < Math.Max(1, nrowa))
+            else if (lda < Math.Max(1, nrowa))
             {
                 info = 8;
             }
-            else if (*ldb < Math.Max(1, nrowb))
+            else if (ldb < Math.Max(1, nrowb))
             {
                 info = 10;
             }
-            else if (*ldc < Math.Max(1, *m))
+            else if (ldc < Math.Max(1, m))
             {
                 info = 13;
             }
@@ -2361,7 +2358,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*m == 0 || *n == 0 || (alpha.r == 0.0 && alpha.i == 0.0 || *k == 0) && (beta.r == 1.0 && beta.i == 0.0))
+            if (m == 0 || n == 0 || (alpha.r == 0.0 && alpha.i == 0.0 || *k == 0) && (beta.r == 1.0 && beta.i == 0.0))
             {
                 return 0;
             }
@@ -2372,10 +2369,10 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 if (beta.r == 0.0 && beta.i == 0.0)
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             i__3 = i + j * c_dim1;
@@ -2387,10 +2384,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 else
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             i__3 = i + j * c_dim1;
@@ -2414,13 +2411,13 @@ namespace TAlex.MathCore.LinearAlgebra
                 if (nota)
                 {
                     // Form  C := alpha*A*B + beta*C. 
-                    i__1 = *n;
+                    i__1 = n;
 
                     for (j = 1; j <= i__1; ++j)
                     {
                         if (beta.r == 0.0 && beta.i == 0.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * c_dim1;
@@ -2431,7 +2428,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                         else if (beta.r != 1.0 || beta.i != 0.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * c_dim1;
@@ -2459,7 +2456,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
 
-                                i__3 = *m;
+                                i__3 = m;
 
                                 for (i = 1; i <= i__3; ++i)
                                 {
@@ -2484,10 +2481,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Form  C := alpha*conjg( A' )*B + beta*C. 
 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             temp.r = 0.0;
@@ -2543,10 +2540,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 else
                 {
                     // Form  C := alpha*A'*B + beta*C 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             temp.r = 0.0;
@@ -2602,12 +2599,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 if (conjb)
                 {
                     // Form  C := alpha*A*conjg( B' ) + beta*C. 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         if (beta.r == 0.0 && beta.i == 0.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * c_dim1;
@@ -2617,7 +2614,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                         else if (beta.r != 1.0 || beta.i != 0.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * c_dim1;
@@ -2644,7 +2641,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
 
-                                i__3 = *m;
+                                i__3 = m;
                                 for (i = 1; i <= i__3; ++i)
                                 {
                                     i__4 = i + j * c_dim1;
@@ -2667,12 +2664,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 else
                 {
                     // Form  C := alpha*A*B'          + beta*C 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         if (beta.r == 0.0 && beta.i == 0.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * c_dim1;
@@ -2682,7 +2679,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                         else if (beta.r != 1.0 || beta.i != 0.0)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * c_dim1;
@@ -2710,7 +2707,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
 
-                                i__3 = *m;
+                                i__3 = m;
                                 for (i = 1; i <= i__3; ++i)
                                 {
                                     i__4 = i + j * c_dim1;
@@ -2736,10 +2733,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 if (conjb)
                 {
                     // Form  C := alpha*conjg( A' )*conjg( B' ) + beta*C. 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             temp.r = 0.0;
@@ -2792,10 +2789,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 else
                 {
                     // Form  C := alpha*conjg( A' )*B' + beta*C 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             temp.r = 0.0;
@@ -2851,10 +2848,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 if (conjb)
                 {
                     // Form  C := alpha*A'*conjg( B' ) + beta*C 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             temp.r = 0.0;
@@ -2908,10 +2905,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 else
                 {
                     // Form  C := alpha*A'*B' + beta*C 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             temp.r = 0.0;
@@ -2969,8 +2966,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgemv(string trans, int* m, int* n, complex16* alpha,
-            complex16* a, int* lda, complex16* x, int* incx,
+        public static int zgemv(string trans, int m, int n, complex16* alpha,
+            complex16* a, int lda, complex16* x, int* incx,
             complex16* beta, complex16* y, int* incy)
         {
             //  Purpose 
@@ -3076,7 +3073,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool noconj;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --x;
@@ -3088,15 +3085,15 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 1;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = 2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = 3;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = 6;
             }
@@ -3117,7 +3114,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*m == 0 || *n == 0 || alpha.r == 0.0 && alpha.i == 0.0 && (beta.r == 1.0 && beta.i == 0.0))
+            if (m == 0 || n == 0 || alpha.r == 0.0 && alpha.i == 0.0 && (beta.r == 1.0 && beta.i == 0.0))
             {
                 return 0;
             }
@@ -3129,13 +3126,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (lsame(trans, "N"))
             {
-                lenx = *n;
-                leny = *m;
+                lenx = n;
+                leny = m;
             }
             else
             {
-                lenx = *m;
-                leny = *n;
+                lenx = m;
+                leny = n;
             }
 
             if (*incx > 0)
@@ -3226,7 +3223,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 jx = kx;
                 if (*incy == 1)
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         i__2 = jx;
@@ -3239,7 +3236,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             temp.r = z__1.r;
                             temp.i = z__1.i;
 
-                            i__2 = *m;
+                            i__2 = m;
 
                             for (i = 1; i <= i__2; ++i)
                             {
@@ -3261,7 +3258,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 else
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         i__2 = jx;
@@ -3275,7 +3272,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             temp.i = z__1.i;
 
                             iy = ky;
-                            i__2 = *m;
+                            i__2 = m;
 
                             for (i = 1; i <= i__2; ++i)
                             {
@@ -3304,7 +3301,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 jy = ky;
                 if (*incx == 1)
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         temp.r = 0.0;
@@ -3312,7 +3309,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         if (noconj)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * a_dim1;
@@ -3329,7 +3326,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                         else
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 d_cnjg(&z__3, &a[i + j * a_dim1]);
@@ -3360,7 +3357,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 else
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         temp.r = 0.0;
@@ -3369,7 +3366,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         if (noconj)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * a_dim1;
@@ -3387,7 +3384,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                         else
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 d_cnjg(&z__3, &a[i + j * a_dim1]);
@@ -3423,9 +3420,9 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgerc(int* m, int* n, complex16* alpha,
+        public static int zgerc(int m, int n, complex16* alpha,
             complex16* x, int* incx, complex16* y, int* incy,
-            complex16* a, int* lda)
+            complex16* a, int lda)
         {
             //  Purpose 
             //  ======= 
@@ -3507,17 +3504,17 @@ namespace TAlex.MathCore.LinearAlgebra
             // Parameter adjustments 
             --x;
             --y;
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
 
             // Function Body 
             info = 0;
-            if (*m < 0)
+            if (m < 0)
             {
                 info = 1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = 2;
             }
@@ -3529,7 +3526,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 7;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = 9;
             }
@@ -3542,7 +3539,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*m == 0 || *n == 0 || alpha.r == 0.0 && alpha.i == 0.0)
+            if (m == 0 || n == 0 || alpha.r == 0.0 && alpha.i == 0.0)
             {
                 return 0;
             }
@@ -3556,11 +3553,11 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else
             {
-                jy = 1 - (*n - 1) * *incy;
+                jy = 1 - (n - 1) * *incy;
             }
             if (*incx == 1)
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     i__2 = jy;
@@ -3574,7 +3571,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         temp.r = z__1.r;
                         temp.i = z__1.i;
 
-                        i__2 = *m;
+                        i__2 = m;
                         for (i = 1; i <= i__2; ++i)
                         {
                             i__3 = i + j * a_dim1;
@@ -3602,10 +3599,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 else
                 {
-                    kx = 1 - (*m - 1) * *incx;
+                    kx = 1 - (m - 1) * *incx;
                 }
 
-                i__1 = *n;
+                i__1 = n;
 
                 for (j = 1; j <= i__1; ++j)
                 {
@@ -3621,7 +3618,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         temp.i = z__1.i;
 
                         ix = kx;
-                        i__2 = *m;
+                        i__2 = m;
 
                         for (i = 1; i <= i__2; ++i)
                         {
@@ -3648,7 +3645,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zscal(int* n, complex16* za, complex16* zx, int* incx)
+        public static int zscal(int n, complex16* za, complex16* zx, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -3669,7 +3666,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --zx;
 
             // Function Body 
-            if (*n <= 0 || *incx <= 0)
+            if (n <= 0 || *incx <= 0)
             {
                 return 0;
             }
@@ -3681,7 +3678,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for increment not equal to 1 
 
             ix = 1;
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = ix;
@@ -3698,7 +3695,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for increment equal to 1 
 
             L20:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = i;
@@ -3714,7 +3711,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zswap(int* n, complex16* zx, int* incx, complex16* zy, int* incy)
+        public static int zswap(int n, complex16* zx, int* incx, complex16* zy, int* incy)
         {
             //  Purpose 
             //  ======= 
@@ -3735,7 +3732,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --zx;
 
             // Function Body 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
@@ -3751,13 +3748,13 @@ namespace TAlex.MathCore.LinearAlgebra
             iy = 1;
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = ix;
@@ -3778,7 +3775,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // code for both increments equal to 1 
 
         L20:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = i;
@@ -3801,7 +3798,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int ztrmm(string side, string uplo, string transa, string diag,
-            int* m, int* n, complex16* alpha, complex16* a, int* lda, complex16* b, int* ldb)
+            int m, int n, complex16* alpha, complex16* a, int lda, complex16* b, int ldb)
         {
             //  Purpose 
             //  ======= 
@@ -3931,10 +3928,10 @@ namespace TAlex.MathCore.LinearAlgebra
             bool noconj, nounit;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
 
@@ -3943,11 +3940,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (lside)
             {
-                nrowa = *m;
+                nrowa = m;
             }
             else
             {
-                nrowa = *n;
+                nrowa = n;
             }
 
             noconj = lsame(transa, "T");
@@ -3971,19 +3968,19 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 4;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = 5;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = 6;
             }
-            else if (*lda < Math.Max(1, nrowa))
+            else if (lda < Math.Max(1, nrowa))
             {
                 info = 9;
             }
-            else if (*ldb < Math.Max(1, *m))
+            else if (ldb < Math.Max(1, m))
             {
                 info = 11;
             }
@@ -3996,7 +3993,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*m == 0 || *n == 0)
+            if (m == 0 || n == 0)
             {
                 return 0;
             }
@@ -4005,10 +4002,10 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (alpha.r == 0.0 && alpha.i == 0.0)
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * b_dim1;
@@ -4028,10 +4025,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Form  B := alpha*A*B. 
                     if (upper)
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (j = 1; j <= i__1; ++j)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (k = 1; k <= i__2; ++k)
                             {
                                 i__3 = k + j * b_dim1;
@@ -4079,10 +4076,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (j = 1; j <= i__1; ++j)
                         {
-                            for (k = *m; k >= 1; --k)
+                            for (k = m; k >= 1; --k)
                             {
                                 i__2 = k + j * b_dim1;
 
@@ -4111,7 +4108,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                         b[i__2].r = z__1.r;
                                         b[i__2].i = z__1.i;
                                     }
-                                    i__2 = *m;
+                                    i__2 = m;
                                     for (i = k + 1; i <= i__2; ++i)
                                     {
                                         i__3 = i + j * b_dim1;
@@ -4137,10 +4134,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Form  B := alpha*A'*B   or   B := alpha*conjg( A' )*B. 
                     if (upper)
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (j = 1; j <= i__1; ++j)
                         {
-                            for (i = *m; i >= 1; --i)
+                            for (i = m; i >= 1; --i)
                             {
                                 i__2 = i + j * b_dim1;
                                 temp.r = b[i__2].r;
@@ -4217,10 +4214,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (j = 1; j <= i__1; ++j)
                         {
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * b_dim1;
@@ -4238,7 +4235,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                         temp.r = z__1.r;
                                         temp.i = z__1.i;
                                     }
-                                    i__3 = *m;
+                                    i__3 = m;
                                     for (k = i + 1; k <= i__3; ++k)
                                     {
                                         i__4 = k + i * a_dim1;
@@ -4267,7 +4264,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                         temp.i = z__1.i;
                                     }
 
-                                    i__3 = *m;
+                                    i__3 = m;
 
                                     for (k = i + 1; k <= i__3; ++k)
                                     {
@@ -4304,7 +4301,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Form  B := alpha*B*A. 
                     if (upper)
                     {
-                        for (j = *n; j >= 1; --j)
+                        for (j = n; j >= 1; --j)
                         {
                             temp.r = alpha.r;
                             temp.i = alpha.i;
@@ -4319,7 +4316,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
                             }
-                            i__1 = *m;
+                            i__1 = m;
 
                             for (i = 1; i <= i__1; ++i)
                             {
@@ -4347,7 +4344,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                                     temp.r = z__1.r;
                                     temp.i = z__1.i;
-                                    i__2 = *m;
+                                    i__2 = m;
                                     for (i = 1; i <= i__2; ++i)
                                     {
                                         i__3 = i + j * b_dim1;
@@ -4369,7 +4366,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (j = 1; j <= i__1; ++j)
                         {
                             temp.r = alpha.r;
@@ -4384,7 +4381,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = z__1.r;
                                 temp.i = z__1.i;
                             }
-                            i__2 = *m;
+                            i__2 = m;
                             for (i = 1; i <= i__2; ++i)
                             {
                                 i__3 = i + j * b_dim1;
@@ -4396,7 +4393,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 b[i__3].r = z__1.r;
                                 b[i__3].i = z__1.i;
                             }
-                            i__2 = *n;
+                            i__2 = n;
 
                             for (k = j + 1; k <= i__2; ++k)
                             {
@@ -4409,7 +4406,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                                     temp.r = z__1.r;
                                     temp.i = z__1.i;
-                                    i__3 = *m;
+                                    i__3 = m;
 
                                     for (i = 1; i <= i__3; ++i)
                                     {
@@ -4436,7 +4433,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Form  B := alpha*B*A'   or   B := alpha*B*conjg( A' ). 
                     if (upper)
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (k = 1; k <= i__1; ++k)
                         {
                             i__2 = k - 1;
@@ -4465,7 +4462,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                         temp.i = z__1.i;
                                     }
 
-                                    i__3 = *m;
+                                    i__3 = m;
                                     for (i = 1; i <= i__3; ++i)
                                     {
                                         i__4 = i + j * b_dim1;
@@ -4511,7 +4508,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             }
                             if (temp.r != 1.0 || temp.i != 0.0)
                             {
-                                i__2 = *m;
+                                i__2 = m;
                                 for (i = 1; i <= i__2; ++i)
                                 {
                                     i__3 = i + k * b_dim1;
@@ -4528,9 +4525,9 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        for (k = *n; k >= 1; --k)
+                        for (k = n; k >= 1; --k)
                         {
-                            i__1 = *n;
+                            i__1 = n;
                             for (j = k + 1; j <= i__1; ++j)
                             {
                                 i__2 = j + k * a_dim1;
@@ -4556,7 +4553,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                         temp.r = z__1.r;
                                         temp.i = z__1.i;
                                     }
-                                    i__2 = *m;
+                                    i__2 = m;
                                     for (i = 1; i <= i__2; ++i)
                                     {
                                         i__3 = i + j * b_dim1;
@@ -4603,7 +4600,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             }
                             if (temp.r != 1.0 || temp.i != 0.0)
                             {
-                                i__1 = *m;
+                                i__1 = m;
                                 for (i = 1; i <= i__1; ++i)
                                 {
                                     i__2 = i + k * b_dim1;
@@ -4625,8 +4622,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int ztrmv(string uplo, string trans, string diag, int* n,
-            complex16* a, int* lda, complex16* x, int* incx)
+        public static int ztrmv(string uplo, string trans, string diag, int n,
+            complex16* a, int lda, complex16* x, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -4728,7 +4725,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool noconj, nounit;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --x;
@@ -4747,11 +4744,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = 4;
             }
-            else if (*lda < Math.Max(1, *n))
+            else if (lda < Math.Max(1, n))
             {
                 info = 6;
             }
@@ -4768,7 +4765,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
@@ -4781,7 +4778,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*incx <= 0)
             {
-                kx = 1 - (*n - 1) * *incx;
+                kx = 1 - (n - 1) * *incx;
             }
             else if (*incx != 1)
             {
@@ -4798,7 +4795,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (*incx == 1)
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (j = 1; j <= i__1; ++j)
                         {
                             i__2 = j;
@@ -4844,7 +4841,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     else
                     {
                         jx = kx;
-                        i__1 = *n;
+                        i__1 = n;
 
                         for (j = 1; j <= i__1; ++j)
                         {
@@ -4899,7 +4896,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (*incx == 1)
                     {
-                        for (j = *n; j >= 1; --j)
+                        for (j = n; j >= 1; --j)
                         {
                             i__1 = j;
                             if (x[i__1].r != 0.0 || x[i__1].i != 0.0)
@@ -4910,7 +4907,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.i = x[i__1].i;
 
                                 i__1 = j + 1;
-                                for (i = *n; i >= i__1; --i)
+                                for (i = n; i >= i__1; --i)
                                 {
                                     i__2 = i;
                                     i__3 = i;
@@ -4943,10 +4940,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        kx += (*n - 1) * *incx;
+                        kx += (n - 1) * *incx;
                         jx = kx;
 
-                        for (j = *n; j >= 1; --j)
+                        for (j = n; j >= 1; --j)
                         {
                             i__1 = jx;
                             if (x[i__1].r != 0.0 || x[i__1].i != 0.0)
@@ -4959,7 +4956,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 ix = kx;
                                 i__1 = j + 1;
 
-                                for (i = *n; i >= i__1; --i)
+                                for (i = n; i >= i__1; --i)
                                 {
                                     i__2 = ix;
                                     i__3 = ix;
@@ -5001,7 +4998,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (*incx == 1)
                     {
-                        for (j = *n; j >= 1; --j)
+                        for (j = n; j >= 1; --j)
                         {
                             i__1 = j;
 
@@ -5071,9 +5068,9 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        jx = kx + (*n - 1) * *incx;
+                        jx = kx + (n - 1) * *incx;
 
-                        for (j = *n; j >= 1; --j)
+                        for (j = n; j >= 1; --j)
                         {
                             i__1 = jx;
 
@@ -5152,7 +5149,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (*incx == 1)
                     {
-                        i__1 = *n;
+                        i__1 = n;
 
                         for (j = 1; j <= i__1; ++j)
                         {
@@ -5174,7 +5171,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                     temp.i = z__1.i;
                                 }
 
-                                i__2 = *n;
+                                i__2 = n;
 
                                 for (i = j + 1; i <= i__2; ++i)
                                 {
@@ -5204,7 +5201,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                     temp.i = z__1.i;
                                 }
 
-                                i__2 = *n;
+                                i__2 = n;
 
                                 for (i = j + 1; i <= i__2; ++i)
                                 {
@@ -5231,7 +5228,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     else
                     {
                         jx = kx;
-                        i__1 = *n;
+                        i__1 = n;
 
                         for (j = 1; j <= i__1; ++j)
                         {
@@ -5255,7 +5252,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                     temp.i = z__1.i;
                                 }
 
-                                i__2 = *n;
+                                i__2 = n;
 
                                 for (i = j + 1; i <= i__2; ++i)
                                 {
@@ -5286,7 +5283,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                     temp.i = z__1.i;
                                 }
 
-                                i__2 = *n;
+                                i__2 = n;
 
                                 for (i = j + 1; i <= i__2; ++i)
                                 {
@@ -5320,7 +5317,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int ztrsv(string uplo, string trans, string diag,
-            int* n, complex16* a, int* lda, complex16* x, int* incx)
+            int n, complex16* a, int lda, complex16* x, int* incx)
         {
             //  Purpose 
             //  ======= 
@@ -5425,7 +5422,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool noconj, nounit;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --x;
@@ -5444,11 +5441,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = 4;
             }
-            else if (*lda < Math.Max(1, *n))
+            else if (lda < Math.Max(1, n))
             {
                 info = 6;
             }
@@ -5465,7 +5462,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
@@ -5478,7 +5475,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*incx <= 0)
             {
-                kx = 1 - (*n - 1) * *incx;
+                kx = 1 - (n - 1) * *incx;
             }
             else if (*incx != 1)
             {
@@ -5496,7 +5493,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (*incx == 1)
                     {
-                        for (j = *n; j >= 1; --j)
+                        for (j = n; j >= 1; --j)
                         {
                             i__1 = j;
 
@@ -5536,8 +5533,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        jx = kx + (*n - 1) * *incx;
-                        for (j = *n; j >= 1; --j)
+                        jx = kx + (n - 1) * *incx;
+                        for (j = n; j >= 1; --j)
                         {
                             i__1 = jx;
                             if (x[i__1].r != 0.0 || x[i__1].i != 0.0)
@@ -5582,7 +5579,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (*incx == 1)
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (j = 1; j <= i__1; ++j)
                         {
                             i__2 = j;
@@ -5602,7 +5599,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.r = x[i__2].r;
                                 temp.i = x[i__2].i;
 
-                                i__2 = *n;
+                                i__2 = n;
                                 for (i = j + 1; i <= i__2; ++i)
                                 {
                                     i__3 = i;
@@ -5624,7 +5621,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     else
                     {
                         jx = kx;
-                        i__1 = *n;
+                        i__1 = n;
 
                         for (j = 1; j <= i__1; ++j)
                         {
@@ -5646,7 +5643,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 temp.i = x[i__2].i;
 
                                 ix = jx;
-                                i__2 = *n;
+                                i__2 = n;
 
                                 for (i = j + 1; i <= i__2; ++i)
                                 {
@@ -5678,7 +5675,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (*incx == 1)
                     {
-                        i__1 = *n;
+                        i__1 = n;
 
                         for (j = 1; j <= i__1; ++j)
                         {
@@ -5751,7 +5748,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     else
                     {
                         jx = kx;
-                        i__1 = *n;
+                        i__1 = n;
 
                         for (j = 1; j <= i__1; ++j)
                         {
@@ -5829,7 +5826,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (*incx == 1)
                     {
-                        for (j = *n; j >= 1; --j)
+                        for (j = n; j >= 1; --j)
                         {
                             i__1 = j;
 
@@ -5839,7 +5836,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             if (noconj)
                             {
                                 i__1 = j + 1;
-                                for (i = *n; i >= i__1; --i)
+                                for (i = n; i >= i__1; --i)
                                 {
                                     i__2 = i + j * a_dim1;
                                     i__3 = i;
@@ -5865,7 +5862,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             else
                             {
                                 i__1 = j + 1;
-                                for (i = *n; i >= i__1; --i)
+                                for (i = n; i >= i__1; --i)
                                 {
                                     d_cnjg(&z__3, &a[i + j * a_dim1]);
                                     i__2 = i;
@@ -5897,10 +5894,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        kx += (*n - 1) * *incx;
+                        kx += (n - 1) * *incx;
                         jx = kx;
 
-                        for (j = *n; j >= 1; --j)
+                        for (j = n; j >= 1; --j)
                         {
                             ix = kx;
                             i__1 = jx;
@@ -5912,7 +5909,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             {
                                 i__1 = j + 1;
 
-                                for (i = *n; i >= i__1; --i)
+                                for (i = n; i >= i__1; --i)
                                 {
                                     i__2 = i + j * a_dim1;
                                     i__3 = ix;
@@ -5940,7 +5937,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             else
                             {
                                 i__1 = j + 1;
-                                for (i = *n; i >= i__1; --i)
+                                for (i = n; i >= i__1; --i)
                                 {
                                     d_cnjg(&z__3, &a[i + j * a_dim1]);
                                     i__2 = ix;
@@ -5986,7 +5983,7 @@ namespace TAlex.MathCore.LinearAlgebra
         #region Double precision real routines
 
         
-        public static int dbdsdc(string uplo, string compq, int* n, double* d, double* e,
+        public static int dbdsdc(string uplo, string compq, int n, double* d, double* e,
             double* u, int* ldu, double* vt, int* ldvt, double* q, int* iq, double* work, int* iwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -6187,15 +6184,15 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -3;
             }
-            else if (*ldu < 1 || icompq == 2 && *ldu < *n)
+            else if (*ldu < 1 || icompq == 2 && *ldu < n)
             {
                 info = -7;
             }
-            else if (*ldvt < 1 || icompq == 2 && *ldvt < *n)
+            else if (*ldvt < 1 || icompq == 2 && *ldvt < n)
             {
                 info = -9;
             }
@@ -6209,17 +6206,17 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
             smlsiz = ilaenv(&c__9, "DBDSDC", " ", &c__0, &c__0, &c__0, &c__0);
-            if (*n == 1)
+            if (n == 1)
             {
                 if (icompq == 1)
                 {
                     q[1] = d_sign(&c_b15, &d[1]);
-                    q[smlsiz * *n + 1] = 1.0;
+                    q[smlsiz * n + 1] = 1.0;
                 }
                 else if (icompq == 2)
                 {
@@ -6229,7 +6226,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 d[1] = Math.Abs(d[1]);
                 return 0;
             }
-            nm1 = *n - 1;
+            nm1 = n - 1;
 
             // If matrix lower bidiagonal, rotate to be upper bidiagonal
             // by applying Givens rotations on the left
@@ -6240,15 +6237,15 @@ namespace TAlex.MathCore.LinearAlgebra
             if (icompq == 1)
             {
                 dcopy(n, &d[1], &c__1, &q[1], &c__1);
-                i__1 = *n - 1;
-                dcopy(&i__1, &e[1], &c__1, &q[*n + 1], &c__1);
+                i__1 = n - 1;
+                dcopy(&i__1, &e[1], &c__1, &q[n + 1], &c__1);
             }
 
             if (iuplo == 2)
             {
                 qstart = 5;
-                wstart = (*n << 1) - 1;
-                i__1 = *n - 1;
+                wstart = (n << 1) - 1;
+                i__1 = n - 1;
                 for (i = 1; i <= i__1; ++i)
                 {
                     dlartg(&d[i], &e[i], &cs, &sn, &r);
@@ -6257,8 +6254,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     d[i + 1] = cs * d[i + 1];
                     if (icompq == 1)
                     {
-                        q[i + (*n << 1)] = cs;
-                        q[i + *n * 3] = sn;
+                        q[i + (n << 1)] = cs;
+                        q[i + n * 3] = sn;
                     }
                     else if (icompq == 2)
                     {
@@ -6281,7 +6278,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // If N is_ smaller than the minimum divide size SMLSIZ, then solve
             // the problem with another solver.
 
-            if (*n <= smlsiz)
+            if (n <= smlsiz)
             {
                 if (icompq == 2)
                 {
@@ -6293,11 +6290,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 else if (icompq == 1)
                 {
                     iu = 1;
-                    ivt = iu + *n;
-                    dlaset("A", n, n, &c_b29, &c_b15, &q[iu + (qstart - 1) * *n], n);
-                    dlaset("A", n, n, &c_b29, &c_b15, &q[ivt + (qstart - 1) * *n], n);
-                    dlasdq("U", &c__0, n, n, n, &c__0, &d[1], &e[1], &q[ivt + (qstart - 1) * *n],
-                        n, &q[iu + (qstart - 1) * *n], n, &q[iu + (qstart - 1) * *n],
+                    ivt = iu + n;
+                    dlaset("A", n, n, &c_b29, &c_b15, &q[iu + (qstart - 1) * n], n);
+                    dlaset("A", n, n, &c_b29, &c_b15, &q[ivt + (qstart - 1) * n], n);
+                    dlasdq("U", &c__0, n, n, n, &c__0, &d[1], &e[1], &q[ivt + (qstart - 1) * n],
+                        n, &q[iu + (qstart - 1) * n], n, &q[iu + (qstart - 1) * n],
                         n, &work[wstart], info);
                 }
                 goto L40;
@@ -6321,7 +6318,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             eps = dlamch("Epsilon");
 
-            mlvl = (int)(Math.Log((double)(*n) / (double)(smlsiz + 1)) / Math.Log(2.0)) + 1;
+            mlvl = (int)(Math.Log((double)(n) / (double)(smlsiz + 1)) / Math.Log(2.0)) + 1;
             smlszp = smlsiz + 1;
 
             if (icompq == 1)
@@ -6342,7 +6339,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 givcol = perm + mlvl;
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 if (Math.Abs(d[i]) < eps)
@@ -6372,7 +6369,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         // A subproblem with E(NM1) not too small but I = NM1.
 
-                        nsize = *n - start + 1;
+                        nsize = n - start + 1;
                     }
                     else
                     {
@@ -6383,15 +6380,15 @@ namespace TAlex.MathCore.LinearAlgebra
                         nsize = i - start + 1;
                         if (icompq == 2)
                         {
-                            u[*n + *n * u_dim1] = d_sign(&c_b15, &d[*n]);
-                            vt[*n + *n * vt_dim1] = 1.0;
+                            u[n + n * u_dim1] = d_sign(&c_b15, &d[n]);
+                            vt[n + n * vt_dim1] = 1.0;
                         }
                         else if (icompq == 1)
                         {
-                            q[*n + (qstart - 1) * *n] = d_sign(&c_b15, &d[*n]);
-                            q[*n + (smlsiz + qstart - 1) * *n] = 1.0;
+                            q[n + (qstart - 1) * n] = d_sign(&c_b15, &d[n]);
+                            q[n + (smlsiz + qstart - 1) * n] = 1.0;
                         }
-                        d[*n] = Math.Abs(d[*n]);
+                        d[n] = Math.Abs(d[n]);
                     }
                     if (icompq == 2)
                     {
@@ -6400,12 +6397,12 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        dlasda(&icompq, &smlsiz, &nsize, &sqre, &d[start], &e[start], &q[start + (iu + qstart - 2) * *n],
-                            n, &q[start + (ivt + qstart - 2) * *n], &iq[start + k * *n], &q[start + (difl + qstart - 2) * *n],
-                            &q[start + (difr + qstart - 2) * *n], &q[start + (z + qstart - 2) * *n],
-                            &q[start + (poles + qstart - 2) * *n], &iq[start + givptr * *n], &iq[start + givcol * *n], n,
-                            &iq[start + perm * *n], &q[start + (givnum + qstart - 2) * *n], &q[start + (ic + qstart - 2) * *n],
-                            &q[start + (is_ + qstart - 2) * *n], &work[wstart], &iwork[1], info);
+                        dlasda(&icompq, &smlsiz, &nsize, &sqre, &d[start], &e[start], &q[start + (iu + qstart - 2) * n],
+                            n, &q[start + (ivt + qstart - 2) * n], &iq[start + k * n], &q[start + (difl + qstart - 2) * n],
+                            &q[start + (difr + qstart - 2) * n], &q[start + (z + qstart - 2) * n],
+                            &q[start + (poles + qstart - 2) * n], &iq[start + givptr * n], &iq[start + givcol * n], n,
+                            &iq[start + perm * n], &q[start + (givnum + qstart - 2) * n], &q[start + (ic + qstart - 2) * n],
+                            &q[start + (is_ + qstart - 2) * n], &work[wstart], &iwork[1], info);
 
                         if (info != 0)
                         {
@@ -6423,13 +6420,13 @@ namespace TAlex.MathCore.LinearAlgebra
         L40:
             // Use Selection Sort to minimize swaps of singular vectors
 
-            i__1 = *n;
+            i__1 = n;
             for (ii = 2; ii <= i__1; ++ii)
             {
                 i = ii - 1;
                 kk = i;
                 p = d[i];
-                i__2 = *n;
+                i__2 = n;
                 for (j = ii; j <= i__2; ++j)
                 {
                     if (d[j] > p)
@@ -6464,11 +6461,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 if (iuplo == 1)
                 {
-                    iq[*n] = 1;
+                    iq[n] = 1;
                 }
                 else
                 {
-                    iq[*n] = 0;
+                    iq[n] = 0;
                 }
             }
 
@@ -6477,15 +6474,15 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (iuplo == 2 && icompq == 2)
             {
-                dlasr("L", "V", "B", n, n, &work[1], &work[*n], &u[u_offset], ldu);
+                dlasr("L", "V", "B", n, n, &work[1], &work[n], &u[u_offset], ldu);
             }
 
             return 0;
         }
 
         
-        public static int dbdsqr(string uplo, int* n, int* ncvt, int* nru, int* ncc, double* d,
-            double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int* ldc, double* work, out int info)
+        public static int dbdsqr(string uplo, int n, int* ncvt, int* nru, int* ncc, double* d,
+            double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int ldc, double* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -6669,7 +6666,7 @@ namespace TAlex.MathCore.LinearAlgebra
             u_dim1 = *ldu;
             u_offset = 1 + u_dim1;
             u -= u_offset;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -6681,7 +6678,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
@@ -6697,7 +6694,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -5;
             }
-            else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < Math.Max(1, *n))
+            else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < Math.Max(1, n))
             {
                 info = -9;
             }
@@ -6705,7 +6702,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -11;
             }
-            else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < Math.Max(1, *n))
+            else if (*ncc == 0 && ldc < 1 || *ncc > 0 && ldc < Math.Max(1, n))
             {
                 info = -13;
             }
@@ -6716,11 +6713,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 xerbla("DBDSQR", i__1);
                 return 0;
             }
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
-            if (*n == 1)
+            if (n == 1)
             {
                 goto L160;
             }
@@ -6737,7 +6734,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
             }
 
-            nm1 = *n - 1;
+            nm1 = n - 1;
             nm12 = nm1 + nm1;
             nm13 = nm12 + nm1;
             idir = 0;
@@ -6752,7 +6749,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (lower)
             {
-                i__1 = *n - 1;
+                i__1 = n - 1;
                 for (i = 1; i <= i__1; ++i)
                 {
                     dlartg(&d[i], &e[i], &cs, &sn, &r);
@@ -6767,11 +6764,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (*nru > 0)
                 {
-                    dlasr("R", "V", "F", nru, n, &work[1], &work[*n], &u[u_offset], ldu);
+                    dlasr("R", "V", "F", nru, n, &work[1], &work[n], &u[u_offset], ldu);
                 }
                 if (*ncc > 0)
                 {
-                    dlasr("L", "V", "F", n, ncc, &work[1], &work[*n], &c[c_offset], ldc);
+                    dlasr("L", "V", "F", n, ncc, &work[1], &work[n], &c[c_offset], ldc);
                 }
             }
 
@@ -6791,7 +6788,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Compute approximate maximum, minimum singular values
 
             smax = 0.0;
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 // Computing MAX
@@ -6799,7 +6796,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 d__3 = Math.Abs(d[i]);
                 smax = Math.Max(d__2, d__3);
             }
-            i__1 = *n - 1;
+            i__1 = n - 1;
             for (i = 1; i <= i__1; ++i)
             {
                 // Computing MAX
@@ -6819,7 +6816,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     goto L50;
                 }
                 mu = sminoa;
-                i__1 = *n;
+                i__1 = n;
                 for (i = 2; i <= i__1; ++i)
                 {
                     mu = Math.Abs(d[i]) * (mu / (mu + Math.Abs(e[i - 1])));
@@ -6830,10 +6827,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                 }
             L50:
-                sminoa /= Math.Sqrt((double)(*n));
+                sminoa /= Math.Sqrt((double)(n));
                 // Computing MAX
                 d__1 = tol * sminoa;
-                d__2 = *n * 6 * *n * unfl;
+                d__2 = n * 6 * n * unfl;
                 thresh = Math.Max(d__1, d__2);
             }
             else
@@ -6842,7 +6839,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Computing MAX
                 d__1 = Math.Abs(tol) * smax;
-                d__2 = *n * 6 * *n * unfl;
+                d__2 = n * 6 * n * unfl;
                 thresh = Math.Max(d__1, d__2);
             }
 
@@ -6850,14 +6847,14 @@ namespace TAlex.MathCore.LinearAlgebra
             // (MAXIT is the maximum number of passes through the inner
             // loop permitted before nonconvergence signalled.)
 
-            maxit = *n * 6 * *n;
+            maxit = n * 6 * n;
             iter = 0;
             oldll = -1;
             oldm = -1;
 
             // M points to last element of unconverged part of matrix
 
-            m = *n;
+            m = n;
 
             // Begin main iteration loop
 
@@ -7039,7 +7036,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Computing MAX
             d__1 = eps;
             d__2 = tol * 0.01;
-            if (tol >= 0.0 && *n * tol * (sminl / smax) <= Math.Max(d__1, d__2))
+            if (tol >= 0.0 && n * tol * (sminl / smax) <= Math.Max(d__1, d__2))
             {
                 // Use a zero shift to avoid loss of relative accuracy
 
@@ -7114,7 +7111,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     if (*ncvt > 0)
                     {
                         i__1 = m - ll + 1;
-                        dlasr("L", "V", "F", &i__1, ncvt, &work[1], &work[*n], &vt[ll + vt_dim1], ldvt);
+                        dlasr("L", "V", "F", &i__1, ncvt, &work[1], &work[n], &vt[ll + vt_dim1], ldvt);
                     }
                     if (*nru > 0)
                     {
@@ -7173,12 +7170,12 @@ namespace TAlex.MathCore.LinearAlgebra
                     if (*nru > 0)
                     {
                         i__1 = m - ll + 1;
-                        dlasr("R", "V", "B", nru, &i__1, &work[1], &work[*n], &u[ll * u_dim1 + 1], ldu);
+                        dlasr("R", "V", "B", nru, &i__1, &work[1], &work[n], &u[ll * u_dim1 + 1], ldu);
                     }
                     if (*ncc > 0)
                     {
                         i__1 = m - ll + 1;
-                        dlasr("L", "V", "B", &i__1, ncc, &work[1], &work[*n], &c[ll + c_dim1], ldc);
+                        dlasr("L", "V", "B", &i__1, ncc, &work[1], &work[n], &c[ll + c_dim1], ldc);
                     }
 
                     // Test convergence
@@ -7233,7 +7230,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     if (*ncvt > 0)
                     {
                         i__1 = m - ll + 1;
-                        dlasr("L", "V", "F", &i__1, ncvt, &work[1], &work[*n], &vt[ll + vt_dim1], ldvt);
+                        dlasr("L", "V", "F", &i__1, ncvt, &work[1], &work[n], &vt[ll + vt_dim1], ldvt);
                     }
                     if (*nru > 0)
                     {
@@ -7306,12 +7303,12 @@ namespace TAlex.MathCore.LinearAlgebra
                     if (*nru > 0)
                     {
                         i__1 = m - ll + 1;
-                        dlasr("R", "V", "B", nru, &i__1, &work[1], &work[*n], &u[ll * u_dim1 + 1], ldu);
+                        dlasr("R", "V", "B", nru, &i__1, &work[1], &work[n], &u[ll * u_dim1 + 1], ldu);
                     }
                     if (*ncc > 0)
                     {
                         i__1 = m - ll + 1;
-                        dlasr("L", "V", "B", &i__1, ncc, &work[1], &work[*n], &c[ll + c_dim1], ldc);
+                        dlasr("L", "V", "B", &i__1, ncc, &work[1], &work[n], &c[ll + c_dim1], ldc);
                     }
                 }
             }
@@ -7323,7 +7320,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // All singular values converged, so make them positive
 
         L160:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 if (d[i] < 0.0)
@@ -7342,14 +7339,14 @@ namespace TAlex.MathCore.LinearAlgebra
             // Sort the singular values into decreasing order (insertion sort on
             // singular values, but only one transposition per singular vector)
 
-            i__1 = *n - 1;
+            i__1 = n - 1;
             for (i = 1; i <= i__1; ++i)
             {
                 // Scan for smallest D(I)
 
                 isub = 1;
                 smin = d[1];
-                i__2 = *n + 1 - i;
+                i__2 = n + 1 - i;
                 for (j = 2; j <= i__2; ++j)
                 {
                     if (d[j] <= smin)
@@ -7358,23 +7355,23 @@ namespace TAlex.MathCore.LinearAlgebra
                         smin = d[j];
                     }
                 }
-                if (isub != *n + 1 - i)
+                if (isub != n + 1 - i)
                 {
                     // Swap singular values and vectors
 
-                    d[isub] = d[*n + 1 - i];
-                    d[*n + 1 - i] = smin;
+                    d[isub] = d[n + 1 - i];
+                    d[n + 1 - i] = smin;
                     if (*ncvt > 0)
                     {
-                        dswap(ncvt, &vt[isub + vt_dim1], ldvt, &vt[*n + 1 - i + vt_dim1], ldvt);
+                        dswap(ncvt, &vt[isub + vt_dim1], ldvt, &vt[n + 1 - i + vt_dim1], ldvt);
                     }
                     if (*nru > 0)
                     {
-                        dswap(nru, &u[isub * u_dim1 + 1], &c__1, &u[(*n + 1 - i) * u_dim1 + 1], &c__1);
+                        dswap(nru, &u[isub * u_dim1 + 1], &c__1, &u[(n + 1 - i) * u_dim1 + 1], &c__1);
                     }
                     if (*ncc > 0)
                     {
-                        dswap(ncc, &c[isub + c_dim1], ldc, &c[*n + 1 - i + c_dim1], ldc);
+                        dswap(ncc, &c[isub + c_dim1], ldc, &c[n + 1 - i + c_dim1], ldc);
                     }
                 }
             }
@@ -7384,7 +7381,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         L200:
             info = 0;
-            i__1 = *n - 1;
+            i__1 = n - 1;
             for (i = 1; i <= i__1; ++i)
             {
                 if (e[i] != 0.0)
@@ -7469,7 +7466,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlacpy(string uplo, int* m, int* n, double* a, int* lda, double* b, int* ldb)
+        public static int dlacpy(string uplo, int m, int n, double[] a, int lda, double[] b, int ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -7519,20 +7516,20 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
 
             // Function Body
             if (lsame(uplo, "U"))
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = Math.Min(j, *m);
+                    i__2 = Math.Min(j, m);
                     for (i = 1; i <= i__2; ++i)
                     {
                         b[i + j * b_dim1] = a[i + j * a_dim1];
@@ -7541,10 +7538,10 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else if (lsame(uplo, "L"))
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = j; i <= i__2; ++i)
                     {
                         b[i + j * b_dim1] = a[i + j * a_dim1];
@@ -7553,10 +7550,10 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         b[i + j * b_dim1] = a[i + j * a_dim1];
@@ -8136,7 +8133,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double dlanst(string norm, int* n, double* d, double* e)
+        public static double dlanst(string norm, int n, double* d, double* e)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -8203,7 +8200,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --d;
 
             // Function Body
-            if (*n <= 0)
+            if (n <= 0)
             {
                 anorm = 0.0;
             }
@@ -8211,8 +8208,8 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Find max(abs(A(i,j))).
 
-                anorm = Math.Abs(d[*n]);
-                i__1 = *n - 1;
+                anorm = Math.Abs(d[n]);
+                i__1 = n - 1;
                 for (i = 1; i <= i__1; ++i)
                 {
                     // Computing MAX
@@ -8229,7 +8226,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Find norm1(A).
 
-                if (*n == 1)
+                if (n == 1)
                 {
                     anorm = Math.Abs(d[1]);
                 }
@@ -8237,9 +8234,9 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Computing MAX
                     d__3 = Math.Abs(d[1]) + Math.Abs(e[1]);
-                    d__4 = Math.Abs(e[*n - 1]) + Math.Abs(d[*n]);
+                    d__4 = Math.Abs(e[n - 1]) + Math.Abs(d[n]);
                     anorm = Math.Max(d__3, d__4);
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     for (i = 2; i <= i__1; ++i)
                     {
                         // Computing MAX
@@ -8255,9 +8252,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 scale = 0.0;
                 sum = 1.0;
-                if (*n > 1)
+                if (n > 1)
                 {
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     dlassq(&i__1, &e[1], &c__1, &scale, &sum);
                     sum *= 2;
                 }
@@ -8270,7 +8267,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double dlapy2(double* x, double* y)
+        public static double dlapy2(double x, double y)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -8297,8 +8294,8 @@ namespace TAlex.MathCore.LinearAlgebra
             // Local variables 
             double w, z, xabs, yabs;
 
-            xabs = Math.Abs(*x);
-            yabs = Math.Abs(*y);
+            xabs = Math.Abs(x);
+            yabs = Math.Abs(y);
             w = Math.Max(xabs, yabs);
             z = Math.Min(xabs, yabs);
 
@@ -8317,7 +8314,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double dlapy3(double* x, double* y, double* z)
+        public static double dlapy3(double x, double y, double z)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -8345,9 +8342,9 @@ namespace TAlex.MathCore.LinearAlgebra
             // Local variables 
             double w, xabs, yabs, zabs;
 
-            xabs = Math.Abs(*x);
-            yabs = Math.Abs(*y);
-            zabs = Math.Abs(*z);
+            xabs = Math.Abs(x);
+            yabs = Math.Abs(y);
+            zabs = Math.Abs(z);
 
             // Computing MAX 
             d__1 = Math.Max(xabs, yabs);
@@ -8669,7 +8666,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int dlascl(string type, int* kl, int* ku,
-            double* cfrom, double* cto, int* m, int* n, double* a, int* lda, out int info)
+            double* cfrom, double* cto, int m, int n, double* a, int lda, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -8750,7 +8747,7 @@ namespace TAlex.MathCore.LinearAlgebra
             double bignum, smlnum;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
 
@@ -8802,22 +8799,22 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -5;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -6;
             }
-            else if (*n < 0 || itype == 4 && *n != *m || itype == 5 && *n != *m)
+            else if (n < 0 || itype == 4 && n != m || itype == 5 && n != m)
             {
                 info = -7;
             }
-            else if (itype <= 3 && *lda < Math.Max(1, *m))
+            else if (itype <= 3 && lda < Math.Max(1, m))
             {
                 info = -9;
             }
             else if (itype >= 4)
             {
                 // Computing MAX 
-                i__1 = *m - 1;
+                i__1 = m - 1;
                 if (*kl < 0 || *kl > Math.Max(i__1, 0))
                 {
                     info = -2;
@@ -8825,12 +8822,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 else // if(complicated condition) 
                 {
                     // Computing MAX 
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     if (*ku < 0 || *ku > Math.Max(i__1, 0) || (itype == 4 || itype == 5) && *kl != *ku)
                     {
                         info = -3;
                     }
-                    else if (itype == 4 && *lda < *kl + 1 || itype == 5 && *lda < *ku + 1 || itype == 6 && *lda < (*kl << 1) + *ku + 1)
+                    else if (itype == 4 && lda < *kl + 1 || itype == 5 && lda < *ku + 1 || itype == 6 && lda < (*kl << 1) + *ku + 1)
                     {
                         info = -9;
                     }
@@ -8846,7 +8843,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 0 || *m == 0)
+            if (n == 0 || m == 0)
             {
                 return 0;
             }
@@ -8902,10 +8899,10 @@ namespace TAlex.MathCore.LinearAlgebra
             if (itype == 0)
             {
                 // Full matrix 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         a[i + j * a_dim1] *= mul;
@@ -8915,10 +8912,10 @@ namespace TAlex.MathCore.LinearAlgebra
             else if (itype == 1)
             {
                 // Lower triangular matrix 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = j; i <= i__2; ++i)
                     {
                         a[i + j * a_dim1] *= mul;
@@ -8928,10 +8925,10 @@ namespace TAlex.MathCore.LinearAlgebra
             else if (itype == 2)
             {
                 // Upper triangular matrix 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = Math.Min(j, *m);
+                    i__2 = Math.Min(j, m);
                     for (i = 1; i <= i__2; ++i)
                     {
                         a[i + j * a_dim1] *= mul;
@@ -8941,12 +8938,12 @@ namespace TAlex.MathCore.LinearAlgebra
             else if (itype == 3)
             {
                 // Upper Hessenberg matrix 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MIN 
                     i__3 = j + 1;
-                    i__2 = Math.Min(i__3, *m);
+                    i__2 = Math.Min(i__3, m);
 
                     for (i = 1; i <= i__2; ++i)
                     {
@@ -8959,8 +8956,8 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Lower half of a symmetric band matrix 
                 k3 = *kl + 1;
-                k4 = *n + 1;
-                i__1 = *n;
+                k4 = n + 1;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MIN 
@@ -8979,7 +8976,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Upper half of a symmetric band matrix 
                 k1 = *ku + 2;
                 k3 = *ku + 1;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MAX 
@@ -8999,8 +8996,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 k1 = *kl + *ku + 2;
                 k2 = *kl + 1;
                 k3 = (*kl << 1) + *ku + 1;
-                k4 = *kl + *ku + 1 + *m;
-                i__1 = *n;
+                k4 = *kl + *ku + 1 + m;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MAX 
@@ -9026,7 +9023,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlasd0(int* n, int* sqre, double* d, double* e, double* u,
+        public static int dlasd0(int n, int* sqre, double* d, double* e, double* u,
             int* ldu, double* vt, int* ldvt, int* smlsiz, int* iwork, double* work, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -9131,7 +9128,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body
             info = 0;
 
-            if (*n < 0)
+            if (n < 0)
             {
                 info = -1;
             }
@@ -9140,9 +9137,9 @@ namespace TAlex.MathCore.LinearAlgebra
                 info = -2;
             }
 
-            m = *n + *sqre;
+            m = n + *sqre;
 
-            if (*ldu < *n)
+            if (*ldu < n)
             {
                 info = -6;
             }
@@ -9164,9 +9161,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // If the input matrix is too small, call DLASDQ to find the SVD.
 
-            if (*n <= *smlsiz)
+            if (n <= *smlsiz)
             {
-                dlasdq("U", sqre, n, &m, n, &c__0, &d[1], &e[1], &vt[vt_offset],
+                dlasdq("U", sqre, n, m, n, &c__0, &d[1], &e[1], &vt[vt_offset],
                     ldvt, &u[u_offset], ldu, &u[u_offset], ldu, &work[1], info);
                 return 0;
             }
@@ -9174,10 +9171,10 @@ namespace TAlex.MathCore.LinearAlgebra
             // Set up the computation tree.
 
             inode = 1;
-            ndiml = inode + *n;
-            ndimr = ndiml + *n;
-            idxq = ndimr + *n;
-            iwk = idxq + *n;
+            ndiml = inode + n;
+            ndimr = ndiml + n;
+            idxq = ndimr + n;
+            iwk = idxq + n;
             dlasdt(n, &nlvl, &nd, &iwork[inode], &iwork[ndiml], &iwork[ndimr], smlsiz);
 
             // For the nodes on bottom level of the tree, solve
@@ -9513,7 +9510,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
             }
 
-            dlascl("G", &c__0, &c__0, &orgnrm, &c_b7, &n, &c__1, &d[1], &n, info);
+            dlascl("G", &c__0, &c__0, &orgnrm, &c_b7, n, &c__1, &d[1], n, info);
             *alpha /= orgnrm;
             *beta /= orgnrm;
 
@@ -9537,7 +9534,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Unscale.
 
-            dlascl("G", &c__0, &c__0, &c_b7, &orgnrm, &n, &c__1, &d[1], &n, info);
+            dlascl("G", &c__0, &c__0, &c_b7, &orgnrm, n, &c__1, &d[1], n, info);
 
             // Prepare the IDXQ sorting permutation.
 
@@ -9965,8 +9962,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         --idxj;
                     }
-                    drot(&n, &u[idxjp * u_dim1 + 1], &c__1, &u[idxj * u_dim1 + 1], &c__1, &c, &s);
-                    drot(&m, &vt[idxjp + vt_dim1], ldvt, &vt[idxj + vt_dim1], ldvt, &c, &s);
+                    drot(n, &u[idxjp * u_dim1 + 1], &c__1, &u[idxj * u_dim1 + 1], &c__1, &c, &s);
+                    drot(m, &vt[idxjp + vt_dim1], ldvt, &vt[idxj + vt_dim1], ldvt, &c, &s);
 
                     if (coltyp[j] != coltyp[jprev])
                     {
@@ -10054,8 +10051,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     --idxj;
                 }
-                dcopy(&n, &u[idxj * u_dim1 + 1], &c__1, &u2[j * u2_dim1 + 1], &c__1);
-                dcopy(&m, &vt[idxj + vt_dim1], ldvt, &vt2[j + vt2_dim1], ldvt2);
+                dcopy(n, &u[idxj * u_dim1 + 1], &c__1, &u2[j * u2_dim1 + 1], &c__1);
+                dcopy(m, &vt[idxj + vt_dim1], ldvt, &vt2[j + vt2_dim1], ldvt2);
             }
 
             // Determine DSIGMA(1), DSIGMA(2) and Z(1)
@@ -10101,7 +10098,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Determine the first column of U2, the first row of VT2 and the
             // last row of VT.
 
-            dlaset("A", &n, &c__1, &c_b30, &c_b30, &u2[u2_offset], ldu2);
+            dlaset("A", n, &c__1, &c_b30, &c_b30, &u2[u2_offset], ldu2);
             u2[nlp1 + u2_dim1] = 1.0;
             if (m > n)
             {
@@ -10120,11 +10117,11 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else
             {
-                dcopy(&m, &vt[nlp1 + vt_dim1], ldvt, &vt2[vt2_dim1 + 1], ldvt2);
+                dcopy(m, &vt[nlp1 + vt_dim1], ldvt, &vt2[vt2_dim1 + 1], ldvt2);
             }
             if (m > n)
             {
-                dcopy(&m, &vt[m + vt_dim1], ldvt, &vt2[m + vt2_dim1], ldvt2);
+                dcopy(m, &vt[m + vt_dim1], ldvt, &vt2[m + vt2_dim1], ldvt2);
             }
 
             // The deflated singular values and their corresponding vectors go
@@ -10135,9 +10132,9 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__1 = n - *k;
                 dcopy(&i__1, &dsigma[*k + 1], &c__1, &d[*k + 1], &c__1);
                 i__1 = n - *k;
-                dlacpy("A", &n, &i__1, &u2[(*k + 1) * u2_dim1 + 1], ldu2, &u[(*k + 1) * u_dim1 + 1], ldu);
+                dlacpy("A", n, &i__1, &u2[(*k + 1) * u2_dim1 + 1], ldu2, &u[(*k + 1) * u_dim1 + 1], ldu);
                 i__1 = n - *k;
-                dlacpy("A", &i__1, &m, &vt2[*k + 1 + vt2_dim1], ldvt2, &vt[*k + 1 + vt_dim1], ldvt);
+                dlacpy("A", &i__1, m, &vt2[*k + 1 + vt2_dim1], ldvt2, &vt[*k + 1 + vt_dim1], ldvt);
             }
 
             // Copy CTOT into COLTYP for referencing in DLASD3.0
@@ -10372,10 +10369,10 @@ namespace TAlex.MathCore.LinearAlgebra
             if (*k == 1)
             {
                 d[1] = Math.Abs(z[1]);
-                dcopy(&m, &vt2[vt2_dim1 + 1], ldvt2, &vt[vt_dim1 + 1], ldvt);
+                dcopy(m, &vt2[vt2_dim1 + 1], ldvt2, &vt[vt_dim1 + 1], ldvt);
                 if (z[1] > 0.0)
                 {
-                    dcopy(&n, &u2[u2_dim1 + 1], &c__1, &u[u_dim1 + 1], &c__1);
+                    dcopy(n, &u2[u2_dim1 + 1], &c__1, &u[u_dim1 + 1], &c__1);
                 }
                 else
                 {
@@ -10487,7 +10484,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*k == 2)
             {
-                dgemm("N", "N", &n, k, k, &c_b13, &u2[u2_offset], ldu2, &q[q_offset],
+                dgemm("N", "N", n, k, k, &c_b13, &u2[u2_offset], ldu2, &q[q_offset],
                      ldq, &c_b26, &u[u_offset], ldu);
                 goto L100;
             }
@@ -10538,7 +10535,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*k == 2)
             {
-                dgemm("N", "N", k, &m, k, &c_b13, &q[q_offset], ldq,
+                dgemm("N", "N", k, m, k, &c_b13, &q[q_offset], ldq,
                     &vt2[vt2_offset], ldvt2, &c_b26, &vt[vt_offset], ldvt);
                 return 0;
             }
@@ -10576,7 +10573,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlasd4(int* n, int* i, double* d, double* z,
+        public static int dlasd4(int n, int* i, double* d, double* z,
             double* delta, double* rho, double* sigma, double* work, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
@@ -10703,7 +10700,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body
             info = 0;
-            if (*n == 1)
+            if (n == 1)
             {
                 // Presumably, I=1 upon entry
 
@@ -10712,7 +10709,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 work[1] = 1.0;
                 return 0;
             }
-            if (*n == 2)
+            if (n == 2)
             {
                 dlasd5(i, &d[1], &z[1], &delta[1], rho, sigma, &work[1]);
                 return 0;
@@ -10725,11 +10722,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // The case I = N
 
-            if (*i == *n)
+            if (*i == n)
             {
                 // Initialize some basic variables
 
-                ii = *n - 1;
+                ii = n - 1;
                 niter = 1;
 
                 // Calculate initial guess
@@ -10739,31 +10736,31 @@ namespace TAlex.MathCore.LinearAlgebra
                 // If ||Z||_2 is not one, then TEMP should be set to
                 // RHO * ||Z||_2^2 / TWO
 
-                temp1 = temp / (d[*n] + Math.Sqrt(d[*n] * d[*n] + temp));
-                i__1 = *n;
+                temp1 = temp / (d[n] + Math.Sqrt(d[n] * d[n] + temp));
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    work[j] = d[j] + d[*n] + temp1;
-                    delta[j] = d[j] - d[*n] - temp1;
+                    work[j] = d[j] + d[n] + temp1;
+                    delta[j] = d[j] - d[n] - temp1;
                 }
 
                 psi = 0.0;
-                i__1 = *n - 2;
+                i__1 = n - 2;
                 for (j = 1; j <= i__1; ++j)
                 {
                     psi += z[j] * z[j] / (delta[j] * work[j]);
                 }
 
                 c = rhoinv + psi;
-                w = c + z[ii] * z[ii] / (delta[ii] * work[ii]) + z[*n] * z[*
-                    n] / (delta[*n] * work[*n]);
+                w = c + z[ii] * z[ii] / (delta[ii] * work[ii]) + z[n] * z[*
+                    n] / (delta[n] * work[n]);
 
                 if (w <= 0.0)
                 {
-                    temp1 = Math.Sqrt(d[*n] * d[*n] + *rho);
-                    temp = z[*n - 1] * z[*n - 1] / ((d[*n - 1] + temp1) * (d[*
-                        n] - d[*n - 1] + *rho / (d[*n] + temp1))) + z[*n] *
-                        z[*n] / *rho;
+                    temp1 = Math.Sqrt(d[n] * d[n] + *rho);
+                    temp = z[n - 1] * z[n - 1] / ((d[n - 1] + temp1) * (d[*
+                        n] - d[n - 1] + *rho / (d[n] + temp1))) + z[n] *
+                        z[n] / *rho;
 
                     // The following TAU is to approximate
                     // SIGMA_n^2 - D( N )*D( N )
@@ -10774,10 +10771,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        delsq = (d[*n] - d[*n - 1]) * (d[*n] + d[*n - 1]);
-                        a = -c * delsq + z[*n - 1] * z[*n - 1] + z[*n] * z[*
+                        delsq = (d[n] - d[n - 1]) * (d[n] + d[n - 1]);
+                        a = -c * delsq + z[n - 1] * z[n - 1] + z[n] * z[*
                             n];
-                        b = z[*n] * z[*n] * delsq;
+                        b = z[n] * z[n] * delsq;
                         if (a < 0.0)
                         {
                             tau = b * 2.0 / (Math.Sqrt(a * a + b * 4.0 * c) - a);
@@ -10794,9 +10791,9 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 else
                 {
-                    delsq = (d[*n] - d[*n - 1]) * (d[*n] + d[*n - 1]);
-                    a = -c * delsq + z[*n - 1] * z[*n - 1] + z[*n] * z[*n];
-                    b = z[*n] * z[*n] * delsq;
+                    delsq = (d[n] - d[n - 1]) * (d[n] + d[n - 1]);
+                    a = -c * delsq + z[n - 1] * z[n - 1] + z[n] * z[n];
+                    b = z[n] * z[n] * delsq;
 
                     // The following TAU is to approximate
                     // SIGMA_n^2 - D( N )*D( N )
@@ -10817,10 +10814,10 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // The following ETA is to approximate SIGMA_n - D( N )
 
-                eta = tau / (d[*n] + Math.Sqrt(d[*n] * d[*n] + tau));
+                eta = tau / (d[n] + Math.Sqrt(d[n] * d[n] + tau));
 
-                *sigma = d[*n] + eta;
-                i__1 = *n;
+                *sigma = d[n] + eta;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     delta[j] = d[j] - d[*i] - eta;
@@ -10844,8 +10841,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Evaluate PHI and the derivative DPHI
 
-                temp = z[*n] / (delta[*n] * work[*n]);
-                phi = z[*n] * temp;
+                temp = z[n] / (delta[n] * work[n]);
+                phi = z[n] * temp;
                 dphi = temp * temp;
                 erretm = (-phi - psi) * 8.0 + erretm - phi + rhoinv + Math.Abs(tau) * (dpsi + dphi);
 
@@ -10861,8 +10858,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Calculate the new step
 
                 ++niter;
-                dtnsq1 = work[*n - 1] * delta[*n - 1];
-                dtnsq = work[*n] * delta[*n];
+                dtnsq1 = work[n - 1] * delta[n - 1];
+                dtnsq = work[n] * delta[n];
                 c = w - dtnsq1 * dpsi - dtnsq * dphi;
                 a = (dtnsq + dtnsq1) * w - dtnsq * dtnsq1 * (dpsi + dphi);
                 b = dtnsq * dtnsq1 * w;
@@ -10901,7 +10898,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 tau += eta;
                 eta /= *sigma + Math.Sqrt(eta + *sigma * *sigma);
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     delta[j] -= eta;
@@ -10927,8 +10924,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Evaluate PHI and the derivative DPHI
 
-                temp = z[*n] / (work[*n] * delta[*n]);
-                phi = z[*n] * temp;
+                temp = z[n] / (work[n] * delta[n]);
+                phi = z[n] * temp;
                 dphi = temp * temp;
                 erretm = (-phi - psi) * 8.0 + erretm - phi + rhoinv + Math.Abs(tau) * (dpsi
                     + dphi);
@@ -10950,8 +10947,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // Calculate the new step
 
-                    dtnsq1 = work[*n - 1] * delta[*n - 1];
-                    dtnsq = work[*n] * delta[*n];
+                    dtnsq1 = work[n - 1] * delta[n - 1];
+                    dtnsq = work[n] * delta[n];
                     c = w - dtnsq1 * dpsi - dtnsq * dphi;
                     a = (dtnsq + dtnsq1) * w - dtnsq1 * dtnsq * (dpsi + dphi);
                     b = dtnsq1 * dtnsq * w;
@@ -10982,7 +10979,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     tau += eta;
                     eta /= *sigma + Math.Sqrt(eta + *sigma * *sigma);
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         delta[j] -= eta;
@@ -11008,8 +11005,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // Evaluate PHI and the derivative DPHI
 
-                    temp = z[*n] / (work[*n] * delta[*n]);
-                    phi = z[*n] * temp;
+                    temp = z[n] / (work[n] * delta[n]);
+                    phi = z[n] * temp;
                     dphi = temp * temp;
                     erretm = (-phi - psi) * 8.0 + erretm - phi + rhoinv + Math.Abs(tau) * (dpsi + dphi);
 
@@ -11036,7 +11033,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 delsq = (d[ip1] - d[*i]) * (d[ip1] + d[*i]);
                 delsq2 = delsq / 2.0;
                 temp = delsq2 / (d[*i] + Math.Sqrt(d[*i] * d[*i] + delsq2));
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     work[j] = d[j] + d[*i] + temp;
@@ -11052,7 +11049,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 phi = 0.0;
                 i__1 = *i + 2;
-                for (j = *n; j >= i__1; --j)
+                for (j = n; j >= i__1; --j)
                 {
                     phi += z[j] * z[j] / (work[j] * delta[j]);
                 }
@@ -11116,7 +11113,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     ii = *i;
                     *sigma = d[*i] + eta;
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         work[j] = d[j] + d[*i] + eta;
@@ -11127,7 +11124,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     ii = *i + 1;
                     *sigma = d[ip1] + eta;
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         work[j] = d[j] + d[ip1] + eta;
@@ -11157,7 +11154,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 dphi = 0.0;
                 phi = 0.0;
                 i__1 = iip1;
-                for (j = *n; j >= i__1; --j)
+                for (j = n; j >= i__1; --j)
                 {
                     temp = z[j] / (work[j] * delta[j]);
                     phi += z[j] * temp;
@@ -11185,7 +11182,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         swtch3 = true;
                     }
                 }
-                if (ii == 1 || ii == *n)
+                if (ii == 1 || ii == n)
                 {
                     swtch3 = false;
                 }
@@ -11343,7 +11340,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 prew = w;
 
                 *sigma += eta;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     work[j] += eta;
@@ -11370,7 +11367,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 dphi = 0.0;
                 phi = 0.0;
                 i__1 = iip1;
-                for (j = *n; j >= i__1; --j)
+                for (j = n; j >= i__1; --j)
                 {
                     temp = z[j] / (work[j] * delta[j]);
                     phi += z[j] * temp;
@@ -11585,7 +11582,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     eta /= *sigma + Math.Sqrt(*sigma * *sigma + eta);
 
                     *sigma += eta;
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         work[j] += eta;
@@ -11614,7 +11611,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     dphi = 0.0;
                     phi = 0.0;
                     i__1 = iip1;
-                    for (j = *n; j >= i__1; --j)
+                    for (j = n; j >= i__1; --j)
                     {
                         temp = z[j] / (work[j] * delta[j]);
                         phi += z[j] * temp;
@@ -12108,7 +12105,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     orgnrm = Math.Abs(d[i__]);
                 }
             }
-            dlascl("G", &c__0, &c__0, &orgnrm, &c_b7, &n, &c__1, &d[1], &n, info);
+            dlascl("G", &c__0, &c__0, &orgnrm, &c_b7, n, &c__1, &d[1], n, info);
             *alpha /= orgnrm;
             *beta /= orgnrm;
 
@@ -12134,7 +12131,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Unscale.
 
-            dlascl("G", &c__0, &c__0, &c_b7, &orgnrm, &n, &c__1, &d[1], &n, info);
+            dlascl("G", &c__0, &c__0, &c_b7, &orgnrm, n, &c__1, &d[1], n, info);
 
             // Prepare the IDXQ sorting permutation.
 
@@ -12946,7 +12943,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlasda(int* icompq, int* smlsiz, int* n, int* sqre, double* d, double* e,
+        public static int dlasda(int* icompq, int* smlsiz, int n, int* sqre, double* d, double* e,
             double* u, int* ldu, double* vt, int* k, double* difl, double* difr, double* z, double* poles,
             int* givptr, int* givcol, int* ldgcol, int* perm, double* givnum, double* c,
             double* s, double* work, int* iwork, out int info)
@@ -13177,7 +13174,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -3;
             }
@@ -13185,11 +13182,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -4;
             }
-            else if (*ldu < *n + *sqre)
+            else if (*ldu < n + *sqre)
             {
                 info = -8;
             }
-            else if (*ldgcol < *n)
+            else if (*ldgcol < n)
             {
                 info = -17;
             }
@@ -13201,11 +13198,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
             }
 
-            m = *n + *sqre;
+            m = n + *sqre;
 
             // If the input matrix is too small, call DLASDQ to find the SVD.
 
-            if (*n <= *smlsiz)
+            if (n <= *smlsiz)
             {
                 if (*icompq == 0)
                 {
@@ -13214,7 +13211,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 else
                 {
-                    dlasdq("U", sqre, n, &m, n, &c__0, &d[1], &e[1], &vt[vt_offset],
+                    dlasdq("U", sqre, n, m, n, &c__0, &d[1], &e[1], &vt[vt_offset],
                         ldu, &u[u_offset], ldu, &u[u_offset], ldu, &work[1], info);
                 }
                 return 0;
@@ -13223,10 +13220,10 @@ namespace TAlex.MathCore.LinearAlgebra
             // Book-keeping and  set up the computation tree.
 
             inode = 1;
-            ndiml = inode + *n;
-            ndimr = ndiml + *n;
-            idxq = ndimr + *n;
-            iwk = idxq + *n;
+            ndiml = inode + n;
+            ndimr = ndiml + n;
+            idxq = ndimr + n;
+            iwk = idxq + n;
 
             ncc = 0;
             nru = 0;
@@ -13409,7 +13406,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlasdt(int* n, int* lvl, int* nd, int* inode, int* ndiml, int* ndimr, int* msub)
+        public static int dlasdt(int n, int* lvl, int* nd, int* inode, int* ndiml, int* ndimr, int* msub)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -13470,14 +13467,14 @@ namespace TAlex.MathCore.LinearAlgebra
             --inode;
 
             // Function Body
-            maxn = Math.Max(1, *n);
+            maxn = Math.Max(1, n);
             temp = Math.Log((double)maxn / (double)(*msub + 1)) / Math.Log(2.0);
             *lvl = (int)temp + 1;
 
-            i = *n / 2;
+            i = n / 2;
             inode[1] = i + 1;
             ndiml[1] = i;
-            ndimr[1] = *n - i - 1;
+            ndimr[1] = n - i - 1;
             il = 0;
             ir = 1;
             llst = 1;
@@ -13508,8 +13505,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlasdq(string uplo, int* sqre, int* n, int* ncvt, int* nru, int* ncc, double* d,
-            double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int* ldc, double* work, out int info)
+        public static int dlasdq(string uplo, int* sqre, int n, int* ncvt, int* nru, int* ncc, double* d,
+            double* e, double* vt, int* ldvt, double* u, int* ldu, double* c, int ldc, double* work, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -13655,7 +13652,7 @@ namespace TAlex.MathCore.LinearAlgebra
             u_dim1 = *ldu;
             u_offset = 1 + u_dim1;
             u -= u_offset;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -13679,7 +13676,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -3;
             }
@@ -13695,7 +13692,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -6;
             }
-            else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < Math.Max(1, *n))
+            else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < Math.Max(1, n))
             {
                 info = -10;
             }
@@ -13703,7 +13700,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -12;
             }
-            else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < Math.Max(1, *n))
+            else if (*ncc == 0 && ldc < 1 || *ncc > 0 && ldc < Math.Max(1, n))
             {
                 info = -14;
             }
@@ -13715,7 +13712,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
             }
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
@@ -13723,7 +13720,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // ROTATE is true if any singular vectors desired, false otherwise
 
             rotate = *ncvt > 0 || *nru > 0 || *ncc > 0;
-            np1 = *n + 1;
+            np1 = n + 1;
             sqre1 = *sqre;
 
             // If matrix non-square upper bidiagonal, rotate to be lower
@@ -13731,7 +13728,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (iuplo == 1 && sqre1 == 1)
             {
-                i__1 = *n - 1;
+                i__1 = n - 1;
                 for (i = 1; i <= i__1; ++i)
                 {
                     dlartg(&d[i], &e[i], &cs, &sn, &r);
@@ -13741,16 +13738,16 @@ namespace TAlex.MathCore.LinearAlgebra
                     if (rotate)
                     {
                         work[i] = cs;
-                        work[*n + i] = sn;
+                        work[n + i] = sn;
                     }
                 }
-                dlartg(&d[*n], &e[*n], &cs, &sn, &r);
-                d[*n] = r;
-                e[*n] = 0.0;
+                dlartg(&d[n], &e[n], &cs, &sn, &r);
+                d[n] = r;
+                e[n] = 0.0;
                 if (rotate)
                 {
-                    work[*n] = cs;
-                    work[*n + *n] = sn;
+                    work[n] = cs;
+                    work[n + n] = sn;
                 }
                 iuplo = 2;
                 sqre1 = 0;
@@ -13768,7 +13765,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (iuplo == 2)
             {
-                i__1 = *n - 1;
+                i__1 = n - 1;
                 for (i = 1; i <= i__1; ++i)
                 {
                     dlartg(&d[i], &e[i], &cs, &sn, &r);
@@ -13778,7 +13775,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     if (rotate)
                     {
                         work[i] = cs;
-                        work[*n + i] = sn;
+                        work[n + i] = sn;
                     }
                 }
 
@@ -13787,12 +13784,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (sqre1 == 1)
                 {
-                    dlartg(&d[*n], &e[*n], &cs, &sn, &r);
-                    d[*n] = r;
+                    dlartg(&d[n], &e[n], &cs, &sn, &r);
+                    d[n] = r;
                     if (rotate)
                     {
-                        work[*n] = cs;
-                        work[*n + *n] = sn;
+                        work[n] = cs;
+                        work[n + n] = sn;
                     }
                 }
 
@@ -13831,14 +13828,14 @@ namespace TAlex.MathCore.LinearAlgebra
             // Sort the singular values into ascending order (insertion sort on
             // singular values, but only one transposition per singular vector)
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 // Scan for smallest D(I).
 
                 isub = i;
                 smin = d[i];
-                i__2 = *n;
+                i__2 = n;
                 for (j = i + 1; j <= i__2; ++j)
                 {
                     if (d[j] < smin)
@@ -13873,7 +13870,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlaset(string uplo, int* m, int* n, double* alpha, double* beta, double* a, int* lda)
+        public static int dlaset(string uplo, int m, int n, double* alpha, double* beta, double* a, int lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -13929,7 +13926,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
 
@@ -13939,12 +13936,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Set the strictly upper triangular or trapezoidal part of the
                 // array to ALPHA.
 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 2; j <= i__1; ++j)
                 {
                     // Computing MIN
                     i__3 = j - 1;
-                    i__2 = Math.Min(i__3, *m);
+                    i__2 = Math.Min(i__3, m);
                     for (i = 1; i <= i__2; ++i)
                     {
                         a[i + j * a_dim1] = *alpha;
@@ -13956,10 +13953,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Set the strictly lower triangular or trapezoidal part of the
                 // array to ALPHA.
 
-                i__1 = Math.Min(*m, *n);
+                i__1 = Math.Min(m, n);
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = j + 1; i <= i__2; ++i)
                     {
                         a[i + j * a_dim1] = *alpha;
@@ -13970,10 +13967,10 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Set the leading m-by-n submatrix to ALPHA.
 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         a[i + j * a_dim1] = *alpha;
@@ -13983,7 +13980,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Set the first min(M,N) diagonal elements to BETA.
 
-            i__1 = Math.Min(*m, *n);
+            i__1 = Math.Min(m, n);
             for (i = 1; i <= i__1; ++i)
             {
                 a[i + i * a_dim1] = *beta;
@@ -13993,7 +13990,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlasq1(int* n, double* d, double* e, double* work, out int info)
+        public static int dlasq1(int n, double* d, double* e, double* work, out int info)
         {
             //  -- LAPACK routine (version 3.2)                                    --
 
@@ -14076,23 +14073,23 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body
             info = 0;
-            if (*n < 0)
+            if (n < 0)
             {
                 info = -2;
                 i__1 = -(info);
                 xerbla("DLASQ1", i__1);
                 return 0;
             }
-            else if (*n == 0)
+            else if (n == 0)
             {
                 return 0;
             }
-            else if (*n == 1)
+            else if (n == 1)
             {
                 d[1] = Math.Abs(d[1]);
                 return 0;
             }
-            else if (*n == 2)
+            else if (n == 2)
             {
                 dlas2(&d[1], &e[1], &d[2], &sigmn, &sigmx);
                 d[1] = sigmx;
@@ -14103,7 +14100,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Estimate the largest singular value.
 
             sigmx = 0.0;
-            i__1 = *n - 1;
+            i__1 = n - 1;
             for (i = 1; i <= i__1; ++i)
             {
                 d[i] = Math.Abs(d[i]);
@@ -14112,7 +14109,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 d__3 = Math.Abs(e[i]);
                 sigmx = Math.Max(d__2, d__3);
             }
-            d[*n] = Math.Abs(d[*n]);
+            d[n] = Math.Abs(d[n]);
 
             // Early return if SIGMX is zero (matrix is already diagonal).
 
@@ -14122,7 +14119,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 // Computing MAX
@@ -14138,28 +14135,28 @@ namespace TAlex.MathCore.LinearAlgebra
             safmin = dlamch("Safe minimum");
             scale = Math.Sqrt(eps / safmin);
             dcopy(n, &d[1], &c__1, &work[1], &c__2);
-            i__1 = *n - 1;
+            i__1 = n - 1;
             dcopy(&i__1, &e[1], &c__1, &work[2], &c__2);
-            i__1 = (*n << 1) - 1;
-            i__2 = (*n << 1) - 1;
+            i__1 = (n << 1) - 1;
+            i__2 = (n << 1) - 1;
             dlascl("G", &c__0, &c__0, &sigmx, &scale, &i__1, &c__1, &work[1], &i__2, &iinfo);
 
             // Compute the q's and e's.
 
-            i__1 = (*n << 1) - 1;
+            i__1 = (n << 1) - 1;
             for (i = 1; i <= i__1; ++i)
             {
                 // Computing 2nd power
                 d__1 = work[i];
                 work[i] = d__1 * d__1;
             }
-            work[*n * 2] = 0.0;
+            work[n * 2] = 0.0;
 
             dlasq2(n, &work[1], info);
 
             if (info == 0)
             {
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     d[i] = Math.Sqrt(work[i]);
@@ -14171,7 +14168,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlasq2(int* n, double* z, out int info)
+        public static int dlasq2(int n, double* z, out int info)
         {
             //  -- LAPACK routine (version 3.2)                                    --
 
@@ -14288,17 +14285,17 @@ namespace TAlex.MathCore.LinearAlgebra
             d__1 = tol;
             tol2 = d__1 * d__1;
 
-            if (*n < 0)
+            if (n < 0)
             {
                 info = -1;
                 xerbla("DLASQ2", c__1);
                 return 0;
             }
-            else if (*n == 0)
+            else if (n == 0)
             {
                 return 0;
             }
-            else if (*n == 1)
+            else if (n == 1)
             {
                 // 1-by-1 case.
 
@@ -14309,7 +14306,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
                 return 0;
             }
-            else if (*n == 2)
+            else if (n == 2)
             {
                 // 2-by-2 case.
 
@@ -14349,14 +14346,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Check for negative data and compute sums of q's and e's.
 
-            z[*n * 2] = 0.0;
+            z[n * 2] = 0.0;
             emin = z[2];
             qmax = 0.0;
             zmax = 0.0;
             d = 0.0;
             e = 0.0;
 
-            i__1 = *n - 1 << 1;
+            i__1 = n - 1 << 1;
             for (k = 1; k <= i__1; k += 2)
             {
                 if (z[k] < 0.0)
@@ -14387,17 +14384,17 @@ namespace TAlex.MathCore.LinearAlgebra
                 zmax = Math.Max(d__1, d__2);
             }
 
-            if (z[(*n << 1) - 1] < 0.0)
+            if (z[(n << 1) - 1] < 0.0)
             {
-                info = -((*n << 1) + 199);
+                info = -((n << 1) + 199);
                 xerbla("DLASQ2", c__2);
                 return 0;
             }
 
-            d += z[(*n << 1) - 1];
+            d += z[(n << 1) - 1];
             // Computing MAX
             d__1 = qmax;
-            d__2 = z[(*n << 1) - 1];
+            d__2 = z[(n << 1) - 1];
             qmax = Math.Max(d__1, d__2);
             zmax = Math.Max(qmax, zmax);
 
@@ -14405,14 +14402,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (e == 0.0)
             {
-                i__1 = *n;
+                i__1 = n;
                 for (k = 2; k <= i__1; ++k)
                 {
                     z[k] = z[(k << 1) - 1];
                 }
 
                 dlasrt("D", n, &z[1], &iinfo);
-                z[(*n << 1) - 1] = d;
+                z[(n << 1) - 1] = d;
 
                 return 0;
             }
@@ -14423,7 +14420,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (trace == 0.0)
             {
-                z[(*n << 1) - 1] = 0.0;
+                z[(n << 1) - 1] = 0.0;
                 return 0;
             }
 
@@ -14434,7 +14431,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Rearrange data for locality: Z=(q1,qq1,e1,ee1,q2,qq2,e2,ee2,...).
 
-            for (k = *n << 1; k >= 2; k += -2)
+            for (k = n << 1; k >= 2; k += -2)
             {
                 z[k * 2] = 0.0;
                 z[(k << 1) - 1] = z[k];
@@ -14443,7 +14440,7 @@ namespace TAlex.MathCore.LinearAlgebra
             }
 
             i0 = 1;
-            n0 = *n;
+            n0 = n;
 
             // Reverse the qd-array, if warranted.
 
@@ -14551,7 +14548,7 @@ namespace TAlex.MathCore.LinearAlgebra
             nfail = 0;
             ndiv = n0 - i0 << 1;
 
-            i__1 = *n + 1;
+            i__1 = n + 1;
             for (iwhila = 1; iwhila <= i__1; ++iwhila)
             {
                 if (n0 < 1)
@@ -14565,7 +14562,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // splits from the rest of the array, but is negated.
 
                 desig = 0.0;
-                if (n0 == *n)
+                if (n0 == n)
                 {
                     sigma = 0.0;
                 }
@@ -14755,7 +14752,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Move q's to the front.
 
-            i__1 = *n;
+            i__1 = n;
             for (k = 2; k <= i__1; ++k)
             {
                 z[k] = z[(k << 2) - 3];
@@ -14766,20 +14763,20 @@ namespace TAlex.MathCore.LinearAlgebra
             dlasrt("D", n, &z[1], &iinfo);
 
             e = 0.0;
-            for (k = *n; k >= 1; --k)
+            for (k = n; k >= 1; --k)
             {
                 e += z[k];
             }
 
             // Store trace, sum(eigenvalues) and information on performance.
 
-            z[(*n << 1) + 1] = trace;
-            z[(*n << 1) + 2] = e;
-            z[(*n << 1) + 3] = (double)iter;
+            z[(n << 1) + 1] = trace;
+            z[(n << 1) + 2] = e;
+            z[(n << 1) + 3] = (double)iter;
             // Computing 2nd power
-            i__1 = *n;
-            z[(*n << 1) + 4] = (double)ndiv / (double)(i__1 * i__1);
-            z[(*n << 1) + 5] = nfail * 100.0 / (double)iter;
+            i__1 = n;
+            z[(n << 1) + 4] = (double)ndiv / (double)(i__1 * i__1);
+            z[(n << 1) + 5] = nfail * 100.0 / (double)iter;
 
             return 0;
         }
@@ -15995,7 +15992,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int dlasr(string side, string pivot, string direct,
-            int* m, int* n, double* c, double* s, double* a, int* lda)
+            int m, int n, double* c, double* s, double* a, int lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -16139,7 +16136,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Parameter adjustments
             --c;
             --s;
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
 
@@ -16157,15 +16154,15 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = 3;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = 4;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = 5;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = 9;
             }
@@ -16178,7 +16175,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*m == 0 || *n == 0)
+            if (m == 0 || n == 0)
             {
                 return 0;
             }
@@ -16191,14 +16188,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (lsame(direct, "F"))
                     {
-                        i__1 = *m - 1;
+                        i__1 = m - 1;
                         for (j = 1; j <= i__1; ++j)
                         {
                             ctemp = c[j];
                             stemp = s[j];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__2 = *n;
+                                i__2 = n;
                                 for (i = 1; i <= i__2; ++i)
                                 {
                                     temp = a[j + 1 + i * a_dim1];
@@ -16210,13 +16207,13 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else if (lsame(direct, "B"))
                     {
-                        for (j = *m - 1; j >= 1; --j)
+                        for (j = m - 1; j >= 1; --j)
                         {
                             ctemp = c[j];
                             stemp = s[j];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__1 = *n;
+                                i__1 = n;
                                 for (i = 1; i <= i__1; ++i)
                                 {
                                     temp = a[j + 1 + i * a_dim1];
@@ -16231,14 +16228,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (lsame(direct, "F"))
                     {
-                        i__1 = *m;
+                        i__1 = m;
                         for (j = 2; j <= i__1; ++j)
                         {
                             ctemp = c[j - 1];
                             stemp = s[j - 1];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__2 = *n;
+                                i__2 = n;
                                 for (i = 1; i <= i__2; ++i)
                                 {
                                     temp = a[j + i * a_dim1];
@@ -16250,13 +16247,13 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else if (lsame(direct, "B"))
                     {
-                        for (j = *m; j >= 2; --j)
+                        for (j = m; j >= 2; --j)
                         {
                             ctemp = c[j - 1];
                             stemp = s[j - 1];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__1 = *n;
+                                i__1 = n;
                                 for (i = 1; i <= i__1; ++i)
                                 {
                                     temp = a[j + i * a_dim1];
@@ -16271,37 +16268,37 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (lsame(direct, "F"))
                     {
-                        i__1 = *m - 1;
+                        i__1 = m - 1;
                         for (j = 1; j <= i__1; ++j)
                         {
                             ctemp = c[j];
                             stemp = s[j];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__2 = *n;
+                                i__2 = n;
                                 for (i = 1; i <= i__2; ++i)
                                 {
                                     temp = a[j + i * a_dim1];
-                                    a[j + i * a_dim1] = stemp * a[*m + i * a_dim1] + ctemp * temp;
-                                    a[*m + i * a_dim1] = ctemp * a[*m + i * a_dim1] - stemp * temp;
+                                    a[j + i * a_dim1] = stemp * a[m + i * a_dim1] + ctemp * temp;
+                                    a[m + i * a_dim1] = ctemp * a[m + i * a_dim1] - stemp * temp;
                                 }
                             }
                         }
                     }
                     else if (lsame(direct, "B"))
                     {
-                        for (j = *m - 1; j >= 1; --j)
+                        for (j = m - 1; j >= 1; --j)
                         {
                             ctemp = c[j];
                             stemp = s[j];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__1 = *n;
+                                i__1 = n;
                                 for (i = 1; i <= i__1; ++i)
                                 {
                                     temp = a[j + i * a_dim1];
-                                    a[j + i * a_dim1] = stemp * a[*m + i * a_dim1] + ctemp * temp;
-                                    a[*m + i * a_dim1] = ctemp * a[*m + i * a_dim1] - stemp * temp;
+                                    a[j + i * a_dim1] = stemp * a[m + i * a_dim1] + ctemp * temp;
+                                    a[m + i * a_dim1] = ctemp * a[m + i * a_dim1] - stemp * temp;
                                 }
                             }
                         }
@@ -16316,14 +16313,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (lsame(direct, "F"))
                     {
-                        i__1 = *n - 1;
+                        i__1 = n - 1;
                         for (j = 1; j <= i__1; ++j)
                         {
                             ctemp = c[j];
                             stemp = s[j];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__2 = *m;
+                                i__2 = m;
                                 for (i = 1; i <= i__2; ++i)
                                 {
                                     temp = a[i + (j + 1) * a_dim1];
@@ -16335,13 +16332,13 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else if (lsame(direct, "B"))
                     {
-                        for (j = *n - 1; j >= 1; --j)
+                        for (j = n - 1; j >= 1; --j)
                         {
                             ctemp = c[j];
                             stemp = s[j];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__1 = *m;
+                                i__1 = m;
                                 for (i = 1; i <= i__1; ++i)
                                 {
                                     temp = a[i + (j + 1) * a_dim1];
@@ -16356,14 +16353,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (lsame(direct, "F"))
                     {
-                        i__1 = *n;
+                        i__1 = n;
                         for (j = 2; j <= i__1; ++j)
                         {
                             ctemp = c[j - 1];
                             stemp = s[j - 1];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__2 = *m;
+                                i__2 = m;
                                 for (i = 1; i <= i__2; ++i)
                                 {
                                     temp = a[i + j * a_dim1];
@@ -16375,13 +16372,13 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else if (lsame(direct, "B"))
                     {
-                        for (j = *n; j >= 2; --j)
+                        for (j = n; j >= 2; --j)
                         {
                             ctemp = c[j - 1];
                             stemp = s[j - 1];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__1 = *m;
+                                i__1 = m;
                                 for (i = 1; i <= i__1; ++i)
                                 {
                                     temp = a[i + j * a_dim1];
@@ -16396,37 +16393,37 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     if (lsame(direct, "F"))
                     {
-                        i__1 = *n - 1;
+                        i__1 = n - 1;
                         for (j = 1; j <= i__1; ++j)
                         {
                             ctemp = c[j];
                             stemp = s[j];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__2 = *m;
+                                i__2 = m;
                                 for (i = 1; i <= i__2; ++i)
                                 {
                                     temp = a[i + j * a_dim1];
-                                    a[i + j * a_dim1] = stemp * a[i + *n * a_dim1] + ctemp * temp;
-                                    a[i + *n * a_dim1] = ctemp * a[i + *n * a_dim1] - stemp * temp;
+                                    a[i + j * a_dim1] = stemp * a[i + n * a_dim1] + ctemp * temp;
+                                    a[i + n * a_dim1] = ctemp * a[i + n * a_dim1] - stemp * temp;
                                 }
                             }
                         }
                     }
                     else if (lsame(direct, "B"))
                     {
-                        for (j = *n - 1; j >= 1; --j)
+                        for (j = n - 1; j >= 1; --j)
                         {
                             ctemp = c[j];
                             stemp = s[j];
                             if (ctemp != 1.0 || stemp != 0.0)
                             {
-                                i__1 = *m;
+                                i__1 = m;
                                 for (i = 1; i <= i__1; ++i)
                                 {
                                     temp = a[i + j * a_dim1];
-                                    a[i + j * a_dim1] = stemp * a[i + *n * a_dim1] + ctemp * temp;
-                                    a[i + *n * a_dim1] = ctemp * a[i + *n * a_dim1] - stemp * temp;
+                                    a[i + j * a_dim1] = stemp * a[i + n * a_dim1] + ctemp * temp;
+                                    a[i + n * a_dim1] = ctemp * a[i + n * a_dim1] - stemp * temp;
                                 }
                             }
                         }
@@ -16438,7 +16435,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlasrt(string id, int* n, double* d, out int info)
+        public static int dlasrt(string id, int n, double* d, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -16507,7 +16504,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
@@ -16521,14 +16518,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*n <= 1)
+            if (n <= 1)
             {
                 return 0;
             }
 
             stkpnt = 1;
             stack[0] = 1;
-            stack[1] = *n;
+            stack[1] = n;
 
         L10:
             start = stack[(stkpnt << 1) - 2];
@@ -16731,7 +16728,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int dlassq(int* n, double* x, int* incx, double* scale, double* sumsq)
+        public static int dlassq(int n, double* x, int* incx, double* scale, double* sumsq)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -16792,9 +16789,9 @@ namespace TAlex.MathCore.LinearAlgebra
             --x;
 
             // Function Body
-            if (*n > 0)
+            if (n > 0)
             {
-                i__1 = (*n - 1) * *incx + 1;
+                i__1 = (n - 1) * *incx + 1;
                 i__2 = *incx;
                 for (ix = 1; i__2 < 0 ? ix >= i__1 : ix <= i__1; ix += i__2)
                 {
@@ -17088,7 +17085,7 @@ namespace TAlex.MathCore.LinearAlgebra
         #region Double precision complex routines
 
         
-        public static int zdrscl(int* n, double* sa, complex16* sx, int* incx)
+        public static int zdrscl(int n, double* sa, complex16* sx, int* incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -17131,7 +17128,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --sx;
 
             // Function Body 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
@@ -17188,8 +17185,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgebak(string job, string side, int* n, int* ilo,
-            int* ihi, double* scale, int* m, complex16* v, int* ldv, out int info)
+        public static int zgebak(string job, string side, int n, int* ilo,
+            int* ihi, double* scale, int m, complex16* v, int* ldv, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -17276,23 +17273,23 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -3;
             }
-            else if (*ilo < 1 || *ilo > Math.Max(1, *n))
+            else if (*ilo < 1 || *ilo > Math.Max(1, n))
             {
                 info = -4;
             }
-            else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
+            else if (*ihi < Math.Min(*ilo, n) || *ihi > n)
             {
                 info = -5;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -7;
             }
-            else if (*ldv < Math.Max(1, *n))
+            else if (*ldv < Math.Max(1, n))
             {
                 info = -9;
             }
@@ -17306,11 +17303,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
-            if (*m == 0)
+            if (m == 0)
             {
                 return 0;
             }
@@ -17359,7 +17356,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 if (rightv)
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (ii = 1; ii <= i__1; ++ii)
                     {
                         i = ii;
@@ -17385,7 +17382,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (leftv)
                 {
-                    i__1 = *n;
+                    i__1 = n;
                     for (ii = 1; ii <= i__1; ++ii)
                     {
                         i = ii;
@@ -17416,7 +17413,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgebal(string job, int* n, complex16* a, int* lda, int* ilo, int* ihi, double* scale, out int info)
+        public static int zgebal(string job, int n, complex16* a, int lda, out int ilo, out int ihi, double* scale, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -17526,7 +17523,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool noconv;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --scale;
@@ -17537,11 +17534,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
-            else if (*lda < Math.Max(1, *n))
+            else if (lda < Math.Max(1, n))
             {
                 info = -4;
             }
@@ -17553,16 +17550,16 @@ namespace TAlex.MathCore.LinearAlgebra
             }
 
             k = 1;
-            l = *n;
+            l = n;
 
-            if (*n == 0)
+            if (n == 0)
             {
                 goto L210;
             }
 
             if (lsame(job, "N"))
             {
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     scale[i] = 1.0;
@@ -17589,7 +17586,7 @@ namespace TAlex.MathCore.LinearAlgebra
             }
 
             zswap(&l, &a[j * a_dim1 + 1], &c__1, &a[m * a_dim1 + 1], &c__1);
-            i__1 = *n - k + 1;
+            i__1 = n - k + 1;
             zswap(&i__1, &a[j + k * a_dim1], lda, &a[m + k * a_dim1], lda);
 
         L30:
@@ -17717,7 +17714,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 ica = izamax(&l, &a[i * a_dim1 + 1], &c__1);
                 ca = z_abs(&a[ica + i * a_dim1]);
-                i__2 = *n - k + 1;
+                i__2 = n - k + 1;
                 ira = izamax(&i__2, &a[i + k * a_dim1], lda);
                 ra = z_abs(&a[i + (ira + k - 1) * a_dim1]);
 
@@ -17796,7 +17793,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 scale[i] *= f;
                 noconv = true;
 
-                i__2 = *n - k + 1;
+                i__2 = n - k + 1;
                 zdscal(&i__2, &g, &a[i + k * a_dim1], lda);
                 zdscal(&l, &f, &a[i * a_dim1 + 1], &c__1);
 
@@ -17810,14 +17807,14 @@ namespace TAlex.MathCore.LinearAlgebra
             }
 
         L210:
-            *ilo = k;
-            *ihi = l;
+            ilo = k;
+            ihi = l;
 
             return 0;
         }
 
         
-        public static int zgebd2(int* m, int* n, complex16* a, int* lda,
+        public static int zgebd2(int m, int n, complex16* a, int lda,
             double* d, double* e, complex16* tauq, complex16* taup, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -17947,7 +17944,7 @@ namespace TAlex.MathCore.LinearAlgebra
             complex16 alpha;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --d;
@@ -17958,15 +17955,15 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body
             info = 0;
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -4;
             }
@@ -17978,11 +17975,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
             }
 
-            if (*m >= *n)
+            if (m >= n)
             {
                 // Reduce to upper bidiagonal form
 
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     // Generate elementary reflector H(i) to annihilate A(i+1:m,i)
@@ -17992,10 +17989,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     alpha.r = a[i__2].r;
                     alpha.i = a[i__2].i;
 
-                    i__2 = *m - i + 1;
+                    i__2 = m - i + 1;
                     // Computing MIN
                     i__3 = i + 1;
-                    zlarfg(&i__2, &alpha, &a[Math.Min(i__3, *m) + i * a_dim1], &c__1, &tauq[i]);
+                    zlarfg(&i__2, &alpha, &a[Math.Min(i__3, m) + i * a_dim1], &c__1, &tauq[i]);
                     i__2 = i;
                     d[i__2] = alpha.r;
                     i__2 = i + i * a_dim1;
@@ -18005,10 +18002,10 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // Apply H(i)' to A(i:m,i+1:n) from the left
 
-                    if (i < *n)
+                    if (i < n)
                     {
-                        i__2 = *m - i + 1;
-                        i__3 = *n - i;
+                        i__2 = m - i + 1;
+                        i__3 = n - i;
                         d_cnjg(&z__1, &tauq[i]);
                         zlarf("Left", &i__2, &i__3, &a[i + i * a_dim1],
                             &c__1, &z__1, &a[i + (i + 1) * a_dim1], lda, &work[1]);
@@ -18019,22 +18016,22 @@ namespace TAlex.MathCore.LinearAlgebra
                     a[i__2].r = d[i__3];
                     a[i__2].i = 0.0;
 
-                    if (i < *n)
+                    if (i < n)
                     {
                         // Generate elementary reflector G(i) to annihilate
                         // A(i,i+2:n)
 
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         zlacgv(&i__2, &a[i + (i + 1) * a_dim1], lda);
                         i__2 = i + (i + 1) * a_dim1;
 
                         alpha.r = a[i__2].r;
                         alpha.i = a[i__2].i;
 
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         // Computing MIN
                         i__3 = i + 2;
-                        zlarfg(&i__2, &alpha, &a[i + Math.Min(i__3, *n) * a_dim1], lda, &taup[i]);
+                        zlarfg(&i__2, &alpha, &a[i + Math.Min(i__3, n) * a_dim1], lda, &taup[i]);
                         i__2 = i;
                         e[i__2] = alpha.r;
                         i__2 = i + (i + 1) * a_dim1;
@@ -18044,13 +18041,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Apply G(i) to A(i+1:m,i+1:n) from the right
 
-                        i__2 = *m - i;
-                        i__3 = *n - i;
+                        i__2 = m - i;
+                        i__3 = n - i;
 
                         zlarf("Right", &i__2, &i__3, &a[i + (i + 1) * a_dim1],
                             lda, &taup[i], &a[i + 1 + (i + 1) * a_dim1], lda, &work[1]);
 
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         zlacgv(&i__2, &a[i + (i + 1) * a_dim1], lda);
                         i__2 = i + (i + 1) * a_dim1;
                         i__3 = i;
@@ -18070,22 +18067,22 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Reduce to lower bidiagonal form
 
-                i__1 = *m;
+                i__1 = m;
                 for (i = 1; i <= i__1; ++i)
                 {
                     // Generate elementary reflector G(i) to annihilate A(i,i+1:n)
 
-                    i__2 = *n - i + 1;
+                    i__2 = n - i + 1;
                     zlacgv(&i__2, &a[i + i * a_dim1], lda);
                     i__2 = i + i * a_dim1;
 
                     alpha.r = a[i__2].r;
                     alpha.i = a[i__2].i;
 
-                    i__2 = *n - i + 1;
+                    i__2 = n - i + 1;
                     // Computing MIN
                     i__3 = i + 1;
-                    zlarfg(&i__2, &alpha, &a[i + Math.Min(i__3, *n) * a_dim1], lda, &taup[i]);
+                    zlarfg(&i__2, &alpha, &a[i + Math.Min(i__3, n) * a_dim1], lda, &taup[i]);
                     i__2 = i;
                     d[i__2] = alpha.r;
                     i__2 = i + i * a_dim1;
@@ -18095,22 +18092,22 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // Apply G(i) to A(i+1:m,i:n) from the right
 
-                    if (i < *m)
+                    if (i < m)
                     {
-                        i__2 = *m - i;
-                        i__3 = *n - i + 1;
+                        i__2 = m - i;
+                        i__3 = n - i + 1;
                         zlarf("Right", &i__2, &i__3, &a[i + i * a_dim1], lda,
                             &taup[i], &a[i + 1 + i * a_dim1], lda, &work[1]);
                     }
 
-                    i__2 = *n - i + 1;
+                    i__2 = n - i + 1;
                     zlacgv(&i__2, &a[i + i * a_dim1], lda);
                     i__2 = i + i * a_dim1;
                     i__3 = i;
                     a[i__2].r = d[i__3];
                     a[i__2].i = 0.0;
 
-                    if (i < *m)
+                    if (i < m)
                     {
                         // Generate elementary reflector H(i) to annihilate
                         // A(i+2:m,i)
@@ -18118,11 +18115,11 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__2 = i + 1 + i * a_dim1;
                         alpha.r = a[i__2].r;
                         alpha.i = a[i__2].i;
-                        i__2 = *m - i;
+                        i__2 = m - i;
 
                         // Computing MIN
                         i__3 = i + 2;
-                        zlarfg(&i__2, &alpha, &a[Math.Min(i__3, *m) + i * a_dim1], &c__1, &tauq[i]);
+                        zlarfg(&i__2, &alpha, &a[Math.Min(i__3, m) + i * a_dim1], &c__1, &tauq[i]);
                         i__2 = i;
                         e[i__2] = alpha.r;
                         i__2 = i + 1 + i * a_dim1;
@@ -18131,8 +18128,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Apply H(i)' to A(i+1:m,i+1:n) from the left
 
-                        i__2 = *m - i;
-                        i__3 = *n - i;
+                        i__2 = m - i;
+                        i__3 = n - i;
                         d_cnjg(&z__1, &tauq[i]);
                         zlarf("Left", &i__2, &i__3, &a[i + 1 + i * a_dim1],
                             &c__1, &z__1, &a[i + 1 + (i + 1) * a_dim1], lda, &work[1]);
@@ -18155,7 +18152,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgebrd(int* m, int* n, complex16* a, int* lda, double* d,
+        public static int zgebrd(int m, int n, complex16* a, int lda, double* d,
             double* e, complex16* tauq, complex16* taup, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
@@ -18304,7 +18301,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --d;
@@ -18319,29 +18316,29 @@ namespace TAlex.MathCore.LinearAlgebra
             i__1 = 1;
             i__2 = ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
             nb = Math.Max(i__1, i__2);
-            lwkopt = (*m + *n) * nb;
+            lwkopt = (m + n) * nb;
             d__1 = (double)lwkopt;
             work[1].r = d__1;
             work[1].i = 0.0;
             lquery = *lwork == -1;
 
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -4;
             }
             else // if(complicated condition)
             {
                 // Computing MAX
-                i__1 = Math.Max(1, *m);
-                if (*lwork < Math.Max(i__1, *n) && !lquery)
+                i__1 = Math.Max(1, m);
+                if (*lwork < Math.Max(i__1, n) && !lquery)
                 {
                     info = -10;
                 }
@@ -18360,7 +18357,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            minmn = Math.Min(*m, *n);
+            minmn = Math.Min(m, n);
             if (minmn == 0)
             {
                 work[1].r = 1.0;
@@ -18368,9 +18365,9 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
             }
 
-            ws = (double)Math.Max(*m, *n);
-            ldwrkx = *m;
-            ldwrky = *n;
+            ws = (double)Math.Max(m, n);
+            ldwrkx = m;
+            ldwrky = n;
 
             if (nb > 1 && nb < minmn)
             {
@@ -18385,16 +18382,16 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (nx < minmn)
                 {
-                    ws = (double)((*m + *n) * nb);
+                    ws = (double)((m + n) * nb);
                     if ((double)(*lwork) < ws)
                     {
                         // Not enough work space for the optimal NB, consider using
                         // a smaller block size.
 
                         nbmin = ilaenv(&c__2, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
-                        if (*lwork >= (*m + *n) * nbmin)
+                        if (*lwork >= (m + n) * nbmin)
                         {
-                            nb = *lwork / (*m + *n);
+                            nb = *lwork / (m + n);
                         }
                         else
                         {
@@ -18417,23 +18414,23 @@ namespace TAlex.MathCore.LinearAlgebra
                 // the matrices X and Y which are needed to update the unreduced
                 // part of the matrix
 
-                i__3 = *m - i + 1;
-                i__4 = *n - i + 1;
+                i__3 = m - i + 1;
+                i__4 = n - i + 1;
                 zlabrd(&i__3, &i__4, &nb, &a[i + i * a_dim1], lda, &d[i], &e[i],
                     &tauq[i], &taup[i], &work[1], &ldwrkx, &work[ldwrkx * nb + 1], &ldwrky);
 
                 // Update the trailing submatrix A(i+ib:m,i+ib:n), using
                 // an update of the form  A := A - V*Y' - X*U'
 
-                i__3 = *m - i - nb + 1;
-                i__4 = *n - i - nb + 1;
+                i__3 = m - i - nb + 1;
+                i__4 = n - i - nb + 1;
                 z__1.r = -1.0;
                 z__1.i = -0.0;
                 zgemm("No transpose", "Conjugate transpose", &i__3, &i__4, &nb,
                     &z__1, &a[i + nb + i * a_dim1], lda, &work[ldwrkx * nb + nb + 1],
                     &ldwrky, &c_b1, &a[i + nb + (i + nb) * a_dim1], lda);
-                i__3 = *m - i - nb + 1;
-                i__4 = *n - i - nb + 1;
+                i__3 = m - i - nb + 1;
+                i__4 = n - i - nb + 1;
                 z__1.r = -1.0;
                 z__1.i = -0.0;
                 zgemm("No transpose", "No transpose", &i__3, &i__4, &nb,
@@ -18442,7 +18439,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Copy diagonal and off-diagonal elements of B back into A
 
-                if (*m >= *n)
+                if (m >= n)
                 {
                     i__3 = i + nb - 1;
                     for (j = i; j <= i__3; ++j)
@@ -18482,8 +18479,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Use unblocked code to reduce the remainder of the matrix
 
-            i__2 = *m - i + 1;
-            i__1 = *n - i + 1;
+            i__2 = m - i + 1;
+            i__1 = n - i + 1;
             zgebd2(&i__2, &i__1, &a[i + i * a_dim1], lda, &d[i], &e[i], &tauq[i], &taup[i], &work[1], &iinfo);
             work[1].r = ws;
             work[1].i = 0.0;
@@ -18493,9 +18490,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int zgeevx(string balanc, string jobvl, string jobvr, string sense,
-            int* n, complex16* a, int* lda, complex16* w, complex16* vl, int* ldvl,
-            complex16* vr, int* ldvr, int* ilo, int* ihi, double* scale, double* abnrm,
-            double* rconde, double* rcondv, complex16* work, int* lwork, double* rwork, out int info)
+            int n, complex16[] a, int lda, complex16[] w, complex16[] vl, int ldvl,
+            complex16[] vr, int ldvr, out int ilo, out int ihi, double[] scale, out double abnrm,
+            double[] rconde, double[] rcondv, complex16[] work, int lwork, double[] rwork, out int info)
         {
             //  -- LAPACK driver routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -18698,7 +18695,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool wntsnn, wntsnv;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --w;
@@ -18716,7 +18713,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body 
             info = 0;
-            lquery = (*lwork == -1);
+            lquery = (lwork == -1);
             wantvl = lsame(jobvl, "V");
             wantvr = lsame(jobvr, "V");
             wntsnn = lsame(sense, "N");
@@ -18740,19 +18737,19 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -4;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -5;
             }
-            else if (*lda < Math.Max(1, *n))
+            else if (lda < Math.Max(1, n))
             {
                 info = -7;
             }
-            else if (*ldvl < 1 || wantvl && *ldvl < *n)
+            else if (*ldvl < 1 || wantvl && *ldvl < n)
             {
                 info = -10;
             }
-            else if (*ldvr < 1 || wantvr && *ldvr < *n)
+            else if (*ldvr < 1 || wantvr && *ldvr < n)
             {
                 info = -12;
             }
@@ -18770,14 +18767,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (info == 0)
             {
-                if (*n == 0)
+                if (n == 0)
                 {
                     minwrk = 1;
                     maxwrk = 1;
                 }
                 else
                 {
-                    maxwrk = *n + *n * ilaenv(&c__1, "ZGEHRD", " ", n, &c__1, n, &c__0);
+                    maxwrk = n + n * ilaenv(&c__1, "ZGEHRD", " ", n, &c__1, n, &c__0);
 
                     if (wantvl)
                     {
@@ -18807,13 +18804,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     if (!wantvl && !wantvr)
                     {
-                        minwrk = *n << 1;
+                        minwrk = n << 1;
 
                         if (!(wntsnn || wntsne))
                         {
                             // Computing MAX 
                             i__1 = minwrk;
-                            i__2 = *n * *n + (*n << 1);
+                            i__2 = n * n + (n << 1);
                             minwrk = Math.Max(i__1, i__2);
                         }
 
@@ -18823,39 +18820,39 @@ namespace TAlex.MathCore.LinearAlgebra
                         {
                             // Computing MAX 
                             i__1 = maxwrk;
-                            i__2 = *n * *n + (*n << 1);
+                            i__2 = n * n + (n << 1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                     }
                     else
                     {
-                        minwrk = *n << 1;
+                        minwrk = n << 1;
 
                         if (!(wntsnn || wntsne))
                         {
                             // Computing MAX 
                             i__1 = minwrk;
-                            i__2 = *n * *n + (*n << 1);
+                            i__2 = n * n + (n << 1);
                             minwrk = Math.Max(i__1, i__2);
                         }
 
                         maxwrk = Math.Max(maxwrk, hswork);
                         // Computing MAX 
                         i__1 = maxwrk;
-                        i__2 = *n + (*n - 1) * ilaenv(&c__1, "ZUNGHR", " ", n, &c__1, n, &c_n1);
+                        i__2 = n + (n - 1) * ilaenv(&c__1, "ZUNGHR", " ", n, &c__1, n, &c_n1);
                         maxwrk = Math.Max(i__1, i__2);
 
                         if (!(wntsnn || wntsne))
                         {
                             // Computing MAX 
                             i__1 = maxwrk;
-                            i__2 = *n * *n + (*n << 1);
+                            i__2 = n * n + (n << 1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
 
                         // Computing MAX 
                         i__1 = maxwrk;
-                        i__2 = *n << 1;
+                        i__2 = n << 1;
                         maxwrk = Math.Max(i__1, i__2);
                     }
                     maxwrk = Math.Max(maxwrk, minwrk);
@@ -18863,7 +18860,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 work[1].r = (double)maxwrk;
                 work[1].i = 0.0;
 
-                if (*lwork < minwrk && !lquery)
+                if (lwork < minwrk && !lquery)
                 {
                     info = -20;
                 }
@@ -18882,7 +18879,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
@@ -18934,8 +18931,8 @@ namespace TAlex.MathCore.LinearAlgebra
             // (RWorkspace: none) 
 
             itau = 1;
-            iwrk = itau + *n;
-            i__1 = *lwork - iwrk + 1;
+            iwrk = itau + n;
+            i__1 = lwork - iwrk + 1;
             zgehrd(n, ilo, ihi, &a[a_offset], lda, &work[itau], &work[iwrk], &i__1, &ierr);
 
             if (wantvl)
@@ -18951,7 +18948,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // (CWorkspace: need 2*N-1, prefer N+(N-1)*NB) 
                 // (RWorkspace: none) 
 
-                i__1 = *lwork - iwrk + 1;
+                i__1 = lwork - iwrk + 1;
                 zunghr(n, ilo, ihi, &vl[vl_offset], ldvl, &work[itau], &work[iwrk], &i__1, &ierr);
 
                 // Perform QR iteration, accumulating Schur vectors in VL 
@@ -18959,8 +18956,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 // (RWorkspace: none) 
 
                 iwrk = itau;
-                i__1 = *lwork - iwrk + 1;
-                zhseqr("S", "V", n, ilo, ihi, &a[a_offset], lda, &w[1], &vl[vl_offset], ldvl, &work[iwrk], &i__1, ref info);
+                i__1 = lwork - iwrk + 1;
+                zhseqr("S", "V", n, ilo, ihi, &a[a_offset], lda, &w[1], &vl[vl_offset], ldvl, &work[iwrk], &i__1, out info);
 
                 if (wantvr)
                 {
@@ -18983,7 +18980,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // (CWorkspace: need 2*N-1, prefer N+(N-1)*NB) 
                 // (RWorkspace: none) 
 
-                i__1 = *lwork - iwrk + 1;
+                i__1 = lwork - iwrk + 1;
                 zunghr(n, ilo, ihi, &vr[vr_offset], ldvr, &work[itau], &work[iwrk], &i__1, &ierr);
 
                 // Perform QR iteration, accumulating Schur vectors in VR 
@@ -18991,8 +18988,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 // (RWorkspace: none) 
 
                 iwrk = itau;
-                i__1 = *lwork - iwrk + 1;
-                zhseqr("S", "V", n, ilo, ihi, &a[a_offset], lda, &w[1], &vr[vr_offset], ldvr, &work[iwrk], &i__1, ref info);
+                i__1 = lwork - iwrk + 1;
+                zhseqr("S", "V", n, ilo, ihi, &a[a_offset], lda, &w[1], &vr[vr_offset], ldvr, &work[iwrk], &i__1, out info);
 
             }
             else
@@ -19013,8 +19010,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 // (RWorkspace: none) 
 
                 iwrk = itau;
-                i__1 = *lwork - iwrk + 1;
-                zhseqr(job, "N", n, ilo, ihi, &a[a_offset], lda, &w[1], &vr[vr_offset], ldvr, &work[iwrk], &i__1, ref info);
+                i__1 = lwork - iwrk + 1;
+                zhseqr(job, "N", n, ilo, ihi, &a[a_offset], lda, &w[1], &vr[vr_offset], ldvr, &work[iwrk], &i__1, out info);
             }
 
             // If INFO > 0 from ZHSEQR, then quit 
@@ -19053,12 +19050,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Normalize left eigenvectors and make largest component real 
 
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     scl = 1.0 / dznrm2(n, &vl[i * vl_dim1 + 1], &c__1);
                     zdscal(n, &scl, &vl[i * vl_dim1 + 1], &c__1);
-                    i__2 = *n;
+                    i__2 = n;
 
                     for (k = 1; k <= i__2; ++k)
                     {
@@ -19101,12 +19098,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Normalize right eigenvectors and make largest component real 
 
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     scl = 1.0 / dznrm2(n, &vr[i * vr_dim1 + 1], &c__1);
                     zdscal(n, &scl, &vr[i * vr_dim1 + 1], &c__1);
-                    i__2 = *n;
+                    i__2 = n;
 
                     for (k = 1; k <= i__2; ++k)
                     {
@@ -19146,10 +19143,10 @@ namespace TAlex.MathCore.LinearAlgebra
             L50:
             if (scalea)
             {
-                i__1 = *n - info;
+                i__1 = n - info;
 
                 // Computing MAX 
-                i__3 = *n - info;
+                i__3 = n - info;
                 i__2 = Math.Max(i__3, 1);
 
                 zlascl("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &w[info + 1], &i__2, &ierr);
@@ -19175,7 +19172,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgehd2(int* n, int* ilo, int* ihi, complex16* a, int* lda,
+        public static int zgehd2(int n, int* ilo, int* ihi, complex16* a, int lda,
             complex16* tau, complex16* work, ref int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -19270,7 +19267,7 @@ namespace TAlex.MathCore.LinearAlgebra
             complex16 alpha;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -19279,19 +19276,19 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body 
             info = 0;
 
-            if (*n < 0)
+            if (n < 0)
             {
                 info = -1;
             }
-            else if (*ilo < 1 || *ilo > Math.Max(1, *n))
+            else if (*ilo < 1 || *ilo > Math.Max(1, n))
             {
                 info = -2;
             }
-            else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
+            else if (*ihi < Math.Min(*ilo, n) || *ihi > n)
             {
                 info = -3;
             }
-            else if (*lda < Math.Max(1, *n))
+            else if (lda < Math.Max(1, n))
             {
                 info = -5;
             }
@@ -19316,7 +19313,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__2 = *ihi - i;
                 // Computing MIN 
                 i__3 = i + 2;
-                zlarfg(&i__2, &alpha, &a[Math.Min(i__3, *n) + i * a_dim1], &c__1, &tau[i]);
+                zlarfg(&i__2, &alpha, &a[Math.Min(i__3, n) + i * a_dim1], &c__1, &tau[i]);
                 i__2 = i + 1 + i * a_dim1;
 
                 a[i__2].r = 1.0;
@@ -19330,7 +19327,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Apply H(i)' to A(i+1:ihi,i+1:n) from the left 
 
                 i__2 = *ihi - i;
-                i__3 = *n - i;
+                i__3 = n - i;
                 d_cnjg(&z__1, &tau[i]);
                 zlarf("Left", &i__2, &i__3, &a[i + 1 + i * a_dim1], &c__1, &z__1, &a[i + 1 + (i + 1) * a_dim1], lda, &work[1]);
 
@@ -19344,7 +19341,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgehrd(int* n, int* ilo, int* ihi, complex16* a, int* lda,
+        public static int zgehrd(int n, int* ilo, int* ihi, complex16* a, int lda,
             complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -19465,7 +19462,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -19477,29 +19474,29 @@ namespace TAlex.MathCore.LinearAlgebra
             i__1 = 64;
             i__2 = ilaenv(&c__1, "ZGEHRD", " ", n, ilo, ihi, &c_n1);
             nb = Math.Min(i__1, i__2);
-            lwkopt = *n * nb;
+            lwkopt = n * nb;
 
             work[1].r = (double)lwkopt;
             work[1].i = 0.0;
             lquery = *lwork == -1;
 
-            if (*n < 0)
+            if (n < 0)
             {
                 info = -1;
             }
-            else if (*ilo < 1 || *ilo > Math.Max(1, *n))
+            else if (*ilo < 1 || *ilo > Math.Max(1, n))
             {
                 info = -2;
             }
-            else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
+            else if (*ihi < Math.Min(*ilo, n) || *ihi > n)
             {
                 info = -3;
             }
-            else if (*lda < Math.Max(1, *n))
+            else if (lda < Math.Max(1, n))
             {
                 info = -5;
             }
-            else if (*lwork < Math.Max(1, *n) && !lquery)
+            else if (*lwork < Math.Max(1, n) && !lquery)
             {
                 info = -8;
             }
@@ -19525,7 +19522,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 tau[i__2].i = 0.0;
             }
 
-            i__1 = *n - 1;
+            i__1 = n - 1;
 
             for (i = Math.Max(1, *ihi); i <= i__1; ++i)
             {
@@ -19567,7 +19564,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Determine if workspace is large enough for blocked code 
 
-                    iws = *n * nb;
+                    iws = n * nb;
                     if (*lwork < iws)
                     {
                         // Not enough workspace to use optimal NB:  determine the 
@@ -19578,9 +19575,9 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__1 = 2;
                         i__2 = ilaenv(&c__2, "ZGEHRD", " ", n, ilo, ihi, &c_n1);
                         nbmin = Math.Max(i__1, i__2);
-                        if (*lwork >= *n * nbmin)
+                        if (*lwork >= n * nbmin)
                         {
-                            nb = *lwork / *n;
+                            nb = *lwork / n;
                         }
                         else
                         {
@@ -19590,7 +19587,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 }
             }
 
-            ldwork = *n;
+            ldwork = n;
 
             if (nb < nbmin || nb >= nh)
             {
@@ -19665,7 +19662,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     // left 
 
                     i__3 = *ihi - i;
-                    i__4 = *n - i - ib + 1;
+                    i__4 = n - i - ib + 1;
 
                     zlarfb("Left", "Conjugate transpose", "Forward", "Columnwise",
                         &i__3, &i__4, &ib, &a[i + 1 + i * a_dim1], lda, t, &c__65,
@@ -19683,7 +19680,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgelq2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, out int info)
+        public static int zgelq2(int m, int n, complex16* a, int lda, complex16* tau, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -19750,7 +19747,7 @@ namespace TAlex.MathCore.LinearAlgebra
             complex16 alpha;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -19758,15 +19755,15 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body
             info = 0;
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -4;
             }
@@ -19778,26 +19775,26 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
             }
 
-            k = Math.Min(*m, *n);
+            k = Math.Min(m, n);
 
             i__1 = k;
             for (i = 1; i <= i__1; ++i)
             {
                 // Generate elementary reflector H(i) to annihilate A(i,i+1:n)
 
-                i__2 = *n - i + 1;
+                i__2 = n - i + 1;
                 zlacgv(&i__2, &a[i + i * a_dim1], lda);
                 i__2 = i + i * a_dim1;
 
                 alpha.r = a[i__2].r;
                 alpha.i = a[i__2].i;
 
-                i__2 = *n - i + 1;
+                i__2 = n - i + 1;
                 // Computing MIN
                 i__3 = i + 1;
-                zlarfp(&i__2, &alpha, &a[i + Math.Min(i__3, *n) * a_dim1], lda, &tau[i]);
+                zlarfp(&i__2, &alpha, &a[i + Math.Min(i__3, n) * a_dim1], lda, &tau[i]);
 
-                if (i < *m)
+                if (i < m)
                 {
                     // Apply H(i) to A(i+1:m,i:n) from the right
 
@@ -19806,15 +19803,15 @@ namespace TAlex.MathCore.LinearAlgebra
                     a[i__2].r = 1.0;
                     a[i__2].i = 0.0;
 
-                    i__2 = *m - i;
-                    i__3 = *n - i + 1;
+                    i__2 = m - i;
+                    i__3 = n - i + 1;
                     zlarf("Right", &i__2, &i__3, &a[i + i * a_dim1], lda, &tau[i], &a[i + 1 + i * a_dim1], lda, &work[1]);
                 }
 
                 i__2 = i + i * a_dim1;
                 a[i__2].r = alpha.r;
                 a[i__2].i = alpha.i;
-                i__2 = *n - i + 1;
+                i__2 = n - i + 1;
                 zlacgv(&i__2, &a[i + i * a_dim1], lda);
             }
 
@@ -19822,7 +19819,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgelqf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, out int info)
+        public static int zgelqf(int m, int n, complex16* a, int lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -19908,7 +19905,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -19917,24 +19914,24 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body
             info = 0;
             nb = ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
-            lwkopt = *m * nb;
+            lwkopt = m * nb;
             work[1].r = (double)lwkopt;
             work[1].i = 0.0;
             lquery = *lwork == -1;
 
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -4;
             }
-            else if (*lwork < Math.Max(1, *m) && !lquery)
+            else if (*lwork < Math.Max(1, m) && !lquery)
             {
                 info = -7;
             }
@@ -19952,7 +19949,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            k = Math.Min(*m, *n);
+            k = Math.Min(m, n);
             if (k == 0)
             {
                 work[1].r = 1.0;
@@ -19962,7 +19959,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             nbmin = 2;
             nx = 0;
-            iws = *m;
+            iws = m;
             if (nb > 1 && nb < k)
             {
                 // Determine when to cross over from blocked to unblocked code.
@@ -19975,7 +19972,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Determine if workspace is large enough for blocked code.
 
-                    ldwork = *m;
+                    ldwork = m;
                     iws = ldwork * nb;
                     if (*lwork < iws)
                     {
@@ -20007,20 +20004,20 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Compute the LQ factorization of the current block
                     // A(i:i+ib-1,i:n)
 
-                    i__3 = *n - i + 1;
+                    i__3 = n - i + 1;
                     zgelq2(&ib, &i__3, &a[i + i * a_dim1], lda, &tau[i], &work[1], &iinfo);
-                    if (i + ib <= *m)
+                    if (i + ib <= m)
                     {
                         // Form the triangular factor of the block reflector
                         // H = H(i) H(i+1) . . . H(i+ib-1)
 
-                        i__3 = *n - i + 1;
+                        i__3 = n - i + 1;
                         zlarft("Forward", "Rowwise", &i__3, &ib, &a[i + i * a_dim1], lda, &tau[i], &work[1], &ldwork);
 
                         // Apply H to A(i+ib:m,i:n) from the right
 
-                        i__3 = *m - i - ib + 1;
-                        i__4 = *n - i + 1;
+                        i__3 = m - i - ib + 1;
+                        i__4 = n - i + 1;
                         zlarfb("Right", "No transpose", "Forward", "Rowwise", &i__3,
                             &i__4, &ib, &a[i + i * a_dim1], lda, &work[1], &ldwork,
                             &a[i + ib + i * a_dim1], lda, &work[ib + 1], &ldwork);
@@ -20036,8 +20033,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (i <= k)
             {
-                i__2 = *m - i + 1;
-                i__1 = *n - i + 1;
+                i__2 = m - i + 1;
+                i__1 = n - i + 1;
                 zgelq2(&i__2, &i__1, &a[i + i * a_dim1], lda, &tau[i], &work[1], &iinfo);
             }
 
@@ -20048,7 +20045,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgeqr2(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, out int info)
+        public static int zgeqr2(int m, int n, complex16* a, int lda, complex16* tau, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20119,7 +20116,7 @@ namespace TAlex.MathCore.LinearAlgebra
             complex16 alpha;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -20127,15 +20124,15 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body
             info = 0;
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -4;
             }
@@ -20146,19 +20143,19 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
             }
 
-            k = Math.Min(*m, *n);
+            k = Math.Min(m, n);
 
             i__1 = k;
             for (i = 1; i <= i__1; ++i)
             {
                 // Generate elementary reflector H(i) to annihilate A(i+1:m,i)
 
-                i__2 = *m - i + 1;
+                i__2 = m - i + 1;
                 // Computing MIN
                 i__3 = i + 1;
-                zlarfp(&i__2, &a[i + i * a_dim1], &a[Math.Min(i__3, *m) + i * a_dim1], &c__1, &tau[i]);
+                zlarfp(&i__2, &a[i + i * a_dim1], &a[Math.Min(i__3, m) + i * a_dim1], &c__1, &tau[i]);
 
-                if (i < *n)
+                if (i < n)
                 {
                     // Apply H(i)' to A(i:m,i+1:n) from the left
 
@@ -20172,8 +20169,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     a[i__2].r = 1.0;
                     a[i__2].i = 0.0;
 
-                    i__2 = *m - i + 1;
-                    i__3 = *n - i;
+                    i__2 = m - i + 1;
+                    i__3 = n - i;
 
                     d_cnjg(&z__1, &tau[i]);
 
@@ -20191,7 +20188,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgeqrf(int* m, int* n, complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, out int info)
+        public static int zgeqrf(int m, int n, complex16* a, int lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20278,7 +20275,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -20287,24 +20284,24 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body
             info = 0;
             nb = ilaenv(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
-            lwkopt = *n * nb;
+            lwkopt = n * nb;
             work[1].r = (double)lwkopt;
             work[1].i = 0.0;
             lquery = *lwork == -1;
 
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -4;
             }
-            else if (*lwork < Math.Max(1, *n) && !lquery)
+            else if (*lwork < Math.Max(1, n) && !lquery)
             {
                 info = -7;
             }
@@ -20322,7 +20319,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            k = Math.Min(*m, *n);
+            k = Math.Min(m, n);
             if (k == 0)
             {
                 work[1].r = 1.0;
@@ -20332,7 +20329,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             nbmin = 2;
             nx = 0;
-            iws = *n;
+            iws = n;
             if (nb > 1 && nb < k)
             {
                 // Determine when to cross over from blocked to unblocked code.
@@ -20345,7 +20342,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Determine if workspace is large enough for blocked code.
 
-                    ldwork = *n;
+                    ldwork = n;
                     iws = ldwork * nb;
                     if (*lwork < iws)
                     {
@@ -20376,22 +20373,22 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Compute the QR factorization of the current block
                     // A(i:m,i:i+ib-1)
 
-                    i__3 = *m - i + 1;
+                    i__3 = m - i + 1;
                     zgeqr2(&i__3, &ib, &a[i + i * a_dim1], lda, &tau[i], &work[
                         1], &iinfo);
-                    if (i + ib <= *n)
+                    if (i + ib <= n)
                     {
                         // Form the triangular factor of the block reflector
                         // H = H(i) H(i+1) . . . H(i+ib-1)
 
-                        i__3 = *m - i + 1;
+                        i__3 = m - i + 1;
                         zlarft("Forward", "Columnwise", &i__3, &ib, &a[i + i *
                             a_dim1], lda, &tau[i], &work[1], &ldwork);
 
                         // Apply H' to A(i:m,i+ib:n) from the left
 
-                        i__3 = *m - i + 1;
-                        i__4 = *n - i - ib + 1;
+                        i__3 = m - i + 1;
+                        i__4 = n - i - ib + 1;
                         zlarfb("Left", "Conjugate transpose", "Forward", "Columnwise", &i__3, &i__4, &ib,
                             &a[i + i * a_dim1], lda, &work[1], &ldwork, &a[i + (i + ib) * a_dim1], lda, &work[ib + 1], &ldwork);
                     }
@@ -20406,8 +20403,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (i <= k)
             {
-                i__2 = *m - i + 1;
-                i__1 = *n - i + 1;
+                i__2 = m - i + 1;
+                i__1 = n - i + 1;
                 zgeqr2(&i__2, &i__1, &a[i + i * a_dim1], lda, &tau[i], &work[1], &iinfo);
             }
 
@@ -20418,8 +20415,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zgesdd(string jobz, int* m, int* n, complex16* a, int* lda, double* s, complex16* u,
-            int* ldu, complex16* vt, int* ldvt, complex16* work, int* lwork, double* rwork, int* iwork, out int info)
+        public static int zgesdd(string jobz, int m, int n, complex16[] a, int lda, double[] s, complex16[] u,
+            int ldu, complex16[] vt, int ldvt, complex16[] work, int lwork, double[] rwork, int[] iwork, out int info)
         {
             //  -- LAPACK driver routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -20586,7 +20583,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int nrwork;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --s;
@@ -20602,7 +20599,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body
             info = 0;
-            minmn = Math.Min(*m, *n);
+            minmn = Math.Min(m, n);
             mnthr1 = (int)(minmn * 17.0 / 9.0);
             mnthr2 = (int)(minmn * 5.0 / 3.0);
             wntqa = lsame(jobz, "A");
@@ -20617,25 +20614,25 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -1;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -3;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -5;
             }
-            else if (*ldu < 1 || wntqas && *ldu < *m || wntqo && *m < *n && *ldu < *
+            else if (*ldu < 1 || wntqas && *ldu < m || wntqo && m < n && *ldu < *
               m)
             {
                 info = -8;
             }
-            else if (*ldvt < 1 || wntqa && *ldvt < *n || wntqs && *ldvt < minmn ||
-              wntqo && *m >= *n && *ldvt < *n)
+            else if (*ldvt < 1 || wntqa && *ldvt < n || wntqs && *ldvt < minmn ||
+              wntqo && m >= n && *ldvt < n)
             {
                 info = -10;
             }
@@ -20648,9 +20645,9 @@ namespace TAlex.MathCore.LinearAlgebra
             //   real workspace. NB refers to the optimal block size for the
             //   immediately following subroutine, as returned by ILAENV.)
 
-            if (info == 0 && *m > 0 && *n > 0)
+            if (info == 0 && m > 0 && n > 0)
             {
-                if (*m >= *n)
+                if (m >= n)
                 {
                     // There is no complex work space needed for bidiagonal SVD
                     // The real work space needed for bidiagonal SVD is BDSPAC
@@ -20659,132 +20656,132 @@ namespace TAlex.MathCore.LinearAlgebra
                     // BDSPAC = 5*N*N + 7*N
                     // BDSPAN = MAX(7*N+4, 3*N+2+SMLSIZ*(SMLSIZ+8))
 
-                    if (*m >= mnthr1)
+                    if (m >= mnthr1)
                     {
                         if (wntqn)
                         {
                             // Path 1 (M much larger than N, JOBZ='N')
 
-                            maxwrk = *n + *n * ilaenv(&c__1, "ZGEQRF", " ", m, n, &
+                            maxwrk = n + n * ilaenv(&c__1, "ZGEQRF", " ", m, n, &
                                 c_n1, &c_n1);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + (*n << 1) * ilaenv(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1);
+                            i__2 = (n << 1) + (n << 1) * ilaenv(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
-                            minwrk = *n * 3;
+                            minwrk = n * 3;
                         }
                         else if (wntqo)
                         {
                             // Path 2 (M much larger than N, JOBZ='O')
 
-                            wrkbl = *n + *n * ilaenv(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
+                            wrkbl = n + n * ilaenv(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = *n + *n * ilaenv(&c__1, "ZUNGQR", " ", m, n, n, &c_n1);
+                            i__2 = n + n * ilaenv(&c__1, "ZUNGQR", " ", m, n, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + (*n << 1) * ilaenv(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1);
+                            i__2 = (n << 1) + (n << 1) * ilaenv(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
-                            maxwrk = *m * *n + *n * *n + wrkbl;
-                            minwrk = (*n << 1) * *n + *n * 3;
+                            maxwrk = m * n + n * n + wrkbl;
+                            minwrk = (n << 1) * n + n * 3;
                         }
                         else if (wntqs)
                         {
                             // Path 3 (M much larger than N, JOBZ='S')
 
-                            wrkbl = *n + *n * ilaenv(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
+                            wrkbl = n + n * ilaenv(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = *n + *n * ilaenv(&c__1, "ZUNGQR", " ", m, n, n, &c_n1);
+                            i__2 = n + n * ilaenv(&c__1, "ZUNGQR", " ", m, n, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + (*n << 1) * ilaenv(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1);
+                            i__2 = (n << 1) + (n << 1) * ilaenv(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
-                            maxwrk = *n * *n + wrkbl;
-                            minwrk = *n * *n + *n * 3;
+                            maxwrk = n * n + wrkbl;
+                            minwrk = n * n + n * 3;
                         }
                         else if (wntqa)
                         {
                             // Path 4 (M much larger than N, JOBZ='A')
 
-                            wrkbl = *n + *n * ilaenv(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
+                            wrkbl = n + n * ilaenv(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = *n + *m * ilaenv(&c__1, "ZUNGQR", " ", m, m, n, &c_n1);
+                            i__2 = n + m * ilaenv(&c__1, "ZUNGQR", " ", m, m, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + (*n << 1) * ilaenv(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1);
+                            i__2 = (n << 1) + (n << 1) * ilaenv(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
-                            maxwrk = *n * *n + wrkbl;
-                            minwrk = *n * *n + (*n << 1) + *m;
+                            maxwrk = n * n + wrkbl;
+                            minwrk = n * n + (n << 1) + m;
                         }
                     }
-                    else if (*m >= mnthr2)
+                    else if (m >= mnthr2)
                     {
                         // Path 5 (M much larger than N, but not as much as MNTHR1)
 
-                        maxwrk = (*n << 1) + (*m + *n) * ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
-                        minwrk = (*n << 1) + *m;
+                        maxwrk = (n << 1) + (m + n) * ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
+                        minwrk = (n << 1) + m;
                         if (wntqo)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNGBR", "P", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNGBR", "P", n, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNGBR", "Q", m, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNGBR", "Q", m, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
-                            maxwrk += *m * *n;
-                            minwrk += *n * *n;
+                            maxwrk += m * n;
+                            minwrk += n * n;
                         }
                         else if (wntqs)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNGBR", "P", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNGBR", "P", n, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNGBR", "Q", m, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNGBR", "Q", m, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                         else if (wntqa)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNGBR", "P", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNGBR", "P", n, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *m * ilaenv(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1);
+                            i__2 = (n << 1) + m * ilaenv(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                     }
@@ -20792,41 +20789,41 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         // Path 6 (M at least N, but not much larger)
 
-                        maxwrk = (*n << 1) + (*m + *n) * ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
-                        minwrk = (*n << 1) + *m;
+                        maxwrk = (n << 1) + (m + n) * ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
+                        minwrk = (n << 1) + m;
                         if (wntqo)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "QLN", m, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "QLN", m, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
-                            maxwrk += *m * *n;
-                            minwrk += *n * *n;
+                            maxwrk += m * n;
+                            minwrk += n * n;
                         }
                         else if (wntqs)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNMBR", "QLN", m, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNMBR", "QLN", m, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                         else if (wntqa)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *n * ilaenv(&c__1, "ZUNGBR", "PRC", n, n, n, &c_n1);
+                            i__2 = (n << 1) + n * ilaenv(&c__1, "ZUNGBR", "PRC", n, n, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*n << 1) + *m * ilaenv(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1);
+                            i__2 = (n << 1) + m * ilaenv(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                     }
@@ -20840,131 +20837,131 @@ namespace TAlex.MathCore.LinearAlgebra
                     // BDSPAC = 5*M*M + 7*M
                     // BDSPAN = MAX(7*M+4, 3*M+2+SMLSIZ*(SMLSIZ+8))
 
-                    if (*n >= mnthr1)
+                    if (n >= mnthr1)
                     {
                         if (wntqn)
                         {
                             // Path 1t (N much larger than M, JOBZ='N')
 
-                            maxwrk = *m + *m * ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
+                            maxwrk = m + m * ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + (*m << 1) * ilaenv(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1);
+                            i__2 = (m << 1) + (m << 1) * ilaenv(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
-                            minwrk = *m * 3;
+                            minwrk = m * 3;
                         }
                         else if (wntqo)
                         {
                             // Path 2t (N much larger than M, JOBZ='O')
 
-                            wrkbl = *m + *m * ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
+                            wrkbl = m + m * ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = *m + *m * ilaenv(&c__1, "ZUNGLQ", " ", m, n, m, &c_n1);
+                            i__2 = m + m * ilaenv(&c__1, "ZUNGLQ", " ", m, n, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + (*m << 1) * ilaenv(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1);
+                            i__2 = (m << 1) + (m << 1) * ilaenv(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
-                            maxwrk = *m * *n + *m * *m + wrkbl;
-                            minwrk = (*m << 1) * *m + *m * 3;
+                            maxwrk = m * n + m * m + wrkbl;
+                            minwrk = (m << 1) * m + m * 3;
                         }
                         else if (wntqs)
                         {
                             // Path 3t (N much larger than M, JOBZ='S')
 
-                            wrkbl = *m + *m * ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
+                            wrkbl = m + m * ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = *m + *m * ilaenv(&c__1, "ZUNGLQ", " ", m, n, m, &c_n1);
+                            i__2 = m + m * ilaenv(&c__1, "ZUNGLQ", " ", m, n, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + (*m << 1) * ilaenv(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1);
+                            i__2 = (m << 1) + (m << 1) * ilaenv(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
-                            maxwrk = *m * *m + wrkbl;
-                            minwrk = *m * *m + *m * 3;
+                            maxwrk = m * m + wrkbl;
+                            minwrk = m * m + m * 3;
                         }
                         else if (wntqa)
                         {
                             // Path 4t (N much larger than M, JOBZ='A')
 
-                            wrkbl = *m + *m * ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
+                            wrkbl = m + m * ilaenv(&c__1, "ZGELQF", " ", m, n, &c_n1, &c_n1);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = *m + *n * ilaenv(&c__1, "ZUNGLQ", " ", n, n, m, &c_n1);
+                            i__2 = m + n * ilaenv(&c__1, "ZUNGLQ", " ", n, n, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + (*m << 1) * ilaenv(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1);
+                            i__2 = (m << 1) + (m << 1) * ilaenv(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = wrkbl;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1);
                             wrkbl = Math.Max(i__1, i__2);
-                            maxwrk = *m * *m + wrkbl;
-                            minwrk = *m * *m + (*m << 1) + *n;
+                            maxwrk = m * m + wrkbl;
+                            minwrk = m * m + (m << 1) + n;
                         }
                     }
-                    else if (*n >= mnthr2)
+                    else if (n >= mnthr2)
                     {
                         // Path 5t (N much larger than M, but not as much as MNTHR1)
 
-                        maxwrk = (*m << 1) + (*m + *n) * ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
-                        minwrk = (*m << 1) + *n;
+                        maxwrk = (m << 1) + (m + n) * ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
+                        minwrk = (m << 1) + n;
                         if (wntqo)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNGBR", "P", m, n, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNGBR", "P", m, n, m, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
-                            maxwrk += *m * *n;
-                            minwrk += *m * *m;
+                            maxwrk += m * n;
+                            minwrk += m * m;
                         }
                         else if (wntqs)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNGBR", "P", m, n, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNGBR", "P", m, n, m, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                         else if (wntqa)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *n * ilaenv(&c__1, "ZUNGBR", "P", n, n, m, &c_n1);
+                            i__2 = (m << 1) + n * ilaenv(&c__1, "ZUNGBR", "P", n, n, m, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                     }
@@ -20972,41 +20969,41 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         // Path 6t (N greater than M, but not much larger)
 
-                        maxwrk = (*m << 1) + (*m + *n) * ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
-                        minwrk = (*m << 1) + *n;
+                        maxwrk = (m << 1) + (m + n) * ilaenv(&c__1, "ZGEBRD", " ", m, n, &c_n1, &c_n1);
+                        minwrk = (m << 1) + n;
                         if (wntqo)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNMBR", "PRC", m, n, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNMBR", "PRC", m, n, m, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNMBR", "QLN", m, m, n, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNMBR", "QLN", m, m, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
-                            maxwrk += *m * *n;
-                            minwrk += *m * *m;
+                            maxwrk += m * n;
+                            minwrk += m * m;
                         }
                         else if (wntqs)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNGBR", "PRC", m, n, m, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNGBR", "PRC", m, n, m, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                         else if (wntqa)
                         {
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *n * ilaenv(&c__1, "ZUNGBR", "PRC", n, n, m, &c_n1);
+                            i__2 = (m << 1) + n * ilaenv(&c__1, "ZUNGBR", "PRC", n, n, m, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                             // Computing MAX
                             i__1 = maxwrk;
-                            i__2 = (*m << 1) + *m * ilaenv(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1);
+                            i__2 = (m << 1) + m * ilaenv(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1);
                             maxwrk = Math.Max(i__1, i__2);
                         }
                     }
@@ -21037,7 +21034,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 return 0;
             }
-            if (*m == 0 || *n == 0)
+            if (m == 0 || n == 0)
             {
                 return 0;
             }
@@ -21063,13 +21060,13 @@ namespace TAlex.MathCore.LinearAlgebra
                 zlascl("G", &c__0, &c__0, &anrm, &bignum, m, n, &a[a_offset], lda, &ierr);
             }
 
-            if (*m >= *n)
+            if (m >= n)
             {
                 // A has at least as many rows as columns. If A has sufficiently
                 // more rows than columns, first reduce using the QR
                 // decomposition (if sufficient workspace available)
 
-                if (*m >= mnthr1)
+                if (m >= mnthr1)
                 {
                     if (wntqn)
                     {
@@ -21077,7 +21074,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         // No singular vectors to be computed
 
                         itau = 1;
-                        nwork = itau + *n;
+                        nwork = itau + n;
 
                         // Compute A=Q*R
                         // (CWorkspace: need 2*N, prefer N+N*NB)
@@ -21088,13 +21085,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Zero out below R
 
-                        i__1 = *n - 1;
-                        i__2 = *n - 1;
+                        i__1 = n - 1;
+                        i__2 = n - 1;
                         zlaset("L", &i__1, &i__2, &c_b1, &c_b1, &a[a_dim1 + 2], lda);
                         ie = 1;
                         itauq = 1;
-                        itaup = itauq + *n;
-                        nwork = itaup + *n;
+                        itaup = itauq + n;
+                        nwork = itaup + n;
 
                         // Bidiagonalize R in A
                         // (CWorkspace: need 3*N, prefer 2*N+2*N*NB)
@@ -21103,7 +21100,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__1 = *lwork - nwork + 1;
                         zgebrd(n, n, &a[a_offset], lda, &s[1], &rwork[ie],
                             &work[itauq], &work[itaup], &work[nwork], &i__1, &ierr);
-                        nrwork = ie + *n;
+                        nrwork = ie + n;
 
                         // Perform bidiagonal SVD, compute singular values only
                         // (CWorkspace: 0)
@@ -21123,20 +21120,20 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // WORK(IU) is N by N
 
-                        ldwrku = *n;
-                        ir = iu + ldwrku * *n;
-                        if (*lwork >= *m * *n + *n * *n + *n * 3)
+                        ldwrku = n;
+                        ir = iu + ldwrku * n;
+                        if (*lwork >= m * n + n * n + n * 3)
                         {
                             // WORK(IR) is M by N
 
-                            ldwrkr = *m;
+                            ldwrkr = m;
                         }
                         else
                         {
-                            ldwrkr = (*lwork - *n * *n - *n * 3) / *n;
+                            ldwrkr = (*lwork - n * n - n * 3) / n;
                         }
-                        itau = ir + ldwrkr * *n;
-                        nwork = itau + *n;
+                        itau = ir + ldwrkr * n;
+                        nwork = itau + n;
 
                         // Compute A=Q*R
                         // (CWorkspace: need N*N+2*N, prefer M*N+N+N*NB)
@@ -21148,8 +21145,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // Copy R to WORK( IR ), zeroing out below it
 
                         zlacpy("U", n, n, &a[a_offset], lda, &work[ir], &ldwrkr);
-                        i__1 = *n - 1;
-                        i__2 = *n - 1;
+                        i__1 = n - 1;
+                        i__2 = n - 1;
                         zlaset("L", &i__1, &i__2, &c_b1, &c_b1, &work[ir + 1], &ldwrkr);
 
                         // Generate Q in A
@@ -21160,8 +21157,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         zungqr(m, n, n, &a[a_offset], lda, &work[itau], &work[nwork], &i__1, &ierr);
                         ie = 1;
                         itauq = itau;
-                        itaup = itauq + *n;
-                        nwork = itaup + *n;
+                        itaup = itauq + n;
+                        nwork = itaup + n;
 
                         // Bidiagonalize R in WORK(IR)
                         // (CWorkspace: need N*N+3*N, prefer M*N+2*N+2*N*NB)
@@ -21177,9 +21174,9 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (CWorkspace: need 0)
                         // (RWorkspace: need BDSPAC)
 
-                        iru = ie + *n;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        iru = ie + n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
                         dbdsdc("U", "I", n, &s[1], &rwork[ie], &rwork[iru], n,
                             &rwork[irvt], n, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -21208,12 +21205,12 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (CWorkspace: need 2*N*N, prefer N*N+M*N)
                         // (RWorkspace: 0)
 
-                        i__1 = *m;
+                        i__1 = m;
                         i__2 = ldwrkr;
                         for (i = 1; i__2 < 0 ? i >= i__1 : i <= i__1; i += i__2)
                         {
                             // Computing MIN
-                            i__3 = *m - i + 1;
+                            i__3 = m - i + 1;
                             chunk = Math.Min(i__3, ldwrkr);
 
                             zgemm("N", "N", &chunk, n, n, &c_b2, &a[i + a_dim1],
@@ -21233,9 +21230,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // WORK(IR) is N by N
 
-                        ldwrkr = *n;
-                        itau = ir + ldwrkr * *n;
-                        nwork = itau + *n;
+                        ldwrkr = n;
+                        itau = ir + ldwrkr * n;
+                        nwork = itau + n;
 
                         // Compute A=Q*R
                         // (CWorkspace: need N*N+2*N, prefer N*N+N+N*NB)
@@ -21247,8 +21244,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // Copy R to WORK(IR), zeroing out below it
 
                         zlacpy("U", n, n, &a[a_offset], lda, &work[ir], &ldwrkr);
-                        i__2 = *n - 1;
-                        i__1 = *n - 1;
+                        i__2 = n - 1;
+                        i__1 = n - 1;
                         zlaset("L", &i__2, &i__1, &c_b1, &c_b1, &work[ir + 1], &ldwrkr);
 
                         // Generate Q in A
@@ -21259,8 +21256,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         zungqr(m, n, n, &a[a_offset], lda, &work[itau], &work[nwork], &i__2, &ierr);
                         ie = 1;
                         itauq = itau;
-                        itaup = itauq + *n;
-                        nwork = itaup + *n;
+                        itaup = itauq + n;
+                        nwork = itaup + n;
 
                         // Bidiagonalize R in WORK(IR)
                         // (CWorkspace: need N*N+3*N, prefer N*N+2*N+2*N*NB)
@@ -21276,9 +21273,9 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (CWorkspace: need 0)
                         // (RWorkspace: need BDSPAC)
 
-                        iru = ie + *n;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        iru = ie + n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
                         dbdsdc("U", "I", n, &s[1], &rwork[ie], &rwork[iru], n,
                             &rwork[irvt], n, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -21322,9 +21319,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // WORK(IU) is N by N
 
-                        ldwrku = *n;
-                        itau = iu + ldwrku * *n;
-                        nwork = itau + *n;
+                        ldwrku = n;
+                        itau = iu + ldwrku * n;
+                        nwork = itau + n;
 
                         // Compute A=Q*R, copying result to U
                         // (CWorkspace: need 2*N, prefer N+N*NB)
@@ -21343,13 +21340,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Produce R in A, zeroing out below it
 
-                        i__2 = *n - 1;
-                        i__1 = *n - 1;
+                        i__2 = n - 1;
+                        i__1 = n - 1;
                         zlaset("L", &i__2, &i__1, &c_b1, &c_b1, &a[a_dim1 + 2], lda);
                         ie = 1;
                         itauq = itau;
-                        itaup = itauq + *n;
-                        nwork = itaup + *n;
+                        itaup = itauq + n;
+                        nwork = itaup + n;
 
                         // Bidiagonalize R in A
                         // (CWorkspace: need 3*N, prefer 2*N+2*N*NB)
@@ -21358,9 +21355,9 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__2 = *lwork - nwork + 1;
                         zgebrd(n, n, &a[a_offset], lda, &s[1], &rwork[ie],
                             &work[itauq], &work[itaup], &work[nwork], &i__2, &ierr);
-                        iru = ie + *n;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        iru = ie + n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
 
                         // Perform bidiagonal SVD, computing left singular vectors
                         // of bidiagonal matrix in RWORK(IRU) and computing right
@@ -21404,7 +21401,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         zlacpy("F", m, n, &a[a_offset], lda, &u[u_offset], ldu);
                     }
                 }
-                else if (*m >= mnthr2)
+                else if (m >= mnthr2)
                 {
                     // MNTHR2 <= M < MNTHR1
 
@@ -21413,10 +21410,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     // ZUNGBR and matrix multiplication to compute singular vectors
 
                     ie = 1;
-                    nrwork = ie + *n;
+                    nrwork = ie + n;
                     itauq = 1;
-                    itaup = itauq + *n;
-                    nwork = itaup + *n;
+                    itaup = itauq + n;
+                    nwork = itaup + n;
 
                     // Bidiagonalize A
                     // (CWorkspace: need 2*N+M, prefer 2*N+(M+N)*NB)
@@ -21439,8 +21436,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         iu = nwork;
                         iru = nrwork;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
 
                         // Copy A to VT, generate P**H
                         // (Cworkspace: need 2*N, prefer N+N*NB)
@@ -21458,19 +21455,19 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__2 = *lwork - nwork + 1;
                         zungbr("Q", m, n, n, &a[a_offset], lda, &work[itauq], &work[nwork], &i__2, &ierr);
 
-                        if (*lwork >= *m * *n + *n * 3)
+                        if (*lwork >= m * n + n * 3)
                         {
                             // WORK( IU ) is M by N
 
-                            ldwrku = *m;
+                            ldwrku = m;
                         }
                         else
                         {
                             // WORK(IU) is LDWRKU by N
 
-                            ldwrku = (*lwork - *n * 3) / *n;
+                            ldwrku = (*lwork - n * 3) / n;
                         }
-                        nwork = iu + ldwrku * *n;
+                        nwork = iu + ldwrku * n;
 
                         // Perform bidiagonal SVD, computing left singular vectors
                         // of bidiagonal matrix in RWORK(IRU) and computing right
@@ -21495,12 +21492,12 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (Rworkspace: need 3*N*N, prefer N*N+2*M*N)
 
                         nrwork = irvt;
-                        i__2 = *m;
+                        i__2 = m;
                         i__1 = ldwrku;
                         for (i = 1; i__1 < 0 ? i >= i__2 : i <= i__2; i += i__1)
                         {
                             // Computing MIN
-                            i__3 = *m - i + 1;
+                            i__3 = m - i + 1;
                             chunk = Math.Min(i__3, ldwrku);
                             zlacrm(&chunk, n, &a[i + a_dim1], lda, &rwork[iru], n, &work[iu], &ldwrku, &rwork[nrwork]);
                             zlacpy("F", &chunk, n, &work[iu], &ldwrku, &a[i + a_dim1], lda);
@@ -21533,8 +21530,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         iru = nrwork;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
                         dbdsdc("U", "I", n, &s[1], &rwork[ie], &rwork[iru], n,
                             &rwork[irvt], n, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -21580,8 +21577,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         iru = nrwork;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
                         dbdsdc("U", "I", n, &s[1], &rwork[ie], &rwork[iru], n,
                             &rwork[irvt], n, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -21612,10 +21609,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Use ZUNMBR to compute singular vectors
 
                     ie = 1;
-                    nrwork = ie + *n;
+                    nrwork = ie + n;
                     itauq = 1;
-                    itaup = itauq + *n;
-                    nwork = itaup + *n;
+                    itaup = itauq + n;
+                    nwork = itaup + n;
 
                     // Bidiagonalize A
                     // (CWorkspace: need 2*N+M, prefer 2*N+(M+N)*NB)
@@ -21638,22 +21635,22 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         iu = nwork;
                         iru = nrwork;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
 
-                        if (*lwork >= *m * *n + *n * 3)
+                        if (*lwork >= m * n + n * 3)
                         {
                             // WORK( IU ) is M by N
 
-                            ldwrku = *m;
+                            ldwrku = m;
                         }
                         else
                         {
                             // WORK( IU ) is LDWRKU by N
 
-                            ldwrku = (*lwork - *n * 3) / *n;
+                            ldwrku = (*lwork - n * 3) / n;
                         }
-                        nwork = iu + ldwrku * *n;
+                        nwork = iu + ldwrku * n;
 
                         // Perform bidiagonal SVD, computing left singular vectors
                         // of bidiagonal matrix in RWORK(IRU) and computing right
@@ -21674,7 +21671,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         zunmbr("P", "R", "C", n, n, n, &a[a_offset], lda, &work[itaup],
                             &vt[vt_offset], ldvt, &work[nwork], &i__1, &ierr);
 
-                        if (*lwork >= *m * *n + *n * 3)
+                        if (*lwork >= m * n + n * 3)
                         {
                             // Copy real matrix RWORK(IRU) to complex matrix WORK(IU)
                             // Overwrite WORK(IU) by left singular vectors of A, copying
@@ -21705,12 +21702,12 @@ namespace TAlex.MathCore.LinearAlgebra
                             // (Rworkspace: need 3*N*N, prefer N*N+2*M*N)
 
                             nrwork = irvt;
-                            i__1 = *m;
+                            i__1 = m;
                             i__2 = ldwrku;
                             for (i = 1; i__2 < 0 ? i >= i__1 : i <= i__1; i += i__2)
                             {
                                 // Computing MIN
-                                i__3 = *m - i + 1;
+                                i__3 = m - i + 1;
                                 chunk = Math.Min(i__3, ldwrku);
                                 zlacrm(&chunk, n, &a[i + a_dim1], lda, &rwork[iru],
                                     n, &work[iu], &ldwrku, &rwork[nrwork]);
@@ -21727,8 +21724,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         iru = nrwork;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
                         dbdsdc("U", "I", n, &s[1], &rwork[ie], &rwork[iru], n,
                             &rwork[irvt], n, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -21762,8 +21759,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         iru = nrwork;
-                        irvt = iru + *n * *n;
-                        nrwork = irvt + *n * *n;
+                        irvt = iru + n * n;
+                        nrwork = irvt + n * n;
                         dbdsdc("U", "I", n, &s[1], &rwork[ie], &rwork[iru], n,
                             &rwork[irvt], n, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -21771,11 +21768,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         zlaset("F", m, m, &c_b1, &c_b1, &u[u_offset], ldu);
 
-                        if (*m > *n)
+                        if (m > n)
                         {
-                            i__2 = *m - *n;
-                            i__1 = *m - *n;
-                            zlaset("F", &i__2, &i__1, &c_b1, &c_b2, &u[*n + 1 + (*n + 1) * u_dim1], ldu);
+                            i__2 = m - n;
+                            i__1 = m - n;
+                            zlaset("F", &i__2, &i__1, &c_b1, &c_b2, &u[n + 1 + (n + 1) * u_dim1], ldu);
                         }
 
                         // Copy real matrix RWORK(IRU) to complex matrix U
@@ -21806,7 +21803,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // columns than rows, first reduce using the LQ decomposition (if
                 // sufficient workspace available)
 
-                if (*n >= mnthr1)
+                if (n >= mnthr1)
                 {
                     if (wntqn)
                     {
@@ -21814,7 +21811,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         // No singular vectors to be computed
 
                         itau = 1;
-                        nwork = itau + *m;
+                        nwork = itau + m;
 
                         // Compute A=L*Q
                         // (CWorkspace: need 2*M, prefer M+M*NB)
@@ -21825,13 +21822,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Zero out above L
 
-                        i__2 = *m - 1;
-                        i__1 = *m - 1;
+                        i__2 = m - 1;
+                        i__1 = m - 1;
                         zlaset("U", &i__2, &i__1, &c_b1, &c_b1, &a[(a_dim1 << 1) + 1], lda);
                         ie = 1;
                         itauq = 1;
-                        itaup = itauq + *m;
-                        nwork = itaup + *m;
+                        itaup = itauq + m;
+                        nwork = itaup + m;
 
                         // Bidiagonalize L in A
                         // (CWorkspace: need 3*M, prefer 2*M+2*M*NB)
@@ -21840,7 +21837,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__2 = *lwork - nwork + 1;
                         zgebrd(m, m, &a[a_offset], lda, &s[1], &rwork[ie],
                             &work[itauq], &work[itaup], &work[nwork], &i__2, &ierr);
-                        nrwork = ie + *m;
+                        nrwork = ie + m;
 
                         // Perform bidiagonal SVD, compute singular values only
                         // (CWorkspace: 0)
@@ -21856,27 +21853,27 @@ namespace TAlex.MathCore.LinearAlgebra
                         // M left singular vectors to be computed in U
 
                         ivt = 1;
-                        ldwkvt = *m;
+                        ldwkvt = m;
 
                         // WORK(IVT) is M by M
 
-                        il = ivt + ldwkvt * *m;
-                        if (*lwork >= *m * *n + *m * *m + *m * 3)
+                        il = ivt + ldwkvt * m;
+                        if (*lwork >= m * n + m * m + m * 3)
                         {
                             // WORK(IL) M by N
 
-                            ldwrkl = *m;
-                            chunk = *n;
+                            ldwrkl = m;
+                            chunk = n;
                         }
                         else
                         {
                             // WORK(IL) is M by CHUNK
 
-                            ldwrkl = *m;
-                            chunk = (*lwork - *m * *m - *m * 3) / *m;
+                            ldwrkl = m;
+                            chunk = (*lwork - m * m - m * 3) / m;
                         }
                         itau = il + ldwrkl * chunk;
-                        nwork = itau + *m;
+                        nwork = itau + m;
 
                         // Compute A=L*Q
                         // (CWorkspace: need 2*M, prefer M+M*NB)
@@ -21888,8 +21885,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // Copy L to WORK(IL), zeroing about above it
 
                         zlacpy("L", m, m, &a[a_offset], lda, &work[il], &ldwrkl);
-                        i__2 = *m - 1;
-                        i__1 = *m - 1;
+                        i__2 = m - 1;
+                        i__1 = m - 1;
                         zlaset("U", &i__2, &i__1, &c_b1, &c_b1, &work[il + ldwrkl], &ldwrkl);
 
                         // Generate Q in A
@@ -21900,8 +21897,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         zunglq(m, n, m, &a[a_offset], lda, &work[itau], &work[nwork], &i__2, &ierr);
                         ie = 1;
                         itauq = itau;
-                        itaup = itauq + *m;
-                        nwork = itaup + *m;
+                        itaup = itauq + m;
+                        nwork = itaup + m;
 
                         // Bidiagonalize L in WORK(IL)
                         // (CWorkspace: need M*M+3*M, prefer M*M+2*M+2*M*NB)
@@ -21917,9 +21914,9 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (CWorkspace: need 0)
                         // (RWorkspace: need BDSPAC)
 
-                        iru = ie + *m;
-                        irvt = iru + *m * *m;
-                        nrwork = irvt + *m * *m;
+                        iru = ie + m;
+                        irvt = iru + m * m;
+                        nrwork = irvt + m * m;
                         dbdsdc("U", "I", m, &s[1], &rwork[ie], &rwork[iru], m,
                             &rwork[irvt], m, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -21948,12 +21945,12 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (CWorkspace: need 2*M*M, prefer M*M+M*N))
                         // (RWorkspace: 0)
 
-                        i__2 = *n;
+                        i__2 = n;
                         i__1 = chunk;
                         for (i = 1; i__1 < 0 ? i >= i__2 : i <= i__2; i += i__1)
                         {
                             // Computing MIN
-                            i__3 = *n - i + 1;
+                            i__3 = n - i + 1;
                             blk = Math.Min(i__3, chunk);
                             zgemm("N", "N", m, &blk, m, &c_b2, &work[ivt], m,
                                 &a[i * a_dim1 + 1], lda, &c_b1, &work[il], &ldwrkl);
@@ -21970,9 +21967,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // WORK(IL) is M by M
 
-                        ldwrkl = *m;
-                        itau = il + ldwrkl * *m;
-                        nwork = itau + *m;
+                        ldwrkl = m;
+                        itau = il + ldwrkl * m;
+                        nwork = itau + m;
 
                         // Compute A=L*Q
                         // (CWorkspace: need 2*M, prefer M+M*NB)
@@ -21984,8 +21981,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // Copy L to WORK(IL), zeroing out above it
 
                         zlacpy("L", m, m, &a[a_offset], lda, &work[il], &ldwrkl);
-                        i__1 = *m - 1;
-                        i__2 = *m - 1;
+                        i__1 = m - 1;
+                        i__2 = m - 1;
                         zlaset("U", &i__1, &i__2, &c_b1, &c_b1, &work[il + ldwrkl], &ldwrkl);
 
                         // Generate Q in A
@@ -21996,8 +21993,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         zunglq(m, n, m, &a[a_offset], lda, &work[itau], &work[nwork], &i__1, &ierr);
                         ie = 1;
                         itauq = itau;
-                        itaup = itauq + *m;
-                        nwork = itaup + *m;
+                        itaup = itauq + m;
+                        nwork = itaup + m;
 
                         // Bidiagonalize L in WORK(IL)
                         // (CWorkspace: need M*M+3*M, prefer M*M+2*M+2*M*NB)
@@ -22013,9 +22010,9 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (CWorkspace: need 0)
                         // (RWorkspace: need BDSPAC)
 
-                        iru = ie + *m;
-                        irvt = iru + *m * *m;
-                        nrwork = irvt + *m * *m;
+                        iru = ie + m;
+                        irvt = iru + m * m;
+                        nrwork = irvt + m * m;
                         dbdsdc("U", "I", m, &s[1], &rwork[ie], &rwork[iru], m,
                             &rwork[irvt], m, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -22058,9 +22055,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // WORK(IVT) is M by M
 
-                        ldwkvt = *m;
-                        itau = ivt + ldwkvt * *m;
-                        nwork = itau + *m;
+                        ldwkvt = m;
+                        itau = ivt + ldwkvt * m;
+                        nwork = itau + m;
 
                         // Compute A=L*Q, copying result to VT
                         // (CWorkspace: need 2*M, prefer M+M*NB)
@@ -22079,13 +22076,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Produce L in A, zeroing out above it
 
-                        i__1 = *m - 1;
-                        i__2 = *m - 1;
+                        i__1 = m - 1;
+                        i__2 = m - 1;
                         zlaset("U", &i__1, &i__2, &c_b1, &c_b1, &a[(a_dim1 << 1) + 1], lda);
                         ie = 1;
                         itauq = itau;
-                        itaup = itauq + *m;
-                        nwork = itaup + *m;
+                        itaup = itauq + m;
+                        nwork = itaup + m;
 
                         // Bidiagonalize L in A
                         // (CWorkspace: need M*M+3*M, prefer M*M+2*M+2*M*NB)
@@ -22101,9 +22098,9 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (CWorkspace: need 0)
                         // (RWorkspace: need BDSPAC)
 
-                        iru = ie + *m;
-                        irvt = iru + *m * *m;
-                        nrwork = irvt + *m * *m;
+                        iru = ie + m;
+                        irvt = iru + m * m;
+                        nrwork = irvt + m * m;
                         dbdsdc("U", "I", m, &s[1], &rwork[ie], &rwork[iru], m,
                             &rwork[irvt], m, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -22140,7 +22137,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         zlacpy("F", m, n, &a[a_offset], lda, &vt[vt_offset], ldvt);
                     }
                 }
-                else if (*n >= mnthr2)
+                else if (n >= mnthr2)
                 {
                     // MNTHR2 <= N < MNTHR1
 
@@ -22149,10 +22146,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     // ZUNGBR and matrix multiplication to compute singular vectors
 
                     ie = 1;
-                    nrwork = ie + *m;
+                    nrwork = ie + m;
                     itauq = 1;
-                    itaup = itauq + *m;
-                    nwork = itaup + *m;
+                    itaup = itauq + m;
+                    nwork = itaup + m;
 
                     // Bidiagonalize A
                     // (CWorkspace: need 2*M+N, prefer 2*M+(M+N)*NB)
@@ -22174,8 +22171,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     else if (wntqo)
                     {
                         irvt = nrwork;
-                        iru = irvt + *m * *m;
-                        nrwork = iru + *m * *m;
+                        iru = irvt + m * m;
+                        nrwork = iru + m * m;
                         ivt = nwork;
 
                         // Copy A to U, generate Q
@@ -22193,19 +22190,19 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__1 = *lwork - nwork + 1;
                         zungbr("P", m, n, m, &a[a_offset], lda, &work[itaup], &work[nwork], &i__1, &ierr);
 
-                        ldwkvt = *m;
-                        if (*lwork >= *m * *n + *m * 3)
+                        ldwkvt = m;
+                        if (*lwork >= m * n + m * 3)
                         {
                             // WORK( IVT ) is M by N
 
-                            nwork = ivt + ldwkvt * *n;
-                            chunk = *n;
+                            nwork = ivt + ldwkvt * n;
+                            chunk = n;
                         }
                         else
                         {
                             // WORK( IVT ) is M by CHUNK
 
-                            chunk = (*lwork - *m * 3) / *m;
+                            chunk = (*lwork - m * 3) / m;
                             nwork = ivt + ldwkvt * chunk;
                         }
 
@@ -22232,12 +22229,12 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (Rworkspace: need 2*M*M, prefer 2*M*N)
 
                         nrwork = iru;
-                        i__1 = *n;
+                        i__1 = n;
                         i__2 = chunk;
                         for (i = 1; i__2 < 0 ? i >= i__1 : i <= i__1; i += i__2)
                         {
                             // Computing MIN
-                            i__3 = *n - i + 1;
+                            i__3 = n - i + 1;
                             blk = Math.Min(i__3, chunk);
                             zlarcm(m, &blk, &rwork[irvt], m, &a[i * a_dim1 + 1],
                                 lda, &work[ivt], &ldwkvt, &rwork[nrwork]);
@@ -22269,8 +22266,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         irvt = nrwork;
-                        iru = irvt + *m * *m;
-                        nrwork = iru + *m * *m;
+                        iru = irvt + m * m;
+                        nrwork = iru + m * m;
                         dbdsdc("L", "I", m, &s[1], &rwork[ie], &rwork[iru], m,
                             &rwork[irvt], m, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -22316,8 +22313,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         irvt = nrwork;
-                        iru = irvt + *m * *m;
-                        nrwork = iru + *m * *m;
+                        iru = irvt + m * m;
+                        nrwork = iru + m * m;
                         dbdsdc("L", "I", m, &s[1], &rwork[ie], &rwork[iru], m,
                             &rwork[irvt], m, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -22347,10 +22344,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Use ZUNMBR to compute singular vectors
 
                     ie = 1;
-                    nrwork = ie + *m;
+                    nrwork = ie + m;
                     itauq = 1;
-                    itaup = itauq + *m;
-                    nwork = itaup + *m;
+                    itaup = itauq + m;
+                    nwork = itaup + m;
 
                     // Bidiagonalize A
                     // (CWorkspace: need 2*M+N, prefer 2*M+(M+N)*NB)
@@ -22371,20 +22368,20 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else if (wntqo)
                     {
-                        ldwkvt = *m;
+                        ldwkvt = m;
                         ivt = nwork;
-                        if (*lwork >= *m * *n + *m * 3)
+                        if (*lwork >= m * n + m * 3)
                         {
                             // WORK( IVT ) is M by N
 
                             zlaset("F", m, n, &c_b1, &c_b1, &work[ivt], &ldwkvt);
-                            nwork = ivt + ldwkvt * *n;
+                            nwork = ivt + ldwkvt * n;
                         }
                         else
                         {
                             // WORK( IVT ) is M by CHUNK
 
-                            chunk = (*lwork - *m * 3) / *m;
+                            chunk = (*lwork - m * 3) / m;
                             nwork = ivt + ldwkvt * chunk;
                         }
 
@@ -22395,8 +22392,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         irvt = nrwork;
-                        iru = irvt + *m * *m;
-                        nrwork = iru + *m * *m;
+                        iru = irvt + m * m;
+                        nrwork = iru + m * m;
                         dbdsdc("L", "I", m, &s[1], &rwork[ie], &rwork[iru], m,
                             &rwork[irvt], m, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -22410,7 +22407,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         zunmbr("Q", "L", "N", m, m, n, &a[a_offset], lda,
                             &work[itauq], &u[u_offset], ldu, &work[nwork], &i__2, &ierr);
 
-                        if (*lwork >= *m * *n + *m * 3)
+                        if (*lwork >= m * n + m * 3)
                         {
                             // Copy real matrix RWORK(IRVT) to complex matrix WORK(IVT)
                             // Overwrite WORK(IVT) by right singular vectors of A,
@@ -22439,12 +22436,12 @@ namespace TAlex.MathCore.LinearAlgebra
                             // (Rworkspace: need 3*M*M, prefer M*M+2*M*N)
 
                             nrwork = iru;
-                            i__2 = *n;
+                            i__2 = n;
                             i__1 = chunk;
                             for (i = 1; i__1 < 0 ? i >= i__2 : i <= i__2; i += i__1)
                             {
                                 // Computing MIN
-                                i__3 = *n - i + 1;
+                                i__3 = n - i + 1;
                                 blk = Math.Min(i__3, chunk);
                                 zlarcm(m, &blk, &rwork[irvt], m, &a[i * a_dim1 + 1],
                                     lda, &work[ivt], &ldwkvt, &rwork[nrwork]);
@@ -22461,8 +22458,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         irvt = nrwork;
-                        iru = irvt + *m * *m;
-                        nrwork = iru + *m * *m;
+                        iru = irvt + m * m;
+                        nrwork = iru + m * m;
                         dbdsdc("L", "I", m, &s[1], &rwork[ie], &rwork[iru], m,
                             &rwork[irvt], m, dum, idum, &rwork[nrwork], &iwork[1], info);
 
@@ -22496,8 +22493,8 @@ namespace TAlex.MathCore.LinearAlgebra
                         // (RWorkspace: need BDSPAC)
 
                         irvt = nrwork;
-                        iru = irvt + *m * *m;
-                        nrwork = iru + *m * *m;
+                        iru = irvt + m * m;
+                        nrwork = iru + m * m;
 
                         dbdsdc("L", "I", m, &s[1], &rwork[ie], &rwork[iru], m,
                             &rwork[irvt], m, dum, idum, &rwork[nrwork], &iwork[1], info);
@@ -22564,9 +22561,9 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zhseqr(string job, string compz, int* n, int* ilo,
-             int* ihi, complex16* h, int* ldh, complex16* w,
-            complex16* z, int* ldz, complex16* work, int* lwork, out int info)
+        public static int zhseqr(string job, string compz, int n, int ilo,
+             int ihi, complex16[] h, int ldh, complex16[] w,
+            complex16[] z, int ldz, complex16[] work, int lwork, out int info)
         {
             //  -- LAPACK driver routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
@@ -22826,7 +22823,7 @@ namespace TAlex.MathCore.LinearAlgebra
             wantt = lsame(job, "S");
             initz = lsame(compz, "I");
             wantz = initz || lsame(compz, "V");
-            d__1 = (double)Math.Max(1, *n);
+            d__1 = (double)Math.Max(1, n);
 
             z__1.r = d__1;
             z__1.i = 0.0;
@@ -22845,27 +22842,27 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -3;
             }
-            else if (*ilo < 1 || *ilo > Math.Max(1, *n))
+            else if (*ilo < 1 || *ilo > Math.Max(1, n))
             {
                 info = -4;
             }
-            else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
+            else if (ihi < Math.Min(*ilo, n) || ihi > n)
             {
                 info = -5;
             }
-            else if (*ldh < Math.Max(1, *n))
+            else if (*ldh < Math.Max(1, n))
             {
                 info = -7;
             }
-            else if (*ldz < 1 || wantz && *ldz < Math.Max(1, *n))
+            else if (*ldz < 1 || wantz && *ldz < Math.Max(1, n))
             {
                 info = -10;
             }
-            else if (*lwork < Math.Max(1, *n) && !lquery)
+            else if (*lwork < Math.Max(1, n) && !lquery)
             {
                 info = -12;
             }
@@ -22880,7 +22877,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 return 0;
 
             }
-            else if (*n == 0)
+            else if (n == 0)
             {
 
                 // ==== Quick return in case N = 0; nothing to do. ==== 
@@ -22899,7 +22896,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // .    previous LAPACK versions. ==== 
                 // Computing MAX 
                 d__2 = work[1].r;
-                d__3 = (double)Math.Max(1, *n);
+                d__3 = (double)Math.Max(1, n);
                 d__1 = Math.Max(d__2, d__3);
 
                 z__1.r = d__1;
@@ -22919,11 +22916,11 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__2 = *ldh + 1;
                     zcopy(&i__1, &h[h_offset], &i__2, &w[1], &c__1);
                 }
-                if (*ihi < *n)
+                if (ihi < n)
                 {
-                    i__1 = *n - *ihi;
+                    i__1 = n - ihi;
                     i__2 = *ldh + 1;
-                    zcopy(&i__1, &h[*ihi + 1 + (*ihi + 1) * h_dim1], &i__2, &w[*ihi + 1], &c__1);
+                    zcopy(&i__1, &h[ihi + 1 + (ihi + 1) * h_dim1], &i__2, &w[ihi + 1], &c__1);
                 }
 
                 // ==== Initialize Z, if requested ==== 
@@ -22935,7 +22932,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // ==== Quick return if possible ==== 
 
-                if (*ilo == *ihi)
+                if (*ilo == ihi)
                 {
                     i__1 = *ilo;
                     i__2 = *ilo + *ilo * h_dim1;
@@ -22951,7 +22948,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // ==== ZLAQR0 for big matrices; ZLAHQR for small ones ==== 
 
-                if (*n > nmin)
+                if (n > nmin)
                 {
                     zlaqr0(&wantt, &wantz, n, ilo, ihi, &h[h_offset], ldh, &w[1],
                         ilo, ihi, &z[z_offset], ldz, &work[1], lwork, info);
@@ -22969,7 +22966,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         kbot = info;
 
-                        if (*n >= 49)
+                        if (n >= 49)
                         {
                             // ==== Larger matrices have enough subdiagonal scratch 
                             // .    space to call ZLAQR0 directly. ==== 
@@ -22985,13 +22982,13 @@ namespace TAlex.MathCore.LinearAlgebra
                             // .    array before calling ZLAQR0. ==== 
 
                             zlacpy("A", n, n, &h[h_offset], ldh, hl, &c__49);
-                            i__1 = *n + 1 + *n * 49 - 50;
+                            i__1 = n + 1 + n * 49 - 50;
 
                             hl[i__1].r = 0.0;
                             hl[i__1].i = 0.0;
 
-                            i__1 = 49 - *n;
-                            zlaset("A", &c__49, &i__1, &c_b1, &c_b1, &hl[(*n + 1) *
+                            i__1 = 49 - n;
+                            zlaset("A", &c__49, &i__1, &c_b1, &c_b1, &hl[(n + 1) *
                                 49 - 49], &c__49);
                             zlaqr0(&wantt, &wantz, &c__49, ilo, &kbot, hl, &c__49,
                                 &w[1], ilo, ihi, &z[z_offset], ldz, workl, &c__49, info);
@@ -23005,10 +23002,10 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // ==== Clear out the trash, if necessary. ==== 
 
-                if ((wantt || info != 0) && *n > 2)
+                if ((wantt || info != 0) && n > 2)
                 {
-                    i__1 = *n - 2;
-                    i__2 = *n - 2;
+                    i__1 = n - 2;
+                    i__2 = n - 2;
                     zlaset("L", &i__1, &i__2, &c_b1, &c_b1, &h[h_dim1 + 3], ldh);
                 }
 
@@ -23016,7 +23013,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // .    previous LAPACK versions. ==== 
 
                 // Computing MAX 
-                d__2 = (double)Math.Max(1, *n);
+                d__2 = (double)Math.Max(1, n);
                 d__3 = work[1].r;
 
                 d__1 = Math.Max(d__2, d__3);
@@ -23032,8 +23029,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlabrd(int* m, int* n, int* nb, complex16* a, int* lda, double* d,
-            double* e, complex16* tauq, complex16* taup, complex16* x, int* ldx, complex16* y, int* ldy)
+        public static int zlabrd(int m, int n, int nb, complex16[] a, int lda, double[] d,
+            double[] e, complex16[] tauq, complex16[] taup, complex16[] x, int ldx, complex16[] y, int ldy)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -23175,7 +23172,7 @@ namespace TAlex.MathCore.LinearAlgebra
             complex16 alpha;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --d;
@@ -23190,12 +23187,12 @@ namespace TAlex.MathCore.LinearAlgebra
             y -= y_offset;
 
             // Function Body
-            if (*m <= 0 || *n <= 0)
+            if (m <= 0 || n <= 0)
             {
                 return 0;
             }
 
-            if (*m >= *n)
+            if (m >= n)
             {
                 // Reduce to upper bidiagonal form
 
@@ -23206,7 +23203,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     i__2 = i - 1;
                     zlacgv(&i__2, &y[i + y_dim1], ldy);
-                    i__2 = *m - i + 1;
+                    i__2 = m - i + 1;
                     i__3 = i - 1;
                     z__1.r = -1.0;
                     z__1.i = -0.0;
@@ -23214,7 +23211,7 @@ namespace TAlex.MathCore.LinearAlgebra
                          &y[i + y_dim1], ldy, &c_b2, &a[i + i * a_dim1], &c__1);
                     i__2 = i - 1;
                     zlacgv(&i__2, &y[i + y_dim1], ldy);
-                    i__2 = *m - i + 1;
+                    i__2 = m - i + 1;
                     i__3 = i - 1;
                     z__1.r = -1.0;
                     z__1.i = -0.0;
@@ -23226,14 +23223,14 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__2 = i + i * a_dim1;
                     alpha.r = a[i__2].r;
                     alpha.i = a[i__2].i;
-                    i__2 = *m - i + 1;
+                    i__2 = m - i + 1;
                     // Computing MIN
                     i__3 = i + 1;
-                    zlarfg(&i__2, &alpha, &a[Math.Min(i__3, *m) + i * a_dim1], &c__1, &tauq[i]);
+                    zlarfg(&i__2, &alpha, &a[Math.Min(i__3, m) + i * a_dim1], &c__1, &tauq[i]);
                     i__2 = i;
                     d[i__2] = alpha.r;
 
-                    if (i < *n)
+                    if (i < n)
                     {
                         i__2 = i + i * a_dim1;
                         a[i__2].r = 1.0;
@@ -23241,39 +23238,39 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Compute Y(i+1:n,i)
 
-                        i__2 = *m - i + 1;
-                        i__3 = *n - i;
+                        i__2 = m - i + 1;
+                        i__3 = n - i;
                         zgemv("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i + (i + 1) * a_dim1],
                             lda, &a[i + i * a_dim1], &c__1, &c_b1, &y[i + 1 + i * y_dim1], &c__1);
-                        i__2 = *m - i + 1;
+                        i__2 = m - i + 1;
                         i__3 = i - 1;
                         zgemv("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i + a_dim1], lda,
                             &a[i + i * a_dim1], &c__1, &c_b1, &y[i * y_dim1 + 1], &c__1);
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         i__3 = i - 1;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("No transpose", &i__2, &i__3, &z__1, &y[i + 1 + y_dim1], ldy,
                             &y[i * y_dim1 + 1], &c__1, &c_b2, &y[i + 1 + i * y_dim1], &c__1);
-                        i__2 = *m - i + 1;
+                        i__2 = m - i + 1;
                         i__3 = i - 1;
                         zgemv("Conjugate transpose", &i__2, &i__3, &c_b2, &x[i + x_dim1],
                             ldx, &a[i + i * a_dim1], &c__1, &c_b1, &y[i * y_dim1 + 1], &c__1);
                         i__2 = i - 1;
-                        i__3 = *n - i;
+                        i__3 = n - i;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("Conjugate transpose", &i__2, &i__3, &z__1, &a[(i + 1) * a_dim1 + 1],
                             lda, &y[i * y_dim1 + 1], &c__1, &c_b2, &y[i + 1 + i * y_dim1], &c__1);
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         zscal(&i__2, &tauq[i], &y[i + 1 + i * y_dim1], &c__1);
 
                         // Update A(i,i+1:n)
 
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         zlacgv(&i__2, &a[i + (i + 1) * a_dim1], lda);
                         zlacgv(&i, &a[i + a_dim1], lda);
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("No transpose", &i__2, &i, &z__1, &y[i + 1 + y_dim1], ldy,
@@ -23282,7 +23279,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__2 = i - 1;
                         zlacgv(&i__2, &x[i + x_dim1], ldx);
                         i__2 = i - 1;
-                        i__3 = *n - i;
+                        i__3 = n - i;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("Conjugate transpose", &i__2, &i__3, &z__1, &a[(i + 1) * a_dim1 + 1],
@@ -23295,10 +23292,10 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__2 = i + (i + 1) * a_dim1;
                         alpha.r = a[i__2].r;
                         alpha.i = a[i__2].i;
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         // Computing MIN
                         i__3 = i + 2;
-                        zlarfg(&i__2, &alpha, &a[i + Math.Min(i__3, *n) * a_dim1], lda, &taup[i]);
+                        zlarfg(&i__2, &alpha, &a[i + Math.Min(i__3, n) * a_dim1], lda, &taup[i]);
                         i__2 = i;
                         e[i__2] = alpha.r;
                         i__2 = i + (i + 1) * a_dim1;
@@ -23307,31 +23304,31 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Compute X(i+1:m,i)
 
-                        i__2 = *m - i;
-                        i__3 = *n - i;
+                        i__2 = m - i;
+                        i__3 = n - i;
                         zgemv("No transpose", &i__2, &i__3, &c_b2, &a[i + 1 + (i + 1) * a_dim1],
                             lda, &a[i + (i + 1) * a_dim1], lda, &c_b1, &x[i + 1 + i * x_dim1], &c__1);
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         zgemv("Conjugate transpose", &i__2, &i, &c_b2, &y[i + 1 + y_dim1], ldy,
                             &a[i + (i + 1) * a_dim1], lda, &c_b1, &x[i * x_dim1 + 1], &c__1);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("No transpose", &i__2, &i, &z__1, &a[i + 1 + a_dim1], lda,
                             &x[i * x_dim1 + 1], &c__1, &c_b2, &x[i + 1 + i * x_dim1], &c__1);
                         i__2 = i - 1;
-                        i__3 = *n - i;
+                        i__3 = n - i;
                         zgemv("No transpose", &i__2, &i__3, &c_b2, &a[(i + 1) * a_dim1 + 1],
                             lda, &a[i + (i + 1) * a_dim1], lda, &c_b1, &x[i * x_dim1 + 1], &c__1);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         i__3 = i - 1;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("No transpose", &i__2, &i__3, &z__1, &x[i + 1 + x_dim1], ldx,
                             &x[i * x_dim1 + 1], &c__1, &c_b2, &x[i + 1 + i * x_dim1], &c__1);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         zscal(&i__2, &taup[i], &x[i + 1 + i * x_dim1], &c__1);
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         zlacgv(&i__2, &a[i + (i + 1) * a_dim1], lda);
                     }
                 }
@@ -23345,11 +23342,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Update A(i,i:n)
 
-                    i__2 = *n - i + 1;
+                    i__2 = n - i + 1;
                     zlacgv(&i__2, &a[i + i * a_dim1], lda);
                     i__2 = i - 1;
                     zlacgv(&i__2, &a[i + a_dim1], lda);
-                    i__2 = *n - i + 1;
+                    i__2 = n - i + 1;
                     i__3 = i - 1;
                     z__1.r = -1.0;
                     z__1.i = -0.0;
@@ -23360,7 +23357,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__2 = i - 1;
                     zlacgv(&i__2, &x[i + x_dim1], ldx);
                     i__2 = i - 1;
-                    i__3 = *n - i + 1;
+                    i__3 = n - i + 1;
                     z__1.r = -1.0;
                     z__1.i = -0.0;
                     zgemv("Conjugate transpose", &i__2, &i__3, &z__1, &a[i * a_dim1 + 1],
@@ -23373,14 +23370,14 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__2 = i + i * a_dim1;
                     alpha.r = a[i__2].r;
                     alpha.i = a[i__2].i;
-                    i__2 = *n - i + 1;
+                    i__2 = n - i + 1;
                     // Computing MIN
                     i__3 = i + 1;
-                    zlarfg(&i__2, &alpha, &a[i + Math.Min(i__3, *n) * a_dim1], lda, &taup[i]);
+                    zlarfg(&i__2, &alpha, &a[i + Math.Min(i__3, n) * a_dim1], lda, &taup[i]);
                     i__2 = i;
                     d[i__2] = alpha.r;
 
-                    if (i < *m)
+                    if (i < m)
                     {
                         i__2 = i + i * a_dim1;
                         a[i__2].r = 1.0;
@@ -23388,40 +23385,40 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Compute X(i+1:m,i)
 
-                        i__2 = *m - i;
-                        i__3 = *n - i + 1;
+                        i__2 = m - i;
+                        i__3 = n - i + 1;
                         zgemv("No transpose", &i__2, &i__3, &c_b2, &a[i + 1 + i * a_dim1], lda,
                             &a[i + i * a_dim1], lda, &c_b1, &x[i + 1 + i * x_dim1], &c__1);
-                        i__2 = *n - i + 1;
+                        i__2 = n - i + 1;
                         i__3 = i - 1;
                         zgemv("Conjugate transpose", &i__2, &i__3, &c_b2, &y[i + y_dim1], ldy,
                             &a[i + i * a_dim1], lda, &c_b1, &x[i * x_dim1 + 1], &c__1);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         i__3 = i - 1;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("No transpose", &i__2, &i__3, &z__1, &a[i + 1 + a_dim1], lda,
                             &x[i * x_dim1 + 1], &c__1, &c_b2, &x[i + 1 + i * x_dim1], &c__1);
                         i__2 = i - 1;
-                        i__3 = *n - i + 1;
+                        i__3 = n - i + 1;
                         zgemv("No transpose", &i__2, &i__3, &c_b2, &a[i * a_dim1 + 1], lda,
                             &a[i + i * a_dim1], lda, &c_b1, &x[i * x_dim1 + 1], &c__1);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         i__3 = i - 1;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("No transpose", &i__2, &i__3, &z__1, &x[i + 1 + x_dim1], ldx,
                             &x[i * x_dim1 + 1], &c__1, &c_b2, &x[i + 1 + i * x_dim1], &c__1);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         zscal(&i__2, &taup[i], &x[i + 1 + i * x_dim1], &c__1);
-                        i__2 = *n - i + 1;
+                        i__2 = n - i + 1;
                         zlacgv(&i__2, &a[i + i * a_dim1], lda);
 
                         // Update A(i+1:m,i)
 
                         i__2 = i - 1;
                         zlacgv(&i__2, &y[i + y_dim1], ldy);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         i__3 = i - 1;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
@@ -23429,7 +23426,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             &y[i + y_dim1], ldy, &c_b2, &a[i + 1 + i * a_dim1], &c__1);
                         i__2 = i - 1;
                         zlacgv(&i__2, &y[i + y_dim1], ldy);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("No transpose", &i__2, &i, &z__1, &x[i + 1 + x_dim1], ldx,
@@ -23440,10 +23437,10 @@ namespace TAlex.MathCore.LinearAlgebra
                         i__2 = i + 1 + i * a_dim1;
                         alpha.r = a[i__2].r;
                         alpha.i = a[i__2].i;
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         // Computing MIN
                         i__3 = i + 2;
-                        zlarfg(&i__2, &alpha, &a[Math.Min(i__3, *m) + i * a_dim1], &c__1, &tauq[i]);
+                        zlarfg(&i__2, &alpha, &a[Math.Min(i__3, m) + i * a_dim1], &c__1, &tauq[i]);
                         i__2 = i;
                         e[i__2] = alpha.r;
                         i__2 = i + 1 + i * a_dim1;
@@ -23452,34 +23449,34 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // Compute Y(i+1:n,i)
 
-                        i__2 = *m - i;
-                        i__3 = *n - i;
+                        i__2 = m - i;
+                        i__3 = n - i;
                         zgemv("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i + 1 + (i + 1) * a_dim1],
                             lda, &a[i + 1 + i * a_dim1], &c__1, &c_b1, &y[i + 1 + i * y_dim1], &c__1);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         i__3 = i - 1;
                         zgemv("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i + 1 + a_dim1], lda,
                             &a[i + 1 + i * a_dim1], &c__1, &c_b1, &y[i * y_dim1 + 1], &c__1);
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         i__3 = i - 1;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("No transpose", &i__2, &i__3, &z__1, &y[i + 1 + y_dim1], ldy,
                             &y[i * y_dim1 + 1], &c__1, &c_b2, &y[i + 1 + i * y_dim1], &c__1);
-                        i__2 = *m - i;
+                        i__2 = m - i;
                         zgemv("Conjugate transpose", &i__2, &i, &c_b2, &x[i + 1 + x_dim1], ldx,
                             &a[i + 1 + i * a_dim1], &c__1, &c_b1, &y[i * y_dim1 + 1], &c__1);
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         z__1.r = -1.0;
                         z__1.i = -0.0;
                         zgemv("Conjugate transpose", &i, &i__2, &z__1, &a[(i + 1) * a_dim1 + 1], lda,
                             &y[i * y_dim1 + 1], &c__1, &c_b2, &y[i + 1 + i * y_dim1], &c__1);
-                        i__2 = *n - i;
+                        i__2 = n - i;
                         zscal(&i__2, &tauq[i], &y[i + 1 + i * y_dim1], &c__1);
                     }
                     else
                     {
-                        i__2 = *n - i + 1;
+                        i__2 = n - i + 1;
                         zlacgv(&i__2, &a[i + i * a_dim1], lda);
                     }
                 }
@@ -23489,7 +23486,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlacgv(int* n, complex16* x, int* incx)
+        public static int zlacgv(int n, complex16[] x, int incx)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -23529,7 +23526,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body 
             if (*incx == 1)
             {
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i;
@@ -23544,10 +23541,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 ioff = 1;
                 if (*incx < 0)
                 {
-                    ioff = 1 - (*n - 1) * *incx;
+                    ioff = 1 - (n - 1) * *incx;
                 }
 
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = ioff;
@@ -23563,7 +23560,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlacn2(int* n, complex16* v, complex16* x, double* est, int* kase, int* isave)
+        public static int zlacn2(int n, complex16[] v, complex16[] x, out double est, out int kase, int[] isave)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -23652,11 +23649,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (*kase == 0)
             {
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i;
-                    d__1 = 1.0 / (double)(*n);
+                    d__1 = 1.0 / (double)(n);
 
                     z__1.r = d__1;
                     z__1.i = 0.0;
@@ -23683,7 +23680,7 @@ namespace TAlex.MathCore.LinearAlgebra
         // FIRST ITERATION.  X HAS BEEN OVERWRITTEN BY A*X. 
 
         L20:
-            if (*n == 1)
+            if (n == 1)
             {
                 v[1].r = x[1].r;
                 v[1].i = x[1].i;
@@ -23695,7 +23692,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             *est = dzsum1(n, &x[1], &c__1);
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 absxi = z_abs(&x[i]);
@@ -23734,7 +23731,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // MAIN LOOP - ITERATIONS 2,3,...,ITMAX. 
 
         L50:
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = i;
@@ -23765,7 +23762,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 goto L100;
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 absxi = z_abs(&x[i]);
@@ -23811,11 +23808,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
         L100:
             altsgn = 1.0;
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
                 i__2 = i;
-                d__1 = altsgn * ((double)(i - 1) / (double)(*n - 1) + 1.0);
+                d__1 = altsgn * ((double)(i - 1) / (double)(n - 1) + 1.0);
 
                 z__1.r = d__1;
                 z__1.i = 0.0;
@@ -23834,7 +23831,7 @@ namespace TAlex.MathCore.LinearAlgebra
         // X HAS BEEN OVERWRITTEN BY A*X. 
 
         L120:
-            temp = dzsum1(n, &x[1], &c__1) / (double)(*n * 3) * 2.0;
+            temp = dzsum1(n, &x[1], &c__1) / (double)(n * 3) * 2.0;
 
             if (temp > *est)
             {
@@ -23849,7 +23846,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlacp2(string uplo, int* m, int* n, double* a, int* lda, complex16* b, int* ldb)
+        public static int zlacp2(string uplo, int m, int n, double[] a, int lda, complex16[] b, int ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -23899,20 +23896,20 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
 
             // Function Body
             if (lsame(uplo, "U"))
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = Math.Min(j, *m);
+                    i__2 = Math.Min(j, m);
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * b_dim1;
@@ -23926,10 +23923,10 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else if (lsame(uplo, "L"))
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = j; i <= i__2; ++i)
                     {
                         i__3 = i + j * b_dim1;
@@ -23943,10 +23940,10 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * b_dim1;
@@ -23962,7 +23959,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlacpy(string uplo, int* m, int* n, complex16* a, int* lda, complex16* b, int* ldb)
+        public static int zlacpy(string uplo, int m, int n, complex16[] a, int lda, complex16[] b, int ldb)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -24012,20 +24009,20 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
 
             // Function Body 
             if (lsame(uplo, "U"))
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = Math.Min(j, *m);
+                    i__2 = Math.Min(j, m);
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * b_dim1;
@@ -24038,10 +24035,10 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else if (lsame(uplo, "L"))
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = j; i <= i__2; ++i)
                     {
                         i__3 = i + j * b_dim1;
@@ -24053,10 +24050,10 @@ namespace TAlex.MathCore.LinearAlgebra
             }
             else
             {
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * b_dim1;
@@ -24073,8 +24070,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlacrm(int* m, int* n, complex16* a,
-            int* lda, double* b, int* ldb, complex16* c, int* ldc, double* rwork)
+        public static int zlacrm(int m, int n, complex16[] a, int lda, double[] b, int ldb, complex16[] c, int ldc, double[] rwork)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -24135,72 +24131,72 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j, l;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --rwork;
 
             // Function Body
-            if (*m == 0 || *n == 0)
+            if (m == 0 || n == 0)
             {
                 return 0;
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
                 for (i = 1; i <= i__2; ++i)
                 {
                     i__3 = i + j * a_dim1;
-                    rwork[(j - 1) * *m + i] = a[i__3].r;
+                    rwork[(j - 1) * m + i] = a[i__3].r;
                 }
             }
 
-            l = *m * *n + 1;
+            l = m * n + 1;
             dgemm("N", "N", m, n, n, &c_b6, &rwork[1], m, &b[b_offset], ldb, &c_b7, &rwork[l], m);
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
                 for (i = 1; i <= i__2; ++i)
                 {
                     i__3 = i + j * c_dim1;
-                    i__4 = l + (j - 1) * *m + i - 1;
+                    i__4 = l + (j - 1) * m + i - 1;
 
                     c[i__3].r = rwork[i__4];
                     c[i__3].i = 0.0;
                 }
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
                 for (i = 1; i <= i__2; ++i)
                 {
-                    rwork[(j - 1) * *m + i] = d_imag(&a[i + j * a_dim1]);
+                    rwork[(j - 1) * m + i] = d_imag(&a[i + j * a_dim1]);
                 }
             }
 
             dgemm("N", "N", m, n, n, &c_b6, &rwork[1], m, &b[b_offset], ldb, &c_b7, &rwork[l], m);
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
                 for (i = 1; i <= i__2; ++i)
                 {
                     i__3 = i + j * c_dim1;
                     i__4 = i + j * c_dim1;
 
                     d__1 = c[i__4].r;
-                    i__5 = l + (j - 1) * *m + i - 1;
+                    i__5 = l + (j - 1) * m + i - 1;
                     z__1.r = d__1;
                     z__1.i = rwork[i__5];
 
@@ -24213,7 +24209,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static void zladiv(complex16* ret_val, complex16* x, complex16* y)
+        public static void zladiv(out complex16 ret_val, complex16 x, complex16 y)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -24258,8 +24254,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlaein(bool* rightv, bool* noinit, int* n, complex16* h, int* ldh, complex16* w,
-            complex16* v, complex16* b, int* ldb, double* rwork, double* eps3, double* smlnum, out int info)
+        public static int zlaein(bool* rightv, bool* noinit, int n, complex16* h, int* ldh, complex16* w,
+            complex16* v, complex16* b, int ldb, double* rwork, double* eps3, double* smlnum, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -24350,7 +24346,7 @@ namespace TAlex.MathCore.LinearAlgebra
             h_offset = 1 + h_dim1;
             h -= h_offset;
             --v;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
             --rwork;
@@ -24361,7 +24357,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // GROWTO is the threshold used in the acceptance test for an
             // eigenvector.
 
-            rootn = Math.Sqrt((double)(*n));
+            rootn = Math.Sqrt((double)(n));
             growto = 0.1 / rootn;
             // Computing MAX
             d__1 = 1.0;
@@ -24371,7 +24367,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Form B = H - W*I (except that the subdiagonal elements are not
             // stored).
 
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
                 i__2 = j - 1;
@@ -24398,7 +24394,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Initialize V.
 
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i;
@@ -24420,7 +24416,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // LU decomposition with partial pivoting of B, replacing zero
                 // pivots by EPS3.
 
-                i__1 = *n - 1;
+                i__1 = n - 1;
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i + 1 + i * h_dim1;
@@ -24441,7 +24437,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         b[i__2].r = ei.r;
                         b[i__2].i = ei.i;
 
-                        i__2 = *n;
+                        i__2 = n;
                         for (j = i + 1; j <= i__2; ++j)
                         {
                             i__3 = i + 1 + j * b_dim1;
@@ -24487,7 +24483,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         if (x.r != 0.0 || x.i != 0.0)
                         {
-                            i__2 = *n;
+                            i__2 = n;
                             for (j = i + 1; j <= i__2; ++j)
                             {
                                 i__3 = i + 1 + j * b_dim1;
@@ -24508,10 +24504,10 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                 }
 
-                i__1 = *n + *n * b_dim1;
+                i__1 = n + n * b_dim1;
                 if (b[i__1].r == 0.0 && b[i__1].i == 0.0)
                 {
-                    i__2 = *n + *n * b_dim1;
+                    i__2 = n + n * b_dim1;
                     b[i__2].r = *eps3;
                     b[i__2].i = 0.0;
                 }
@@ -24523,7 +24519,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // UL decomposition with partial pivoting of B, replacing zero
                 // pivots by EPS3.
 
-                for (j = *n; j >= 2; --j)
+                for (j = n; j >= 2; --j)
                 {
                     i__1 = j + (j - 1) * h_dim1;
                     ej.r = h[i__1].r;
@@ -24621,7 +24617,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             normin = "N";
 
-            i__1 = *n;
+            i__1 = n;
             for (its = 1; its <= i__1; ++its)
             {
                 // Solve U*x = scale*v for a right eigenvector
@@ -24644,7 +24640,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 rtemp = *eps3 / (rootn + 1.0);
                 v[1].r = *eps3;
                 v[1].i = 0.0;
-                i__2 = *n;
+                i__2 = n;
 
                 for (i = 2; i <= i__2; ++i)
                 {
@@ -24653,8 +24649,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     v[i__3].i = 0.0;
                 }
 
-                i__2 = *n - its + 1;
-                i__3 = *n - its + 1;
+                i__2 = n - its + 1;
+                i__3 = n - its + 1;
 
                 d__1 = *eps3 * rootn;
                 z__1.r = v[i__3].r - d__1;
@@ -24682,7 +24678,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlahqr(bool* wantt, bool* wantz, int* n, int* ilo, int* ihi, complex16* h, int* ldh,
+        public static int zlahqr(bool* wantt, bool* wantz, int n, int* ilo, int* ihi, complex16* h, int* ldh,
             complex16* w, int* iloz, int* ihiz, complex16* z, int* ldz, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -24842,7 +24838,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
@@ -24881,7 +24877,7 @@ namespace TAlex.MathCore.LinearAlgebra
             if (*wantt)
             {
                 jlo = 1;
-                jhi = *n;
+                jhi = n;
             }
             else
             {
@@ -24962,7 +24958,7 @@ namespace TAlex.MathCore.LinearAlgebra
             if (*wantt)
             {
                 i1 = 1;
-                i2 = *n;
+                i2 = n;
             }
 
             // The main loop begins here. I is the loop index and decreases from 
@@ -25628,8 +25624,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlahr2(int* n, int* k, int* nb,
-            complex16* a, int* lda, complex16* tau, complex16* t,
+        public static int zlahr2(int n, int* k, int* nb,
+            complex16* a, int lda, complex16* tau, complex16* t,
             int* ldt, complex16* y, int* ldy)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -25747,7 +25743,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Parameter adjustments 
             --tau;
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             t_dim1 = *ldt;
@@ -25758,7 +25754,7 @@ namespace TAlex.MathCore.LinearAlgebra
             y -= y_offset;
 
             // Function Body 
-            if (*n <= 1)
+            if (n <= 1)
             {
                 return 0;
             }
@@ -25774,7 +25770,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     i__2 = i - 1;
                     zlacgv(&i__2, &a[*k + i - 1 + a_dim1], lda);
-                    i__2 = *n - *k;
+                    i__2 = n - *k;
                     i__3 = i - 1;
                     z__1.r = -1.0;
                     z__1.i = -0.0;
@@ -25803,7 +25799,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // w := w + V2'*b2 
 
-                    i__2 = *n - *k - i + 1;
+                    i__2 = n - *k - i + 1;
                     i__3 = i - 1;
                     zgemv("Conjugate transpose", &i__2, &i__3, &c_b2, &a[*k + i +
                         a_dim1], lda, &a[*k + i + i * a_dim1], &c__1, &c_b2,
@@ -25817,7 +25813,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // b2 := b2 - V2*w 
 
-                    i__2 = *n - *k - i + 1;
+                    i__2 = n - *k - i + 1;
                     i__3 = i - 1;
                     z__1.r = -1.0;
                     z__1.i = -0.0;
@@ -25842,11 +25838,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Generate the elementary reflector H(I) to annihilate 
                 // A(K+I+1:N,I) 
 
-                i__2 = *n - *k - i + 1;
+                i__2 = n - *k - i + 1;
 
                 // Computing MIN 
                 i__3 = *k + i + 1;
-                zlarfg(&i__2, &a[*k + i + i * a_dim1], &a[Math.Min(i__3, *n) + i * a_dim1], &c__1, &tau[i]);
+                zlarfg(&i__2, &a[*k + i + i * a_dim1], &a[Math.Min(i__3, n) + i * a_dim1], &c__1, &tau[i]);
                 i__2 = *k + i + i * a_dim1;
 
                 ei.r = a[i__2].r;
@@ -25859,19 +25855,19 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Compute  Y(K+1:N,I) 
 
-                i__2 = *n - *k;
-                i__3 = *n - *k - i + 1;
+                i__2 = n - *k;
+                i__3 = n - *k - i + 1;
 
                 zgemv("NO TRANSPOSE", &i__2, &i__3, &c_b2, &a[*k + 1 + (i + 1) *
                     a_dim1], lda, &a[*k + i + i * a_dim1], &c__1, &c_b1, &y[*k + 1 + i * y_dim1], &c__1);
 
-                i__2 = *n - *k - i + 1;
+                i__2 = n - *k - i + 1;
                 i__3 = i - 1;
 
                 zgemv("Conjugate transpose", &i__2, &i__3, &c_b2, &a[*k + i +
                     a_dim1], lda, &a[*k + i + i * a_dim1], &c__1, &c_b1, &t[i * t_dim1 + 1], &c__1);
 
-                i__2 = *n - *k;
+                i__2 = n - *k;
                 i__3 = i - 1;
                 z__1.r = -1.0;
                 z__1.i = -0.0;
@@ -25879,7 +25875,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 zgemv("NO TRANSPOSE", &i__2, &i__3, &z__1, &y[*k + 1 + y_dim1], ldy,
                     &t[i * t_dim1 + 1], &c__1, &c_b2, &y[*k + 1 + i * y_dim1], &c__1);
 
-                i__2 = *n - *k;
+                i__2 = n - *k;
                 zscal(&i__2, &tau[i], &y[*k + 1 + i * y_dim1], &c__1);
 
                 // Compute T(1:I,I) 
@@ -25911,9 +25907,9 @@ namespace TAlex.MathCore.LinearAlgebra
             ztrmm("RIGHT", "Lower", "NO TRANSPOSE", "UNIT", k, nb, &c_b2, &a[*k + 1
                 + a_dim1], lda, &y[y_offset], ldy);
 
-            if (*n > *k + *nb)
+            if (n > *k + *nb)
             {
-                i__1 = *n - *k - *nb;
+                i__1 = n - *k - *nb;
 
                 zgemm("NO TRANSPOSE", "NO TRANSPOSE", k, nb, &i__1, &c_b2, &a[(*nb +
                     2) * a_dim1 + 1], lda, &a[*k + 1 + *nb + a_dim1], lda, &c_b2, &y[y_offset], ldy);
@@ -25926,7 +25922,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double zlange(string norm, int* m, int* n, complex16* a, int* lda, double* work)
+        public static double zlange(string norm, int m, int n, complex16* a, int lda, double* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -25997,13 +25993,13 @@ namespace TAlex.MathCore.LinearAlgebra
             double value = 0;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --work;
 
             // Function Body 
-            if (Math.Min(*m, *n) == 0)
+            if (Math.Min(m, n) == 0)
             {
                 value = 0.0;
             }
@@ -26011,10 +26007,10 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Find max(abs(A(i,j))). 
                 value = 0.0;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         // Computing MAX 
@@ -26028,11 +26024,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Find norm1(A). 
                 value = 0.0;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     sum = 0.0;
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         sum += z_abs(&a[i + j * a_dim1]);
@@ -26043,22 +26039,22 @@ namespace TAlex.MathCore.LinearAlgebra
             else if (lsame(norm, "I"))
             {
                 // Find normI(A). 
-                i__1 = *m;
+                i__1 = m;
                 for (i = 1; i <= i__1; ++i)
                 {
                     work[i] = 0.0;
                 }
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         work[i] += z_abs(&a[i + j * a_dim1]);
                     }
                 }
                 value = 0.0;
-                i__1 = *m;
+                i__1 = m;
                 for (i = 1; i <= i__1; ++i)
                 {
                     // Computing MAX 
@@ -26072,7 +26068,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Find normF(A). 
                 scale = 0.0;
                 sum = 1.0;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     zlassq(m, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
@@ -26086,7 +26082,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static double zlanhs(string norm, int* n, complex16* a, int* lda, double* work)
+        public static double zlanhs(string norm, int n, complex16* a, int lda, double* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -26154,13 +26150,13 @@ namespace TAlex.MathCore.LinearAlgebra
             double value = 0.0;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --work;
 
             // Function Body
-            if (*n == 0)
+            if (n == 0)
             {
                 value = 0.0;
             }
@@ -26169,11 +26165,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Find max(abs(A(i,j))).
 
                 value = 0.0;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MIN
-                    i__3 = *n;
+                    i__3 = n;
                     i__4 = j + 1;
                     i__2 = Math.Min(i__3, i__4);
                     for (i = 1; i <= i__2; ++i)
@@ -26190,12 +26186,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Find norm1(A).
 
                 value = 0.0;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     sum = 0.0;
                     // Computing MIN
-                    i__3 = *n;
+                    i__3 = n;
                     i__4 = j + 1;
                     i__2 = Math.Min(i__3, i__4);
                     for (i = 1; i <= i__2; ++i)
@@ -26209,16 +26205,16 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Find normI(A).
 
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     work[i] = 0.0;
                 }
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MIN
-                    i__3 = *n;
+                    i__3 = n;
                     i__4 = j + 1;
                     i__2 = Math.Min(i__3, i__4);
                     for (i = 1; i <= i__2; ++i)
@@ -26227,7 +26223,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                 }
                 value = 0.0;
-                i__1 = *n;
+                i__1 = n;
                 for (i = 1; i <= i__1; ++i)
                 {
                     // Computing MAX
@@ -26242,11 +26238,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 scale = 0.0;
                 sum = 1.0;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MIN
-                    i__3 = *n;
+                    i__3 = n;
                     i__4 = j + 1;
                     i__2 = Math.Min(i__3, i__4);
                     zlassq(&i__2, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
@@ -26259,9 +26255,9 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlaqr0(bool* wantt, bool* wantz, int* n,
+        public static int zlaqr0(bool* wantt, bool* wantz, int n,
             int* ilo, int* ihi, complex16* h, int* ldh,
-            complex16* w, int* iloz, int* ihiz, complex16* z,
+            complex16* w, int* iloz, int ihiz, complex16* z,
             int* ldz, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -26472,14 +26468,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // ==== Quick return for N = 0: nothing to do. ==== 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
                 return 0;
             }
 
-            if (*n <= 11)
+            if (n <= 11)
             {
                 // ==== Tiny matrices must use ZLAHQR. ==== 
 
@@ -26528,7 +26524,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 nwr = Math.Max(2, nwr);
                 // Computing MIN 
                 i__1 = *ihi - *ilo + 1;
-                i__2 = (*n - 1) / 3;
+                i__2 = (n - 1) / 3;
                 i__1 = Math.Min(i__1, i__2);
                 nwr = Math.Min(i__1, nwr);
 
@@ -26541,7 +26537,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Computing MIN 
                 i__1 = nsr;
-                i__2 = (*n + 6) / 9;
+                i__2 = (n + 6) / 9;
                 i__1 = Math.Min(i__1, i__2);
                 i__2 = *ihi - *ilo;
                 nsr = Math.Min(i__1, i__2);
@@ -26599,7 +26595,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // .    which there is sufficient workspace. ==== 
 
                 // Computing MIN 
-                i__1 = (*n - 1) / 3;
+                i__1 = (n - 1) / 3;
                 i__2 = *lwork / 2;
                 nwmax = Math.Min(i__1, i__2);
                 nw = nwmax;
@@ -26608,7 +26604,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // .    for which there is sufficient workspace. ==== 
 
                 // Computing MIN 
-                i__1 = (*n + 6) / 9;
+                i__1 = (n + 6) / 9;
                 i__2 = (*lwork << 1) / 3;
                 nsmax = Math.Min(i__1, i__2);
                 nsmax -= nsmax % 2;
@@ -26727,11 +26723,11 @@ namespace TAlex.MathCore.LinearAlgebra
                     // .        vertical work array aint the left-hand-edge. 
                     // .        ==== 
 
-                    kv = *n - nw + 1;
+                    kv = n - nw + 1;
                     kt = nw + 1;
-                    nho = *n - nw - 1 - kt + 1;
+                    nho = n - nw - 1 - kt + 1;
                     kwv = nw + 2;
-                    nve = *n - nw - kwv + 1;
+                    nve = n - nw - kwv + 1;
 
                     // ==== Aggressive early deflation ==== 
 
@@ -26811,7 +26807,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             if (kbot - ks + 1 <= ns / 2)
                             {
                                 ks = kbot - ns + 1;
-                                kt = *n - ns + 1;
+                                kt = n - ns + 1;
                                 zlacpy("A", &ns, &ns, &h[ks + ks * h_dim1], ldh, &h[kt + h_dim1], ldh);
                                 if (ns > nmin)
                                 {
@@ -27044,11 +27040,11 @@ namespace TAlex.MathCore.LinearAlgebra
                         // .      the left-hand-edge. ==== 
 
                         kdu = ns * 3 - 3;
-                        ku = *n - kdu + 1;
+                        ku = n - kdu + 1;
                         kwh = kdu + 1;
-                        nho = *n - kdu - 3 - (kdu + 1) + 1;
+                        nho = n - kdu - 3 - (kdu + 1) + 1;
                         kwv = kdu + 4;
-                        nve = *n - kdu - kwv + 1;
+                        nve = n - kdu - kwv + 1;
 
                         // ==== Small-bulge multi-shift QR sweep ==== 
 
@@ -27094,7 +27090,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlaqr1(int* n, complex16* h, int* ldh, complex16* s1, complex16* s2, complex16* v)
+        public static int zlaqr1(int n, complex16* h, int* ldh, complex16* s1, complex16* s2, complex16* v)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd.. 
@@ -27150,7 +27146,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --v;
 
             // Function Body 
-            if (*n == 2)
+            if (n == 2)
             {
                 i__1 = h_dim1 + 1;
 
@@ -27365,7 +27361,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlaqr2(bool* wantt, bool* wantz, int* n, int* ktop, int* kbot, int* nw, complex16* h,
+        public static int zlaqr2(bool* wantt, bool* wantz, int n, int* ktop, int* kbot, int* nw, complex16* h,
             int* ldh, int* iloz, int* ihiz, complex16* z, int* ldz, int* ns, int* nd, complex16* sh,
             complex16* v, int* ldv, int* nh, complex16* t, int* ldt, int* nv, complex16* wv, int* ldwv,
             complex16* work, int* lwork)
@@ -27628,7 +27624,7 @@ namespace TAlex.MathCore.LinearAlgebra
             safmax = 1.0 / safmin;
             dlabad(&safmin, &safmax);
             ulp = dlamch("PRECISION");
-            smlnum = safmin * ((double)(*n) / ulp);
+            smlnum = safmin * ((double)(n) / ulp);
 
             // ==== Setup deflation window ==== 
 
@@ -27874,13 +27870,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (*wantt)
                 {
-                    i__2 = *n;
+                    i__2 = n;
                     i__1 = *nh;
                     for (kcol = *kbot + 1; i__1 < 0 ? kcol >= i__2 : kcol <= i__2; kcol += i__1)
                     {
                         // Computing MIN 
                         i__3 = *nh;
-                        i__4 = *n - kcol + 1;
+                        i__4 = n - kcol + 1;
                         kln = Math.Min(i__3, i__4);
                         zgemm("C", "N", &jw, &kln, &jw, &c_b2, &v[v_offset], ldv, &
                             h[kwtop + kcol * h_dim1], ldh, &c_b1, &t[t_offset], ldt);
@@ -27932,8 +27928,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlaqr3(bool* wantt, bool* wantz, int* n, int* ktop, int* kbot, int* nw, complex16* h,
-            int* ldh, int* iloz, int* ihiz, complex16* z, int* ldz, int* ns, int* nd, complex16* sh,
+        public static int zlaqr3(bool* wantt, bool* wantz, int n, int* ktop, int* kbot, int* nw, complex16* h,
+            int* ldh, int* iloz, int ihiz, complex16* z, int* ldz, int* ns, int* nd, complex16* sh,
             complex16* v, int* ldv, int* nh, complex16* t, int* ldt, int* nv, complex16* wv, int* ldwv,
             complex16* work, int* lwork)
         {
@@ -28204,7 +28200,7 @@ namespace TAlex.MathCore.LinearAlgebra
             safmax = 1.0 / safmin;
             dlabad(&safmin, &safmax);
             ulp = dlamch("PRECISION");
-            smlnum = safmin * ((double)(*n) / ulp);
+            smlnum = safmin * ((double)(n) / ulp);
 
             // ==== Setup deflation window ==== 
 
@@ -28480,14 +28476,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (*wantt)
                 {
-                    i__2 = *n;
+                    i__2 = n;
                     i__1 = *nh;
 
                     for (kcol = *kbot + 1; i__1 < 0 ? kcol >= i__2 : kcol <= i__2; kcol += i__1)
                     {
                         // Computing MIN 
                         i__3 = *nh;
-                        i__4 = *n - kcol + 1;
+                        i__4 = n - kcol + 1;
                         kln = Math.Min(i__3, i__4);
 
                         zgemm("C", "N", &jw, &kln, &jw, &c_b2, &v[v_offset], ldv,
@@ -28501,14 +28497,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (*wantz)
                 {
-                    i__1 = *ihiz;
+                    i__1 = ihiz;
                     i__2 = *nv;
 
                     for (krow = *iloz; i__2 < 0 ? krow >= i__1 : krow <= i__1; krow += i__2)
                     {
                         // Computing MIN 
                         i__3 = *nv;
-                        i__4 = *ihiz - krow + 1;
+                        i__4 = ihiz - krow + 1;
                         kln = Math.Min(i__3, i__4);
 
                         zgemm("N", "N", &kln, &jw, &jw, &c_b2, &z[krow + kwtop * z_dim1],
@@ -28544,7 +28540,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlaqr4(bool* wantt, bool* wantz, int* n, int* ilo, int* ihi, complex16* h, int* ldh,
+        public static int zlaqr4(bool* wantt, bool* wantz, int n, int* ilo, int* ihi, complex16* h, int* ldh,
             complex16* w, int* iloz, int* ihiz, complex16* z, int* ldz, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -28762,14 +28758,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // ==== Quick return for N = 0: nothing to do. ==== 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
                 return 0;
             }
 
-            if (*n <= 11)
+            if (n <= 11)
             {
                 // ==== Tiny matrices must use ZLAHQR. ==== 
 
@@ -28819,7 +28815,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Computing MIN 
                 i__1 = *ihi - *ilo + 1;
-                i__2 = (*n - 1) / 3;
+                i__2 = (n - 1) / 3;
                 i__1 = Math.Min(i__1, i__2);
 
                 nwr = Math.Min(i__1, nwr);
@@ -28832,7 +28828,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 nsr = ilaenv(&c__15, "ZLAQR4", jbcmpz, n, ilo, ihi, lwork);
                 // Computing MIN 
                 i__1 = nsr;
-                i__2 = (*n + 6) / 9;
+                i__2 = (n + 6) / 9;
                 i__1 = Math.Min(i__1, i__2);
                 i__2 = *ihi - *ilo;
                 nsr = Math.Min(i__1, i__2);
@@ -28892,7 +28888,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // .    which there is sufficient workspace. ==== 
 
                 // Computing MIN 
-                i__1 = (*n - 1) / 3;
+                i__1 = (n - 1) / 3;
                 i__2 = *lwork / 2;
                 nwmax = Math.Min(i__1, i__2);
                 nw = nwmax;
@@ -28901,7 +28897,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // .    for which there is sufficient workspace. ==== 
 
                 // Computing MIN 
-                i__1 = (*n + 6) / 9;
+                i__1 = (n + 6) / 9;
                 i__2 = (*lwork << 1) / 3;
                 nsmax = Math.Min(i__1, i__2);
                 nsmax -= nsmax % 2;
@@ -29020,11 +29016,11 @@ namespace TAlex.MathCore.LinearAlgebra
                     // .        vertical work array aint the left-hand-edge. 
                     // .        ==== 
 
-                    kv = *n - nw + 1;
+                    kv = n - nw + 1;
                     kt = nw + 1;
-                    nho = *n - nw - 1 - kt + 1;
+                    nho = n - nw - 1 - kt + 1;
                     kwv = nw + 2;
-                    nve = *n - nw - kwv + 1;
+                    nve = n - nw - kwv + 1;
 
                     // ==== Aggressive early deflation ==== 
 
@@ -29102,7 +29098,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             if (kbot - ks + 1 <= ns / 2)
                             {
                                 ks = kbot - ns + 1;
-                                kt = *n - ns + 1;
+                                kt = n - ns + 1;
                                 zlacpy("A", &ns, &ns, &h[ks + ks * h_dim1], ldh, &h[kt + h_dim1], ldh);
                                 zlahqr(&c_false, &c_false, &ns, &c__1, &ns, &h[kt + h_dim1],
                                     ldh, &w[ks], &c__1, &c__1, zdum, &c__1, &inf);
@@ -29325,11 +29321,11 @@ namespace TAlex.MathCore.LinearAlgebra
                         // .      the left-hand-edge. ==== 
 
                         kdu = ns * 3 - 3;
-                        ku = *n - kdu + 1;
+                        ku = n - kdu + 1;
                         kwh = kdu + 1;
-                        nho = *n - kdu - 3 - (kdu + 1) + 1;
+                        nho = n - kdu - 3 - (kdu + 1) + 1;
                         kwv = kdu + 4;
-                        nve = *n - kdu - kwv + 1;
+                        nve = n - kdu - kwv + 1;
 
                         // ==== Small-bulge multi-shift QR sweep ==== 
 
@@ -29376,7 +29372,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int zlaqr5(bool* wantt, bool* wantz, int* kacc22,
-            int* n, int* ktop, int* kbot, int* nshfts,
+            int n, int* ktop, int* kbot, int* nshfts,
             complex16* s, complex16* h, int* ldh, int* iloz,
             int* ihiz, complex16* z, int* ldz, complex16* v,
             int* ldv, complex16* u, int* ldu, int* nv,
@@ -29588,7 +29584,7 @@ namespace TAlex.MathCore.LinearAlgebra
             safmax = 1.0 / safmin;
             dlabad(&safmin, &safmax);
             ulp = dlamch("PRECISION");
-            smlnum = safmin * ((double)(*n) / ulp);
+            smlnum = safmin * ((double)(n) / ulp);
 
             // ==== Use accumulated reflections to update far-from-diagonal 
             // .    entries ? ==== 
@@ -29903,7 +29899,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else if (*wantt)
                     {
-                        jbot = *n;
+                        jbot = n;
                     }
                     else
                     {
@@ -30641,7 +30637,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     if (*wantt)
                     {
                         jtop = 1;
-                        jbot = *n;
+                        jbot = n;
                     }
                     else
                     {
@@ -30889,8 +30885,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlarcm(int* m, int* n, double* a, int* lda,
-            complex16* b, int* ldb, complex16* c, int* ldc, double* rwork)
+        public static int zlarcm(int m, int n, double* a, int lda,
+            complex16* b, int ldb, complex16* c, int ldc, double* rwork)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -30951,71 +30947,71 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j, l;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
-            b_dim1 = *ldb;
+            b_dim1 = ldb;
             b_offset = 1 + b_dim1;
             b -= b_offset;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --rwork;
 
             // Function Body
-            if (*m == 0 || *n == 0)
+            if (m == 0 || n == 0)
             {
                 return 0;
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
                 for (i = 1; i <= i__2; ++i)
                 {
                     i__3 = i + j * b_dim1;
-                    rwork[(j - 1) * *m + i] = b[i__3].r;
+                    rwork[(j - 1) * m + i] = b[i__3].r;
                 }
             }
 
-            l = *m * *n + 1;
+            l = m * n + 1;
             dgemm("N", "N", m, n, m, &c_b6, &a[a_offset], lda, &rwork[1], m, &c_b7, &rwork[l], m);
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
                 for (i = 1; i <= i__2; ++i)
                 {
                     i__3 = i + j * c_dim1;
-                    i__4 = l + (j - 1) * *m + i - 1;
+                    i__4 = l + (j - 1) * m + i - 1;
                     c[i__3].r = rwork[i__4];
                     c[i__3].i = 0.0;
                 }
             }
 
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
                 for (i = 1; i <= i__2; ++i)
                 {
-                    rwork[(j - 1) * *m + i] = d_imag(&b[i + j * b_dim1]);
+                    rwork[(j - 1) * m + i] = d_imag(&b[i + j * b_dim1]);
                 }
             }
 
             dgemm("N", "N", m, n, m, &c_b6, &a[a_offset], lda, &rwork[1], m, &c_b7, &rwork[l], m);
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
                 for (i = 1; i <= i__2; ++i)
                 {
                     i__3 = i + j * c_dim1;
                     i__4 = i + j * c_dim1;
 
                     d__1 = c[i__4].r;
-                    i__5 = l + (j - 1) * *m + i - 1;
+                    i__5 = l + (j - 1) * m + i - 1;
                     z__1.r = d__1;
                     z__1.i = rwork[i__5];
 
@@ -31028,8 +31024,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlarf(string side, int* m, int* n, complex16* v, int* incv,
-            complex16* tau, complex16* c, int* ldc, complex16* work)
+        public static int zlarf(string side, int m, int n, complex16* v, int* incv,
+            complex16* tau, complex16* c, int ldc, complex16* work)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -31107,7 +31103,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Parameter adjustments 
             --v;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -31123,11 +31119,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 // of V. 
                 if (applyleft)
                 {
-                    lastv = *m;
+                    lastv = m;
                 }
                 else
                 {
-                    lastv = *n;
+                    lastv = n;
                 }
                 if (*incv > 0)
                 {
@@ -31205,8 +31201,8 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int zlarfb(string side, string trans, string direct, string storev,
-            int* m, int* n, int* k, complex16* v, int* ldv,
-            complex16* t, int* ldt, complex16* c, int* ldc,
+            int m, int n, int* k, complex16* v, int* ldv,
+            complex16* t, int* ldt, complex16* c, int ldc,
             complex16* work, int* ldwork)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -31309,7 +31305,7 @@ namespace TAlex.MathCore.LinearAlgebra
             t_dim1 = *ldt;
             t_offset = 1 + t_dim1;
             t -= t_offset;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             work_dim1 = *ldwork;
@@ -31317,7 +31313,7 @@ namespace TAlex.MathCore.LinearAlgebra
             work -= work_offset;
 
             // Function Body 
-            if (*m <= 0 || *n <= 0)
+            if (m <= 0 || n <= 0)
             {
                 return 0;
             }
@@ -31383,7 +31379,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         // C := C - V * W' 
 
-                        if (*m > *k)
+                        if (m > *k)
                         {
                             // C2 := C2 - V2 * W' 
 
@@ -32008,7 +32004,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlarfg(int* n, complex16* alpha, complex16* x, int* incx, complex16* tau)
+        public static int zlarfg(int n, complex16* alpha, complex16* x, int* incx, complex16* tau)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -32079,14 +32075,14 @@ namespace TAlex.MathCore.LinearAlgebra
             --x;
 
             // Function Body 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 tau.r = 0.0;
                 tau.i = 0.0;
                 return 0;
             }
 
-            i__1 = *n - 1;
+            i__1 = n - 1;
             xnorm = dznrm2(&i__1, &x[1], incx);
             alphr = alpha.r;
             alphi = d_imag(alpha);
@@ -32113,7 +32109,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 L10:
                     ++knt;
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     zdscal(&i__1, &rsafmn, &x[1], incx);
                     beta *= rsafmn;
                     alphi *= rsafmn;
@@ -32125,7 +32121,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // New BETA is at most 1, at least SAFMIN 
 
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     xnorm = dznrm2(&i__1, &x[1], incx);
 
                     z__1.r = alphr;
@@ -32154,7 +32150,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 alpha.r = z__1.r;
                 alpha.i = z__1.i;
-                i__1 = *n - 1;
+                i__1 = n - 1;
 
                 zscal(&i__1, alpha, &x[1], incx);
 
@@ -32174,7 +32170,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlarfp(int* n, complex16* alpha, complex16* x, int* incx, complex16* tau)
+        public static int zlarfp(int n, complex16* alpha, complex16* x, int* incx, complex16* tau)
         {
             //  -- LAPACK auxiliary routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -32245,14 +32241,14 @@ namespace TAlex.MathCore.LinearAlgebra
             --x;
 
             // Function Body
-            if (*n <= 0)
+            if (n <= 0)
             {
                 tau.r = 0.0;
                 tau.i = 0.0;
                 return 0;
             }
 
-            i__1 = *n - 1;
+            i__1 = n - 1;
             xnorm = dznrm2(&i__1, &x[1], incx);
             alphr = alpha.r;
             alphi = d_imag(alpha);
@@ -32278,7 +32274,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         tau.r = 2.0;
                         tau.i = 0.0;
 
-                        i__1 = *n - 1;
+                        i__1 = n - 1;
                         for (j = 1; j <= i__1; ++j)
                         {
                             i__2 = (j - 1) * *incx + 1;
@@ -32305,7 +32301,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     tau.r = z__1.r;
                     tau.i = z__1.i;
 
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     for (j = 1; j <= i__1; ++j)
                     {
                         i__2 = (j - 1) * *incx + 1;
@@ -32332,7 +32328,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     L10:
                     ++knt;
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     zdscal(&i__1, &rsafmn, &x[1], incx);
                     beta *= rsafmn;
                     alphi *= rsafmn;
@@ -32345,7 +32341,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // New BETA is at most 1, at least SAFMIN
 
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     xnorm = dznrm2(&i__1, &x[1], incx);
                     z__1.r = alphr;
                     z__1.i = alphi;
@@ -32400,7 +32396,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 alpha.r = z__1.r;
                 alpha.i = z__1.i;
 
-                i__1 = *n - 1;
+                i__1 = n - 1;
                 zscal(&i__1, alpha, &x[1], incx);
 
                 // If BETA is subnormal, it may lose relative accuracy
@@ -32418,7 +32414,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlarft(string direct, string storev, int* n, int* k,
+        public static int zlarft(string direct, string storev, int n, int* k,
             complex16* v, int* ldv, complex16* tau, complex16* t, int* ldt)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -32538,14 +32534,14 @@ namespace TAlex.MathCore.LinearAlgebra
             t -= t_offset;
 
             // Function Body 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
 
             if (lsame(direct, "F"))
             {
-                prevlastv = *n;
+                prevlastv = n;
                 i__1 = *k;
 
                 for (i = 1; i <= i__1; ++i)
@@ -32583,7 +32579,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             // Skip any trailing zeros. 
                             i__2 = i + 1;
 
-                            for (lastv = *n; lastv >= i__2; --lastv)
+                            for (lastv = n; lastv >= i__2; --lastv)
                             {
                                 i__3 = lastv + i * v_dim1;
 
@@ -32613,7 +32609,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             // Skip any trailing zeros. 
                             i__2 = i + 1;
 
-                            for (lastv = *n; lastv >= i__2; --lastv)
+                            for (lastv = n; lastv >= i__2; --lastv)
                             {
                                 i__3 = i + lastv * v_dim1;
                                 if (v[i__3].r != 0.0 || v[i__3].i != 0.0)
@@ -32701,12 +32697,12 @@ namespace TAlex.MathCore.LinearAlgebra
                         {
                             if (lsame(storev, "C"))
                             {
-                                i__1 = *n - *k + i + i * v_dim1;
+                                i__1 = n - *k + i + i * v_dim1;
 
                                 vii.r = v[i__1].r;
                                 vii.i = v[i__1].i;
 
-                                i__1 = *n - *k + i + i * v_dim1;
+                                i__1 = n - *k + i + i * v_dim1;
 
 
                                 v[i__1].r = 1.0;
@@ -32730,7 +32726,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 // T(i+1:k,i) := 
                                 // - tau(i) * V(j:n-k+i,i+1:k)' * V(j:n-k+i,i) 
 
-                                i__1 = *n - *k + i - j + 1;
+                                i__1 = n - *k + i - j + 1;
                                 i__2 = *k - i;
                                 i__3 = i;
 
@@ -32741,19 +32737,19 @@ namespace TAlex.MathCore.LinearAlgebra
                                     &v[j + (i + 1) * v_dim1], ldv, &v[j + i *
                                     v_dim1], &c__1, &c_b2, &t[i + 1 + i * t_dim1], &c__1);
 
-                                i__1 = *n - *k + i + i * v_dim1;
+                                i__1 = n - *k + i + i * v_dim1;
 
                                 v[i__1].r = vii.r;
                                 v[i__1].i = vii.i;
                             }
                             else
                             {
-                                i__1 = i + (*n - *k + i) * v_dim1;
+                                i__1 = i + (n - *k + i) * v_dim1;
 
                                 vii.r = v[i__1].r;
                                 vii.i = v[i__1].i;
 
-                                i__1 = i + (*n - *k + i) * v_dim1;
+                                i__1 = i + (n - *k + i) * v_dim1;
 
                                 v[i__1].r = 1.0;
                                 v[i__1].i = 0.0;
@@ -32776,10 +32772,10 @@ namespace TAlex.MathCore.LinearAlgebra
                                 // T(i+1:k,i) := 
                                 // - tau(i) * V(i+1:k,j:n-k+i) * V(i,j:n-k+i)' 
 
-                                i__1 = *n - *k + i - 1 - j + 1;
+                                i__1 = n - *k + i - 1 - j + 1;
                                 zlacgv(&i__1, &v[i + j * v_dim1], ldv);
                                 i__1 = *k - i;
-                                i__2 = *n - *k + i - j + 1;
+                                i__2 = n - *k + i - j + 1;
                                 i__3 = i;
 
                                 z__1.r = -tau[i__3].r;
@@ -32789,9 +32785,9 @@ namespace TAlex.MathCore.LinearAlgebra
                                     1 + j * v_dim1], ldv, &v[i + j * v_dim1],
                                     ldv, &c_b2, &t[i + 1 + i * t_dim1], &c__1);
 
-                                i__1 = *n - *k + i - 1 - j + 1;
+                                i__1 = n - *k + i - 1 - j + 1;
                                 zlacgv(&i__1, &v[i + j * v_dim1], ldv);
-                                i__1 = i + (*n - *k + i) * v_dim1;
+                                i__1 = i + (n - *k + i) * v_dim1;
 
                                 v[i__1].r = vii.r;
                                 v[i__1].i = vii.i;
@@ -33166,7 +33162,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int zlascl(string type, int* kl, int* ku, double* cfrom,
-            double* cto, int* m, int* n, complex16* a, int* lda, out int info)
+            double* cto, int m, int n, complex16* a, int lda, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -33248,7 +33244,7 @@ namespace TAlex.MathCore.LinearAlgebra
             double bignum, smlnum;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
 
@@ -33300,22 +33296,22 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -5;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -6;
             }
-            else if (*n < 0 || itype == 4 && *n != *m || itype == 5 && *n != *m)
+            else if (n < 0 || itype == 4 && n != m || itype == 5 && n != m)
             {
                 info = -7;
             }
-            else if (itype <= 3 && *lda < Math.Max(1, *m))
+            else if (itype <= 3 && lda < Math.Max(1, m))
             {
                 info = -9;
             }
             else if (itype >= 4)
             {
                 // Computing MAX 
-                i__1 = *m - 1;
+                i__1 = m - 1;
                 if (*kl < 0 || *kl > Math.Max(i__1, 0))
                 {
                     info = -2;
@@ -33323,12 +33319,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 else // if(complicated condition) 
                 {
                     // Computing MAX 
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     if (*ku < 0 || *ku > Math.Max(i__1, 0) || (itype == 4 || itype == 5) && *kl != *ku)
                     {
                         info = -3;
                     }
-                    else if (itype == 4 && *lda < *kl + 1 || itype == 5 && *lda < *ku + 1 || itype == 6 && *lda < (*kl << 1) + *ku + 1)
+                    else if (itype == 4 && lda < *kl + 1 || itype == 5 && lda < *ku + 1 || itype == 6 && lda < (*kl << 1) + *ku + 1)
                     {
                         info = -9;
                     }
@@ -33344,7 +33340,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 0 || *m == 0)
+            if (n == 0 || m == 0)
             {
                 return 0;
             }
@@ -33400,10 +33396,10 @@ namespace TAlex.MathCore.LinearAlgebra
             if (itype == 0)
             {
                 // Full matrix 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
@@ -33420,10 +33416,10 @@ namespace TAlex.MathCore.LinearAlgebra
             else if (itype == 1)
             {
                 // Lower triangular matrix 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = j; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
@@ -33441,10 +33437,10 @@ namespace TAlex.MathCore.LinearAlgebra
             else if (itype == 2)
             {
                 // Upper triangular matrix 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = Math.Min(j, *m);
+                    i__2 = Math.Min(j, m);
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
@@ -33461,12 +33457,12 @@ namespace TAlex.MathCore.LinearAlgebra
             else if (itype == 3)
             {
                 // Upper Hessenberg matrix 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MIN 
                     i__3 = j + 1;
-                    i__2 = Math.Min(i__3, *m);
+                    i__2 = Math.Min(i__3, m);
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
@@ -33484,8 +33480,8 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Lower half of a symmetric band matrix 
                 k3 = *kl + 1;
-                k4 = *n + 1;
-                i__1 = *n;
+                k4 = n + 1;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MIN 
@@ -33510,7 +33506,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Upper half of a symmetric band matrix 
                 k1 = *ku + 2;
                 k3 = *ku + 1;
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MAX 
@@ -33536,8 +33532,8 @@ namespace TAlex.MathCore.LinearAlgebra
                 k1 = *kl + *ku + 2;
                 k2 = *kl + 1;
                 k3 = (*kl << 1) + *ku + 1;
-                k4 = *kl + *ku + 1 + *m;
-                i__1 = *n;
+                k4 = *kl + *ku + 1 + m;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     // Computing MAX 
@@ -33569,7 +33565,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlaset(string uplo, int* m, int* n, complex16* alpha, complex16* beta, complex16* a, int* lda)
+        public static int zlaset(string uplo, int m, int n, complex16* alpha, complex16* beta, complex16* a, int lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -33621,7 +33617,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
 
@@ -33631,12 +33627,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Set the diagonal to BETA and the strictly upper triangular 
                 // part of the array to ALPHA. 
 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 2; j <= i__1; ++j)
                 {
                     // Computing MIN 
                     i__3 = j - 1;
-                    i__2 = Math.Min(i__3, *m);
+                    i__2 = Math.Min(i__3, m);
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
@@ -33645,7 +33641,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                 }
 
-                i__1 = Math.Min(*n, *m);
+                i__1 = Math.Min(n, m);
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i + i * a_dim1;
@@ -33658,10 +33654,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Set the diagonal to BETA and the strictly lower triangular 
                 // part of the array to ALPHA. 
 
-                i__1 = Math.Min(*m, *n);
+                i__1 = Math.Min(m, n);
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = j + 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
@@ -33669,7 +33665,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         a[i__3].i = alpha.i;
                     }
                 }
-                i__1 = Math.Min(*n, *m);
+                i__1 = Math.Min(n, m);
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i + i * a_dim1;
@@ -33683,10 +33679,10 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Set the array to BETA on the diagonal and ALPHA on the 
                 // offdiagonal. 
 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
@@ -33694,7 +33690,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         a[i__3].i = alpha.i;
                     }
                 }
-                i__1 = Math.Min(*m, *n);
+                i__1 = Math.Min(m, n);
                 for (i = 1; i <= i__1; ++i)
                 {
                     i__2 = i + i * a_dim1;
@@ -33707,7 +33703,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zlassq(int* n, complex16* x, int* incx, double* scale, double* sumsq)
+        public static int zlassq(int n, complex16* x, int* incx, double* scale, double* sumsq)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -33723,7 +33719,7 @@ namespace TAlex.MathCore.LinearAlgebra
             //  where x( i ) = abs( X( 1 + ( i - 1 )*INCX ) ). The value of sumsq is 
             //  assumed to be at least unity and the value of ssq will then satisfy 
 
-            //     1.0 .le. ssq .le. ( sumsq + 2*n ). 
+            //     1.0 .le. ssq .le. ( sumsq + 2n ). 
 
             //  scale is assumed to be non-negative and scl returns the value 
 
@@ -33771,9 +33767,9 @@ namespace TAlex.MathCore.LinearAlgebra
             --x;
 
             // Function Body 
-            if (*n > 0)
+            if (n > 0)
             {
-                i__1 = (*n - 1) * *incx + 1;
+                i__1 = (n - 1) * *incx + 1;
                 i__2 = *incx;
                 for (ix = 1; i__2 < 0 ? ix >= i__1 : ix <= i__1; ix += i__2)
                 {
@@ -33821,7 +33817,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int zlatrs(string uplo, string trans, string diag, string normin,
-            int* n, complex16* a, int* lda, complex16* x, double* scale, double* cnorm, out int info)
+            int n, complex16* a, int lda, complex16* x, double* scale, double* cnorm, out int info)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -34011,7 +34007,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool nounit;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --x;
@@ -34041,11 +34037,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -4;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -5;
             }
-            else if (*lda < Math.Max(1, *n))
+            else if (lda < Math.Max(1, n))
             {
                 info = -7;
             }
@@ -34059,7 +34055,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
@@ -34081,7 +34077,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // A is upper triangular. 
 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
                         i__2 = j - 1;
@@ -34092,13 +34088,13 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // A is lower triangular. 
 
-                    i__1 = *n - 1;
+                    i__1 = n - 1;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        i__2 = *n - j;
+                        i__2 = n - j;
                         cnorm[j] = dzasum(&i__2, &a[j + 1 + j * a_dim1], &c__1);
                     }
-                    cnorm[*n] = 0.0;
+                    cnorm[n] = 0.0;
                 }
             }
 
@@ -34121,7 +34117,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Level 2 BLAS routine ZTRSV can be used. 
 
             xmax = 0.0;
-            i__1 = *n;
+            i__1 = n;
             for (j = 1; j <= i__1; ++j)
             {
                 // Computing MAX 
@@ -34138,14 +34134,14 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (upper)
                 {
-                    jfirst = *n;
+                    jfirst = n;
                     jlast = 1;
                     jinc = -1;
                 }
                 else
                 {
                     jfirst = 1;
-                    jlast = *n;
+                    jlast = n;
                     jinc = 1;
                 }
 
@@ -34248,12 +34244,12 @@ namespace TAlex.MathCore.LinearAlgebra
                 if (upper)
                 {
                     jfirst = 1;
-                    jlast = *n;
+                    jlast = n;
                     jinc = 1;
                 }
                 else
                 {
-                    jfirst = *n;
+                    jfirst = n;
                     jlast = 1;
                     jinc = -1;
                 }
@@ -34471,7 +34467,7 @@ namespace TAlex.MathCore.LinearAlgebra
                             // A(j,j) = 0:  Set x(1:n) = 0, x(j) = 1, and 
                             // scale = 0, and compute a solution to A*x = 0. 
 
-                            i__3 = *n;
+                            i__3 = n;
                             for (i = 1; i <= i__3; ++i)
                             {
                                 i__4 = i;
@@ -34540,12 +34536,12 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                         else
                         {
-                            if (j < *n)
+                            if (j < n)
                             {
                                 // Compute the update 
                                 // x(j+1:n) := x(j+1:n) - x(j) * A(j+1:n,j) 
 
-                                i__3 = *n - j;
+                                i__3 = n - j;
                                 i__4 = j;
 
                                 z__2.r = -x[i__4].r;
@@ -34555,7 +34551,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 z__1.i = tscal * z__2.i;
 
                                 zaxpy(&i__3, &z__1, &a[j + 1 + j * a_dim1], &c__1, &x[j + 1], &c__1);
-                                i__3 = *n - j;
+                                i__3 = n - j;
                                 i = j + izamax(&i__3, &x[j + 1], &c__1);
                                 i__3 = i;
                                 xmax = Math.Abs(x[i__3].r) + Math.Abs(d_imag(&x[i]));
@@ -34638,9 +34634,9 @@ namespace TAlex.MathCore.LinearAlgebra
                                 csumj.r = z__1.r;
                                 csumj.i = z__1.i;
                             }
-                            else if (j < *n)
+                            else if (j < n)
                             {
-                                i__3 = *n - j;
+                                i__3 = n - j;
                                 zdotu(&z__1, &i__3, &a[j + 1 + j * a_dim1], &c__1, &
                                     x[j + 1], &c__1);
                                 csumj.r = z__1.r;
@@ -34671,9 +34667,9 @@ namespace TAlex.MathCore.LinearAlgebra
                                     csumj.i = z__1.i;
                                 }
                             }
-                            else if (j < *n)
+                            else if (j < n)
                             {
-                                i__3 = *n;
+                                i__3 = n;
                                 for (i = j + 1; i <= i__3; ++i)
                                 {
                                     i__4 = i + j * a_dim1;
@@ -34781,7 +34777,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 // A(j,j) = 0:  Set x(1:n) = 0, x(j) = 1, and 
                                 // scale = 0 and compute a solution to A**T *x = 0. 
 
-                                i__3 = *n;
+                                i__3 = n;
                                 for (i = 1; i <= i__3; ++i)
                                 {
                                     i__4 = i;
@@ -34895,9 +34891,9 @@ namespace TAlex.MathCore.LinearAlgebra
                                 csumj.r = z__1.r;
                                 csumj.i = z__1.i;
                             }
-                            else if (j < *n)
+                            else if (j < n)
                             {
-                                i__3 = *n - j;
+                                i__3 = n - j;
                                 zdotc(&z__1, &i__3, &a[j + 1 + j * a_dim1], &c__1, &
                                     x[j + 1], &c__1);
                                 csumj.r = z__1.r;
@@ -34930,9 +34926,9 @@ namespace TAlex.MathCore.LinearAlgebra
                                     csumj.i = z__1.i;
                                 }
                             }
-                            else if (j < *n)
+                            else if (j < n)
                             {
-                                i__3 = *n;
+                                i__3 = n;
                                 for (i = j + 1; i <= i__3; ++i)
                                 {
                                     d_cnjg(&z__4, &a[i + j * a_dim1]);
@@ -35040,7 +35036,7 @@ namespace TAlex.MathCore.LinearAlgebra
                                 // A(j,j) = 0:  Set x(1:n) = 0, x(j) = 1, and 
                                 // scale = 0 and compute a solution to A**H *x = 0. 
 
-                                i__3 = *n;
+                                i__3 = n;
                                 for (i = 1; i <= i__3; ++i)
                                 {
                                     i__4 = i;
@@ -35093,7 +35089,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zrot(int* n, complex16* cx, int* incx,
+        public static int zrot(int n, complex16* cx, int* incx,
             complex16* cy, int* incy, double* c, complex16* s)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
@@ -35148,7 +35144,7 @@ namespace TAlex.MathCore.LinearAlgebra
             --cx;
 
             // Function Body 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
@@ -35163,15 +35159,15 @@ namespace TAlex.MathCore.LinearAlgebra
             iy = 1;
             if (*incx < 0)
             {
-                ix = (-(*n) + 1) * *incx + 1;
+                ix = (-(n) + 1) * *incx + 1;
             }
 
             if (*incy < 0)
             {
-                iy = (-(*n) + 1) * *incy + 1;
+                iy = (-(n) + 1) * *incy + 1;
             }
 
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 1; i <= i__1; ++i)
             {
@@ -35222,7 +35218,7 @@ namespace TAlex.MathCore.LinearAlgebra
             // Code for both increments equal to 1 
 
         L20:
-            i__1 = *n;
+            i__1 = n;
 
             for (i = 1; i <= i__1; ++i)
             {
@@ -35271,7 +35267,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int ztrevc(string side, string howmny, bool* select,
-            int* n, complex16* t, int* ldt, complex16* vl,
+            int n, complex16* t, int* ldt, complex16* vl,
             int* ldvl, complex16* vr, int* ldvr, int* mm, int
             * m, complex16* work, double* rwork, out int info)
         {
@@ -35449,19 +35445,19 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (somev)
             {
-                *m = 0;
-                i__1 = *n;
+                m = 0;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
                     if (select[j])
                     {
-                        ++(*m);
+                        ++(m);
                     }
                 }
             }
             else
             {
-                *m = *n;
+                m = n;
             }
 
             info = 0;
@@ -35473,23 +35469,23 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -4;
             }
-            else if (*ldt < Math.Max(1, *n))
+            else if (*ldt < Math.Max(1, n))
             {
                 info = -6;
             }
-            else if (*ldvl < 1 || leftv && *ldvl < *n)
+            else if (*ldvl < 1 || leftv && *ldvl < n)
             {
                 info = -8;
             }
-            else if (*ldvr < 1 || rightv && *ldvr < *n)
+            else if (*ldvr < 1 || rightv && *ldvr < n)
             {
                 info = -10;
             }
-            else if (*mm < *m)
+            else if (*mm < m)
             {
                 info = -11;
             }
@@ -35503,7 +35499,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible. 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
@@ -35514,14 +35510,14 @@ namespace TAlex.MathCore.LinearAlgebra
             ovfl = 1.0 / unfl;
             dlabad(&unfl, &ovfl);
             ulp = dlamch("Precision");
-            smlnum = unfl * (*n / ulp);
+            smlnum = unfl * (n / ulp);
 
             // Store the diagonal elements of T in working array WORK. 
 
-            i__1 = *n;
+            i__1 = n;
             for (i = 1; i <= i__1; ++i)
             {
-                i__2 = i + *n;
+                i__2 = i + n;
                 i__3 = i + i * t_dim1;
 
                 work[i__2].r = t[i__3].r;
@@ -35532,7 +35528,7 @@ namespace TAlex.MathCore.LinearAlgebra
             //     part of T to control overflow in triangular solver. 
 
             rwork[1] = 0.0;
-            i__1 = *n;
+            i__1 = n;
             for (j = 2; j <= i__1; ++j)
             {
                 i__2 = j - 1;
@@ -35543,8 +35539,8 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 //Compute right eigenvectors. 
 
-                is_ = *m;
-                for (ki = *n; ki >= 1; --ki)
+                is_ = m;
+                for (ki = n; ki >= 1; --ki)
                 {
 
                     if (somev)
@@ -35627,7 +35623,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                         zdscal(&ki, &remax, &vr[is_ * vr_dim1 + 1], &c__1);
 
-                        i__1 = *n;
+                        i__1 = n;
                         for (k = ki + 1; k <= i__1; ++k)
                         {
                             i__2 = k + is_ * vr_dim1;
@@ -35657,7 +35653,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     for (k = 1; k <= i__1; ++k)
                     {
                         i__2 = k + k * t_dim1;
-                        i__3 = k + *n;
+                        i__3 = k + n;
                         t[i__2].r = work[i__3].r;
                         t[i__2].i = work[i__3].i;
                     }
@@ -35673,7 +35669,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Compute left eigenvectors. 
 
                 is_ = 1;
-                i__1 = *n;
+                i__1 = n;
                 for (ki = 1; ki <= i__1; ++ki)
                 {
 
@@ -35690,13 +35686,13 @@ namespace TAlex.MathCore.LinearAlgebra
                     d__3 = ulp * (Math.Abs(t[i__2].r) + Math.Abs(d_imag(&t[ki + ki * t_dim1])));
                     smin = Math.Max(d__3, smlnum);
 
-                    i__2 = *n;
+                    i__2 = n;
                     work[i__2].r = 1.0;
                     work[i__2].i = 0.0;
 
                     // Form right-hand side. 
 
-                    i__2 = *n;
+                    i__2 = n;
                     for (k = ki + 1; k <= i__2; ++k)
                     {
                         i__3 = k;
@@ -35712,7 +35708,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     // Solve the triangular system: 
                     // (T(KI+1:N,KI+1:N) - T(KI,KI))'*X = SCALE*WORK. 
 
-                    i__2 = *n;
+                    i__2 = n;
                     for (k = ki + 1; k <= i__2; ++k)
                     {
                         i__3 = k + k * t_dim1;
@@ -35735,9 +35731,9 @@ namespace TAlex.MathCore.LinearAlgebra
                         }
                     }
 
-                    if (ki < *n)
+                    if (ki < n)
                     {
-                        i__2 = *n - ki;
+                        i__2 = n - ki;
                         zlatrs("Upper", "Conjugate transpose", "Non-unit", "Y", &i__2, &t[ki + 1 + (ki + 1) * t_dim1], ldt, &work[ki + 1], &scale, &rwork[1], info);
                         i__2 = ki;
 
@@ -35749,16 +35745,16 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     if (!over)
                     {
-                        i__2 = *n - ki + 1;
+                        i__2 = n - ki + 1;
                         zcopy(&i__2, &work[ki], &c__1, &vl[ki + is_ * vl_dim1], &c__1);
 
-                        i__2 = *n - ki + 1;
+                        i__2 = n - ki + 1;
                         ii = izamax(&i__2, &vl[ki + is_ * vl_dim1], &c__1) + ki - 1;
                         i__2 = ii + is_ * vl_dim1;
 
                         remax = 1.0 / (Math.Abs(vl[i__2].r) + Math.Abs(d_imag(&vl[ii + is_ * vl_dim1])));
 
-                        i__2 = *n - ki + 1;
+                        i__2 = n - ki + 1;
                         zdscal(&i__2, &remax, &vl[ki + is_ * vl_dim1], &c__1);
 
                         i__2 = ki - 1;
@@ -35771,9 +35767,9 @@ namespace TAlex.MathCore.LinearAlgebra
                     }
                     else
                     {
-                        if (ki < *n)
+                        if (ki < n)
                         {
-                            i__2 = *n - ki;
+                            i__2 = n - ki;
                             z__1.r = scale;
                             z__1.i = 0.0;
 
@@ -35790,11 +35786,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // Set back the original diagonal elements of T. 
 
-                    i__2 = *n;
+                    i__2 = n;
                     for (k = ki + 1; k <= i__2; ++k)
                     {
                         i__3 = k + k * t_dim1;
-                        i__4 = k + *n;
+                        i__4 = k + n;
 
                         t[i__3].r = work[i__4].r;
                         t[i__3].i = work[i__4].i;
@@ -35810,7 +35806,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int ztrexc(string compq, int* n, complex16* t,
+        public static int ztrexc(string compq, int n, complex16* t,
             int* ldt, complex16* q, int* ldq, int* ifst, int* ilst, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -35896,23 +35892,23 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -1;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -2;
             }
-            else if (*ldt < Math.Max(1, *n))
+            else if (*ldt < Math.Max(1, n))
             {
                 info = -4;
             }
-            else if (*ldq < 1 || wantq && *ldq < Math.Max(1, *n))
+            else if (*ldq < 1 || wantq && *ldq < Math.Max(1, n))
             {
                 info = -6;
             }
-            else if (*ifst < 1 || *ifst > *n)
+            else if (*ifst < 1 || *ifst > n)
             {
                 info = -7;
             }
-            else if (*ilst < 1 || *ilst > *n)
+            else if (*ilst < 1 || *ilst > n)
             {
                 info = -8;
             }
@@ -35926,7 +35922,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 1 || *ifst == *ilst)
+            if (n == 1 || *ifst == *ilst)
             {
                 return 0;
             }
@@ -35972,9 +35968,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Apply transformation to the matrix T. 
 
-                if (k + 2 <= *n)
+                if (k + 2 <= n)
                 {
-                    i__3 = *n - k - 1;
+                    i__3 = n - k - 1;
                     zrot(&i__3, &t[k + (k + 2) * t_dim1], ldt, &t[k + 1 + (k + 2) * t_dim1], ldt, &cs, &sn);
                 }
 
@@ -36005,9 +36001,9 @@ namespace TAlex.MathCore.LinearAlgebra
 
         
         public static int ztrsna(string job, string howmny, bool* select,
-            int* n, complex16* t, int* ldt, complex16* vl,
+            int n, complex16* t, int* ldt, complex16* vl,
             int* ldvl, complex16* vr, int* ldvr, double* s,
-            double* sep, int* mm, int* m, complex16* work,
+            double* sep, int* mm, int m, complex16* work,
             int* ldwork, double* rwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -36211,20 +36207,20 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (somcon)
             {
-                *m = 0;
-                i__1 = *n;
+                m = 0;
+                i__1 = n;
 
                 for (j = 1; j <= i__1; ++j)
                 {
                     if (select[j])
                     {
-                        ++(*m);
+                        ++(m);
                     }
                 }
             }
             else
             {
-                *m = *n;
+                m = n;
             }
 
             info = 0;
@@ -36236,27 +36232,27 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -4;
             }
-            else if (*ldt < Math.Max(1, *n))
+            else if (*ldt < Math.Max(1, n))
             {
                 info = -6;
             }
-            else if (*ldvl < 1 || wants && *ldvl < *n)
+            else if (*ldvl < 1 || wants && *ldvl < n)
             {
                 info = -8;
             }
-            else if (*ldvr < 1 || wants && *ldvr < *n)
+            else if (*ldvr < 1 || wants && *ldvr < n)
             {
                 info = -10;
             }
-            else if (*mm < *m)
+            else if (*mm < m)
             {
                 info = -13;
             }
-            else if (*ldwork < 1 || wantsp && *ldwork < *n)
+            else if (*ldwork < 1 || wantsp && *ldwork < n)
             {
                 info = -16;
             }
@@ -36270,12 +36266,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 return 0;
             }
 
-            if (*n == 1)
+            if (n == 1)
             {
                 if (somcon)
                 {
@@ -36303,7 +36299,7 @@ namespace TAlex.MathCore.LinearAlgebra
             dlabad(&smlnum, &bignum);
 
             ks = 1;
-            i__1 = *n;
+            i__1 = n;
             for (k = 1; k <= i__1; ++k)
             {
                 if (somcon)
@@ -36343,7 +36339,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // Form  C = T22 - lambda*I in WORK(2:N,2:N). 
 
-                    i__2 = *n;
+                    i__2 = n;
                     for (i__ = 2; i__ <= i__2; ++i__)
                     {
                         i__3 = i__ + i__ * work_dim1;
@@ -36367,8 +36363,8 @@ namespace TAlex.MathCore.LinearAlgebra
                     normin = "N";
 
                 L30:
-                    i__2 = *n - 1;
-                    zlacn2(&i__2, &work[(*n + 1) * work_dim1 + 1], &work[work_offset], &est, &kase, isave);
+                    i__2 = n - 1;
+                    zlacn2(&i__2, &work[(n + 1) * work_dim1 + 1], &work[work_offset], &est, &kase, isave);
 
                     if (kase != 0)
                     {
@@ -36376,14 +36372,14 @@ namespace TAlex.MathCore.LinearAlgebra
                         {
                             // Solve C'*x = scale*b 
 
-                            i__2 = *n - 1;
+                            i__2 = n - 1;
                             zlatrs("Upper", "Conjugate transpose", "Nonunit", normin, &i__2, &work[(work_dim1 << 1) + 2],
                                 ldwork, &work[work_offset], &scale, &rwork[1], &ierr);
                         }
                         else
                         {
                             // Solve C*x = scale*b 
-                            i__2 = *n - 1;
+                            i__2 = n - 1;
                             zlatrs("Upper", "No transpose", "Nonunit", normin, &i__2, &work[(work_dim1 << 1) + 2],
                                 ldwork, &work[work_offset], &scale, &rwork[1], &ierr);
                         }
@@ -36393,7 +36389,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         {
                             // Multiply by 1/SCALE if doing so will not cause 
                             // overflow. 
-                            i__2 = *n - 1;
+                            i__2 = n - 1;
                             ix = izamax(&i__2, &work[work_offset], &c__1);
                             i__2 = ix + work_dim1;
 
@@ -36421,8 +36417,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zung2r(int* m, int* n, int* k, complex16* a,
-            int* lda, complex16* tau, complex16* work, out int info)
+        public static int zung2r(int m, int n, int* k, complex16* a,
+            int lda, complex16* tau, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -36485,7 +36481,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j, l;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -36493,19 +36489,19 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body 
             info = 0;
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < 0 || *n > *m)
+            else if (n < 0 || n > m)
             {
                 info = -2;
             }
-            else if (*k < 0 || *k > *n)
+            else if (*k < 0 || *k > n)
             {
                 info = -3;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -5;
             }
@@ -36519,17 +36515,17 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 return 0;
             }
 
             // Initialise columns k+1:n to columns of the unit matrix 
 
-            i__1 = *n;
+            i__1 = n;
             for (j = *k + 1; j <= i__1; ++j)
             {
-                i__2 = *m;
+                i__2 = m;
 
                 for (l = 1; l <= i__2; ++l)
                 {
@@ -36548,22 +36544,22 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Apply H(i) to A(i:m,i:n) from the left 
 
-                if (i < *n)
+                if (i < n)
                 {
                     i__1 = i + i * a_dim1;
 
                     a[i__1].r = 1.0;
                     a[i__1].i = 0.0;
-                    i__1 = *m - i + 1;
-                    i__2 = *n - i;
+                    i__1 = m - i + 1;
+                    i__2 = n - i;
 
                     zlarf("Left", &i__1, &i__2, &a[i + i * a_dim1], &c__1,
                         &tau[i], &a[i + (i + 1) * a_dim1], lda, &work[1]);
                 }
 
-                if (i < *m)
+                if (i < m)
                 {
-                    i__1 = *m - i;
+                    i__1 = m - i;
                     i__2 = i;
                     z__1.r = -tau[i__2].r;
                     z__1.i = -tau[i__2].i;
@@ -36597,8 +36593,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zungbr(string vect, int* m, int* n, int* k,
-            complex16* a, int* lda, complex16* tau, complex16* work, int* lwork, out int info)
+        public static int zungbr(string vect, int m, int n, int* k,
+            complex16* a, int lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -36701,7 +36697,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -36710,19 +36706,19 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body
             info = 0;
             wantq = lsame(vect, "Q");
-            mn = Math.Min(*m, *n);
+            mn = Math.Min(m, n);
             lquery = *lwork == -1;
 
             if (!wantq && !lsame(vect, "P"))
             {
                 info = -1;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -2;
             }
-            else if (*n < 0 || wantq && (*n > *m || *n < Math.Min(*m, *k)) || !wantq && (
-              *m > *n || *m < Math.Min(*n, *k)))
+            else if (n < 0 || wantq && (n > m || n < Math.Min(m, *k)) || !wantq && (
+              m > n || m < Math.Min(n, *k)))
             {
                 info = -3;
             }
@@ -36730,7 +36726,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -4;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -6;
             }
@@ -36768,7 +36764,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*m == 0 || *n == 0)
+            if (m == 0 || n == 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
@@ -36780,7 +36776,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Form Q, determined by a call to ZGEBRD to reduce an m-by-k
                 // matrix
 
-                if (*m >= *k)
+                if (m >= *k)
                 {
                     // If m >= k, assume m >= n >= k
 
@@ -36794,12 +36790,12 @@ namespace TAlex.MathCore.LinearAlgebra
                     // column to the right, and set the first row and column of Q
                     // to those of the unit matrix
 
-                    for (j = *m; j >= 2; --j)
+                    for (j = m; j >= 2; --j)
                     {
                         i__1 = j * a_dim1 + 1;
                         a[i__1].r = 0.0;
                         a[i__1].i = 0.0;
-                        i__1 = *m;
+                        i__1 = m;
 
                         for (i__ = j + 1; i__ <= i__1; ++i__)
                         {
@@ -36814,7 +36810,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__1 = a_dim1 + 1;
                     a[i__1].r = 1.0;
                     a[i__1].i = 0.0;
-                    i__1 = *m;
+                    i__1 = m;
 
                     for (i__ = 2; i__ <= i__1; ++i__)
                     {
@@ -36824,13 +36820,13 @@ namespace TAlex.MathCore.LinearAlgebra
                         a[i__2].i = 0.0;
                     }
 
-                    if (*m > 1)
+                    if (m > 1)
                     {
                         // Form Q(2:m,2:m)
 
-                        i__1 = *m - 1;
-                        i__2 = *m - 1;
-                        i__3 = *m - 1;
+                        i__1 = m - 1;
+                        i__2 = m - 1;
+                        i__3 = m - 1;
                         zungqr(&i__1, &i__2, &i__3, &a[(a_dim1 << 1) + 2], lda, &tau[1], &work[1], lwork, &iinfo);
                     }
                 }
@@ -36840,7 +36836,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Form P', determined by a call to ZGEBRD to reduce a k-by-n
                 // matrix
 
-                if (*k < *n)
+                if (*k < n)
                 {
                     // If k < n, assume k <= m <= n
 
@@ -36858,7 +36854,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__1 = a_dim1 + 1;
                     a[i__1].r = 1.0;
                     a[i__1].i = 0.0;
-                    i__1 = *n;
+                    i__1 = n;
 
                     for (i__ = 2; i__ <= i__1; ++i__)
                     {
@@ -36867,7 +36863,7 @@ namespace TAlex.MathCore.LinearAlgebra
                         a[i__2].i = 0.0;
                     }
 
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 2; j <= i__1; ++j)
                     {
                         for (i__ = j - 1; i__ >= 2; --i__)
@@ -36882,13 +36878,13 @@ namespace TAlex.MathCore.LinearAlgebra
                         a[i__2].i = 0.0;
                     }
 
-                    if (*n > 1)
+                    if (n > 1)
                     {
                         // Form P'(2:n,2:n)
 
-                        i__1 = *n - 1;
-                        i__2 = *n - 1;
-                        i__3 = *n - 1;
+                        i__1 = n - 1;
+                        i__2 = n - 1;
+                        i__3 = n - 1;
                         zunglq(&i__1, &i__2, &i__3, &a[(a_dim1 << 1) + 2], lda, &tau[1], &work[1], lwork, &iinfo);
                     }
                 }
@@ -36901,8 +36897,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zunghr(int* n, int* ilo, int* ihi,
-            complex16* a, int* lda, complex16* tau, complex16*
+        public static int zunghr(int n, int* ilo, int* ihi,
+            complex16* a, int lda, complex16* tau, complex16*
             work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -36975,7 +36971,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -36986,19 +36982,19 @@ namespace TAlex.MathCore.LinearAlgebra
             nh = *ihi - *ilo;
             lquery = *lwork == -1;
 
-            if (*n < 0)
+            if (n < 0)
             {
                 info = -1;
             }
-            else if (*ilo < 1 || *ilo > Math.Max(1, *n))
+            else if (*ilo < 1 || *ilo > Math.Max(1, n))
             {
                 info = -2;
             }
-            else if (*ihi < Math.Min(*ilo, *n) || *ihi > *n)
+            else if (*ihi < Math.Min(*ilo, n) || *ihi > n)
             {
                 info = -3;
             }
-            else if (*lda < Math.Max(1, *n))
+            else if (lda < Math.Max(1, n))
             {
                 info = -5;
             }
@@ -37028,7 +37024,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n == 0)
+            if (n == 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
@@ -37063,7 +37059,7 @@ namespace TAlex.MathCore.LinearAlgebra
                     a[i__3].i = a[i__4].i;
                 }
 
-                i__2 = *n;
+                i__2 = n;
 
                 for (i = *ihi + 1; i <= i__2; ++i)
                 {
@@ -37078,7 +37074,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             for (j = 1; j <= i__1; ++j)
             {
-                i__2 = *n;
+                i__2 = n;
 
                 for (i = 1; i <= i__2; ++i)
                 {
@@ -37093,11 +37089,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 a[i__2].r = 1.0;
                 a[i__2].i = 0.0;
             }
-            i__1 = *n;
+            i__1 = n;
 
             for (j = *ihi + 1; j <= i__1; ++j)
             {
-                i__2 = *n;
+                i__2 = n;
 
                 for (i = 1; i <= i__2; ++i)
                 {
@@ -37126,8 +37122,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zungl2(int* m, int* n, int* k,
-            complex16* a, int* lda, complex16* tau, complex16* work, out int info)
+        public static int zungl2(int m, int n, int* k,
+            complex16* a, int lda, complex16* tau, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -37186,7 +37182,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int i, j, l;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -37194,19 +37190,19 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Function Body
             info = 0;
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < *m)
+            else if (n < m)
             {
                 info = -2;
             }
-            else if (*k < 0 || *k > *m)
+            else if (*k < 0 || *k > m)
             {
                 info = -3;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -5;
             }
@@ -37220,26 +37216,26 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*m <= 0)
+            if (m <= 0)
             {
                 return 0;
             }
 
-            if (*k < *m)
+            if (*k < m)
             {
                 // Initialise rows k+1:m to rows of the unit matrix
 
-                i__1 = *n;
+                i__1 = n;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (l = *k + 1; l <= i__2; ++l)
                     {
                         i__3 = l + j * a_dim1;
                         a[i__3].r = 0.0;
                         a[i__3].i = 0.0;
                     }
-                    if (j > *k && j <= *m)
+                    if (j > *k && j <= m)
                     {
                         i__2 = j + j * a_dim1;
                         a[i__2].r = 1.0;
@@ -37252,31 +37248,31 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // Apply H(i)' to A(i:m,i:n) from the right
 
-                if (i < *n)
+                if (i < n)
                 {
-                    i__1 = *n - i;
+                    i__1 = n - i;
                     zlacgv(&i__1, &a[i + (i + 1) * a_dim1], lda);
-                    if (i < *m)
+                    if (i < m)
                     {
                         i__1 = i + i * a_dim1;
 
                         a[i__1].r = 1.0;
                         a[i__1].i = 0.0;
 
-                        i__1 = *m - i;
-                        i__2 = *n - i + 1;
+                        i__1 = m - i;
+                        i__2 = n - i + 1;
                         d_cnjg(&z__1, &tau[i]);
                         zlarf("Right", &i__1, &i__2, &a[i + i * a_dim1], lda,
                         &z__1, &a[i + 1 + i * a_dim1], lda, &work[1]);
                     }
-                    i__1 = *n - i;
+                    i__1 = n - i;
                     i__2 = i;
 
                     z__1.r = -tau[i__2].r;
                     z__1.i = -tau[i__2].i;
 
                     zscal(&i__1, &z__1, &a[i + (i + 1) * a_dim1], lda);
-                    i__1 = *n - i;
+                    i__1 = n - i;
                     zlacgv(&i__1, &a[i + (i + 1) * a_dim1], lda);
                 }
                 i__1 = i + i * a_dim1;
@@ -37303,8 +37299,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zunglq(int* m, int* n, int* k, complex16* a,
-            int* lda, complex16* tau, complex16* work, int* lwork, out int info)
+        public static int zunglq(int m, int n, int* k, complex16* a,
+            int lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -37382,7 +37378,7 @@ namespace TAlex.MathCore.LinearAlgebra
             int lwkopt;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -37391,28 +37387,28 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body
             info = 0;
             nb = ilaenv(&c__1, "ZUNGLQ", " ", m, n, k, &c_n1);
-            lwkopt = Math.Max(1, *m) * nb;
+            lwkopt = Math.Max(1, m) * nb;
             work[1].r = (double)lwkopt;
             work[1].i = 0.0;
             lquery = *lwork == -1;
 
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < *m)
+            else if (n < m)
             {
                 info = -2;
             }
-            else if (*k < 0 || *k > *m)
+            else if (*k < 0 || *k > m)
             {
                 info = -3;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -5;
             }
-            else if (*lwork < Math.Max(1, *m) && !lquery)
+            else if (*lwork < Math.Max(1, m) && !lquery)
             {
                 info = -8;
             }
@@ -37430,7 +37426,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*m <= 0)
+            if (m <= 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
@@ -37439,7 +37435,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             nbmin = 2;
             nx = 0;
-            iws = *m;
+            iws = m;
             if (nb > 1 && nb < *k)
             {
                 // Determine when to cross over from blocked to unblocked code.
@@ -37452,7 +37448,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Determine if workspace is large enough for blocked code.
 
-                    ldwork = *m;
+                    ldwork = m;
                     iws = ldwork * nb;
                     if (*lwork < iws)
                     {
@@ -37484,7 +37480,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 i__1 = kk;
                 for (j = 1; j <= i__1; ++j)
                 {
-                    i__2 = *m;
+                    i__2 = m;
                     for (i = kk + 1; i <= i__2; ++i)
                     {
                         i__3 = i + j * a_dim1;
@@ -37500,10 +37496,10 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Use unblocked code for the last or only block.
 
-            if (kk < *m)
+            if (kk < m)
             {
-                i__1 = *m - kk;
-                i__2 = *n - kk;
+                i__1 = m - kk;
+                i__2 = n - kk;
                 i__3 = *k - kk;
                 zungl2(&i__1, &i__2, &i__3, &a[kk + 1 + (kk + 1) * a_dim1], lda, &tau[kk + 1], &work[1], &iinfo);
             }
@@ -37519,18 +37515,18 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__2 = nb;
                     i__3 = *k - i + 1;
                     ib = Math.Min(i__2, i__3);
-                    if (i + ib <= *m)
+                    if (i + ib <= m)
                     {
                         // Form the triangular factor of the block reflector
                         // H = H(i) H(i+1) . . . H(i+ib-1)
 
-                        i__2 = *n - i + 1;
+                        i__2 = n - i + 1;
                         zlarft("Forward", "Rowwise", &i__2, &ib, &a[i + i * a_dim1], lda, &tau[i], &work[1], &ldwork);
 
                         // Apply H' to A(i+ib:m,i:n) from the right
 
-                        i__2 = *m - i - ib + 1;
-                        i__3 = *n - i + 1;
+                        i__2 = m - i - ib + 1;
+                        i__3 = n - i + 1;
                         zlarfb("Right", "Conjugate transpose", "Forward", "Rowwise",
                             &i__2, &i__3, &ib, &a[i + i * a_dim1], lda, &work[1], &ldwork,
                             &a[i + ib + i * a_dim1], lda, &work[ib + 1], &ldwork);
@@ -37538,7 +37534,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // Apply H' to columns i:n of current block
 
-                    i__2 = *n - i + 1;
+                    i__2 = n - i + 1;
                     zungl2(&ib, &i__2, &ib, &a[i + i * a_dim1], lda, &tau[i], &work[1], &iinfo);
 
                     // Set columns 1:i-1 of current block to zero
@@ -37564,8 +37560,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zungqr(int* m, int* n, int* k, complex16* a,
-            int* lda, complex16* tau, complex16* work, int* lwork, out int info)
+        public static int zungqr(int m, int n, int* k, complex16* a,
+            int lda, complex16* tau, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -37645,7 +37641,7 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
@@ -37654,30 +37650,30 @@ namespace TAlex.MathCore.LinearAlgebra
             // Function Body 
             info = 0;
             nb = ilaenv(&c__1, "ZUNGQR", " ", m, n, k, &c_n1);
-            lwkopt = Math.Max(1, *n) * nb;
+            lwkopt = Math.Max(1, n) * nb;
 
             work[1].r = (double)lwkopt;
             work[1].i = 0.0;
 
             lquery = *lwork == -1;
 
-            if (*m < 0)
+            if (m < 0)
             {
                 info = -1;
             }
-            else if (*n < 0 || *n > *m)
+            else if (n < 0 || n > m)
             {
                 info = -2;
             }
-            else if (*k < 0 || *k > *n)
+            else if (*k < 0 || *k > n)
             {
                 info = -3;
             }
-            else if (*lda < Math.Max(1, *m))
+            else if (lda < Math.Max(1, m))
             {
                 info = -5;
             }
-            else if (*lwork < Math.Max(1, *n) && !lquery)
+            else if (*lwork < Math.Max(1, n) && !lquery)
             {
                 info = -8;
             }
@@ -37695,7 +37691,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*n <= 0)
+            if (n <= 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
@@ -37704,7 +37700,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             nbmin = 2;
             nx = 0;
-            iws = *n;
+            iws = n;
             if (nb > 1 && nb < *k)
             {
                 // Determine when to cross over from blocked to unblocked code. 
@@ -37718,7 +37714,7 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // Determine if workspace is large enough for blocked code. 
 
-                    ldwork = *n;
+                    ldwork = n;
                     iws = ldwork * nb;
 
                     if (*lwork < iws)
@@ -37748,7 +37744,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 // Set A(1:kk,kk+1:n) to zero. 
 
-                i__1 = *n;
+                i__1 = n;
                 for (j = kk + 1; j <= i__1; ++j)
                 {
                     i__2 = kk;
@@ -37767,10 +37763,10 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Use unblocked code for the last or only block. 
 
-            if (kk < *n)
+            if (kk < n)
             {
-                i__1 = *m - kk;
-                i__2 = *n - kk;
+                i__1 = m - kk;
+                i__2 = n - kk;
                 i__3 = *k - kk;
 
                 zung2r(&i__1, &i__2, &i__3, &a[kk + 1 + (kk + 1) * a_dim1], lda, &tau[kk + 1], &work[1], &iinfo);
@@ -37788,18 +37784,18 @@ namespace TAlex.MathCore.LinearAlgebra
                     i__3 = *k - i + 1;
                     ib = Math.Min(i__2, i__3);
 
-                    if (i + ib <= *n)
+                    if (i + ib <= n)
                     {
                         // Form the triangular factor of the block reflector 
                         // H = H(i) H(i+1) . . . H(i+ib-1) 
 
-                        i__2 = *m - i + 1;
+                        i__2 = m - i + 1;
                         zlarft("Forward", "Columnwise", &i__2, &ib, &a[i + i * a_dim1], lda, &tau[i], &work[1], &ldwork);
 
                         // Apply H to A(i:m,i+ib:n) from the left 
 
-                        i__2 = *m - i + 1;
-                        i__3 = *n - i - ib + 1;
+                        i__2 = m - i + 1;
+                        i__3 = n - i - ib + 1;
 
                         zlarfb("Left", "No transpose", "Forward", "Columnwise", &
                             i__2, &i__3, &ib, &a[i + i * a_dim1], lda, &work[1],
@@ -37808,7 +37804,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     // Apply H to rows i:m of current block 
 
-                    i__2 = *m - i + 1;
+                    i__2 = m - i + 1;
                     zung2r(&i__2, &ib, &ib, &a[i + i * a_dim1], lda, &tau[i], &work[1], &iinfo);
 
                     // Set rows 1:i-1 of current block to zero 
@@ -37834,9 +37830,9 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zunm2r(string side, string trans, int* m, int* n,
-            int* k, complex16* a, int* lda, complex16* tau,
-            complex16* c, int* ldc, complex16* work, out int info)
+        public static int zunm2r(string side, string trans, int m, int n,
+            int* k, complex16* a, int lda, complex16* tau,
+            complex16* c, int ldc, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -37933,11 +37929,11 @@ namespace TAlex.MathCore.LinearAlgebra
             bool notran;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -37951,11 +37947,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (left)
             {
-                nq = *m;
+                nq = m;
             }
             else
             {
-                nq = *n;
+                nq = n;
             }
 
             if (!left && !lsame(side, "R"))
@@ -37966,11 +37962,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -4;
             }
@@ -37978,11 +37974,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -5;
             }
-            else if (*lda < Math.Max(1, nq))
+            else if (lda < Math.Max(1, nq))
             {
                 info = -7;
             }
-            else if (*ldc < Math.Max(1, *m))
+            else if (ldc < Math.Max(1, m))
             {
                 info = -10;
             }
@@ -37996,7 +37992,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*m == 0 || *n == 0 || *k == 0)
+            if (m == 0 || n == 0 || *k == 0)
             {
                 return 0;
             }
@@ -38016,12 +38012,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (left)
             {
-                ni = *n;
+                ni = n;
                 jc = 1;
             }
             else
             {
-                mi = *m;
+                mi = m;
                 ic = 1;
             }
 
@@ -38033,13 +38029,13 @@ namespace TAlex.MathCore.LinearAlgebra
                 if (left)
                 {
                     // H(i) or H(i)' is applied to C(i:m,1:n) 
-                    mi = *m - i + 1;
+                    mi = m - i + 1;
                     ic = i;
                 }
                 else
                 {
                     // H(i) or H(i)' is applied to C(1:m,i:n) 
-                    ni = *n - i + 1;
+                    ni = n - i + 1;
                     jc = i;
                 }
 
@@ -38080,9 +38076,9 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zunmbr(string vect, string side, string trans, int* m,
-            int* n, int* k, complex16* a, int* lda, complex16* tau,
-            complex16* c, int* ldc, complex16* work, int* lwork, out int info)
+        public static int zunmbr(string vect, string side, string trans, int m,
+            int n, int* k, complex16* a, int lda, complex16* tau,
+            complex16* c, int ldc, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -38212,11 +38208,11 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -38232,16 +38228,16 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (left)
             {
-                nq = *m;
-                nw = *n;
+                nq = m;
+                nw = n;
             }
             else
             {
-                nq = *n;
-                nw = *m;
+                nq = n;
+                nw = m;
             }
 
-            if (*m == 0 || *n == 0)
+            if (m == 0 || n == 0)
             {
                 nw = 0;
             }
@@ -38258,11 +38254,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -3;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -4;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -5;
             }
@@ -38275,11 +38271,11 @@ namespace TAlex.MathCore.LinearAlgebra
                 // Computing MAX
                 i__1 = 1;
                 i__2 = Math.Min(nq, *k);
-                if (applyq && *lda < Math.Max(1, nq) || !applyq && *lda < Math.Max(i__1, i__2))
+                if (applyq && lda < Math.Max(1, nq) || !applyq && lda < Math.Max(i__1, i__2))
                 {
                     info = -8;
                 }
-                else if (*ldc < Math.Max(1, *m))
+                else if (ldc < Math.Max(1, m))
                 {
                     info = -11;
                 }
@@ -38297,14 +38293,14 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         if (left)
                         {
-                            i__1 = *m - 1;
-                            i__2 = *m - 1;
+                            i__1 = m - 1;
+                            i__2 = m - 1;
                             nb = ilaenv(&c__1, "ZUNMQR", side + trans, &i__1, n, &i__2, &c_n1);
                         }
                         else
                         {
-                            i__1 = *n - 1;
-                            i__2 = *n - 1;
+                            i__1 = n - 1;
+                            i__2 = n - 1;
                             nb = ilaenv(&c__1, "ZUNMQR", side + trans, m, &i__1, &i__2, &c_n1);
                         }
                     }
@@ -38312,14 +38308,14 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         if (left)
                         {
-                            i__1 = *m - 1;
-                            i__2 = *m - 1;
+                            i__1 = m - 1;
+                            i__2 = m - 1;
                             nb = ilaenv(&c__1, "ZUNMLQ", side + trans, &i__1, n, &i__2, &c_n1);
                         }
                         else
                         {
-                            i__1 = *n - 1;
-                            i__2 = *n - 1;
+                            i__1 = n - 1;
+                            i__2 = n - 1;
                             nb = ilaenv(&c__1, "ZUNMLQ", side + trans, m, &i__1, &i__2, &c_n1);
                         }
                     }
@@ -38351,7 +38347,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*m == 0 || *n == 0)
+            if (m == 0 || n == 0)
             {
                 return 0;
             }
@@ -38373,15 +38369,15 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     if (left)
                     {
-                        mi = *m - 1;
-                        ni = *n;
+                        mi = m - 1;
+                        ni = n;
                         i1 = 2;
                         i2 = 1;
                     }
                     else
                     {
-                        mi = *m;
-                        ni = *n - 1;
+                        mi = m;
+                        ni = n - 1;
                         i1 = 1;
                         i2 = 2;
                     }
@@ -38415,15 +38411,15 @@ namespace TAlex.MathCore.LinearAlgebra
 
                     if (left)
                     {
-                        mi = *m - 1;
-                        ni = *n;
+                        mi = m - 1;
+                        ni = n;
                         i1 = 2;
                         i2 = 1;
                     }
                     else
                     {
-                        mi = *m;
-                        ni = *n - 1;
+                        mi = m;
+                        ni = n - 1;
                         i1 = 1;
                         i2 = 2;
                     }
@@ -38440,9 +38436,9 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zunmhr(string side, string trans, int* m, int* n,
-            int* ilo, int* ihi, complex16* a, int* lda,
-            complex16* tau, complex16* c, int* ldc, complex16*
+        public static int zunmhr(string side, string trans, int m, int n,
+            int* ilo, int* ihi, complex16* a, int lda,
+            complex16* tau, complex16* c, int ldc, complex16*
             work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
@@ -38551,11 +38547,11 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -38570,13 +38566,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (left)
             {
-                nq = *m;
-                nw = *n;
+                nq = m;
+                nw = n;
             }
             else
             {
-                nq = *n;
-                nw = *m;
+                nq = n;
+                nw = m;
             }
 
             if (!left && !lsame(side, "R"))
@@ -38587,11 +38583,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -4;
             }
@@ -38603,11 +38599,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -6;
             }
-            else if (*lda < Math.Max(1, nq))
+            else if (lda < Math.Max(1, nq))
             {
                 info = -8;
             }
-            else if (*ldc < Math.Max(1, *m))
+            else if (ldc < Math.Max(1, m))
             {
                 info = -11;
             }
@@ -38642,7 +38638,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*m == 0 || *n == 0 || nh == 0)
+            if (m == 0 || n == 0 || nh == 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
@@ -38652,13 +38648,13 @@ namespace TAlex.MathCore.LinearAlgebra
             if (left)
             {
                 mi = nh;
-                ni = *n;
+                ni = n;
                 i1 = *ilo + 1;
                 i2 = 1;
             }
             else
             {
-                mi = *m;
+                mi = m;
                 ni = nh;
                 i1 = 1;
                 i2 = *ilo + 1;
@@ -38674,8 +38670,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zunml2(string side, string trans, int* m, int* n, int* k,
-            complex16* a, int* lda, complex16* tau, complex16* c, int* ldc, complex16* work, out int info)
+        public static int zunml2(string side, string trans, int m, int n, int* k,
+            complex16* a, int lda, complex16* tau, complex16* c, int ldc, complex16* work, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -38769,11 +38765,11 @@ namespace TAlex.MathCore.LinearAlgebra
             bool notran;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -38787,11 +38783,11 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (left)
             {
-                nq = *m;
+                nq = m;
             }
             else
             {
-                nq = *n;
+                nq = n;
             }
             if (!left && !lsame(side, "R"))
             {
@@ -38801,11 +38797,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -4;
             }
@@ -38813,11 +38809,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -5;
             }
-            else if (*lda < Math.Max(1, *k))
+            else if (lda < Math.Max(1, *k))
             {
                 info = -7;
             }
-            else if (*ldc < Math.Max(1, *m))
+            else if (ldc < Math.Max(1, m))
             {
                 info = -10;
             }
@@ -38831,7 +38827,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*m == 0 || *n == 0 || *k == 0)
+            if (m == 0 || n == 0 || *k == 0)
             {
                 return 0;
             }
@@ -38851,12 +38847,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (left)
             {
-                ni = *n;
+                ni = n;
                 jc = 1;
             }
             else
             {
-                mi = *m;
+                mi = m;
                 ic = 1;
             }
 
@@ -38868,14 +38864,14 @@ namespace TAlex.MathCore.LinearAlgebra
                 {
                     // H(i) or H(i)' is applied to C(i:m,1:n)
 
-                    mi = *m - i + 1;
+                    mi = m - i + 1;
                     ic = i;
                 }
                 else
                 {
                     // H(i) or H(i)' is applied to C(1:m,i:n)
 
-                    ni = *n - i + 1;
+                    ni = n - i + 1;
                     jc = i;
                 }
 
@@ -38924,8 +38920,8 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zunmlq(string side, string trans, int* m, int* n, int* k, complex16* a,
-            int* lda, complex16* tau, complex16* c, int* ldc, complex16* work, int* lwork, out int info)
+        public static int zunmlq(string side, string trans, int m, int n, int* k, complex16* a,
+            int lda, complex16* tau, complex16* c, int ldc, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) --
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
@@ -39037,11 +39033,11 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -39056,13 +39052,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (left)
             {
-                nq = *m;
-                nw = *n;
+                nq = m;
+                nw = n;
             }
             else
             {
-                nq = *n;
-                nw = *m;
+                nq = n;
+                nw = m;
             }
 
             if (!left && !lsame(side, "R"))
@@ -39073,11 +39069,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -4;
             }
@@ -39085,11 +39081,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -5;
             }
-            else if (*lda < Math.Max(1, *k))
+            else if (lda < Math.Max(1, *k))
             {
                 info = -7;
             }
-            else if (*ldc < Math.Max(1, *m))
+            else if (ldc < Math.Max(1, m))
             {
                 info = -10;
             }
@@ -39124,7 +39120,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible
 
-            if (*m == 0 || *n == 0 || *k == 0)
+            if (m == 0 || n == 0 || *k == 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
@@ -39175,12 +39171,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (left)
                 {
-                    ni = *n;
+                    ni = n;
                     jc = 1;
                 }
                 else
                 {
-                    mi = *m;
+                    mi = m;
                     ic = 1;
                 }
 
@@ -39210,14 +39206,14 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         // H or H' is applied to C(i:m,1:n)
 
-                        mi = *m - i + 1;
+                        mi = m - i + 1;
                         ic = i;
                     }
                     else
                     {
                         // H or H' is applied to C(1:m,i:n)
 
-                        ni = *n - i + 1;
+                        ni = n - i + 1;
                         jc = i;
                     }
 
@@ -39235,9 +39231,9 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int zunmqr(string side, string trans, int* m, int* n,
-            int* k, complex16* a, int* lda, complex16* tau,
-            complex16* c, int* ldc, complex16* work, int* lwork, out int info)
+        public static int zunmqr(string side, string trans, int m, int n,
+            int* k, complex16* a, int lda, complex16* tau,
+            complex16* c, int ldc, complex16* work, int* lwork, out int info)
         {
             //  -- LAPACK routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -39348,11 +39344,11 @@ namespace TAlex.MathCore.LinearAlgebra
             bool lquery;
 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
             --tau;
-            c_dim1 = *ldc;
+            c_dim1 = ldc;
             c_offset = 1 + c_dim1;
             c -= c_offset;
             --work;
@@ -39367,13 +39363,13 @@ namespace TAlex.MathCore.LinearAlgebra
 
             if (left)
             {
-                nq = *m;
-                nw = *n;
+                nq = m;
+                nw = n;
             }
             else
             {
-                nq = *n;
-                nw = *m;
+                nq = n;
+                nw = m;
             }
 
             if (!left && !lsame(side, "R"))
@@ -39384,11 +39380,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -2;
             }
-            else if (*m < 0)
+            else if (m < 0)
             {
                 info = -3;
             }
-            else if (*n < 0)
+            else if (n < 0)
             {
                 info = -4;
             }
@@ -39396,11 +39392,11 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 info = -5;
             }
-            else if (*lda < Math.Max(1, nq))
+            else if (lda < Math.Max(1, nq))
             {
                 info = -7;
             }
-            else if (*ldc < Math.Max(1, *m))
+            else if (ldc < Math.Max(1, m))
             {
                 info = -10;
             }
@@ -39437,7 +39433,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick return if possible 
 
-            if (*m == 0 || *n == 0 || *k == 0)
+            if (m == 0 || n == 0 || *k == 0)
             {
                 work[1].r = 1.0;
                 work[1].i = 0.0;
@@ -39487,12 +39483,12 @@ namespace TAlex.MathCore.LinearAlgebra
 
                 if (left)
                 {
-                    ni = *n;
+                    ni = n;
                     jc = 1;
                 }
                 else
                 {
-                    mi = *m;
+                    mi = m;
                     ic = 1;
                 }
 
@@ -39516,14 +39512,14 @@ namespace TAlex.MathCore.LinearAlgebra
                     {
                         // H or H' is applied to C(i:m,1:n) 
 
-                        mi = *m - i + 1;
+                        mi = m - i + 1;
                         ic = i;
                     }
                     else
                     {
                         // H or H' is applied to C(1:m,i:n) 
 
-                        ni = *n - i + 1;
+                        ni = n - i + 1;
                         jc = i;
                     }
 
@@ -39546,7 +39542,7 @@ namespace TAlex.MathCore.LinearAlgebra
         #region Auxilary
 
         
-        public static int ilazlc(int* m, int* n, complex16* a, int* lda)
+        public static int ilazlc(int m, int n, complex16* a, int lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2.1)                        -- 
 
@@ -39585,30 +39581,30 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick test for the common case where one corner is non-zero. 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
 
             // Function Body 
-            if (*n == 0)
+            if (n == 0)
             {
-                ret_val = *n;
+                ret_val = n;
             }
             else // if(complicated condition)
             {
-                i__1 = *n * a_dim1 + 1;
-                i__2 = *m + *n * a_dim1;
+                i__1 = n * a_dim1 + 1;
+                i__2 = m + n * a_dim1;
 
                 if (a[i__1].r != 0.0 || a[i__1].i != 0.0 || (a[i__2].r != 0.0 || a[i__2].i != 0.0))
                 {
-                    ret_val = *n;
+                    ret_val = n;
                 }
                 else
                 {
                     // Now scan each column from the end, returning with the first non-zero. 
-                    for (ret_val = *n; ret_val >= 1; --ret_val)
+                    for (ret_val = n; ret_val >= 1; --ret_val)
                     {
-                        i__1 = *m;
+                        i__1 = m;
                         for (i = 1; i <= i__1; ++i)
                         {
                             i__2 = i + ret_val * a_dim1;
@@ -39625,7 +39621,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int ilazlr(int* m, int* n, complex16* a, int* lda)
+        public static int ilazlr(int m, int n, complex16* a, int lda)
         {
             //  -- LAPACK auxiliary routine (version 3.2.1)                        -- 
 
@@ -39664,32 +39660,32 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // Quick test for the common case where one corner is non-zero. 
             // Parameter adjustments 
-            a_dim1 = *lda;
+            a_dim1 = lda;
             a_offset = 1 + a_dim1;
             a -= a_offset;
 
             // Function Body 
-            if (*m == 0)
+            if (m == 0)
             {
-                ret_val = *m;
+                ret_val = m;
             }
             else // if(complicated condition) 
             {
-                i__1 = *m + a_dim1;
-                i__2 = *m + *n * a_dim1;
+                i__1 = m + a_dim1;
+                i__2 = m + n * a_dim1;
 
                 if (a[i__1].r != 0.0 || a[i__1].i != 0.0 || (a[i__2].r != 0.0 || a[i__2].i != 0.0))
                 {
-                    ret_val = *m;
+                    ret_val = m;
                 }
                 else
                 {
                     // Scan up each column tracking the last zero row seen. 
                     ret_val = 0;
-                    i__1 = *n;
+                    i__1 = n;
                     for (j = 1; j <= i__1; ++j)
                     {
-                        for (i = *m; i >= 1; --i)
+                        for (i = m; i >= 1; --i)
                         {
                             i__2 = i + j * a_dim1;
                             if (a[i__2].r != 0.0 || a[i__2].i != 0.0)
@@ -39951,7 +39947,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        private static int ilaenv(int* ispec, string name, string opts, int* n1, int* n2, int* n3, int* n4)
+        private static int ilaenv(int* ispec, string name, string opts, int n1, int* n2, int n3, int* n4)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -40528,7 +40524,7 @@ namespace TAlex.MathCore.LinearAlgebra
 
             // ISPEC = 6:  crossover point for SVD (used by xGELSS and xGESVD) 
 
-            ret_val = (int)((float)Math.Min(*n1, *n2) * 1.6f);
+            ret_val = (int)((float)Math.Min(n1, *n2) * 1.6f);
             return ret_val;
 
         L110:
@@ -40589,7 +40585,7 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         
-        public static int iparmq(int* ispec, string name, string opts, int* n, int* ilo, int* ihi, int* lwork)
+        public static int iparmq(int* ispec, string name, string opts, int n, int* ilo, int ihi, int* lwork)
         {
             //  -- LAPACK auxiliary routine (version 3.2) -- 
             //     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. 
@@ -40754,7 +40750,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 // ==== Set the number simultaneous shifts ==== 
 
-                nh = *ihi - *ilo + 1;
+                nh = ihi - *ilo + 1;
                 ns = 2;
                 if (nh >= 30)
                 {

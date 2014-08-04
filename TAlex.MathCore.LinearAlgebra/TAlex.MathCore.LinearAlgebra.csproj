@@ -42,7 +42,6 @@
     <Compile Include="CMatrix.cs" />
     <Compile Include="CPolynomialExtensions.cs" />
     <Compile Include="CSVD.cs" />
-    <Compile Include="LAPACK.cs" />
     <Compile Include="MatrixSizeMismatchException.cs" />
     <Compile Include="NumericUtilExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -146,91 +146,91 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <param name="singularValuesOnly">A value that indicating whether only the singular values will be computed.</param>
         public CSVD(CMatrix matrix, bool singularValuesOnly)
         {
-            int m = matrix.RowCount;
-            int n = matrix.ColumnCount;
+            //int m = matrix.RowCount;
+            //int n = matrix.ColumnCount;
 
-            _m = matrix.RowCount;
-            _n = matrix.ColumnCount;
+            //_m = matrix.RowCount;
+            //_n = matrix.ColumnCount;
 
-            int min = Math.Min(m, n);
-            int max = Math.Max(m, n);
+            //int min = Math.Min(m, n);
+            //int max = Math.Max(m, n);
 
-            string jobz;
-            int lda = Math.Max(1, m);
-            int ldu = m;
-            int ldvt = n;
-            int lwork;
-            int info;
+            //string jobz;
+            //int lda = Math.Max(1, m);
+            //int ldu = m;
+            //int ldvt = n;
+            //int lwork;
+            //int info;
 
-            complex16[] u, vt;
+            //complex16[] u, vt;
 
-            if (singularValuesOnly)
-            {
-                jobz = "N";
-                lwork = (min * 2) + max;
-                u = null;
-                vt = null;
-            }
-            else
-            {
-                jobz = "A";
-                lwork = ((min + 2) * min) + max;
-                complex16[] temp1 = new complex16[m * m];
-                complex16[] temp2 = new complex16[n * n];
-                u = temp1;
-                vt = temp2;
-            }
+            //if (singularValuesOnly)
+            //{
+            //    jobz = "N";
+            //    lwork = (min * 2) + max;
+            //    u = null;
+            //    vt = null;
+            //}
+            //else
+            //{
+            //    jobz = "A";
+            //    lwork = ((min + 2) * min) + max;
+            //    complex16[] temp1 = new complex16[m * m];
+            //    complex16[] temp2 = new complex16[n * n];
+            //    u = temp1;
+            //    vt = temp2;
+            //}
 
-            complex16[] a = new complex16[lda * n];
-            double[] s = new double[Math.Min(m, n)];
+            //complex16[] a = new complex16[lda * n];
+            //double[] s = new double[Math.Min(m, n)];
             
-            complex16[] work = new complex16[Math.Max(1, lwork)];
-            double[] rwork = new double[(((min * 5) + 7) * min)];
-            int[] iwork = new int[8 * Math.Min(m, n)];
+            //complex16[] work = new complex16[Math.Max(1, lwork)];
+            //double[] rwork = new double[(((min * 5) + 7) * min)];
+            //int[] iwork = new int[8 * Math.Min(m, n)];
 
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    Complex temp = matrix[i, j];
-                    a[i + j * m] = new complex16(temp.Re, temp.Im);
-                }
-            }
+            //for (int i = 0; i < m; i++)
+            //{
+            //    for (int j = 0; j < n; j++)
+            //    {
+            //        Complex temp = matrix[i, j];
+            //        a[i + j * m] = new complex16(temp.Re, temp.Im);
+            //    }
+            //}
 
-            lapack.zgesdd(jobz, &m, &n, a, &lda, s, u, &ldu, vt, &ldvt, work, &lwork, rwork, iwork, out info);
+            //lapack.zgesdd(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, iwork, out info);
 
-            if (info == 0) _succeded = true;
-            else _succeded = false;
+            //if (info == 0) _succeded = true;
+            //else _succeded = false;
 
-            _s = new double[Math.Min(m, n)];
+            //_s = new double[Math.Min(m, n)];
 
-            for (int i = 0; i < _s.Length; i++)
-                _s[i] = s[i];
+            //for (int i = 0; i < _s.Length; i++)
+            //    _s[i] = s[i];
 
-            if (!singularValuesOnly)
-            {
-                _u = new CMatrix(m, m);
+            //if (!singularValuesOnly)
+            //{
+            //    _u = new CMatrix(m, m);
 
-                for (int i = 0; i < m; i++)
-                {
-                    for (int j = 0; j < m; j++)
-                    {
-                        complex16 temp = u[i + j * m];
-                        _u[i, j] = new Complex(temp.r, temp.i);
-                    }
-                }
+            //    for (int i = 0; i < m; i++)
+            //    {
+            //        for (int j = 0; j < m; j++)
+            //        {
+            //            complex16 temp = u[i + j * m];
+            //            _u[i, j] = new Complex(temp.r, temp.i);
+            //        }
+            //    }
 
-                _vt = new CMatrix(n, n);
+            //    _vt = new CMatrix(n, n);
 
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        complex16 temp = vt[i + j * n];
-                        _vt[i, j] = new Complex(temp.r, temp.i);
-                    }
-                }
-            }
+            //    for (int i = 0; i < n; i++)
+            //    {
+            //        for (int j = 0; j < n; j++)
+            //        {
+            //            complex16 temp = vt[i + j * n];
+            //            _vt[i, j] = new Complex(temp.r, temp.i);
+            //        }
+            //    }
+            //}
         }
 
         #endregion
