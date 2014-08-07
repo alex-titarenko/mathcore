@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 
 namespace TAlex.MathCore.LinearAlgebra
@@ -146,6 +147,43 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <param name="singularValuesOnly">A value that indicating whether only the singular values will be computed.</param>
         public CSVD(CMatrix matrix, bool singularValuesOnly)
         {
+            _m = matrix.RowCount;
+            _n = matrix.ColumnCount;
+
+            var m = new MathNet.Numerics.LinearAlgebra.Complex.DenseMatrix(matrix.RowCount, matrix.ColumnCount);
+            for (int i = 0; i < m.RowCount; i++)
+            {
+                for (int j = 0; j < m.ColumnCount; j++)
+                {
+                    m.Storage[i, j] = new MathNet.Numerics.Complex(matrix[i, j].Re, matrix[i, j].Im);
+                }
+            }
+            var svd = m.Svd();
+
+            _s = svd.S.ToArray().Select(x => x.Real).ToArray();
+            
+            _u = new CMatrix(m.RowCount, m.RowCount);
+            
+            var u = svd.U;
+            for (int i = 0; i < m.RowCount; i++)
+            {
+                for (int j = 0; j < m.RowCount; j++)
+                {
+                    _u[i, j] = new Complex(u.At(i, j).Real, u.At(i, j).Imaginary);
+                }
+            }
+
+            _vt = new CMatrix(m.ColumnCount, m.ColumnCount);
+            var vt = svd.VT;
+            for (int i = 0; i < m.ColumnCount; i++)
+            {
+                for (int j = 0; j < m.ColumnCount; j++)
+                {
+                    _vt[i, j] = new Complex(vt.At(i, j).Real, vt.At(i, j).Imaginary);
+                }
+            }
+
+
             //int m = matrix.RowCount;
             //int n = matrix.ColumnCount;
 

@@ -119,7 +119,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 for (int j = 0; j < m.ColumnCount; j++)
                 {
-                    m.Values[i * m.RowCount + j] = new MathNet.Numerics.Complex(matrix[i, j].Re, matrix[i, j].Im);
+                    m.Storage[i, j] = new MathNet.Numerics.Complex(matrix[i, j].Re, matrix[i, j].Im);
                 }
             }
             var evd = m.Evd();
