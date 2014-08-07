@@ -1380,18 +1380,6 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         /// <summary>
-        /// Returns a matrix containing all normalized left eigenvectors of the matrix.
-        /// </summary>
-        /// <param name="m">A complex square matrix.</param>
-        /// <returns>The matrix containing all normalized left eigenvectors of m.</returns>
-        /// <exception cref="MatrixSizeMismatchException">The matrix m is not square.</exception>
-        public static CMatrix LeftEigenvectors(CMatrix m)
-        {
-            CEigenproblem eigen = new CEigenproblem(m, false, true);
-            return eigen.LeftEigenvectors;
-        }
-
-        /// <summary>
         /// Returns a vector whose elements are the singular values of a complex matrix.
         /// </summary>
         /// <param name="m">A complex matrix.</param>

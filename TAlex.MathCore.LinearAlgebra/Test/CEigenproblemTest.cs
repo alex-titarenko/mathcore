@@ -49,31 +49,5 @@ namespace TAlex.MathCore.LinearAlgebra.Test
                 }
             }
         }
-
-        [Test]
-        public void LeftEigenSystemTest()
-        {
-            //arrange
-            int size = _m.RowCount;
-            double TOL = 10E-14;
-            CMatrix identity = CMatrix.Identity(size);
-
-            //action
-            CEigenproblem eigen = new CEigenproblem(_m, false, true);
-            CMatrix eigenVals = eigen.Eigenvalues;
-            CMatrix eigenVecs = eigen.LeftEigenvectors;
-
-            //assert
-            for (int i = 0; i < size; i++)
-            {
-                CMatrix eigenVec = eigenVecs.GetColumn(i).Adjoint;
-                CMatrix v = eigenVec * _m - eigenVals[i] * eigenVec;
-
-                foreach (Complex elem in v)
-                {
-                    NumericUtil.FuzzyEquals(Complex.Abs(elem), 0, TOL).Should().BeTrue();
-                }
-            }
-        }
     }
 }

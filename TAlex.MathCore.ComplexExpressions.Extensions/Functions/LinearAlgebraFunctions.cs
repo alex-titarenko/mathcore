@@ -667,25 +667,6 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
         }
     }
 
-    [DisplayName("Left eigenvectors")]
-    [Category(Categories.LinearAlgebra)]
-    [Section(Sections.EigenSystem)]
-    [Description("Calculates the matrix containing all normalized left eigenvectors of the matrix.")]
-    [FunctionSignature("leigvecs", "complex matrix m")]
-    [ExampleUsage("leigvecs({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{0.894427190999916, 0, 0; -0.447213595499958, 1, 0; 0, 0, 1}")]
-    public class LeftEigenvectorsFuncExpression : UnaryExpression<Object>
-    {
-        public LeftEigenvectorsFuncExpression(Expression<Object> subExpression)
-            : base(subExpression)
-        {
-        }
-
-        public override object Evaluate()
-        {
-            return CMatrix.LeftEigenvectors(SubExpression.EvaluateAsCMatrix());
-        }
-    }
-
     [DisplayName("Singularvalues")]
     [Category(Categories.LinearAlgebra)]
     [Section(Sections.EigenSystem)]
