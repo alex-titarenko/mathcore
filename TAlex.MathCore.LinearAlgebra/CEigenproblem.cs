@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 
 namespace TAlex.MathCore.LinearAlgebra
@@ -111,6 +112,30 @@ namespace TAlex.MathCore.LinearAlgebra
         {
             if (!matrix.IsSquare)
                 throw new MatrixSizeMismatchException("The matrix must be square.");
+
+            
+            var m = new MathNet.Numerics.LinearAlgebra.Complex.DenseMatrix(matrix.RowCount, matrix.ColumnCount);
+            for (int i = 0; i < m.RowCount; i++)
+            {
+                for (int j = 0; j < m.ColumnCount; j++)
+                {
+                    m.Values[i * m.RowCount + j] = new MathNet.Numerics.Complex(matrix[i, j].Re, matrix[i, j].Im);
+                }
+            }
+            var evd = m.Evd();
+
+            _vals = evd.EigenValues.ToArray().Select(x => new Complex(x.Real, x.Imaginary)).ToArray();
+
+            _rightvecs = new CMatrix(matrix.RowCount, matrix.ColumnCount);
+            var vecs = evd.EigenVectors;
+
+            for (int i = 0; i < m.RowCount; i++)
+            {
+                for (int j = 0; j < m.ColumnCount; j++)
+                {
+                    _rightvecs[i, j] = new Complex(vecs.At(i, j).Real, vecs.At(i, j).Imaginary);
+                }
+            }
 
             //string jobvl, jobvr;
             //int n = matrix.RowCount;

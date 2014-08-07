@@ -35,14 +35,129 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="CEigenproblem.cs" />
     <Compile Include="CMatrix.cs" />
     <Compile Include="CPolynomialExtensions.cs" />
     <Compile Include="CSVD.cs" />
     <Compile Include="MatrixSizeMismatchException.cs" />
+    <Compile Include="Numerics\ArrayExtensions.cs" />
+    <Compile Include="Numerics\Compatibility.cs" />
+    <Compile Include="Numerics\Complex64.cs" />
+    <Compile Include="Numerics\ComplexExtensions.cs" />
+    <Compile Include="Numerics\Constants.cs" />
+    <Compile Include="Numerics\Control.cs" />
+    <Compile Include="Numerics\Distributions\IContinuousDistribution.cs" />
+    <Compile Include="Numerics\Distributions\IDistribution.cs" />
+    <Compile Include="Numerics\Distributions\IUnivariateDistribution.cs" />
+    <Compile Include="Numerics\Distributions\Normal.cs" />
+    <Compile Include="Numerics\Exceptions.cs" />
+    <Compile Include="Numerics\GlobalizationHelper.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Builder.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\DenseMatrix.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\DenseVector.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\DiagonalMatrix.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\Cholesky.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseCholesky.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseEvd.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseGramSchmidt.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseLU.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseQR.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseSvd.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\Evd.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\GramSchmidt.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\LU.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\QR.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\Svd.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserCholesky.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserEvd.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserGramSchmidt.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserLU.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserQR.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserSvd.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Matrix.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\BiCgStab.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\CompositeSolver.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\DiagonalPreconditioner.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\GpBiCg.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\ILU0Preconditioner.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\ILUTPPreconditioner.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\MILU0Preconditioner.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\MlkBiCgStab.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\TFQMR.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\SparseMatrix.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\SparseVector.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Complex\Vector.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Factorization\Cholesky.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Factorization\Evd.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Factorization\GramSchmidt.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Factorization\ISolver.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Factorization\LU.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Factorization\QR.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Factorization\Svd.cs" />
+    <Compile Include="Numerics\LinearAlgebra\IBuilder.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Matrix.Arithmetic.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Matrix.BCL.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Matrix.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Matrix.Operators.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Matrix.Solve.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Options.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\CancellationStopCriterion.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\DelegateStopCriterion.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\DivergenceStopCriterion.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\FailureStopCriterion.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\IIterationStopCriterion.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\IIterativeSolver.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\IIterativeSolverSetup.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\IPreconditioner.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\IterationCountStopCriterion.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\IterationStatus.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\Iterator.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\ResidualStopCriterion.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\SolverSetup.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Solvers\UnitPreconditioner.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\DenseColumnMajorMatrixStorage.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\DenseVectorStorage.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\DiagonalMatrixStorage.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\MatrixStorage.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\MatrixStorage.Validation.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\SparseCompressedRowMatrixStorage.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\SparseVectorStorage.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\VectorStorage.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Storage\VectorStorage.Validation.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Vector.Arithmetic.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Vector.BCL.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Vector.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Vector.Operators.cs" />
+    <Compile Include="Numerics\Permutation.cs" />
+    <Compile Include="Numerics\Precision.Comparison.cs" />
+    <Compile Include="Numerics\Precision.cs" />
+    <Compile Include="Numerics\Precision.Equality.cs" />
+    <Compile Include="Numerics\Properties\Resources.Designer.cs" />
+    <Compile Include="Numerics\Properties\Resources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Numerics\Providers\LinearAlgebra\Acml\AcmlLinearAlgebraProvider.Complex.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\Acml\SafeNativeMethods.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\GotoBlas\GotoBlasLinearAlgebraProvider.Complex.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\GotoBlas\GotoBlasLinearAlgebraProvider.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\GotoBlas\SafeNativeMethods.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\ILinearAlgebraProvider.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\ManagedLinearAlgebraProvider.Complex.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\ManagedLinearAlgebraProvider.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\ManagedLinearAlgebraProvider.Double.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\Mkl\MklLinearAlgebraProvider.Complex.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\Mkl\MklLinearAlgebraProvider.cs" />
+    <Compile Include="Numerics\Providers\LinearAlgebra\Mkl\SafeNativeMethods.cs" />
+    <Compile Include="Numerics\Random\RandomExtensions.cs" />
+    <Compile Include="Numerics\Random\RandomSeed.cs" />
+    <Compile Include="Numerics\Random\RandomSource.cs" />
+    <Compile Include="Numerics\Random\SystemRandomSource.cs" />
+    <Compile Include="Numerics\Sorting.cs" />
+    <Compile Include="Numerics\SpecialFunctions\Stability.cs" />
+    <Compile Include="Numerics\Threading\CommonParallel.cs" />
+    <Compile Include="Numerics\Trigonometry.cs" />
     <Compile Include="NumericUtilExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -51,6 +166,12 @@
       <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
       <Name>TAlex.MathCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Numerics\Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
