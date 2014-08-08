@@ -73,15 +73,6 @@
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserQR.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserSvd.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Matrix.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\BiCgStab.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\CompositeSolver.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\DiagonalPreconditioner.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\GpBiCg.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\ILU0Preconditioner.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\ILUTPPreconditioner.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\MILU0Preconditioner.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\MlkBiCgStab.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Solvers\TFQMR.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\SparseMatrix.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\SparseVector.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Vector.cs" />
@@ -146,7 +137,6 @@
     <Compile Include="Numerics\Sorting.cs" />
     <Compile Include="Numerics\SpecialFunctions\Stability.cs" />
     <Compile Include="Numerics\Threading\CommonParallel.cs" />
-    <Compile Include="Numerics\Trigonometry.cs" />
     <Compile Include="NumericUtilExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,6 +152,7 @@
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(SolutionDir).nuget\nuget.exe pack "$(ProjectPath)" -Prop Configuration=$(ConfigurationName)</PostBuildEvent>

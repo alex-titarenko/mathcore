@@ -634,7 +634,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Section(Sections.EigenSystem)]
     [Description("Calculates the vector whose elements are the eigenvalues of the complex square matrix.")]
     [FunctionSignature("eigvals", "complex matrix m")]
-    [ExampleUsage("eigvals({2, 0, 0; 0, 3, 4; 0, 4, 9})", "{11; 1; 2}")]
+    [ExampleUsage("eigvals({2, 0, 0; 0, 3, 4; 0, 4, 9})", "{1; 2; 11}")]
     public class EigenvaluesFuncExpression : UnaryExpression<Object>
     {
         public EigenvaluesFuncExpression(Expression<Object> subExpression)

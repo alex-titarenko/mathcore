@@ -41,7 +41,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Description("Calculates the vector of approximate values of roots of a complex polynomial.")]
     [FunctionSignature("polyroots", "complex vector poly")]
     [ExampleUsage("polyroots({1; 2})", "{-0.5}")]
-    [ExampleUsage("polyroots({1; -2; 5})", "{0.2 + 0.4i; 0.2 - 0.4i}")]
+    [ExampleUsage("polyroots({1; -2; 5})", "{0.2 - 0.4i; 0.2 + 0.4i}")]
     public class FindingRootsFuncExpression : UnaryExpression<Object>
     {
         public FindingRootsFuncExpression(Expression<Object> polyExpression)
