@@ -54,8 +54,6 @@
     <Compile Include="Numerics\LinearAlgebra\Complex\DenseMatrix.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\DenseVector.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\DiagonalMatrix.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\Cholesky.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseCholesky.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseEvd.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseGramSchmidt.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\DenseLU.cs" />
@@ -66,7 +64,6 @@
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\LU.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\QR.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\Svd.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserCholesky.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserEvd.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserGramSchmidt.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Factorization\UserLU.cs" />
@@ -76,7 +73,6 @@
     <Compile Include="Numerics\LinearAlgebra\Complex\SparseMatrix.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\SparseVector.cs" />
     <Compile Include="Numerics\LinearAlgebra\Complex\Vector.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Factorization\Cholesky.cs" />
     <Compile Include="Numerics\LinearAlgebra\Factorization\Evd.cs" />
     <Compile Include="Numerics\LinearAlgebra\Factorization\GramSchmidt.cs" />
     <Compile Include="Numerics\LinearAlgebra\Factorization\ISolver.cs" />
@@ -96,13 +92,11 @@
     <Compile Include="Numerics\LinearAlgebra\Solvers\FailureStopCriterion.cs" />
     <Compile Include="Numerics\LinearAlgebra\Solvers\IIterationStopCriterion.cs" />
     <Compile Include="Numerics\LinearAlgebra\Solvers\IIterativeSolver.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Solvers\IIterativeSolverSetup.cs" />
     <Compile Include="Numerics\LinearAlgebra\Solvers\IPreconditioner.cs" />
     <Compile Include="Numerics\LinearAlgebra\Solvers\IterationCountStopCriterion.cs" />
     <Compile Include="Numerics\LinearAlgebra\Solvers\IterationStatus.cs" />
     <Compile Include="Numerics\LinearAlgebra\Solvers\Iterator.cs" />
     <Compile Include="Numerics\LinearAlgebra\Solvers\ResidualStopCriterion.cs" />
-    <Compile Include="Numerics\LinearAlgebra\Solvers\SolverSetup.cs" />
     <Compile Include="Numerics\LinearAlgebra\Solvers\UnitPreconditioner.cs" />
     <Compile Include="Numerics\LinearAlgebra\Storage\DenseColumnMajorMatrixStorage.cs" />
     <Compile Include="Numerics\LinearAlgebra\Storage\DenseVectorStorage.cs" />

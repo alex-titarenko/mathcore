@@ -43,12 +43,6 @@ namespace MathNet.Numerics.LinearAlgebra
         // Factorizations
 
         /// <summary>
-        /// Computes the Cholesky decomposition for a matrix.
-        /// </summary>
-        /// <returns>The Cholesky decomposition object.</returns>
-        public abstract Cholesky<T> Cholesky();
-
-        /// <summary>
         /// Computes the LU decomposition for a matrix.
         /// </summary>
         /// <returns>The LU decomposition object.</returns>

@@ -1272,11 +1272,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             return true;
         }
 
-        public override Cholesky<Complex> Cholesky()
-        {
-            return DenseCholesky.Create(this);
-        }
-
         public override LU<Complex> LU()
         {
             return DenseLU.Create(this);
