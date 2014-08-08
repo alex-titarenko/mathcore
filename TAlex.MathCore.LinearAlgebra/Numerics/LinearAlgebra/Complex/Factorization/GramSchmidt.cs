@@ -34,7 +34,7 @@ using MathNet.Numerics.Properties;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of the QR decomposition Modified Gram-Schmidt Orthogonalization.</para>
@@ -66,13 +66,13 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 for (var i = 0; i < FullR.ColumnCount; i++)
                 {
                     det *= FullR.At(i, i);
-                    if (FullR.At(i, i).Magnitude.AlmostEqual(0.0))
+                    if (FullR.At(i, i).Modulus.AlmostEqual(0.0))
                     {
                         return 0;
                     }
                 }
 
-                return det.Magnitude;
+                return det.Modulus;
             }
         }
 
@@ -86,7 +86,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             {
                 for (var i = 0; i < FullR.ColumnCount; i++)
                 {
-                    if (FullR.At(i, i).Magnitude.AlmostEqual(0.0))
+                    if (FullR.At(i, i).Modulus.AlmostEqual(0.0))
                     {
                         return false;
                     }

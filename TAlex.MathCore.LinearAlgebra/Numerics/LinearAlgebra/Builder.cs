@@ -38,7 +38,7 @@ using MathNet.Numerics.LinearAlgebra.Storage;
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
     using MathNet.Numerics.Distributions;
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     internal class MatrixBuilder : MatrixBuilder<Complex>
     {
@@ -117,7 +117,7 @@ namespace MathNet.Numerics.LinearAlgebra
 {
     using MathNet.Numerics.Distributions;
     using MathNet.Numerics.Random;
-    using Complex64 = Numerics.Complex;
+    using Complex64 = TAlex.MathCore.Complex;
 
     /// <summary>
     /// Generic linear algebra type builder, for situations where a matrix or vector

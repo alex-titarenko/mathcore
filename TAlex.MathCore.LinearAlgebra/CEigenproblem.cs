@@ -106,12 +106,12 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 for (int j = 0; j < m.ColumnCount; j++)
                 {
-                    m.Storage[i, j] = new MathNet.Numerics.Complex(matrix[i, j].Re, matrix[i, j].Im);
+                    m.At(i, j, matrix[i, j]);
                 }
             }
             var evd = m.Evd();
 
-            _vals = evd.EigenValues.ToArray().Select(x => new Complex(x.Real, x.Imaginary)).ToArray();
+            _vals = evd.EigenValues.ToArray();
 
             _rightvecs = new CMatrix(matrix.RowCount, matrix.ColumnCount);
             var vecs = evd.EigenVectors;
@@ -120,7 +120,7 @@ namespace TAlex.MathCore.LinearAlgebra
             {
                 for (int j = 0; j < m.ColumnCount; j++)
                 {
-                    _rightvecs[i, j] = new Complex(vecs.At(i, j).Real, vecs.At(i, j).Imaginary);
+                    _rightvecs[i, j] = vecs.At(i, j);
                 }
             }
         }

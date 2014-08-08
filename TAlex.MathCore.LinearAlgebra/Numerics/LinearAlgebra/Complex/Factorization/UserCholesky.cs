@@ -35,6 +35,7 @@ using System;
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of a Cholesky factorization for user matrices.</para>
@@ -72,9 +73,9 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 // "Pivot" element
                 var tmpVal = factor.At(ij, ij);
 
-                if (tmpVal.Real > 0.0)
+                if (tmpVal.Re > 0.0)
                 {
-                    tmpVal = tmpVal.SquareRoot();
+                    tmpVal = Complex.Sqrt(tmpVal);
                     factor.At(ij, ij, tmpVal);
                     tmpColumn[ij] = tmpVal;
 
@@ -137,7 +138,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     var tmpVal = multipliers[j];
                     for (var i = j; i < rowDim; i++)
                     {
-                        data.At(i, j, data.At(i, j) - (multipliers[i]*tmpVal.Conjugate()));
+                        data.At(i, j, data.At(i, j) - (multipliers[i]*Complex.Conjugate(tmpVal)));
                     }
                 }
             }
@@ -189,7 +190,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     sum = result.At(i, c);
                     for (var k = i + 1; k < order; k++)
                     {
-                        sum -= Factor.At(k, i).Conjugate()*result.At(k, c);
+                        sum -= Complex.Conjugate(Factor.At(k, i))*result.At(k, c);
                     }
 
                     result.At(i, c, sum/Factor.At(i, i));
@@ -236,7 +237,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 sum = result[i];
                 for (var k = i + 1; k < order; k++)
                 {
-                    sum -= Factor.At(k, i).Conjugate()*result[k];
+                    sum -= Complex.Conjugate(Factor.At(k, i))*result[k];
                 }
 
                 result[i] = sum/Factor.At(i, i);

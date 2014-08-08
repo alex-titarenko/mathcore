@@ -34,6 +34,7 @@ using System;
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of a Cholesky factorization for dense matrices.</para>

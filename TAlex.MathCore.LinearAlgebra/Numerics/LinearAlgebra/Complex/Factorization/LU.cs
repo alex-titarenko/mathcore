@@ -32,7 +32,7 @@ using MathNet.Numerics.LinearAlgebra.Factorization;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of an LU factorization.</para>

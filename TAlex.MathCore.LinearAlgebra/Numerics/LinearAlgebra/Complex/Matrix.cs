@@ -36,7 +36,7 @@ using MathNet.Numerics.Properties;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     /// <summary>
     /// <c>Complex</c> version of the <see cref="Matrix{T}"/> class.
@@ -57,7 +57,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// </summary>
         public override void CoerceZero(double threshold)
         {
-            MapInplace(x => x.Magnitude < threshold ? Complex.Zero : x, Zeros.AllowSkip);
+            MapInplace(x => x.Modulus < threshold ? Complex.Zero : x, Zeros.AllowSkip);
         }
 
         /// <summary>Calculates the induced L1 norm of this matrix.</summary>
@@ -70,7 +70,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var s = 0d;
                 for (var i = 0; i < RowCount; i++)
                 {
-                    s += At(i, j).Magnitude;
+                    s += At(i, j).Modulus;
                 }
                 norm = Math.Max(norm, s);
             }
@@ -87,7 +87,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var s = 0d;
                 for (var j = 0; j < ColumnCount; j++)
                 {
-                    s += At(i, j).Magnitude;
+                    s += At(i, j).Modulus;
                 }
                 norm = Math.Max(norm, s);
             }
@@ -103,7 +103,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             var norm = 0d;
             for (var i = 0; i < RowCount; i++)
             {
-                norm += aat.At(i, i).Magnitude;
+                norm += aat.At(i, i).Modulus;
             }
             return Math.Sqrt(norm);
         }
@@ -122,20 +122,20 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             var ret = new double[RowCount];
             if (norm == 2.0)
             {
-                Storage.FoldByRowUnchecked(ret, (s, x) => s + x.MagnitudeSquared(), (x, c) => Math.Sqrt(x), ret, Zeros.AllowSkip);
+                Storage.FoldByRowUnchecked(ret, (s, x) => s + Complex.AbsSquared(x), (x, c) => Math.Sqrt(x), ret, Zeros.AllowSkip);
             }
             else if (norm == 1.0)
             {
-                Storage.FoldByRowUnchecked(ret, (s, x) => s + x.Magnitude, (x, c) => x, ret, Zeros.AllowSkip);
+                Storage.FoldByRowUnchecked(ret, (s, x) => s + x.Modulus, (x, c) => x, ret, Zeros.AllowSkip);
             }
             else if (double.IsPositiveInfinity(norm))
             {
-                Storage.FoldByRowUnchecked(ret, (s, x) => Math.Max(s, x.Magnitude), (x, c) => x, ret, Zeros.AllowSkip);
+                Storage.FoldByRowUnchecked(ret, (s, x) => Math.Max(s, x.Modulus), (x, c) => x, ret, Zeros.AllowSkip);
             }
             else
             {
                 double invnorm = 1.0/norm;
-                Storage.FoldByRowUnchecked(ret, (s, x) => s + Math.Pow(x.Magnitude, norm), (x, c) => Math.Pow(x, invnorm), ret, Zeros.AllowSkip);
+                Storage.FoldByRowUnchecked(ret, (s, x) => s + Math.Pow(x.Modulus, norm), (x, c) => Math.Pow(x, invnorm), ret, Zeros.AllowSkip);
             }
             return Vector<double>.Build.Dense(ret);
         }
@@ -154,20 +154,20 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             var ret = new double[ColumnCount];
             if (norm == 2.0)
             {
-                Storage.FoldByColumnUnchecked(ret, (s, x) => s + x.MagnitudeSquared(), (x, c) => Math.Sqrt(x), ret, Zeros.AllowSkip);
+                Storage.FoldByColumnUnchecked(ret, (s, x) => s + Complex.AbsSquared(x), (x, c) => Math.Sqrt(x), ret, Zeros.AllowSkip);
             }
             else if (norm == 1.0)
             {
-                Storage.FoldByColumnUnchecked(ret, (s, x) => s + x.Magnitude, (x, c) => x, ret, Zeros.AllowSkip);
+                Storage.FoldByColumnUnchecked(ret, (s, x) => s + x.Modulus, (x, c) => x, ret, Zeros.AllowSkip);
             }
             else if (double.IsPositiveInfinity(norm))
             {
-                Storage.FoldByColumnUnchecked(ret, (s, x) => Math.Max(s, x.Magnitude), (x, c) => x, ret, Zeros.AllowSkip);
+                Storage.FoldByColumnUnchecked(ret, (s, x) => Math.Max(s, x.Modulus), (x, c) => x, ret, Zeros.AllowSkip);
             }
             else
             {
                 double invnorm = 1.0/norm;
-                Storage.FoldByColumnUnchecked(ret, (s, x) => s + Math.Pow(x.Magnitude, norm), (x, c) => Math.Pow(x, invnorm), ret, Zeros.AllowSkip);
+                Storage.FoldByColumnUnchecked(ret, (s, x) => s + Math.Pow(x.Modulus, norm), (x, c) => Math.Pow(x, invnorm), ret, Zeros.AllowSkip);
             }
             return Vector<double>.Build.Dense(ret);
         }
@@ -222,7 +222,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override Vector<Complex> RowAbsoluteSums()
         {
             var ret = new Complex[RowCount];
-            Storage.FoldByRowUnchecked(ret, (s, x) => s + x.Magnitude, (x, c) => x, ret, Zeros.AllowSkip);
+            Storage.FoldByRowUnchecked(ret, (s, x) => s + x.Modulus, (x, c) => x, ret, Zeros.AllowSkip);
             return Vector<Complex>.Build.Dense(ret);
         }
 
@@ -242,7 +242,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override Vector<Complex> ColumnAbsoluteSums()
         {
             var ret = new Complex[ColumnCount];
-            Storage.FoldByColumnUnchecked(ret, (s, x) => s + x.Magnitude, (x, c) => x, ret, Zeros.AllowSkip);
+            Storage.FoldByColumnUnchecked(ret, (s, x) => s + x.Modulus, (x, c) => x, ret, Zeros.AllowSkip);
             return Vector<Complex>.Build.Dense(ret);
         }
 
@@ -253,7 +253,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override sealed Matrix<Complex> ConjugateTranspose()
         {
             var ret = Transpose();
-            ret.MapInplace(c => c.Conjugate(), Zeros.AllowSkip);
+            ret.MapInplace(c => Complex.Conjugate(c), Zeros.AllowSkip);
             return ret;
         }
 
@@ -441,7 +441,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                     var s = Complex.Zero;
                     for (var l = 0; l < ColumnCount; l++)
                     {
-                        s += At(i, l)*other.At(j, l).Conjugate();
+                        s += At(i, l)*Complex.Conjugate(other.At(j, l));
                     }
                     result.At(i, j, s);
                 }
@@ -483,7 +483,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                     var s = Complex.Zero;
                     for (var l = 0; l < RowCount; l++)
                     {
-                        s += At(l, i).Conjugate()*other.At(l, j);
+                        s += Complex.Conjugate(At(l, i))*other.At(l, j);
                     }
                     result.At(i, j, s);
                 }
@@ -520,7 +520,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var s = Complex.Zero;
                 for (var j = 0; j < RowCount; j++)
                 {
-                    s += At(j, i).Conjugate()*rightSide[j];
+                    s += Complex.Conjugate(At(j, i))*rightSide[j];
                 }
                 result[i] = s;
             }
@@ -551,7 +551,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             {
                 for (var j = 0; j < ColumnCount; j++)
                 {
-                    result.At(i, j, At(i, j).Conjugate());
+                    result.At(i, j, Complex.Conjugate(At(i, j)));
                 }
             }
         }
@@ -595,7 +595,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <param name="result">The vector to store the result of the pointwise power.</param>
         protected override void DoPointwisePower(Complex exponent, Matrix<Complex> result)
         {
-            Map(x => x.Power(exponent), result, Zeros.AllowSkip);
+            Map(x => Complex.Pow(x, exponent), result, Zeros.AllowSkip);
         }
 
         /// <summary>
@@ -715,7 +715,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
 
             for (var k = 0; k < RowCount; k++)
             {
-                if (!At(k, k).IsReal())
+                if (!At(k, k).IsReal)
                 {
                     return false;
                 }
@@ -725,7 +725,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             {
                 for (var column = row + 1; column < ColumnCount; column++)
                 {
-                    if (!At(row, column).Equals(At(column, row).Conjugate()))
+                    if (!At(row, column).Equals(Complex.Conjugate(At(column, row))))
                     {
                         return false;
                     }

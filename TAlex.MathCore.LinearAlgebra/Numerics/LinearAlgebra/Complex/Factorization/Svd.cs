@@ -36,6 +36,7 @@ using MathNet.Numerics.Properties;
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of the singular value decomposition (SVD).</para>
@@ -66,7 +67,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
         {
             get
             {
-                return S.Count(t => !t.Magnitude.AlmostEqual(0.0));
+                return S.Count(t => !t.Modulus.AlmostEqual(0.0));
             }
         }
 
@@ -78,7 +79,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
         {
             get
             {
-                return S[0].Magnitude;
+                return S[0].Modulus;
             }
         }
 
@@ -91,7 +92,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             get
             {
                 var tmp = Math.Min(U.RowCount, VT.ColumnCount) - 1;
-                return S[0].Magnitude / S[tmp].Magnitude;
+                return S[0].Modulus / S[tmp].Modulus;
             }
         }
 
@@ -111,13 +112,13 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 foreach (var value in S)
                 {
                     det *= value;
-                    if (value.Magnitude.AlmostEqual(0.0))
+                    if (value.Modulus.AlmostEqual(0.0))
                     {
                         return 0;
                     }
                 }
 
-                return det.Magnitude;
+                return det.Modulus;
             }
         }
     }

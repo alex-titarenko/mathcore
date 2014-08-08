@@ -31,9 +31,11 @@
 using System;
 using MathNet.Numerics.Properties;
 
+
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="Matrix{T}"/>.</para>
@@ -90,9 +92,9 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 {
                     // Compute the transformation for the l-th column and place the l-th diagonal in VectorS[l].
                     s[l] = Cnrm2Column(matrixCopy, matrixCopy.RowCount, l, l);
-                    if (s[l].Magnitude != 0.0)
+                    if (s[l].Modulus != 0.0)
                     {
-                        if (matrixCopy.At(l, l).Magnitude != 0.0)
+                        if (matrixCopy.At(l, l).Modulus != 0.0)
                         {
                             s[l] = Csign(s[l], matrixCopy.At(l, l));
                         }
@@ -108,7 +110,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 {
                     if (l < nct)
                     {
-                        if (s[l].Magnitude != 0.0)
+                        if (s[l].Modulus != 0.0)
                         {
                             // Apply the transformation.
                             t = -Cdotc(matrixCopy, matrixCopy.RowCount, l, j, l)/matrixCopy.At(l, l);
@@ -124,7 +126,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
                     // Place the l-th row of matrixCopy into  e for the
                     // Subsequent calculation of the row transformation.
-                    e[j] = matrixCopy.At(l, j).Conjugate();
+                    e[j] = Complex.Conjugate(matrixCopy.At(l, j));
                 }
 
                 if (computeVectors && l < nct)
@@ -144,9 +146,9 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 // Compute the l-th row transformation and place the l-th super-diagonal in e(l).
                 var enorm = Cnrm2Vector(e, lp1);
                 e[l] = enorm;
-                if (e[l].Magnitude != 0.0)
+                if (e[l].Modulus != 0.0)
                 {
-                    if (e[lp1].Magnitude != 0.0)
+                    if (e[lp1].Modulus != 0.0)
                     {
                         e[l] = Csign(e[l], e[lp1]);
                     }
@@ -155,8 +157,8 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     e[lp1] = Complex.One + e[lp1];
                 }
 
-                e[l] = -e[l].Conjugate();
-                if (lp1 < matrixCopy.RowCount && e[l].Magnitude != 0.0)
+                e[l] = Complex.Conjugate(-e[l]);
+                if (lp1 < matrixCopy.RowCount && e[l].Modulus != 0.0)
                 {
                     // Apply the transformation.
                     for (i = lp1; i < matrixCopy.RowCount; i++)
@@ -177,7 +179,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
                     for (j = lp1; j < matrixCopy.ColumnCount; j++)
                     {
-                        var ww = (-e[j]/e[lp1]).Conjugate();
+                        var ww = Complex.Conjugate(-e[j]/e[lp1]);
                         if (ww != Complex.Zero)
                         {
                             for (var ii = lp1; ii < matrixCopy.RowCount; ii++)
@@ -234,7 +236,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
                 for (l = nct - 1; l >= 0; l--)
                 {
-                    if (s[l].Magnitude != 0.0)
+                    if (s[l].Modulus != 0.0)
                     {
                         for (j = l + 1; j < ncu; j++)
                         {
@@ -275,7 +277,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     lp1 = l + 1;
                     if (l < nrt)
                     {
-                        if (e[l].Magnitude != 0.0)
+                        if (e[l].Modulus != 0.0)
                         {
                             for (j = lp1; j < matrixCopy.ColumnCount; j++)
                             {
@@ -304,9 +306,9 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             for (i = 0; i < m; i++)
             {
                 Complex r;
-                if (s[i].Magnitude != 0.0)
+                if (s[i].Modulus != 0.0)
                 {
-                    t = s[i].Magnitude;
+                    t = s[i].Modulus;
                     r = s[i]/t;
                     s[i] = t;
                     if (i < m - 1)
@@ -326,9 +328,9 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     break;
                 }
 
-                if (e[i].Magnitude != 0.0)
+                if (e[i].Modulus != 0.0)
                 {
-                    t = e[i].Magnitude;
+                    t = e[i].Modulus;
                     r = t/e[i];
                     e[i] = t;
                     s[i + 1] = s[i + 1]*r;
@@ -362,8 +364,8 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 double test;
                 for (l = m - 2; l >= 0; l--)
                 {
-                    test = s[l].Magnitude + s[l + 1].Magnitude;
-                    ztest = test + e[l].Magnitude;
+                    test = s[l].Modulus + s[l + 1].Modulus;
+                    ztest = test + e[l].Modulus;
                     if (ztest.AlmostEqualRelative(test, 15))
                     {
                         e[l] = Complex.Zero;
@@ -384,15 +386,15 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                         test = 0.0;
                         if (ls != m - 1)
                         {
-                            test = test + e[ls].Magnitude;
+                            test = test + e[ls].Modulus;
                         }
 
                         if (ls != l + 1)
                         {
-                            test = test + e[ls - 1].Magnitude;
+                            test = test + e[ls - 1].Modulus;
                         }
 
-                        ztest = test + s[ls].Magnitude;
+                        ztest = test + s[ls].Modulus;
                         if (ztest.AlmostEqualRelative(test, 15))
                         {
                             s[ls] = Complex.Zero;
@@ -426,18 +428,18 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 {
                         // Deflate negligible VectorS[m].
                     case 1:
-                        f = e[m - 2].Real;
+                        f = e[m - 2].Re;
                         e[m - 2] = Complex.Zero;
                         double t1;
                         for (var kk = l; kk < m - 1; kk++)
                         {
                             k = m - 2 - kk + l;
-                            t1 = s[k].Real;
+                            t1 = s[k].Re;
                             Srotg(ref t1, ref f, out cs, out sn);
                             s[k] = t1;
                             if (k != l)
                             {
-                                f = -sn*e[k - 1].Real;
+                                f = -sn*e[k - 1].Re;
                                 e[k - 1] = cs*e[k - 1];
                             }
 
@@ -451,14 +453,14 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
                         // Split at negligible VectorS[l].
                     case 2:
-                        f = e[l - 1].Real;
+                        f = e[l - 1].Re;
                         e[l - 1] = Complex.Zero;
                         for (k = l; k < m; k++)
                         {
-                            t1 = s[k].Real;
+                            t1 = s[k].Re;
                             Srotg(ref t1, ref f, out cs, out sn);
                             s[k] = t1;
-                            f = -sn*e[k].Real;
+                            f = -sn*e[k].Re;
                             e[k] = cs*e[k];
                             if (computeVectors)
                             {
@@ -472,16 +474,16 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     case 3:
                         // Calculate the shift.
                         var scale = 0.0;
-                        scale = Math.Max(scale, s[m - 1].Magnitude);
-                        scale = Math.Max(scale, s[m - 2].Magnitude);
-                        scale = Math.Max(scale, e[m - 2].Magnitude);
-                        scale = Math.Max(scale, s[l].Magnitude);
-                        scale = Math.Max(scale, e[l].Magnitude);
-                        var sm = s[m - 1].Real/scale;
-                        var smm1 = s[m - 2].Real/scale;
-                        var emm1 = e[m - 2].Real/scale;
-                        var sl = s[l].Real/scale;
-                        var el = e[l].Real/scale;
+                        scale = Math.Max(scale, s[m - 1].Modulus);
+                        scale = Math.Max(scale, s[m - 2].Modulus);
+                        scale = Math.Max(scale, e[m - 2].Modulus);
+                        scale = Math.Max(scale, s[l].Modulus);
+                        scale = Math.Max(scale, e[l].Modulus);
+                        var sm = s[m - 1].Re/scale;
+                        var smm1 = s[m - 2].Re/scale;
+                        var emm1 = e[m - 2].Re/scale;
+                        var sl = s[l].Re/scale;
+                        var el = e[l].Re/scale;
                         var b = (((smm1 + sm)*(smm1 - sm)) + (emm1*emm1))/2.0;
                         var c = (sm*emm1)*(sm*emm1);
                         var shift = 0.0;
@@ -509,9 +511,9 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                                 e[k - 1] = f;
                             }
 
-                            f = (cs*s[k].Real) + (sn*e[k].Real);
+                            f = (cs*s[k].Re) + (sn*e[k].Re);
                             e[k] = (cs*e[k]) - (sn*s[k]);
-                            g = sn*s[k + 1].Real;
+                            g = sn*s[k + 1].Re;
                             s[k + 1] = cs*s[k + 1];
                             if (computeVectors)
                             {
@@ -520,9 +522,9 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
                             Srotg(ref f, ref g, out cs, out sn);
                             s[k] = f;
-                            f = (cs*e[k].Real) + (sn*s[k + 1].Real);
+                            f = (cs*e[k].Re) + (sn*s[k + 1].Re);
                             s[k + 1] = (-sn*e[k]) + (cs*s[k + 1]);
-                            g = sn*e[k + 1].Real;
+                            g = sn*e[k + 1].Re;
                             e[k + 1] = cs*e[k + 1];
                             if (computeVectors && k < matrixCopy.RowCount)
                             {
@@ -537,7 +539,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                         // Convergence.
                     case 4:
                         // Make the singular value  positive
-                        if (s[l].Real < 0.0)
+                        if (s[l].Re < 0.0)
                         {
                             s[l] = -s[l];
                             if (computeVectors)
@@ -549,7 +551,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                         // Order the singular value.
                         while (l != mn - 1)
                         {
-                            if (s[l].Real >= s[l + 1].Real)
+                            if (s[l].Re >= s[l + 1].Re)
                             {
                                 break;
                             }
@@ -612,7 +614,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
         /// <returns>Result multiplication of signum function and absolute value</returns>
         static Complex Csign(Complex z1, Complex z2)
         {
-            return z1.Magnitude*(z2/z2.Magnitude);
+            return z1.Modulus*(z2/z2.Modulus);
         }
 
         /// <summary>
@@ -732,7 +734,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             var s = 0.0;
             for (var i = rowStart; i < rowCount; i++)
             {
-                s += a.At(i, column).Magnitude*a.At(i, column).Magnitude;
+                s += a.At(i, column).Modulus*a.At(i, column).Modulus;
             }
 
             return Math.Sqrt(s);
@@ -749,7 +751,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             var s = 0.0;
             for (var i = rowStart; i < a.Length; i++)
             {
-                s += a[i].Magnitude*a[i].Magnitude;
+                s += a[i].Modulus*a[i].Modulus;
             }
 
             return Math.Sqrt(s);
@@ -769,7 +771,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             var z = Complex.Zero;
             for (var i = rowStart; i < rowCount; i++)
             {
-                z += a.At(i, columnA).Conjugate()*a.At(i, columnB);
+                z += Complex.Conjugate(a.At(i, columnA))*a.At(i, columnB);
             }
 
             return z;
@@ -840,7 +842,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     {
                         for (var i = 0; i < U.RowCount; i++)
                         {
-                            value += U.At(i, j).Conjugate()*input.At(i, k);
+                            value += Complex.Conjugate(U.At(i, j))*input.At(i, k);
                         }
 
                         value /= S[j];
@@ -854,7 +856,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     var value = Complex.Zero;
                     for (var i = 0; i < VT.ColumnCount; i++)
                     {
-                        value += VT.At(i, j).Conjugate()*tmp[i];
+                        value += Complex.Conjugate(VT.At(i, j))*tmp[i];
                     }
 
                     result.At(j, k, value);
@@ -896,7 +898,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 {
                     for (var i = 0; i < U.RowCount; i++)
                     {
-                        value += U.At(i, j).Conjugate()*input[i];
+                        value += Complex.Conjugate(U.At(i, j))*input[i];
                     }
 
                     value /= S[j];
@@ -910,7 +912,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 var value = Complex.Zero;
                 for (var i = 0; i < VT.ColumnCount; i++)
                 {
-                    value += VT.At(i, j).Conjugate()*tmp[i];
+                    value += Complex.Conjugate(VT.At(i, j))*tmp[i];
                 }
 
                 result[j] = value;

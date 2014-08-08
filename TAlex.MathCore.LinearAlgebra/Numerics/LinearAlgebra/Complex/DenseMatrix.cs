@@ -41,7 +41,7 @@ using MathNet.Numerics.Threading;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     /// <summary>
     /// A Matrix class with dense storage. The underlying storage is a one dimensional array in column-major order (column by column).
@@ -741,7 +741,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var conjugateDiagonal = new Complex[diagonal.Length];
                 for (int i = 0; i < diagonal.Length; i++)
                 {
-                    conjugateDiagonal[i] = diagonal[i].Conjugate();
+                    conjugateDiagonal[i] = Complex.Conjugate(diagonal[i]);
                 }
 
                 var d = Math.Min(ColumnCount, other.RowCount);
@@ -913,7 +913,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 {
                     for (int j = 0; j < d; j++)
                     {
-                        result.At(i, j, _values[index].Conjugate()*diagonal[j]);
+                        result.At(i, j, Complex.Conjugate(_values[index])*diagonal[j]);
                         index++;
                     }
                     index += (RowCount - d);
@@ -1251,7 +1251,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             int stride = RowCount + 1;
             for (var k = 0; k < _values.Length; k += stride)
             {
-                if (!_values[k].IsReal())
+                if (!_values[k].IsReal)
                 {
                     return false;
                 }
@@ -1262,7 +1262,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var index = j * RowCount;
                 for (var i = j + 1; i < RowCount; i++)
                 {
-                    if (_values[(i*ColumnCount) + j] != _values[index + i].Conjugate())
+                    if (_values[(i*ColumnCount) + j] != Complex.Conjugate(_values[index + i]))
                     {
                         return false;
                     }

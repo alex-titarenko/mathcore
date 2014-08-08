@@ -34,7 +34,7 @@ using System;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     /// <summary>
     /// <c>Complex</c> version of the <see cref="Vector{T}"/> class.
@@ -55,7 +55,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// </summary>
         public override void CoerceZero(double threshold)
         {
-            MapInplace(x => x.Magnitude < threshold ? Complex.Zero : x, Zeros.AllowSkip);
+            MapInplace(x => x.Modulus < threshold ? Complex.Zero : x, Zeros.AllowSkip);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <param name="result">The vector to store the result of the pointwise power.</param>
         protected override void DoPointwisePower(Complex exponent, Vector<Complex> result)
         {
-            Map(x => x.Power(exponent), result, Zeros.AllowSkip);
+            Map(x => Complex.Pow(x, exponent), result, Zeros.AllowSkip);
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             var dot = Complex.Zero;
             for (var i = 0; i < Count; i++)
             {
-                dot += At(i).Conjugate() * other.At(i);
+                dot += Complex.Conjugate(At(i)) * other.At(i);
             }
             return dot;
         }
@@ -323,7 +323,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The value of the absolute minimum element.</returns>
         public override Complex AbsoluteMinimum()
         {
-            return At(AbsoluteMinimumIndex()).Magnitude;
+            return At(AbsoluteMinimumIndex()).Modulus;
         }
 
         /// <summary>
@@ -333,10 +333,10 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override int AbsoluteMinimumIndex()
         {
             var index = 0;
-            var min = At(index).Magnitude;
+            var min = At(index).Modulus;
             for (var i = 1; i < Count; i++)
             {
-                var test = At(i).Magnitude;
+                var test = At(i).Modulus;
                 if (test < min)
                 {
                     index = i;
@@ -353,7 +353,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The value of the absolute maximum element.</returns>
         public override Complex AbsoluteMaximum()
         {
-            return At(AbsoluteMaximumIndex()).Magnitude;
+            return At(AbsoluteMaximumIndex()).Modulus;
         }
 
         /// <summary>
@@ -363,10 +363,10 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override int AbsoluteMaximumIndex()
         {
             var index = 0;
-            var max = At(index).Magnitude;
+            var max = At(index).Modulus;
             for (var i = 1; i < Count; i++)
             {
-                var test = At(i).Magnitude;
+                var test = At(i).Modulus;
                 if (test > max)
                 {
                     index = i;
@@ -400,7 +400,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             double sum = 0d;
             for (var i = 0; i < Count; i++)
             {
-                sum += At(i).Magnitude;
+                sum += At(i).Modulus;
             }
             return sum;
         }
@@ -411,7 +411,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The square root of the sum of the squared values.</returns>
         public override double L2Norm()
         {
-            return DoConjugateDotProduct(this).SquareRoot().Real;
+            return Complex.Sqrt(DoConjugateDotProduct(this)).Re;
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The maximum absolute value.</returns>
         public override double InfinityNorm()
         {
-            return CommonParallel.Aggregate(0, Count, i => At(i).Magnitude, Math.Max, 0d);
+            return CommonParallel.Aggregate(0, Count, i => At(i).Modulus, Math.Max, 0d);
         }
 
         /// <summary>
@@ -443,7 +443,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             double sum = 0d;
             for (var index = 0; index < Count; index++)
             {
-                sum += Math.Pow(At(index).Magnitude, p);
+                sum += Math.Pow(At(index).Modulus, p);
             }
             return Math.Pow(sum, 1.0/p);
         }
@@ -456,7 +456,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         {
             for (var index = 0; index < Count; index++)
             {
-                result.At(index, At(index).Conjugate());
+                result.At(index, Complex.Conjugate(At(index)));
             }
         }
 

@@ -29,6 +29,7 @@
 // </copyright>
 
 using System;
+using TAlex.MathCore;
 
 namespace MathNet.Numerics
 {

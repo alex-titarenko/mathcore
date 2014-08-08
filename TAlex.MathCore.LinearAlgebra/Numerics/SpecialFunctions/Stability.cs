@@ -33,6 +33,7 @@ namespace MathNet.Numerics
 // ReSharper restore CheckNamespace
 {
     using System;
+    using TAlex.MathCore;
 
     public partial class SpecialFunctions
     {
@@ -44,17 +45,17 @@ namespace MathNet.Numerics
         /// <returns>Returns <code>sqrt(a<sup>2</sup> + b<sup>2</sup>)</code> without underflow/overflow.</returns>
         public static Complex Hypotenuse(Complex a, Complex b)
         {
-            if (a.Magnitude > b.Magnitude)
+            if (a.Modulus > b.Modulus)
             {
-                var r = b.Magnitude / a.Magnitude;
-                return a.Magnitude * Math.Sqrt(1 + (r * r));
+                var r = b.Modulus / a.Modulus;
+                return a.Modulus * Math.Sqrt(1 + (r * r));
             }
 
             if (b != 0.0)
             {
                 // NOTE (ruegg): not "!b.AlmostZero()" to avoid convergence issues (e.g. in SVD algorithm)
-                var r = a.Magnitude / b.Magnitude;
-                return b.Magnitude * Math.Sqrt(1 + (r * r));
+                var r = a.Modulus / b.Modulus;
+                return b.Modulus * Math.Sqrt(1 + (r * r));
             }
 
             return 0d;

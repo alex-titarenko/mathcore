@@ -34,6 +34,7 @@ using MathNet.Numerics.Properties;
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of an LU factorization.</para>

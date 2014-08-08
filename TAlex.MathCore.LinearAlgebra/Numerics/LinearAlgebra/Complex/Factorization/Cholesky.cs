@@ -32,7 +32,7 @@ using MathNet.Numerics.LinearAlgebra.Factorization;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of a Cholesky factorization.</para>
@@ -78,7 +78,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 var det = Complex.Zero;
                 for (var j = 0; j < Factor.RowCount; j++)
                 {
-                    det += 2.0*Factor.At(j, j).Ln();
+                    det += 2.0*Complex.Log(Factor.At(j, j));
                 }
 
                 return det;

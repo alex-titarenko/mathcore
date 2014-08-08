@@ -42,8 +42,6 @@
     <Compile Include="MatrixSizeMismatchException.cs" />
     <Compile Include="Numerics\ArrayExtensions.cs" />
     <Compile Include="Numerics\Compatibility.cs" />
-    <Compile Include="Numerics\Complex64.cs" />
-    <Compile Include="Numerics\ComplexExtensions.cs" />
     <Compile Include="Numerics\Constants.cs" />
     <Compile Include="Numerics\Control.cs" />
     <Compile Include="Numerics\Distributions\IContinuousDistribution.cs" />

@@ -32,7 +32,7 @@ using MathNet.Numerics.LinearAlgebra.Factorization;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     /// <summary>
     /// Eigenvalues and eigenvectors of a real matrix.
@@ -74,7 +74,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     }
                 }
 
-                return det.Magnitude;
+                return det.Modulus;
             }
         }
 

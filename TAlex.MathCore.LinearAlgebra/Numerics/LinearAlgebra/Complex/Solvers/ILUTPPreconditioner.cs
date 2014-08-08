@@ -35,7 +35,7 @@ using MathNet.Numerics.Properties;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex.Solvers
 {
-    using Complex = Numerics.Complex;
+    using Complex = TAlex.MathCore.Complex;
 
     /// <summary>
     /// This class performs an Incomplete LU factorization with drop tolerance
@@ -399,7 +399,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Solvers
                     {
                         // Calculate the multiplication factors that go into the L matrix
                         workVector[j] = workVector[j]/_upper[j, j];
-                        if (workVector[j].Magnitude < _dropTolerance)
+                        if (workVector[j].Modulus < _dropTolerance)
                         {
                             workVector[j] = 0.0;
                         }
@@ -430,7 +430,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Solvers
                     // {
                     //     w(j) = 0
                     // }
-                    if (workVector[j].Magnitude <= _dropTolerance*vectorNorm)
+                    if (workVector[j].Modulus <= _dropTolerance*vectorNorm)
                     {
                         workVector[j] = 0.0;
                     }
@@ -494,7 +494,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Solvers
                 // -1 values.
                 if ((i + 1) < (sparseMatrix.RowCount - 1))
                 {
-                    if (workVector[i].Magnitude < _pivotTolerance*workVector[indexSorting[0]].Magnitude)
+                    if (workVector[i].Modulus < _pivotTolerance*workVector[indexSorting[0]].Modulus)
                     {
                         // swap columns of u (which holds the values of A in the
                         // sections that haven't been partitioned yet.
@@ -767,12 +767,12 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Solvers
             while (root * 2 < count)
             {
                 var child = root * 2;
-                if ((child < count - 1) && (values[sortedIndices[child]].Magnitude > values[sortedIndices[child + 1]].Magnitude))
+                if ((child < count - 1) && (values[sortedIndices[child]].Modulus > values[sortedIndices[child + 1]].Modulus))
                 {
                     child += 1;
                 }
 
-                if (values[sortedIndices[root]].Magnitude <= values[sortedIndices[child]].Magnitude)
+                if (values[sortedIndices[root]].Modulus <= values[sortedIndices[child]].Modulus)
                 {
                     return;
                 }

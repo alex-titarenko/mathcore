@@ -34,6 +34,7 @@ using MathNet.Numerics.Properties;
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// Eigenvalues and eigenvectors of a complex matrix.
@@ -140,7 +141,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
             for (var i = 0; i < order; i++)
             {
-                d[i] = matrixA[i, i].Real;
+                d[i] = matrixA[i, i].Re;
             }
 
             // Householder reduction to tridiagonal form.
@@ -152,7 +153,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
                 for (var k = 0; k < i; k++)
                 {
-                    scale = scale + Math.Abs(matrixA[i, k].Real) + Math.Abs(matrixA[i, k].Imaginary);
+                    scale = scale + Math.Abs(matrixA[i, k].Re) + Math.Abs(matrixA[i, k].Im);
                 }
 
                 if (scale == 0.0)
@@ -165,28 +166,28 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     for (var k = 0; k < i; k++)
                     {
                         matrixA[i, k] /= scale;
-                        h += matrixA[i, k].MagnitudeSquared();
+                        h += Complex.AbsSquared(matrixA[i, k]);
                     }
 
                     Complex g = Math.Sqrt(h);
-                    e[i] = scale*g.Real;
+                    e[i] = scale*g.Re;
 
                     Complex temp;
                     var f = matrixA[i, i - 1];
-                    if (f.Magnitude != 0)
+                    if (f.Modulus != 0)
                     {
-                        temp = -(matrixA[i, i - 1].Conjugate()*tau[i].Conjugate())/f.Magnitude;
-                        h += f.Magnitude*g.Real;
-                        g = 1.0 + (g/f.Magnitude);
+                        temp = -(Complex.Conjugate(matrixA[i, i - 1])*Complex.Conjugate(tau[i]))/f.Modulus;
+                        h += f.Modulus*g.Re;
+                        g = 1.0 + (g/f.Modulus);
                         matrixA[i, i - 1] *= g;
                     }
                     else
                     {
-                        temp = -tau[i].Conjugate();
+                        temp = -Complex.Conjugate(tau[i]);
                         matrixA[i, i - 1] = g;
                     }
 
-                    if ((f.Magnitude == 0) || (i != 1))
+                    if ((f.Modulus == 0) || (i != 1))
                     {
                         f = Complex.Zero;
                         for (var j = 0; j < i; j++)
@@ -196,12 +197,12 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                             // Form element of A*U.
                             for (var k = 0; k <= j; k++)
                             {
-                                tmp += matrixA[j, k]*matrixA[i, k].Conjugate();
+                                tmp += matrixA[j, k]*Complex.Conjugate(matrixA[i, k]);
                             }
 
                             for (var k = j + 1; k <= i - 1; k++)
                             {
-                                tmp += matrixA[k, j].Conjugate()*matrixA[i, k].Conjugate();
+                                tmp += Complex.Conjugate(matrixA[k, j])*Complex.Conjugate(matrixA[i, k]);
                             }
 
                             // Form element of P
@@ -209,14 +210,14 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                             f += (tmp/h)*matrixA[i, j];
                         }
 
-                        hh = f.Real/(h + h);
+                        hh = f.Re/(h + h);
 
                         // Form the reduced A.
                         for (var j = 0; j < i; j++)
                         {
-                            f = matrixA[i, j].Conjugate();
+                            f = Complex.Conjugate(matrixA[i, j]);
                             g = tau[j] - (hh*f);
-                            tau[j] = g.Conjugate();
+                            tau[j] = Complex.Conjugate(g);
 
                             for (var k = 0; k <= j; k++)
                             {
@@ -230,16 +231,16 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                         matrixA[i, k] *= scale;
                     }
 
-                    tau[i - 1] = temp.Conjugate();
+                    tau[i - 1] = Complex.Conjugate(temp);
                 }
 
                 hh = d[i];
-                d[i] = matrixA[i, i].Real;
+                d[i] = matrixA[i, i].Re;
                 matrixA[i, i] = new Complex(hh, scale*Math.Sqrt(h));
             }
 
             hh = d[0];
-            d[0] = matrixA[0, 0].Real;
+            d[0] = matrixA[0, 0].Re;
             matrixA[0, 0] = hh;
             e[0] = 0.0;
         }
@@ -340,9 +341,9 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                             // Accumulate transformation.
                             for (var k = 0; k < order; k++)
                             {
-                                h = eigenVectors.At(k, i + 1).Real;
-                                eigenVectors.At(k, i + 1, (s*eigenVectors.At(k, i).Real) + (c*h));
-                                eigenVectors.At(k, i, (c*eigenVectors.At(k, i).Real) - (s*h));
+                                h = eigenVectors.At(k, i + 1).Re;
+                                eigenVectors.At(k, i + 1, (s*eigenVectors.At(k, i).Re) + (c*h));
+                                eigenVectors.At(k, i, (c*eigenVectors.At(k, i).Re) - (s*h));
                             }
                         }
 
@@ -383,7 +384,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     d[i] = p;
                     for (var j = 0; j < order; j++)
                     {
-                        p = eigenVectors.At(j, i).Real;
+                        p = eigenVectors.At(j, i).Re;
                         eigenVectors.At(j, i, eigenVectors.At(j, k));
                         eigenVectors.At(j, k, p);
                     }
@@ -408,14 +409,14 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             {
                 for (var j = 0; j < order; j++)
                 {
-                    eigenVectors.At(i, j, eigenVectors.At(i, j).Real*tau[i].Conjugate());
+                    eigenVectors.At(i, j, eigenVectors.At(i, j).Re*Complex.Conjugate(tau[i]));
                 }
             }
 
             // Recover and apply the Householder matrices.
             for (var i = 1; i < order; i++)
             {
-                var h = matrixA[i, i].Imaginary;
+                var h = matrixA[i, i].Im;
                 if (h != 0)
                 {
                     for (var j = 0; j < order; j++)
@@ -430,7 +431,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
                         for (var k = 0; k < i; k++)
                         {
-                            eigenVectors.At(k, j, eigenVectors.At(k, j) - s*matrixA[i, k].Conjugate());
+                            eigenVectors.At(k, j, eigenVectors.At(k, j) - s*Complex.Conjugate(matrixA[i, k]));
                         }
                     }
                 }
@@ -457,7 +458,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 var scale = 0.0;
                 for (var i = m; i < order; i++)
                 {
-                    scale += Math.Abs(matrixH[i, m - 1].Real) + Math.Abs(matrixH[i, m - 1].Imaginary);
+                    scale += Math.Abs(matrixH[i, m - 1].Re) + Math.Abs(matrixH[i, m - 1].Im);
                 }
 
                 if (scale != 0.0)
@@ -467,14 +468,14 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     for (var i = order - 1; i >= m; i--)
                     {
                         ort[i] = matrixH[i, m - 1]/scale;
-                        h += ort[i].MagnitudeSquared();
+                        h += Complex.AbsSquared(ort[i]);
                     }
 
                     var g = Math.Sqrt(h);
-                    if (ort[m].Magnitude != 0)
+                    if (ort[m].Modulus != 0)
                     {
-                        h = h + (ort[m].Magnitude*g);
-                        g /= ort[m].Magnitude;
+                        h = h + (ort[m].Modulus*g);
+                        g /= ort[m].Modulus;
                         ort[m] = (1.0 + g)*ort[m];
                     }
                     else
@@ -490,7 +491,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                         var f = Complex.Zero;
                         for (var i = order - 1; i >= m; i--)
                         {
-                            f += ort[i].Conjugate()*matrixH[i, j];
+                            f += Complex.Conjugate(ort[i])*matrixH[i, j];
                         }
 
                         f = f/h;
@@ -511,7 +512,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                         f = f/h;
                         for (var j = m; j < order; j++)
                         {
-                            matrixH[i, j] -= f*ort[j].Conjugate();
+                            matrixH[i, j] -= f*Complex.Conjugate(ort[j]);
                         }
                     }
 
@@ -533,7 +534,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             {
                 if (matrixH[m, m - 1] != Complex.Zero && ort[m] != Complex.Zero)
                 {
-                    var norm = (matrixH[m, m - 1].Real*ort[m].Real) + (matrixH[m, m - 1].Imaginary*ort[m].Imaginary);
+                    var norm = (matrixH[m, m - 1].Re*ort[m].Re) + (matrixH[m, m - 1].Im*ort[m].Im);
 
                     for (var i = m + 1; i < order; i++)
                     {
@@ -545,7 +546,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                         var g = Complex.Zero;
                         for (var i = m; i < order; i++)
                         {
-                            g += ort[i].Conjugate()*eigenVectors.At(i, j);
+                            g += Complex.Conjugate(ort[i])*eigenVectors.At(i, j);
                         }
 
                         // Double division avoids possible underflow
@@ -561,13 +562,13 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             // Create real subdiagonal elements.
             for (var i = 1; i < order; i++)
             {
-                if (matrixH[i, i - 1].Imaginary != 0.0)
+                if (matrixH[i, i - 1].Im != 0.0)
                 {
-                    var y = matrixH[i, i - 1]/matrixH[i, i - 1].Magnitude;
-                    matrixH[i, i - 1] = matrixH[i, i - 1].Magnitude;
+                    var y = matrixH[i, i - 1]/matrixH[i, i - 1].Modulus;
+                    matrixH[i, i - 1] = matrixH[i, i - 1].Modulus;
                     for (var j = i; j < order; j++)
                     {
-                        matrixH[i, j] *= y.Conjugate();
+                        matrixH[i, j] *= Complex.Conjugate(y);
                     }
 
                     for (var j = 0; j <= Math.Min(i + 1, order - 1); j++)
@@ -611,8 +612,8 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 var l = n;
                 while (l > 0)
                 {
-                    var tst1 = Math.Abs(matrixH[l - 1, l - 1].Real) + Math.Abs(matrixH[l - 1, l - 1].Imaginary) + Math.Abs(matrixH[l, l].Real) + Math.Abs(matrixH[l, l].Imaginary);
-                    if (Math.Abs(matrixH[l, l - 1].Real) < eps*tst1)
+                    var tst1 = Math.Abs(matrixH[l - 1, l - 1].Re) + Math.Abs(matrixH[l - 1, l - 1].Im) + Math.Abs(matrixH[l, l].Re) + Math.Abs(matrixH[l, l].Im);
+                    if (Math.Abs(matrixH[l, l - 1].Re) < eps*tst1)
                     {
                         break;
                     }
@@ -636,13 +637,13 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     if (iter != 10 && iter != 20)
                     {
                         s = matrixH[n, n];
-                        x = matrixH[n - 1, n]*matrixH[n, n - 1].Real;
+                        x = matrixH[n - 1, n]*matrixH[n, n - 1].Re;
 
-                        if (x.Real != 0.0 || x.Imaginary != 0.0)
+                        if (x.Re != 0.0 || x.Im != 0.0)
                         {
                             y = (matrixH[n - 1, n - 1] - s)/2.0;
-                            z = ((y*y) + x).SquareRoot();
-                            if ((y.Real*z.Real) + (y.Imaginary*z.Imaginary) < 0.0)
+                            z = Complex.Sqrt((y*y) + x);
+                            if ((y.Re*z.Re) + (y.Im*z.Im) < 0.0)
                             {
                                 z *= -1.0;
                             }
@@ -654,7 +655,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     else
                     {
                         // Form exceptional shift
-                        s = Math.Abs(matrixH[n, n - 1].Real) + Math.Abs(matrixH[n - 1, n - 2].Real);
+                        s = Math.Abs(matrixH[n, n - 1].Re) + Math.Abs(matrixH[n - 1, n - 2].Re);
                     }
 
                     for (var i = 0; i <= n; i++)
@@ -668,31 +669,31 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     // Reduce to triangle (rows)
                     for (var i = l + 1; i <= n; i++)
                     {
-                        s = matrixH[i, i - 1].Real;
-                        norm = SpecialFunctions.Hypotenuse(matrixH[i - 1, i - 1].Magnitude, s.Real);
+                        s = matrixH[i, i - 1].Re;
+                        norm = SpecialFunctions.Hypotenuse(matrixH[i - 1, i - 1].Modulus, s.Re);
                         x = matrixH[i - 1, i - 1]/norm;
                         eigenValues[i - 1] = x;
                         matrixH[i - 1, i - 1] = norm;
-                        matrixH[i, i - 1] = new Complex(0.0, s.Real/norm);
+                        matrixH[i, i - 1] = new Complex(0.0, s.Re/norm);
 
                         for (var j = i; j < order; j++)
                         {
                             y = matrixH[i - 1, j];
                             z = matrixH[i, j];
-                            matrixH[i - 1, j] = (x.Conjugate()*y) + (matrixH[i, i - 1].Imaginary*z);
-                            matrixH[i, j] = (x*z) - (matrixH[i, i - 1].Imaginary*y);
+                            matrixH[i - 1, j] = (Complex.Conjugate(x)*y) + (matrixH[i, i - 1].Im*z);
+                            matrixH[i, j] = (x*z) - (matrixH[i, i - 1].Im*y);
                         }
                     }
 
                     s = matrixH[n, n];
-                    if (s.Imaginary != 0.0)
+                    if (s.Im != 0.0)
                     {
-                        s /= matrixH[n, n].Magnitude;
-                        matrixH[n, n] = matrixH[n, n].Magnitude;
+                        s /= matrixH[n, n].Modulus;
+                        matrixH[n, n] = matrixH[n, n].Modulus;
 
                         for (var j = n + 1; j < order; j++)
                         {
-                            matrixH[n, j] *= s.Conjugate();
+                            matrixH[n, j] *= Complex.Conjugate(s);
                         }
                     }
 
@@ -706,27 +707,27 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                             if (i != j)
                             {
                                 y = matrixH[i, j - 1];
-                                matrixH[i, j - 1] = (x*y) + (matrixH[j, j - 1].Imaginary*z);
+                                matrixH[i, j - 1] = (x*y) + (matrixH[j, j - 1].Im*z);
                             }
                             else
                             {
-                                y = matrixH[i, j - 1].Real;
-                                matrixH[i, j - 1] = new Complex((x.Real*y.Real) - (x.Imaginary*y.Imaginary) + (matrixH[j, j - 1].Imaginary*z.Real), matrixH[i, j - 1].Imaginary);
+                                y = matrixH[i, j - 1].Re;
+                                matrixH[i, j - 1] = new Complex((x.Re*y.Re) - (x.Im*y.Im) + (matrixH[j, j - 1].Im*z.Re), matrixH[i, j - 1].Im);
                             }
 
-                            matrixH[i, j] = (x.Conjugate()*z) - (matrixH[j, j - 1].Imaginary*y);
+                            matrixH[i, j] = (Complex.Conjugate(x)*z) - (matrixH[j, j - 1].Im*y);
                         }
 
                         for (var i = 0; i < order; i++)
                         {
                             y = eigenVectors.At(i, j - 1);
                             z = eigenVectors.At(i, j);
-                            eigenVectors.At(i, j - 1, (x*y) + (matrixH[j, j - 1].Imaginary*z));
-                            eigenVectors.At(i, j, (x.Conjugate()*z) - (matrixH[j, j - 1].Imaginary*y));
+                            eigenVectors.At(i, j - 1, (x*y) + (matrixH[j, j - 1].Im*z));
+                            eigenVectors.At(i, j, (Complex.Conjugate(x)*z) - (matrixH[j, j - 1].Im*y));
                         }
                     }
 
-                    if (s.Imaginary != 0.0)
+                    if (s.Im != 0.0)
                     {
                         for (var i = 0; i <= n; i++)
                         {
@@ -748,7 +749,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
             {
                 for (var j = i; j < order; j++)
                 {
-                    norm = Math.Max(norm, Math.Abs(matrixH[i, j].Real) + Math.Abs(matrixH[i, j].Imaginary));
+                    norm = Math.Max(norm, Math.Abs(matrixH[i, j].Re) + Math.Abs(matrixH[i, j].Im));
                 }
             }
 
@@ -776,7 +777,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     }
 
                     y = x - eigenValues[i];
-                    if (y.Real == 0.0 && y.Imaginary == 0.0)
+                    if (y.Re == 0.0 && y.Im == 0.0)
                     {
                         y = eps*norm;
                     }
@@ -784,7 +785,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     matrixH[i, n] = z/y;
 
                     // Overflow control
-                    var tr = Math.Abs(matrixH[i, n].Real) + Math.Abs(matrixH[i, n].Imaginary);
+                    var tr = Math.Abs(matrixH[i, n].Re) + Math.Abs(matrixH[i, n].Im);
                     if ((eps*tr)*tr > 1)
                     {
                         for (var j = i; j <= n; j++)
@@ -850,10 +851,10 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                         {
                             for (var i = 0; i < order; i++)
                             {
-                                value += EigenVectors.At(i, j).Conjugate()*input.At(i, k);
+                                value += Complex.Conjugate(EigenVectors.At(i, j))*input.At(i, k);
                             }
 
-                            value /= EigenValues[j].Real;
+                            value /= EigenValues[j].Re;
                         }
 
                         tmp[j] = value;
@@ -911,10 +912,10 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     {
                         for (var i = 0; i < order; i++)
                         {
-                            value += EigenVectors.At(i, j).Conjugate()*input[i];
+                            value += Complex.Conjugate(EigenVectors.At(i, j))*input[i];
                         }
 
-                        value /= EigenValues[j].Real;
+                        value /= EigenValues[j].Re;
                     }
 
                     tmp[j] = value;

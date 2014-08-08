@@ -40,6 +40,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
 {
     using MathNet.Numerics.Distributions;
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// A matrix type for diagonal matrices.
@@ -223,7 +224,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             result.Clear();
             for (var i = 0; i < _data.Length; i++)
             {
-                result.At(i, i, _data[i].Conjugate());
+                result.At(i, i, Complex.Conjugate(_data[i]));
             }
         }
 
@@ -469,7 +470,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 {
                     for (int i = 0; i < denseOther.RowCount; i++)
                     {
-                        result.At(j, i, dense[index].Conjugate()*diagonal[j]);
+                        result.At(j, i, Complex.Conjugate(dense[index])*diagonal[j]);
                         index++;
                     }
                 }
@@ -560,7 +561,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var conjugateDiagonal = new Complex[_data.Length];
                 for (int i = 0; i < _data.Length; i++)
                 {
-                    conjugateDiagonal[i] = _data[i].Conjugate();
+                    conjugateDiagonal[i] = Complex.Conjugate(_data[i]);
                 }
 
                 var d = Math.Min(denseOther.RowCount, ColumnCount);
@@ -642,7 +643,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
 
             for (var i = 0; i < d; i++)
             {
-                result.At(i, _data[i].Conjugate()*rightSide.At(i));
+                result.At(i, Complex.Conjugate(_data[i])*rightSide.At(i));
             }
         }
 
@@ -775,14 +776,14 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The maximum absolute column sum of the matrix.</returns>
         public override double L1Norm()
         {
-            return _data.Aggregate(0d, (current, t) => Math.Max(current, t.Magnitude));
+            return _data.Aggregate(0d, (current, t) => Math.Max(current, t.Modulus));
         }
 
         /// <summary>Calculates the induced L2 norm of the matrix.</summary>
         /// <returns>The largest singular value of the matrix.</returns>
         public override double L2Norm()
         {
-            return _data.Aggregate(0d, (current, t) => Math.Max(current, t.Magnitude));
+            return _data.Aggregate(0d, (current, t) => Math.Max(current, t.Modulus));
         }
 
         /// <summary>Calculates the induced infinity norm of this matrix.</summary>
@@ -796,7 +797,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The Frobenius norm of this matrix.</returns>
         public override double FrobeniusNorm()
         {
-            return Math.Sqrt(_data.Sum(t => t.Magnitude * t.Magnitude));
+            return Math.Sqrt(_data.Sum(t => t.Modulus * t.Modulus));
         }
 
         /// <summary>Calculates the condition number of this matrix.</summary>
@@ -807,8 +808,8 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             var minSv = double.PositiveInfinity;
             foreach (var t in _data)
             {
-                maxSv = Math.Max(maxSv, t.Magnitude);
-                minSv = Math.Min(minSv, t.Magnitude);
+                maxSv = Math.Max(maxSv, t.Modulus);
+                minSv = Math.Min(minSv, t.Modulus);
             }
 
             return maxSv / minSv;
@@ -1015,7 +1016,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         {
             for (var k = 0; k < _data.Length; k ++)
             {
-                if (!_data[k].IsReal())
+                if (!_data[k].IsReal)
                 {
                     return false;
                 }

@@ -38,6 +38,7 @@ using System.Linq;
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// A vector using dense storage.
@@ -408,7 +409,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             var dot = Complex.Zero;
             for (var i = 0; i < _values.Length; i++)
             {
-                dot += _values[i].Conjugate()*denseVector._values[i];
+                dot += Complex.Conjugate(_values[i])*denseVector._values[i];
             }
             return dot;
         }
@@ -489,10 +490,10 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override int AbsoluteMinimumIndex()
         {
             var index = 0;
-            var min = _values[index].Magnitude;
+            var min = _values[index].Modulus;
             for (var i = 1; i < _length; i++)
             {
-                var test = _values[i].Magnitude;
+                var test = _values[i].Modulus;
                 if (test < min)
                 {
                     index = i;
@@ -509,7 +510,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The value of the absolute minimum element.</returns>
         public override Complex AbsoluteMinimum()
         {
-            return _values[AbsoluteMinimumIndex()].Magnitude;
+            return _values[AbsoluteMinimumIndex()].Modulus;
         }
 
         /// <summary>
@@ -518,7 +519,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The value of the absolute maximum element.</returns>
         public override Complex AbsoluteMaximum()
         {
-            return _values[AbsoluteMaximumIndex()].Magnitude;
+            return _values[AbsoluteMaximumIndex()].Modulus;
         }
 
         /// <summary>
@@ -528,10 +529,10 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override int AbsoluteMaximumIndex()
         {
             var index = 0;
-            var max = _values[index].Magnitude;
+            var max = _values[index].Modulus;
             for (var i = 1; i < _length; i++)
             {
-                var test = _values[i].Magnitude;
+                var test = _values[i].Modulus;
                 if (test > max)
                 {
                     index = i;
@@ -565,7 +566,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             double sum = 0d;
             for (var i = 0; i < _length; i++)
             {
-                sum += _values[i].Magnitude;
+                sum += _values[i].Modulus;
             }
             return sum;
         }
@@ -577,7 +578,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override double L2Norm()
         {
             // TODO: native provider
-            return _values.Aggregate(Complex.Zero, SpecialFunctions.Hypotenuse).Magnitude;
+            return _values.Aggregate(Complex.Zero, SpecialFunctions.Hypotenuse).Modulus;
         }
 
         /// <summary>
@@ -586,7 +587,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The maximum absolute value.</returns>
         public override double InfinityNorm()
         {
-            return CommonParallel.Aggregate(_values, (i, v) => v.Magnitude, Math.Max, 0d);
+            return CommonParallel.Aggregate(_values, (i, v) => v.Modulus, Math.Max, 0d);
         }
 
         /// <summary>
@@ -605,7 +606,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             double sum = 0d;
             for (var i = 0; i < _length; i++)
             {
-                sum += Math.Pow(_values[i].Magnitude, p);
+                sum += Math.Pow(_values[i].Modulus, p);
             }
             return Math.Pow(sum, 1.0 / p);
         }
@@ -719,7 +720,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                     {
                         continue;
                     }
-                    data.Add(current.ToComplex(formatProvider));
+                    data.Add(Complex.Parse(current, formatProvider));
                     current = string.Empty;
                 }
                 if (current != string.Empty)

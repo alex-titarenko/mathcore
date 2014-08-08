@@ -37,6 +37,7 @@ using System.Diagnostics;
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// A vector with sparse storage, intended for very large vectors where most of the cells are zero.
@@ -413,7 +414,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             result.Clear();
             for (var index = 0; index < _storage.ValueCount; index++)
             {
-                result.At(_storage.Indices[index], _storage.Values[index].Conjugate());
+                result.At(_storage.Indices[index], Complex.Conjugate(_storage.Values[index]));
             }
         }
 
@@ -489,14 +490,14 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             {
                 for (var i = 0; i < _storage.ValueCount; i++)
                 {
-                    result += _storage.Values[i].Conjugate() * _storage.Values[i];
+                    result += Complex.Conjugate(_storage.Values[i]) * _storage.Values[i];
                 }
             }
             else
             {
                 for (var i = 0; i < _storage.ValueCount; i++)
                 {
-                    result += _storage.Values[i].Conjugate() * other.At(_storage.Indices[i]);
+                    result += Complex.Conjugate(_storage.Values[i]) * other.At(_storage.Indices[i]);
                 }
             }
             return result;
@@ -653,10 +654,10 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             }
 
             var index = 0;
-            var min = _storage.Values[index].Magnitude;
+            var min = _storage.Values[index].Modulus;
             for (var i = 1; i < _storage.ValueCount; i++)
             {
-                var test = _storage.Values[i].Magnitude;
+                var test = _storage.Values[i].Modulus;
                 if (test < min)
                 {
                     index = i;
@@ -690,7 +691,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             double result = 0d;
             for (var i = 0; i < _storage.ValueCount; i++)
             {
-                result += _storage.Values[i].Magnitude;
+                result += _storage.Values[i].Modulus;
             }
             return result;
         }
@@ -701,7 +702,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <returns>The maximum absolute value.</returns>
         public override double InfinityNorm()
         {
-            return CommonParallel.Aggregate(0, _storage.ValueCount, i => _storage.Values[i].Magnitude, Math.Max, 0d);
+            return CommonParallel.Aggregate(0, _storage.ValueCount, i => _storage.Values[i].Modulus, Math.Max, 0d);
         }
 
         /// <summary>
@@ -725,7 +726,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             double sum = 0d;
             for (var index = 0; index < _storage.ValueCount; index++)
             {
-                sum += Math.Pow(_storage.Values[index].Magnitude, p);
+                sum += Math.Pow(_storage.Values[index].Modulus, p);
             }
             return Math.Pow(sum, 1.0 / p);
         }
@@ -846,7 +847,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                     {
                         continue;
                     }
-                    data.Add(current.ToComplex(formatProvider));
+                    data.Add(Complex.Parse(current, formatProvider));
                     current = string.Empty;
                 }
                 if (current != string.Empty)

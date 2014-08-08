@@ -37,6 +37,7 @@ using MathNet.Numerics.LinearAlgebra.Storage;
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// A Matrix with sparse storage, intended for very large matrices where most of the cells are zero.
@@ -663,7 +664,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var s = 0d;
                 for (var j = startIndex; j < endIndex; j++)
                 {
-                    s += values[j].Magnitude;
+                    s += values[j].Modulus;
                 }
                 norm = Math.Max(norm, s);
             }
@@ -690,7 +691,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 {
                     if (i == aat.ColumnIndices[j])
                     {
-                        norm += aat.Values[j].Magnitude;
+                        norm += aat.Values[j].Modulus;
                     }
                 }
             }
@@ -1135,7 +1136,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 for (var j = rowPointers[i]; j < endIndex; j++)
                 {
                     var resVal = values[j]*other.At(i, columnIndices[j]);
-                    if (!resVal.IsZero())
+                    if (!resVal.IsZero)
                     {
                         result.At(i, columnIndices[j], resVal);
                     }
@@ -1161,7 +1162,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var endIndex = rowPointers[i + 1];
                 for (var j = rowPointers[i]; j < endIndex; j++)
                 {
-                    if (!values[j].IsZero())
+                    if (!values[j].IsZero)
                     {
                         result.At(i, columnIndices[j], values[j]/divisor.At(i, columnIndices[j]));
                     }
@@ -1195,7 +1196,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 var endIndex = rowPointers[i + 1];
                 for (var j = rowPointers[i]; j < endIndex; j++)
                 {
-                    if (!values[j].IsZero())
+                    if (!values[j].IsZero)
                     {
                         result.SetSubMatrix(i*other.RowCount, other.RowCount, columnIndices[j]*other.ColumnCount, other.ColumnCount, values[j]*other);
                     }
@@ -1267,7 +1268,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
                 for (var index = start; index < end; index++)
                 {
                     var column = columnIndices[index];
-                    if (!values[index].Equals(At(column, row).Conjugate()))
+                    if (!values[index].Equals(Complex.Conjugate(At(column, row))))
                     {
                         return false;
                     }

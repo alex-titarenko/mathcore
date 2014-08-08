@@ -31,6 +31,7 @@
 using System;
 using System.Collections.Generic;
 using MathNet.Numerics.LinearAlgebra;
+using TAlex.MathCore;
 
 namespace MathNet.Numerics
 {
@@ -168,7 +169,7 @@ namespace MathNet.Numerics
         /// <param name="maximumAbsoluteError">The accuracy required for being almost equal.</param>
         public static bool AlmostEqual(this Complex a, Complex b, double maximumAbsoluteError)
         {
-            return AlmostEqualNorm(a.Norm(), b.Norm(), a.NormOfDifference(b), maximumAbsoluteError);
+            return AlmostEqualNorm(Complex.AbsSquared(a), Complex.AbsSquared(b), Complex.AbsSquared(a - b), maximumAbsoluteError);
         }
 
         /// <summary>
@@ -204,7 +205,7 @@ namespace MathNet.Numerics
         /// <param name="maximumError">The accuracy required for being almost equal.</param>
         public static bool AlmostEqualRelative(this Complex a, Complex b, double maximumError)
         {
-            return AlmostEqualNormRelative(a.Norm(), b.Norm(), a.NormOfDifference(b), maximumError);
+            return AlmostEqualNormRelative(Complex.AbsSquared(a), Complex.AbsSquared(b), Complex.AbsSquared(a - b), maximumError);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace MathNet.Numerics
         /// <returns>true if the two values differ by no more than 10 * 2^(-52); false otherwise.</returns>
         public static bool AlmostEqual(this Complex a, Complex b)
         {
-            return AlmostEqualNorm(a.Norm(), b.Norm(), a.NormOfDifference(b), DefaultDoubleAccuracy);
+            return AlmostEqualNorm(Complex.AbsSquared(a), Complex.AbsSquared(b), Complex.AbsSquared(a - b), DefaultDoubleAccuracy);
         }
 
         /// <summary>
@@ -270,7 +271,7 @@ namespace MathNet.Numerics
         /// <returns>true if the two values differ by no more than 10 * 2^(-52); false otherwise.</returns>
         public static bool AlmostEqualRelative(this Complex a, Complex b)
         {
-            return AlmostEqualNormRelative(a.Norm(), b.Norm(), a.NormOfDifference(b), DefaultDoubleAccuracy);
+            return AlmostEqualNormRelative(Complex.AbsSquared(a), Complex.AbsSquared(b), Complex.AbsSquared(a - b), DefaultDoubleAccuracy);
         }
 
         /// <summary>
@@ -457,7 +458,7 @@ namespace MathNet.Numerics
         /// <param name="decimalPlaces">The number of decimal places.</param>
         public static bool AlmostEqual(this Complex a, Complex b, int decimalPlaces)
         {
-            return AlmostEqualNorm(a.Norm(), b.Norm(), a.NormOfDifference(b), decimalPlaces);
+            return AlmostEqualNorm(Complex.AbsSquared(a), Complex.AbsSquared(b), Complex.AbsSquared(a - b), decimalPlaces);
         }
 
         /// <summary>
@@ -493,7 +494,7 @@ namespace MathNet.Numerics
         /// <param name="decimalPlaces">The number of decimal places.</param>
         public static bool AlmostEqualRelative(this Complex a, Complex b, int decimalPlaces)
         {
-            return AlmostEqualNormRelative(a.Norm(), b.Norm(), a.NormOfDifference(b), decimalPlaces);
+            return AlmostEqualNormRelative(Complex.AbsSquared(a), Complex.AbsSquared(b), Complex.AbsSquared(a - b), decimalPlaces);
         }
 
         /// <summary>

@@ -33,6 +33,7 @@ using MathNet.Numerics.LinearAlgebra.Complex.Factorization;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using MathNet.Numerics.Properties;
 using MathNet.Numerics.Threading;
+using TAlex.MathCore;
 
 namespace MathNet.Numerics.Providers.LinearAlgebra
 {
@@ -71,11 +72,11 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 throw new ArgumentException(Resources.ArgumentVectorsSameLength);
             }
 
-            if (alpha.IsZero())
+            if (alpha.IsZero)
             {
                 y.Copy(result);
             }
-            else if (alpha.IsOne())
+            else if (alpha.IsOne)
             {
                 CommonParallel.For(0, y.Length, 4096, (a, b) =>
                 {
@@ -111,11 +112,11 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 throw new ArgumentNullException("x");
             }
 
-            if (alpha.IsZero())
+            if (alpha.IsZero)
             {
                 Array.Clear(result, 0, result.Length);
             }
-            else if (alpha.IsOne())
+            else if (alpha.IsOne)
             {
                 x.Copy(result);
             }
@@ -147,7 +148,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
             {
                 for (int i = a; i < b; i++)
                 {
-                    result[i] = x[i].Conjugate();
+                    result[i] = Complex.Conjugate(x[i]);
                 }
             });
         }
@@ -370,7 +371,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                         var s = 0.0;
                         for (var i = 0; i < rows; i++)
                         {
-                            s += matrix[(j*rows) + i].Magnitude;
+                            s += matrix[(j*rows) + i].Modulus;
                         }
                         norm1 = Math.Max(norm1, s);
                     }
@@ -381,7 +382,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     {
                         for (var i = 0; i < rows; i++)
                         {
-                            normMax = Math.Max(matrix[(j * rows) + i].Magnitude, normMax);
+                            normMax = Math.Max(matrix[(j * rows) + i].Modulus, normMax);
                         }
                     }
                     return normMax;
@@ -391,7 +392,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     {
                         for (var i = 0; i < rows; i++)
                         {
-                            r[i] += matrix[(j * rows) + i].Magnitude;
+                            r[i] += matrix[(j * rows) + i].Modulus;
                         }
                     }
                     // TODO: reuse
@@ -410,7 +411,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     var normF = 0d;
                     for (var i = 0; i < rows; i++)
                     {
-                        normF += aat[(i * rows) + i].Magnitude;
+                        normF += aat[(i * rows) + i].Modulus;
                     }
                     return Math.Sqrt(normF);
                 default:
@@ -590,7 +591,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 k = columnsA;
             }
 
-            if (alpha.IsZero() && beta.IsZero())
+            if (alpha.IsZero && beta.IsZero)
             {
                 Array.Clear(c, 0, c.Length);
                 return;
@@ -619,16 +620,16 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 bdata = b;
             }
 
-            if (beta.IsZero())
+            if (beta.IsZero)
             {
                 Array.Clear(c, 0, c.Length);
             }
-            else if (!beta.IsOne())
+            else if (!beta.IsOne)
             {
                 Control.LinearAlgebraProvider.ScaleArray(beta, c, c);
             }
 
-            if (alpha.IsZero())
+            if (alpha.IsZero)
             {
                 return;
             }
@@ -676,8 +677,8 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                                 var sum = Complex.Zero;
                                 for (var k1 = 0; k1 < k; ++k1)
                                 {
-                                    sum += matrixA[(matArowPos*constK) + k1 + shiftAcol].Conjugate()*
-                                        matrixB[((k1 + shiftBrow)*constN) + matBcolPos].Conjugate();
+                                    sum += Complex.Conjugate(matrixA[(matArowPos*constK) + k1 + shiftAcol])*
+                                        Complex.Conjugate(matrixB[((k1 + shiftBrow)*constN) + matBcolPos]);
                                 }
 
                                 result[((n1 + shiftCcol)*constM) + matCrowPos] += alpha*sum;
@@ -696,7 +697,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                                 var sum = Complex.Zero;
                                 for (var k1 = 0; k1 < k; ++k1)
                                 {
-                                    sum += matrixA[(matArowPos*constK) + k1 + shiftAcol].Conjugate()*
+                                    sum += Complex.Conjugate(matrixA[(matArowPos*constK) + k1 + shiftAcol])*
                                         matrixB[((k1 + shiftBrow)*constN) + matBcolPos];
                                 }
 
@@ -717,7 +718,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                                 for (var k1 = 0; k1 < k; ++k1)
                                 {
                                     sum += matrixA[(matArowPos*constK) + k1 + shiftAcol]*
-                                        matrixB[((k1 + shiftBrow)*constN) + matBcolPos].Conjugate();
+                                        Complex.Conjugate(matrixB[((k1 + shiftBrow)*constN) + matBcolPos]);
                                 }
 
                                 result[((n1 + shiftCcol)*constM) + matCrowPos] += alpha*sum;
@@ -759,7 +760,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                                 var sum = Complex.Zero;
                                 for (var k1 = 0; k1 < k; ++k1)
                                 {
-                                    sum += matrixA[(matArowPos*constK) + k1 + shiftAcol].Conjugate()*
+                                    sum += Complex.Conjugate(matrixA[(matArowPos*constK) + k1 + shiftAcol])*
                                         matrixB[(matBcolPos*constK) + k1 + shiftBrow];
                                 }
 
@@ -803,7 +804,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                                 for (var k1 = 0; k1 < k; ++k1)
                                 {
                                     sum += matrixA[((k1 + shiftAcol)*constM) + matArowPos]*
-                                        matrixB[((k1 + shiftBrow)*constN) + matBcolPos].Conjugate();
+                                        Complex.Conjugate(matrixB[((k1 + shiftBrow)*constN) + matBcolPos]);
                                 }
 
                                 result[((n1 + shiftCcol)*constM) + matCrowPos] += alpha*sum;
@@ -957,7 +958,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 var p = j;
                 for (var i = j + 1; i < order; i++)
                 {
-                    if (vecLUcolj[i].Magnitude > vecLUcolj[p].Magnitude)
+                    if (vecLUcolj[i].Modulus > vecLUcolj[p].Modulus)
                     {
                         p = i;
                     }
@@ -1245,9 +1246,9 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 // "Pivot" element
                 var tmpVal = a[(ij*order) + ij];
 
-                if (tmpVal.Real > 0.0)
+                if (tmpVal.Re > 0.0)
                 {
-                    tmpVal = tmpVal.SquareRoot();
+                    tmpVal = Complex.Sqrt(tmpVal);
                     a[(ij*order) + ij] = tmpVal;
                     tmpColumn[ij] = tmpVal;
 
@@ -1303,7 +1304,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     var tmpVal = multipliers[j];
                     for (var i = j; i < rowDim; i++)
                     {
-                        data[(j*rowDim) + i] -= multipliers[i]*tmpVal.Conjugate();
+                        data[(j*rowDim) + i] -= multipliers[i]*Complex.Conjugate(tmpVal);
                     }
                 }
             }
@@ -1415,7 +1416,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 var iindex = i*orderA;
                 for (var k = i + 1; k < orderA; k++)
                 {
-                    sum -= a[iindex + k].Conjugate()*b[cindex + k];
+                    sum -= Complex.Conjugate(a[iindex + k])*b[cindex + k];
                 }
 
                 b[cindex + i] = sum/a[iindex + i];
@@ -1725,7 +1726,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
                     for (var i = rowStart; i < rowCount; i++)
                     {
-                        a[(j*rowCount) + i] -= work[(workIndex*rowCount) + i - rowStart].Conjugate()*scale;
+                        a[(j*rowCount) + i] -= Complex.Conjugate(work[(workIndex*rowCount) + i - rowStart])*scale;
                     }
                 }
             }
@@ -1758,20 +1759,20 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
             for (var i = 0; i < rowCount - row; ++i)
             {
                 var index1 = tmp + i;
-                norm += work[index1].Magnitude*work[index1].Magnitude;
+                norm += work[index1].Modulus*work[index1].Modulus;
             }
 
-            norm = norm.SquareRoot();
-            if (row == rowCount - 1 || norm.Magnitude == 0)
+            norm = Complex.Sqrt(norm);
+            if (row == rowCount - 1 || norm.Modulus == 0)
             {
                 a[index] = -work[tmp];
-                work[tmp] = new Complex(2.0, 0).SquareRoot();
+                work[tmp] = Complex.Sqrt(new Complex(2.0, 0));
                 return;
             }
 
-            if (work[tmp].Magnitude != 0.0)
+            if (work[tmp].Modulus != 0.0)
             {
-                norm = norm.Magnitude*(work[tmp]/work[tmp].Magnitude);
+                norm = norm.Modulus*(work[tmp]/work[tmp].Modulus);
             }
 
             a[index] = -norm;
@@ -1784,12 +1785,12 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 });
             work[tmp] += 1.0;
 
-            var s = (1.0/work[tmp]).SquareRoot();
+            var s = Complex.Sqrt(1.0/work[tmp]);
             CommonParallel.For(0, rowCount - row, 4096, (u, v) =>
                 {
                     for (int i = u; i < v; i++)
                     {
-                        work[tmp + i] = work[tmp + i].Conjugate()*s;
+                        work[tmp + i] = Complex.Conjugate(work[tmp + i])*s;
                     }
                 });
         }
@@ -2010,7 +2011,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                             var sum = Complex.Zero;
                             for (var k = 0; k < rowsA; k++)
                             {
-                                sum += q[im + k].Conjugate()*column[k];
+                                sum += Complex.Conjugate(q[im + k])*column[k];
                             }
 
                             sol[jm + i] = sum;
@@ -2194,7 +2195,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     var sum = 0.0;
                     for (i = l; i < rowsA; i++)
                     {
-                        sum += a[(l*rowsA) + i].Magnitude*a[(l*rowsA) + i].Magnitude;
+                        sum += a[(l*rowsA) + i].Modulus*a[(l*rowsA) + i].Modulus;
                     }
 
                     stemp[l] = Math.Sqrt(sum);
@@ -2202,7 +2203,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     {
                         if (a[(l*rowsA) + l] != 0.0)
                         {
-                            stemp[l] = stemp[l].Magnitude*(a[(l*rowsA) + l]/a[(l*rowsA) + l].Magnitude);
+                            stemp[l] = stemp[l].Modulus*(a[(l*rowsA) + l]/a[(l*rowsA) + l].Modulus);
                         }
 
                         // A part of column "l" of Matrix A from row "l" to end multiply by 1.0 / s[l]
@@ -2227,7 +2228,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                             t = 0.0;
                             for (i = l; i < rowsA; i++)
                             {
-                                t += a[(l*rowsA) + i].Conjugate()*a[(j*rowsA) + i];
+                                t += Complex.Conjugate(a[(l*rowsA) + i])*a[(j*rowsA) + i];
                             }
 
                             t = -t/a[(l*rowsA) + l];
@@ -2241,7 +2242,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
                     // Place the l-th row of matrix into "e" for the
                     // subsequent calculation of the row transformation.
-                    e[j] = a[(j*rowsA) + l].Conjugate();
+                    e[j] = Complex.Conjugate(a[(j*rowsA) + l]);
                 }
 
                 if (computeVectors && l < nct)
@@ -2262,7 +2263,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 var enorm = 0.0;
                 for (i = lp1; i < e.Length; i++)
                 {
-                    enorm += e[i].Magnitude*e[i].Magnitude;
+                    enorm += e[i].Modulus*e[i].Modulus;
                 }
 
                 e[l] = Math.Sqrt(enorm);
@@ -2270,7 +2271,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 {
                     if (e[lp1] != 0.0)
                     {
-                        e[l] = e[l].Magnitude*(e[lp1]/e[lp1].Magnitude);
+                        e[l] = e[l].Modulus*(e[lp1]/e[lp1].Modulus);
                     }
 
                     // Scale vector "e" from "lp1" by 1.0 / e[l]
@@ -2282,7 +2283,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     e[lp1] = 1.0 + e[lp1];
                 }
 
-                e[l] = -e[l].Conjugate();
+                e[l] = -Complex.Conjugate(e[l]);
 
                 if (lp1 < rowsA && e[l] != 0.0)
                 {
@@ -2302,7 +2303,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
                     for (j = lp1; j < columnsA; j++)
                     {
-                        var ww = (-e[j]/e[lp1]).Conjugate();
+                        var ww = Complex.Conjugate(-e[j]/e[lp1]);
                         for (var ii = lp1; ii < rowsA; ii++)
                         {
                             a[(j*rowsA) + ii] += ww*work[ii];
@@ -2365,7 +2366,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                             t = 0.0;
                             for (i = l; i < rowsA; i++)
                             {
-                                t += u[(l*rowsA) + i].Conjugate()*u[(j*rowsA) + i];
+                                t += Complex.Conjugate(u[(l*rowsA) + i])*u[(j*rowsA) + i];
                             }
 
                             t = -t/u[(l*rowsA) + l];
@@ -2414,7 +2415,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                                 t = 0.0;
                                 for (i = lp1; i < columnsA; i++)
                                 {
-                                    t += v[(l*columnsA) + i].Conjugate()*v[(j*columnsA) + i];
+                                    t += Complex.Conjugate(v[(l*columnsA) + i])*v[(j*columnsA) + i];
                                 }
 
                                 t = -t/v[(l*columnsA) + lp1];
@@ -2441,7 +2442,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 Complex r;
                 if (stemp[i] != 0.0)
                 {
-                    t = stemp[i].Magnitude;
+                    t = stemp[i].Modulus;
                     r = stemp[i]/t;
                     stemp[i] = t;
                     if (i < m - 1)
@@ -2470,7 +2471,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     continue;
                 }
 
-                t = e[i].Magnitude;
+                t = e[i].Modulus;
                 r = t/e[i];
                 e[i] = t;
                 stemp[i + 1] = stemp[i + 1]*r;
@@ -2509,8 +2510,8 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 double test;
                 for (l = m - 2; l >= 0; l--)
                 {
-                    test = stemp[l].Magnitude + stemp[l + 1].Magnitude;
-                    ztest = test + e[l].Magnitude;
+                    test = stemp[l].Modulus + stemp[l + 1].Modulus;
+                    ztest = test + e[l].Modulus;
                     if (ztest.AlmostEqualRelative(test, 15))
                     {
                         e[l] = 0.0;
@@ -2531,15 +2532,15 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                         test = 0.0;
                         if (ls != m - 1)
                         {
-                            test = test + e[ls].Magnitude;
+                            test = test + e[ls].Modulus;
                         }
 
                         if (ls != l + 1)
                         {
-                            test = test + e[ls - 1].Magnitude;
+                            test = test + e[ls - 1].Modulus;
                         }
 
-                        ztest = test + stemp[ls].Magnitude;
+                        ztest = test + stemp[ls].Modulus;
                         if (ztest.AlmostEqualRelative(test, 15))
                         {
                             stemp[ls] = 0.0;
@@ -2573,18 +2574,18 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 {
                         // Deflate negligible s[m].
                     case 1:
-                        f = e[m - 2].Real;
+                        f = e[m - 2].Re;
                         e[m - 2] = 0.0;
                         double t1;
                         for (var kk = l; kk < m - 1; kk++)
                         {
                             k = m - 2 - kk + l;
-                            t1 = stemp[k].Real;
+                            t1 = stemp[k].Re;
                             Drotg(ref t1, ref f, out cs, out sn);
                             stemp[k] = t1;
                             if (k != l)
                             {
-                                f = -sn*e[k - 1].Real;
+                                f = -sn*e[k - 1].Re;
                                 e[k - 1] = cs*e[k - 1];
                             }
 
@@ -2604,14 +2605,14 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
                         // Split at negligible s[l].
                     case 2:
-                        f = e[l - 1].Real;
+                        f = e[l - 1].Re;
                         e[l - 1] = 0.0;
                         for (k = l; k < m; k++)
                         {
-                            t1 = stemp[k].Real;
+                            t1 = stemp[k].Re;
                             Drotg(ref t1, ref f, out cs, out sn);
                             stemp[k] = t1;
-                            f = -sn*e[k].Real;
+                            f = -sn*e[k].Re;
                             e[k] = cs*e[k];
                             if (computeVectors)
                             {
@@ -2631,16 +2632,16 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     case 3:
                         // calculate the shift.
                         var scale = 0.0;
-                        scale = Math.Max(scale, stemp[m - 1].Magnitude);
-                        scale = Math.Max(scale, stemp[m - 2].Magnitude);
-                        scale = Math.Max(scale, e[m - 2].Magnitude);
-                        scale = Math.Max(scale, stemp[l].Magnitude);
-                        scale = Math.Max(scale, e[l].Magnitude);
-                        var sm = stemp[m - 1].Real/scale;
-                        var smm1 = stemp[m - 2].Real/scale;
-                        var emm1 = e[m - 2].Real/scale;
-                        var sl = stemp[l].Real/scale;
-                        var el = e[l].Real/scale;
+                        scale = Math.Max(scale, stemp[m - 1].Modulus);
+                        scale = Math.Max(scale, stemp[m - 2].Modulus);
+                        scale = Math.Max(scale, e[m - 2].Modulus);
+                        scale = Math.Max(scale, stemp[l].Modulus);
+                        scale = Math.Max(scale, e[l].Modulus);
+                        var sm = stemp[m - 1].Re/scale;
+                        var smm1 = stemp[m - 2].Re/scale;
+                        var emm1 = e[m - 2].Re/scale;
+                        var sl = stemp[l].Re/scale;
+                        var el = e[l].Re/scale;
                         var b = (((smm1 + sm)*(smm1 - sm)) + (emm1*emm1))/2.0;
                         var c = (sm*emm1)*(sm*emm1);
                         var shift = 0.0;
@@ -2667,9 +2668,9 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                                 e[k - 1] = f;
                             }
 
-                            f = (cs*stemp[k].Real) + (sn*e[k].Real);
+                            f = (cs*stemp[k].Re) + (sn*e[k].Re);
                             e[k] = (cs*e[k]) - (sn*stemp[k]);
-                            g = sn*stemp[k + 1].Real;
+                            g = sn*stemp[k + 1].Re;
                             stemp[k + 1] = cs*stemp[k + 1];
                             if (computeVectors)
                             {
@@ -2683,9 +2684,9 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
                             Drotg(ref f, ref g, out cs, out sn);
                             stemp[k] = f;
-                            f = (cs*e[k].Real) + (sn*stemp[k + 1].Real);
+                            f = (cs*e[k].Re) + (sn*stemp[k + 1].Re);
                             stemp[k + 1] = -(sn*e[k]) + (cs*stemp[k + 1]);
-                            g = sn*e[k + 1].Real;
+                            g = sn*e[k + 1].Re;
                             e[k + 1] = cs*e[k + 1];
                             if (computeVectors && k < rowsA)
                             {
@@ -2706,7 +2707,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     case 4:
 
                         // Make the singular value  positive
-                        if (stemp[l].Real < 0.0)
+                        if (stemp[l].Re < 0.0)
                         {
                             stemp[l] = -stemp[l];
                             if (computeVectors)
@@ -2722,7 +2723,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                         // Order the singular value.
                         while (l != mn - 1)
                         {
-                            if (stemp[l].Real >= stemp[l + 1].Real)
+                            if (stemp[l].Re >= stemp[l + 1].Re)
                             {
                                 break;
                             }
@@ -2768,7 +2769,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 {
                     for (j = 0; j < columnsA; j++)
                     {
-                        vt[(j*columnsA) + i] = v[(i*columnsA) + j].Conjugate();
+                        vt[(j*columnsA) + i] = Complex.Conjugate(v[(i*columnsA) + j]);
                     }
                 }
             }
@@ -2905,7 +2906,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     {
                         for (var i = 0; i < rowsA; i++)
                         {
-                            value += u[(j*rowsA) + i].Conjugate()*b[(k*rowsA) + i];
+                            value += Complex.Conjugate(u[(j*rowsA) + i])*b[(k*rowsA) + i];
                         }
 
                         value /= s[j];
@@ -2919,7 +2920,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                     var value = Complex.Zero;
                     for (var i = 0; i < columnsA; i++)
                     {
-                        value += vt[(j*columnsA) + i].Conjugate()*tmp[i];
+                        value += Complex.Conjugate(vt[(j*columnsA) + i])*tmp[i];
                     }
 
                     x[(k*columnsA) + j] = value;

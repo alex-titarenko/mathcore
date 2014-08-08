@@ -37,6 +37,7 @@ using MathNet.Numerics.Threading;
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of the QR decomposition.</para>
@@ -140,19 +141,19 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 a.At(i, column, 0.0);
             }
 
-            var norm = u.Aggregate(Complex.Zero, (current, t) => current + (t.Magnitude*t.Magnitude));
-            norm = norm.SquareRoot();
+            var norm = u.Aggregate(Complex.Zero, (current, t) => current + (t.Modulus*t.Modulus));
+            norm = Complex.Sqrt(norm);
 
-            if (row == a.RowCount - 1 || norm.Magnitude == 0)
+            if (row == a.RowCount - 1 || norm.Modulus == 0)
             {
                 a.At(row, column, -u[0]);
                 u[0] = Constants.Sqrt2;
                 return u;
             }
 
-            if (u[0].Magnitude != 0.0)
+            if (u[0].Modulus != 0.0)
             {
-                norm = norm.Magnitude*(u[0]/u[0].Magnitude);
+                norm = norm.Modulus*(u[0]/u[0].Modulus);
             }
 
             a.At(row, column, -norm);
@@ -164,10 +165,10 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
             u[0] += 1.0;
 
-            var s = (1.0/u[0]).SquareRoot();
+            var s = Complex.Sqrt(1.0/u[0]);
             for (var i = 0; i < ru; i++)
             {
-                u[i] = u[i].Conjugate()*s;
+                u[i] = Complex.Conjugate(u[i])*s;
             }
 
             return u;
@@ -213,7 +214,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 
                     for (var i = rowStart; i < rowDim; i++)
                     {
-                        a.At(i, j, a.At(i, j) - (u[i - rowStart].Conjugate()*scale));
+                        a.At(i, j, a.At(i, j) - (Complex.Conjugate(u[i - rowStart])*scale));
                     }
                 }
             }
@@ -260,7 +261,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     var s = Complex.Zero;
                     for (var k = 0; k < FullR.RowCount; k++)
                     {
-                        s += Q.At(k, i).Conjugate()*column[k];
+                        s += Complex.Conjugate(Q.At(k, i))*column[k];
                     }
 
                     inputCopy.At(i, j, s);
@@ -327,7 +328,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 var s = Complex.Zero;
                 for (var k = 0; k < FullR.RowCount; k++)
                 {
-                    s += Q.At(k, i).Conjugate()*column[k];
+                    s += Complex.Conjugate(Q.At(k, i))*column[k];
                 }
 
                 inputCopy[i] = s;

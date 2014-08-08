@@ -31,6 +31,7 @@
 namespace MathNet.Numerics
 {
     using System;
+    using TAlex.MathCore;
 
     /// <summary>
     /// Double-precision trigonometry toolkit.
@@ -130,14 +131,14 @@ namespace MathNet.Numerics
         /// <returns>The sine of the complex number.</returns>
         public static Complex Sin(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Sin(value.Real), 0.0);
+                return new Complex(Sin(value.Re), 0.0);
             }
 
             return new Complex(
-                Sin(value.Real) * Cosh(value.Imaginary),
-                Cos(value.Real) * Sinh(value.Imaginary));
+                Sin(value.Re) * Cosh(value.Im),
+                Cos(value.Re) * Sinh(value.Im));
         }
 
         /// <summary>
@@ -157,14 +158,14 @@ namespace MathNet.Numerics
         /// <returns>The cosine of a complex number.</returns>
         public static Complex Cos(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Cos(value.Real), 0.0);
+                return new Complex(Cos(value.Re), 0.0);
             }
 
             return new Complex(
-                Cos(value.Real) * Cosh(value.Imaginary),
-                -Sin(value.Real) * Sinh(value.Imaginary));
+                Cos(value.Re) * Cosh(value.Im),
+                -Sin(value.Re) * Sinh(value.Im));
         }
 
         /// <summary>
@@ -184,16 +185,16 @@ namespace MathNet.Numerics
         /// <returns>The tangent of the complex number.</returns>
         public static Complex Tan(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Tan(value.Real), 0.0);
+                return new Complex(Tan(value.Re), 0.0);
             }
 
-            var cosr = Cos(value.Real);
-            var sinhi = Sinh(value.Imaginary);
+            var cosr = Cos(value.Re);
+            var sinhi = Sinh(value.Im);
             var denom = (cosr * cosr) + (sinhi * sinhi);
 
-            return new Complex(Sin(value.Real) * cosr / denom, sinhi * Cosh(value.Imaginary) / denom);
+            return new Complex(Sin(value.Re) * cosr / denom, sinhi * Cosh(value.Im) / denom);
         }
 
         /// <summary>
@@ -213,16 +214,16 @@ namespace MathNet.Numerics
         /// <returns>The cotangent of the complex number.</returns>
         public static Complex Cot(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Cot(value.Real), 0d);
+                return new Complex(Cot(value.Re), 0d);
             }
 
-            var sinr = Sin(value.Real);
-            var sinhi = Sinh(value.Imaginary);
+            var sinr = Sin(value.Re);
+            var sinhi = Sinh(value.Im);
             var denom = (sinr * sinr) + (sinhi * sinhi);
 
-            return new Complex(sinr * Cos(value.Real) / denom, -sinhi * Cosh(value.Imaginary) / denom);
+            return new Complex(sinr * Cos(value.Re) / denom, -sinhi * Cosh(value.Im) / denom);
         }
 
         /// <summary>
@@ -242,16 +243,16 @@ namespace MathNet.Numerics
         /// <returns>The secant of the complex number.</returns>
         public static Complex Sec(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Sec(value.Real), 0d);
+                return new Complex(Sec(value.Re), 0d);
             }
 
-            var cosr = Cos(value.Real);
-            var sinhi = Sinh(value.Imaginary);
+            var cosr = Cos(value.Re);
+            var sinhi = Sinh(value.Im);
             var denom = (cosr * cosr) + (sinhi * sinhi);
 
-            return new Complex(cosr * Cosh(value.Imaginary) / denom, Sin(value.Real) * sinhi / denom);
+            return new Complex(cosr * Cosh(value.Im) / denom, Sin(value.Re) * sinhi / denom);
         }
 
         /// <summary>
@@ -271,16 +272,16 @@ namespace MathNet.Numerics
         /// <returns>The cosecant of a complex number.</returns>
         public static Complex Csc(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Csc(value.Real), 0d);
+                return new Complex(Csc(value.Re), 0d);
             }
 
-            var sinr = Sin(value.Real);
-            var sinhi = Sinh(value.Imaginary);
+            var sinr = Sin(value.Re);
+            var sinhi = Sinh(value.Im);
             var denom = (sinr * sinr) + (sinhi * sinhi);
 
-            return new Complex(sinr * Cosh(value.Imaginary) / denom, -Cos(value.Real) * sinhi / denom);
+            return new Complex(sinr * Cosh(value.Im) / denom, -Cos(value.Re) * sinhi / denom);
         }
 
 
@@ -295,21 +296,6 @@ namespace MathNet.Numerics
         }
 
         /// <summary>
-        /// Trigonometric principal Arc Sine of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The arc sine of a complex number.</returns>
-        public static Complex Asin(this Complex value)
-        {
-            if (value.Imaginary > 0 || value.Imaginary == 0d && value.Real < 0)
-            {
-                return -Asin(-value);
-            }
-
-            return -Complex.ImaginaryOne * ((1 - value.Square()).SquareRoot() + (Complex.ImaginaryOne * value)).Ln();
-        }
-
-        /// <summary>
         /// Trigonometric principal Arc Cosine in radian
         /// </summary>
         /// <param name="adjacent">The adjacent for a unit hypotenuse (i.e. adjacent / hypotenuse).</param>
@@ -317,21 +303,6 @@ namespace MathNet.Numerics
         public static double Acos(double adjacent)
         {
             return Math.Acos(adjacent);
-        }
-
-        /// <summary>
-        /// Trigonometric principal Arc Cosine of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The arc cosine of a complex number.</returns>
-        public static Complex Acos(this Complex value)
-        {
-            if (value.Imaginary < 0 || value.Imaginary == 0d && value.Real > 0)
-            {
-                return Constants.Pi - Acos(-value);
-            }
-
-            return -Complex.ImaginaryOne * (value + (Complex.ImaginaryOne * (1 - value.Square()).SquareRoot())).Ln();
         }
 
         /// <summary>
@@ -345,17 +316,6 @@ namespace MathNet.Numerics
         }
 
         /// <summary>
-        /// Trigonometric principal Arc Tangent of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The arc tangent of a complex number.</returns>
-        public static Complex Atan(this Complex value)
-        {
-            var iz = new Complex(-value.Imaginary, value.Real); // I*this
-            return new Complex(0, 0.5) * ((1 - iz).Ln() - (1 + iz).Ln());
-        }
-
-        /// <summary>
         /// Trigonometric principal Arc Cotangent in radian
         /// </summary>
         /// <param name="adjacent">The adjacent for a unit opposite (i.e. adjacent / opposite).</param>
@@ -363,22 +323,6 @@ namespace MathNet.Numerics
         public static double Acot(double adjacent)
         {
             return Math.Atan(1 / adjacent);
-        }
-
-        /// <summary>
-        /// Trigonometric principal Arc Cotangent of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The arc cotangent of a complex number.</returns>
-        public static Complex Acot(this Complex value)
-        {
-            if (value.IsZero())
-            {
-                return Constants.PiOver2;
-            }
-
-            var inv = Complex.ImaginaryOne / value;
-            return (Complex.ImaginaryOne * 0.5) * ((1.0 - inv).Ln() - (1.0 + inv).Ln());
         }
 
         /// <summary>
@@ -392,17 +336,6 @@ namespace MathNet.Numerics
         }
 
         /// <summary>
-        /// Trigonometric principal Arc Secant of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The arc secant of a complex number.</returns>
-        public static Complex Asec(this Complex value)
-        {
-            var inv = 1 / value;
-            return -Complex.ImaginaryOne * (inv + (Complex.ImaginaryOne * (1 - inv.Square()).SquareRoot())).Ln();
-        }
-
-        /// <summary>
         /// Trigonometric principal Arc Cosecant in radian
         /// </summary>
         /// <param name="hypotenuse">The hypotenuse for a unit opposite (i.e. hypotenuse / opposite).</param>
@@ -410,17 +343,6 @@ namespace MathNet.Numerics
         public static double Acsc(double hypotenuse)
         {
             return Math.Asin(1 / hypotenuse);
-        }
-
-        /// <summary>
-        /// Trigonometric principal Arc Cosecant of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The arc cosecant of a complex number.</returns>
-        public static Complex Acsc(this Complex value)
-        {
-            var inv = 1 / value;
-            return -Complex.ImaginaryOne * ((Complex.ImaginaryOne * inv) + (1 - inv.Square()).SquareRoot()).Ln();
         }
 
 
@@ -441,14 +363,14 @@ namespace MathNet.Numerics
         /// <returns>The hyperbolic sine of a complex number.</returns>
         public static Complex Sinh(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Sinh(value.Real), 0.0);
+                return new Complex(Sinh(value.Re), 0.0);
             }
 
             return new Complex(
-                Sinh(value.Real) * Cos(value.Imaginary),
-                Cosh(value.Real) * Sin(value.Imaginary));
+                Sinh(value.Re) * Cos(value.Im),
+                Cosh(value.Re) * Sin(value.Im));
         }
 
         /// <summary>
@@ -468,14 +390,14 @@ namespace MathNet.Numerics
         /// <returns>The hyperbolic cosine of a complex number.</returns>
         public static Complex Cosh(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Cosh(value.Real), 0.0);
+                return new Complex(Cosh(value.Re), 0.0);
             }
 
             return new Complex(
-                Cosh(value.Real) * Cos(value.Imaginary),
-                Sinh(value.Real) * Sin(value.Imaginary));
+                Cosh(value.Re) * Cos(value.Im),
+                Sinh(value.Re) * Sin(value.Im));
         }
 
         /// <summary>
@@ -507,13 +429,13 @@ namespace MathNet.Numerics
         /// <returns>The hyperbolic tangent of a complex number.</returns>
         public static Complex Tanh(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Tanh(value.Real), 0.0);
+                return new Complex(Tanh(value.Re), 0.0);
             }
 
-            var cosi = Cos(value.Imaginary);
-            var sinhr = Sinh(value.Real);
+            var cosi = Cos(value.Im);
+            var sinhr = Sinh(value.Re);
 
             if (double.IsInfinity(sinhr))
             {
@@ -522,7 +444,7 @@ namespace MathNet.Numerics
 
             var denom = (cosi * cosi) + (sinhr * sinhr);
 
-            return new Complex(Cosh(value.Real) * sinhr / denom, cosi * Sin(value.Imaginary) / denom);
+            return new Complex(Cosh(value.Re) * sinhr / denom, cosi * Sin(value.Im) / denom);
         }
 
         /// <summary>
@@ -554,13 +476,13 @@ namespace MathNet.Numerics
         /// <returns>The hyperbolic cotangent of a complex number.</returns>
         public static Complex Coth(this Complex value)
         {
-            if (value.IsReal())
+            if (value.IsReal)
             {
-                return new Complex(Coth(value.Real), 0.0);
+                return new Complex(Coth(value.Re), 0.0);
             }
 
-            var sini = Sin(value.Imaginary);
-            var sinhr = Sinh(value.Real);
+            var sini = Sin(value.Im);
+            var sinhr = Sinh(value.Re);
 
             if (double.IsInfinity(sinhr))
             {
@@ -569,7 +491,7 @@ namespace MathNet.Numerics
 
             var denom = (sini * sini) + (sinhr * sinhr);
 
-            return new Complex(sinhr * Cosh(value.Real) / denom, sini * Cos(value.Imaginary) / denom);
+            return new Complex(sinhr * Cosh(value.Re) / denom, sini * Cos(value.Im) / denom);
         }
 
         /// <summary>
@@ -583,28 +505,6 @@ namespace MathNet.Numerics
         }
 
         /// <summary>
-        /// Hyperbolic Secant of a <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The hyperbolic secant of a complex number.</returns>
-        public static Complex Sech(this Complex value)
-        {
-            if (value.IsReal())
-            {
-                return new Complex(Sech(value.Real), 0.0);
-            }
-
-            var exp = value.Exp();
-
-            if (exp.IsInfinity())
-            {
-                return Complex.Zero;
-            }
-
-            return 2 * exp / (exp.Square() + 1);
-        }
-
-        /// <summary>
         /// Hyperbolic Cosecant
         /// </summary>
         /// <param name="angle">The hyperbolic angle, i.e. the area of the hyperbolic sector.</param>
@@ -615,29 +515,6 @@ namespace MathNet.Numerics
         }
 
         /// <summary>
-        /// Hyperbolic Cosecant of a <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The hyperbolic cosecant of a complex number.</returns>
-        public static Complex Csch(this Complex value)
-        {
-            if (value.IsReal())
-            {
-                return new Complex(Csch(value.Real), 0.0);
-            }
-
-            var exp = value.Exp();
-
-            if (exp.IsInfinity())
-            {
-                return Complex.Zero;
-            }
-
-            return 2 * exp / (exp.Square() - 1);
-        }
-
-
-        /// <summary>
         /// Hyperbolic Area Sine
         /// </summary>
         /// <param name="value">The real value.</param>
@@ -645,16 +522,6 @@ namespace MathNet.Numerics
         public static double Asinh(double value)
         {
             return Math.Log(value + Math.Sqrt((value * value) + 1), Math.E);
-        }
-
-        /// <summary>
-        /// Hyperbolic Area Sine of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The hyperbolic arc sine of a complex number.</returns>
-        public static Complex Asinh(this Complex value)
-        {
-            return (value + (value.Square() + 1).SquareRoot()).Ln();
         }
 
         /// <summary>
@@ -668,16 +535,6 @@ namespace MathNet.Numerics
         }
 
         /// <summary>
-        /// Hyperbolic Area Cosine of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The hyperbolic arc cosine of a complex number.</returns>
-        public static Complex Acosh(this Complex value)
-        {
-            return (value + ((value - 1).SquareRoot() * (value + 1).SquareRoot())).Ln();
-        }
-
-        /// <summary>
         /// Hyperbolic Area Tangent
         /// </summary>
         /// <param name="value">The real value.</param>
@@ -685,16 +542,6 @@ namespace MathNet.Numerics
         public static double Atanh(double value)
         {
             return 0.5 * Math.Log((1 + value) / (1 - value), Math.E);
-        }
-
-        /// <summary>
-        /// Hyperbolic Area Tangent of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The hyperbolic arc tangent of a complex number.</returns>
-        public static Complex Atanh(this Complex value)
-        {
-            return 0.5 * ((1 + value).Ln() - (1 - value).Ln());
         }
 
         /// <summary>
@@ -708,17 +555,6 @@ namespace MathNet.Numerics
         }
 
         /// <summary>
-        /// Hyperbolic Area Cotangent of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The hyperbolic arc cotangent of a complex number.</returns>
-        public static Complex Acoth(this Complex value)
-        {
-            var inv = 1.0 / value;
-            return 0.5 * ((1.0 + inv).Ln() - (1.0 - inv).Ln());
-        }
-
-        /// <summary>
         /// Hyperbolic Area Secant
         /// </summary>
         /// <param name="value">The real value.</param>
@@ -729,17 +565,6 @@ namespace MathNet.Numerics
         }
 
         /// <summary>
-        /// Hyperbolic Area Secant of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The hyperbolic arc secant of a complex number.</returns>
-        public static Complex Asech(this Complex value)
-        {
-            var inv = 1 / value;
-            return (inv + ((inv - 1).SquareRoot() * (inv + 1).SquareRoot())).Ln();
-        }
-
-        /// <summary>
         /// Hyperbolic Area Cosecant
         /// </summary>
         /// <param name="value">The real value.</param>
@@ -747,17 +572,6 @@ namespace MathNet.Numerics
         public static double Acsch(double value)
         {
             return Asinh(1 / value);
-        }
-
-        /// <summary>
-        /// Hyperbolic Area Cosecant of this <c>Complex</c> number.
-        /// </summary>
-        /// <param name="value">The complex value.</param>
-        /// <returns>The hyperbolic arc cosecant of a complex number.</returns>
-        public static Complex Acsch(this Complex value)
-        {
-            var inv = 1 / value;
-            return (inv + (inv.Square() + 1).SquareRoot()).Ln();
         }
     }
 }

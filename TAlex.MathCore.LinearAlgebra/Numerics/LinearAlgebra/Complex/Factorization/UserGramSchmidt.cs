@@ -34,6 +34,7 @@ using MathNet.Numerics.Properties;
 namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// <para>A class which encapsulates the functionality of the QR decomposition Modified Gram-Schmidt Orthogonalization.</para>
@@ -81,7 +82,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     var dot = Complex.Zero;
                     for (int i = 0; i < q.RowCount; i++)
                     {
-                        dot += q.Column(k)[i].Conjugate() * q.Column(j)[i];
+                        dot += Complex.Conjugate(q.Column(k)[i]) * q.Column(j)[i];
                     }
                     
                     r.At(k, j, dot);
@@ -142,7 +143,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                     var s = Complex.Zero;
                     for (var k = 0; k < Q.RowCount; k++)
                     {
-                        s += Q.At(k, i).Conjugate() * column[k];
+                        s += Complex.Conjugate(Q.At(k, i)) * column[k];
                     }
 
                     inputCopy.At(i, j, s);
@@ -209,7 +210,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex.Factorization
                 var s = Complex.Zero;
                 for (var k = 0; k < Q.RowCount; k++)
                 {
-                    s += Q.At(k, i).Conjugate() * column[k];
+                    s += Complex.Conjugate(Q.At(k, i)) * column[k];
                 }
 
                 inputCopy[i] = s;

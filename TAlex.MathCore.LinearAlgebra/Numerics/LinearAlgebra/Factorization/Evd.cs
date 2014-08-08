@@ -33,6 +33,7 @@ using System;
 namespace MathNet.Numerics.LinearAlgebra.Factorization
 {
     using Numerics;
+    using TAlex.MathCore;
 
     /// <summary>
     /// Eigenvalues and eigenvectors of a real matrix.

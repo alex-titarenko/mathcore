@@ -29,6 +29,7 @@
 // </copyright>
 
 using MathNet.Numerics.LinearAlgebra.Factorization;
+using TAlex.MathCore;
 
 namespace MathNet.Numerics.Providers.LinearAlgebra
 {

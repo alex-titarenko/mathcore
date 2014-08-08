@@ -117,6 +117,17 @@ namespace TAlex.MathCore
         }
 
         /// <summary>
+        /// Gets a value that indicates whether the complex number is real one.
+        /// </summary>
+        public bool IsOne
+        {
+            get
+            {
+                return Re == 1.0 && Im == 0.0;
+            }
+        }
+
+        /// <summary>
         /// Gets a value that indicates whether the imaginary part is equal to zero.
         /// </summary>
         public bool IsReal
