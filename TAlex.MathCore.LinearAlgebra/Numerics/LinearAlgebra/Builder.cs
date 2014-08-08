@@ -1327,17 +1327,6 @@ namespace MathNet.Numerics.LinearAlgebra
         {
             return Sparse(SparseVectorStorage<T>.OfEnumerable(enumerable));
         }
-
-        /// <summary>
-        /// Create a new sparse vector as a copy of the given indexed enumerable.
-        /// Keys must be provided at most once, zero is assumed if a key is omitted.
-        /// This new vector will be independent from the enumerable.
-        /// A new memory block will be allocated for storing the vector.
-        /// </summary>
-        public Vector<T> SparseOfIndexed(int length, IEnumerable<Tuple<int, T>> enumerable)
-        {
-            return Sparse(SparseVectorStorage<T>.OfIndexedEnumerable(length, enumerable));
-        }
     }
 
     internal static class BuilderInstance<T> where T : struct, IEquatable<T>, IFormattable

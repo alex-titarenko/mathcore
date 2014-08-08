@@ -31,13 +31,9 @@
 using System.Collections.Generic;
 using MathNet.Numerics.Threading;
 
-#if PORTABLE
-using System;
-#else
 using System.Runtime;
 using System.Threading;
 using System;
-#endif
 
 namespace MathNet.Numerics.Random
 {

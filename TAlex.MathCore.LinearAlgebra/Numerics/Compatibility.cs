@@ -136,21 +136,3 @@
         }
     }
 }
-
-#if (PORTABLE || NET35)
-namespace MathNet.Numerics
-{
-    using System;
-
-    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public class TargetedPatchingOptOutAttribute : Attribute
-    {
-        public string Reason { get; private set; }
-
-        public TargetedPatchingOptOutAttribute(string reason)
-        {
-            Reason = reason;
-        }
-    }
-}
-#endif

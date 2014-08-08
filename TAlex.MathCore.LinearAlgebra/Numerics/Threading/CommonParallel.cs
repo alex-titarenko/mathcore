@@ -34,10 +34,6 @@ using System.Threading.Tasks;
 
 namespace MathNet.Numerics.Threading
 {
-#if NET35
-    using Partitioner = MathNet.Numerics.Partitioner;
-#endif
-
     /// <summary>
     /// Used to simplify parallel code, particularly between the .NET 4.0 and Silverlight Code.
     /// </summary>

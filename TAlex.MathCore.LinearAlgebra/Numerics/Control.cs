@@ -65,26 +65,6 @@ namespace MathNet.Numerics
 
             // Linear Algebra Provider
             LinearAlgebraProvider = new ManagedLinearAlgebraProvider();
-#if !PORTABLE && NATIVEMKL
-            try
-            {
-                const string name = "MathNetNumericsLAProvider";
-                var value = Environment.GetEnvironmentVariable(name);
-                switch (value != null ? value.ToUpperInvariant() : string.Empty)
-                {
-#if NATIVEMKL
-                    case "MKL":
-                        LinearAlgebraProvider = new Providers.LinearAlgebra.Mkl.MklLinearAlgebraProvider();
-                        break;
-#endif
-                }
-            }
-            catch
-            {
-                // We don't care about any failures here at all (because "auto")
-                LinearAlgebraProvider = new ManagedLinearAlgebraProvider();
-            }
-#endif
         }
 
         public static void UseSingleThread()
@@ -107,22 +87,6 @@ namespace MathNet.Numerics
         {
             LinearAlgebraProvider = new ManagedLinearAlgebraProvider();
         }
-
-#if NATIVEMKL
-        public static void UseNativeMKL()
-        {
-            LinearAlgebraProvider = new Providers.LinearAlgebra.Mkl.MklLinearAlgebraProvider();
-        }
-
-        [CLSCompliant(false)]
-        public static void UseNativeMKL(
-            Providers.LinearAlgebra.Mkl.MklConsistency consistency = Providers.LinearAlgebra.Mkl.MklConsistency.Auto,
-            Providers.LinearAlgebra.Mkl.MklPrecision precision = Providers.LinearAlgebra.Mkl.MklPrecision.Double,
-            Providers.LinearAlgebra.Mkl.MklAccuracy accuracy = Providers.LinearAlgebra.Mkl.MklAccuracy.High)
-        {
-            LinearAlgebraProvider = new Providers.LinearAlgebra.Mkl.MklLinearAlgebraProvider(consistency, precision, accuracy);
-        }
-#endif
 
         /// <summary>
         /// Gets or sets a value indicating whether the distribution classes check validate each parameter.

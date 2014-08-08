@@ -356,36 +356,6 @@ namespace MathNet.Numerics.LinearAlgebra.Storage
                 };
         }
 
-        public static SparseVectorStorage<T> OfIndexedEnumerable(int length, IEnumerable<Tuple<int, T>> data)
-        {
-            if (data == null)
-            {
-                throw new ArgumentNullException("data");
-            }
-
-            var indices = new List<int>();
-            var values = new List<T>();
-            foreach (var item in data)
-            {
-                if (!Zero.Equals(item.Item2))
-                {
-                    values.Add(item.Item2);
-                    indices.Add(item.Item1);
-                }
-            }
-
-            var indicesArray = indices.ToArray();
-            var valuesArray = values.ToArray();
-            Sorting.Sort(indicesArray, valuesArray);
-
-            return new SparseVectorStorage<T>(length)
-                {
-                    Indices = indicesArray,
-                    Values = valuesArray,
-                    ValueCount = values.Count
-                };
-        }
-
         // VECTOR COPY
 
         internal override void CopyToUnchecked(VectorStorage<T> target, ExistingData existingData = ExistingData.Clear)

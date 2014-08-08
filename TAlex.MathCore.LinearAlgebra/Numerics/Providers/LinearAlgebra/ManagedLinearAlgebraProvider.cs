@@ -28,6 +28,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 // </copyright>
 
+using System;
 namespace MathNet.Numerics.Providers.LinearAlgebra
 {
     /// <summary>
@@ -45,6 +46,63 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
         public override string ToString()
         {
             return "Managed";
+        }
+
+        /// <summary>
+        /// Given the Cartesian coordinates (da, db) of a point p, these function return the parameters da, db, c, and s
+        /// associated with the Givens rotation that zeros the y-coordinate of the point.
+        /// </summary>
+        /// <param name="da">Provides the x-coordinate of the point p. On exit contains the parameter r associated with the Givens rotation</param>
+        /// <param name="db">Provides the y-coordinate of the point p. On exit contains the parameter z associated with the Givens rotation</param>
+        /// <param name="c">Contains the parameter c associated with the Givens rotation</param>
+        /// <param name="s">Contains the parameter s associated with the Givens rotation</param>
+        /// <remarks>This is equivalent to the DROTG LAPACK routine.</remarks>
+        static void Drotg(ref double da, ref double db, out double c, out double s)
+        {
+            double r, z;
+
+            var roe = db;
+            var absda = Math.Abs(da);
+            var absdb = Math.Abs(db);
+            if (absda > absdb)
+            {
+                roe = da;
+            }
+
+            var scale = absda + absdb;
+            if (scale == 0.0)
+            {
+                c = 1.0;
+                s = 0.0;
+                r = 0.0;
+                z = 0.0;
+            }
+            else
+            {
+                var sda = da / scale;
+                var sdb = db / scale;
+                r = scale * Math.Sqrt((sda * sda) + (sdb * sdb));
+                if (roe < 0.0)
+                {
+                    r = -r;
+                }
+
+                c = da / r;
+                s = db / r;
+                z = 1.0;
+                if (absda > absdb)
+                {
+                    z = s;
+                }
+
+                if (absdb >= absda && c != 0.0)
+                {
+                    z = 1.0 / c;
+                }
+            }
+
+            da = r;
+            db = z;
         }
     }
 }
