@@ -43,13 +43,6 @@ namespace MathNet.Numerics.LinearAlgebra
         // Factorizations
 
         /// <summary>
-        /// Computes the QR decomposition for a matrix.
-        /// </summary>
-        /// <param name="method">The type of QR factorization to perform.</param>
-        /// <returns>The QR decomposition object.</returns>
-        public abstract QR<T> QR(QRMethod method = QRMethod.Thin);
-
-        /// <summary>
         /// Computes the SVD decomposition for a matrix.
         /// </summary>
         /// <param name="computeVectors">Compute the singular U and VT vectors or not.</param>

@@ -1272,11 +1272,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             return true;
         }
 
-        public override QR<Complex> QR(QRMethod method = QRMethod.Thin)
-        {
-            return DenseQR.Create(this, method);
-        }
-
         public override Svd<Complex> Svd(bool computeVectors = true)
         {
             return DenseSvd.Create(this, computeVectors);

@@ -454,7 +454,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Section(Sections.SolveAndInverse)]
     [Description("Calculates the Moore-Penrose inverse (pseudoinverse) of the complex matrix.")]
     [FunctionSignature("pinv", "complex matrix m")]
-    [ExampleUsage("pinv({-8, 0, 1; 7, 9, 7})", "{-0.117933723196881, 0.00682261208576995; 0.0477582846003899, 0.0633528265107213; 0.0565302144249513, 0.0545808966861599}")]
+    [ExampleUsage("pinv({-8, 0, 1; 7, 9, 7})", "{-0.117933723196881,0.00682261208577001;0.0477582846003898,0.0633528265107212;0.0565302144249512,0.0545808966861598}")]
     public class PseudoInverseExpression : UnaryExpression<Object>
     {
         public PseudoInverseExpression(Expression<Object> subExpression)
@@ -653,7 +653,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Section(Sections.EigenSystem)]
     [Description("Calculates the matrix containing all normalized eigenvectors of the matrix.")]
     [FunctionSignature("eigvecs", "complex matrix m")]
-    [ExampleUsage("eigvecs({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{1, 0.447213595499958, 0; 0, 0.894427190999916, 0; 0, 0, 1}")]
+    [ExampleUsage("eigvecs({0, 1, 0; 0, 2, 0; 0, 0, 3})", "{1, 0.5, 0; 0, 1, 0; 0, 0, 1}")]
     public class EigenvectorsFuncExpression : UnaryExpression<Object>
     {
         public EigenvectorsFuncExpression(Expression<Object> subExpression)
@@ -771,7 +771,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.ComplexExpressions.Functions
     [Section(Sections.Decompositions)]
     [Description("Calculates the singular value decomposition (the matrix formed by the horizontal concatenation of matrices U, S, VH).")]
     [FunctionSignature("svd", "complex matrix m")]
-    [ExampleUsage("svd({3, 1, 1; -1, 3, 1})", "{-0.70710678118655, -0.707106781186545, 3.46410161513775, 0, 0, -0.408248290463867, -0.816496580927724, -0.408248290463863; -0.707106781186545, 0.70710678118655, 0, 3.16227766016838, 0, -0.894427190999914, 0.447213595499961, 0; 0, 0, 0, 0, 0, -0.182574185835055, -0.365148371670111, 0.912870929175277}")]
+    [ExampleUsage("svd({3, 1, 1; -1, 3, 1})", "{0.707106781186548,0.707106781186547,3.46410161513775,0,0,0.408248290463864,0.816496580927726,0.408248290463863;0.707106781186547,-0.707106781186548,0,3.16227766016838,0,0.894427190999916,-0.447213595499958,0;0,0,0,0,0,0.182574185835055,0.365148371670111,-0.912870929175277}")]
     public class SVDecompositionFuncExpression : UnaryExpression<Object>
     {
         public SVDecompositionFuncExpression(Expression<Object> subExpression)

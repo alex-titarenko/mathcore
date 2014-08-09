@@ -51,13 +51,10 @@
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\DenseVector.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\DiagonalMatrix.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\DenseEvd.cs" />
-    <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\DenseQR.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\DenseSvd.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\Evd.cs" />
-    <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\QR.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\Svd.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\UserEvd.cs" />
-    <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\UserQR.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Factorization\UserSvd.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Matrix.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\SparseMatrix.cs" />
@@ -65,7 +62,6 @@
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Complex\Vector.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Factorization\Evd.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Factorization\ISolver.cs" />
-    <Compile Include="ThirdParty\Numerics\LinearAlgebra\Factorization\QR.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Factorization\Svd.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\IBuilder.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Matrix.Arithmetic.cs" />
