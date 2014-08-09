@@ -740,11 +740,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             return UserQR.Create(this, method);
         }
 
-        public override GramSchmidt<Complex> GramSchmidt()
-        {
-            return UserGramSchmidt.Create(this);
-        }
-
         public override Svd<Complex> Svd(bool computeVectors = true)
         {
             return UserSvd.Create(this, computeVectors);

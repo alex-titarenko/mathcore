@@ -50,12 +50,6 @@ namespace MathNet.Numerics.LinearAlgebra
         public abstract QR<T> QR(QRMethod method = QRMethod.Thin);
 
         /// <summary>
-        /// Computes the QR decomposition for a matrix using Modified Gram-Schmidt Orthogonalization.
-        /// </summary>
-        /// <returns>The QR decomposition object.</returns>
-        public abstract GramSchmidt<T> GramSchmidt();
-
-        /// <summary>
         /// Computes the SVD decomposition for a matrix.
         /// </summary>
         /// <param name="computeVectors">Compute the singular U and VT vectors or not.</param>

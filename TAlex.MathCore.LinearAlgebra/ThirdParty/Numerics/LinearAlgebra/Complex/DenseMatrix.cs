@@ -1277,11 +1277,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             return DenseQR.Create(this, method);
         }
 
-        public override GramSchmidt<Complex> GramSchmidt()
-        {
-            return DenseGramSchmidt.Create(this);
-        }
-
         public override Svd<Complex> Svd(bool computeVectors = true)
         {
             return DenseSvd.Create(this, computeVectors);

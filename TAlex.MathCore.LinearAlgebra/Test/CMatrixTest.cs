@@ -130,7 +130,7 @@ namespace TAlex.MathCore.LinearAlgebra.Test
         public void CharacteristicPolynomialTest()
         {
             //arrange
-            double TOL = 10E-7;
+            double TOL = 10E-6;
             CMatrix zero = new CMatrix(_m.RowCount, _m.ColumnCount);
 
             //action
