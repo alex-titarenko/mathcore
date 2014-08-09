@@ -30,7 +30,6 @@
 
 using System;
 using MathNet.Numerics.LinearAlgebra.Complex.Factorization;
-using MathNet.Numerics.LinearAlgebra.Factorization;
 using MathNet.Numerics.Properties;
 using MathNet.Numerics.Threading;
 using TAlex.MathCore;
@@ -626,7 +625,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
             }
             else if (!beta.IsOne)
             {
-                Control.LinearAlgebraProvider.ScaleArray(beta, c, c);
+                ScaleArray(beta, c, c);
             }
 
             if (alpha.IsZero)
