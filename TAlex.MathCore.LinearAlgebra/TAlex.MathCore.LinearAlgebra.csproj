@@ -44,10 +44,6 @@
     <Compile Include="ThirdParty\Numerics\Compatibility.cs" />
     <Compile Include="ThirdParty\Numerics\Constants.cs" />
     <Compile Include="ThirdParty\Numerics\Control.cs" />
-    <Compile Include="ThirdParty\Numerics\Distributions\IContinuousDistribution.cs" />
-    <Compile Include="ThirdParty\Numerics\Distributions\IDistribution.cs" />
-    <Compile Include="ThirdParty\Numerics\Distributions\IUnivariateDistribution.cs" />
-    <Compile Include="ThirdParty\Numerics\Distributions\Normal.cs" />
     <Compile Include="ThirdParty\Numerics\Exceptions.cs" />
     <Compile Include="ThirdParty\Numerics\GlobalizationHelper.cs" />
     <Compile Include="ThirdParty\Numerics\LinearAlgebra\Builder.cs" />

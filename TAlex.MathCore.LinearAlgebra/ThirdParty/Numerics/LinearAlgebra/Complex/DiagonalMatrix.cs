@@ -38,7 +38,6 @@ using MathNet.Numerics.Threading;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
-    using MathNet.Numerics.Distributions;
     using Numerics;
     using TAlex.MathCore;
 
@@ -177,15 +176,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public static DiagonalMatrix CreateIdentity(int order)
         {
             return new DiagonalMatrix(DiagonalMatrixStorage<Complex>.OfInit(order, order, i => One));
-        }
-
-        /// <summary>
-        /// Create a new diagonal matrix with diagonal values sampled from the provided random distribution.
-        /// </summary>
-        public static DiagonalMatrix CreateRandom(int rows, int columns, IContinuousDistribution distribution)
-        {
-            return new DiagonalMatrix(DiagonalMatrixStorage<Complex>.OfInit(rows, columns,
-                i => new Complex(distribution.Sample(), distribution.Sample())));
         }
 
         /// <summary>

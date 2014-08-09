@@ -37,7 +37,6 @@ using MathNet.Numerics.LinearAlgebra.Storage;
 
 namespace MathNet.Numerics.LinearAlgebra.Complex
 {
-    using MathNet.Numerics.Distributions;
     using Complex = TAlex.MathCore.Complex;
 
     internal class MatrixBuilder : MatrixBuilder<Complex>
@@ -65,11 +64,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         public override Matrix<Complex> Diagonal(DiagonalMatrixStorage<Complex> storage)
         {
             return new DiagonalMatrix(storage);
-        }
-
-        public override Matrix<Complex> Random(int rows, int columns, IContinuousDistribution distribution)
-        {
-            return Dense(rows, columns, (i, j) => new Complex(distribution.Sample(), distribution.Sample()));
         }
 
         public override IIterationStopCriterion<Complex>[] IterativeSolverStopCriteria(int maxIterations = 1000)
@@ -105,17 +99,11 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         {
             return new SparseVector(storage);
         }
-
-        public override Vector<Complex> Random(int length, IContinuousDistribution distribution)
-        {
-            return Dense(length, i => new Complex(distribution.Sample(), distribution.Sample()));
-        }
     }
 }
 
 namespace MathNet.Numerics.LinearAlgebra
 {
-    using MathNet.Numerics.Distributions;
     using MathNet.Numerics.Random;
     using Complex64 = TAlex.MathCore.Complex;
 
@@ -205,57 +193,6 @@ namespace MathNet.Numerics.LinearAlgebra
         public Matrix<T> SameAs(Matrix<T> example, Matrix<T> otherExample)
         {
             return SameAs(example, otherExample, example.RowCount, example.ColumnCount);
-        }
-
-        /// <summary>
-        /// Create a new dense matrix with values sampled from the provided random distribution.
-        /// </summary>
-        public abstract Matrix<T> Random(int rows, int columns, IContinuousDistribution distribution);
-
-        /// <summary>
-        /// Create a new dense matrix with values sampled from the standard distribution with a mersenne twister random source.
-        /// </summary>
-        public Matrix<T> Random(int rows, int columns)
-        {
-            return Random(rows, columns, new Normal(SystemRandomSource.Default));
-        }
-
-        /// <summary>
-        /// Create a new dense matrix with values sampled from the standard distribution with a mersenne twister random source.
-        /// </summary>
-        public Matrix<T> Random(int rows, int columns, int seed)
-        {
-            return Random(rows, columns, new Normal(new SystemRandomSource(seed, true)));
-        }
-
-        /// <summary>
-        /// Create a new positive definite dense matrix where each value is the product
-        /// of two samples from the provided random distribution.
-        /// </summary>
-        public Matrix<T> RandomPositiveDefinite(int order, IContinuousDistribution distribution)
-        {
-            var a = Random(order, order, distribution);
-            return a.ConjugateTransposeThisAndMultiply(a);
-        }
-
-        /// <summary>
-        /// Create a new positive definite dense matrix where each value is the product
-        /// of two samples from the standard distribution with a mersenne twister random source.
-        /// </summary>
-        public Matrix<T> RandomPositiveDefinite(int order)
-        {
-            var a = Random(order, order, new Normal(SystemRandomSource.Default));
-            return a.ConjugateTransposeThisAndMultiply(a);
-        }
-
-        /// <summary>
-        /// Create a new positive definite dense matrix where each value is the product
-        /// of two samples from the provided random distribution.
-        /// </summary>
-        public Matrix<T> RandomPositiveDefinite(int order, int seed)
-        {
-            var a = Random(order, order, new Normal(new SystemRandomSource(seed, true)));
-            return a.ConjugateTransposeThisAndMultiply(a);
         }
 
         /// <summary>
@@ -1158,27 +1095,6 @@ namespace MathNet.Numerics.LinearAlgebra
         public Vector<T> SameAs(Matrix<T> matrix, Vector<T> vector, int length)
         {
             return matrix.Storage.IsDense || vector.Storage.IsDense ? Dense(length) : Sparse(length);
-        }
-
-        /// <summary>
-        /// Create a new dense vector with values sampled from the provided random distribution.
-        /// </summary>
-        public abstract Vector<T> Random(int length, IContinuousDistribution distribution);
-
-        /// <summary>
-        /// Create a new dense vector with values sampled from the standard distribution with a mersenne twister random source.
-        /// </summary>
-        public Vector<T> Random(int length)
-        {
-            return Random(length, new Normal(SystemRandomSource.Default));
-        }
-
-        /// <summary>
-        /// Create a new dense vector with values sampled from the standard distribution with a system random source.
-        /// </summary>
-        public Vector<T> Random(int length, int seed)
-        {
-            return Random(length, new Normal(new SystemRandomSource(seed, true)));
         }
 
         /// <summary>
