@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MathNet.Numerics.Providers.LinearAlgebra;
 
 
 namespace TAlex.MathCore.LinearAlgebra
@@ -150,36 +151,30 @@ namespace TAlex.MathCore.LinearAlgebra
             _m = matrix.RowCount;
             _n = matrix.ColumnCount;
 
-            var m = new MathNet.Numerics.LinearAlgebra.Complex.DenseMatrix(matrix.RowCount, matrix.ColumnCount);
-            for (int i = 0; i < m.RowCount; i++)
-            {
-                for (int j = 0; j < m.ColumnCount; j++)
-                {
-                    m.At(i, j, matrix[i, j]);
-                }
-            }
-            var svd = m.Svd();
+            var nm = Math.Min(matrix.RowCount, matrix.ColumnCount);
+            var s = new Complex[nm];
+            var u = new Complex[matrix.RowCount * matrix.RowCount];
+            var vt = new Complex[matrix.ColumnCount * matrix.ColumnCount];
 
-            _s = svd.S.ToArray().Select(x => x.Re).ToArray();
-            
-            _u = new CMatrix(m.RowCount, m.RowCount);
-            
-            var u = svd.U;
-            for (int i = 0; i < m.RowCount; i++)
+            new ManagedLinearAlgebraProvider().SingularValueDecomposition(!singularValuesOnly, matrix.To1DimArray(), matrix.RowCount, matrix.ColumnCount, s, u, vt);
+
+            _s = s.ToArray().Select(x => x.Re).ToArray();
+
+            _u = new CMatrix(matrix.RowCount, matrix.RowCount);
+            for (int i = 0; i < matrix.RowCount; i++)
             {
-                for (int j = 0; j < m.RowCount; j++)
+                for (int j = 0; j < matrix.RowCount; j++)
                 {
-                    _u[i, j] = u.At(i, j);
+                    _u[i, j] = u[j * matrix.RowCount + i];
                 }
             }
 
-            _vt = new CMatrix(m.ColumnCount, m.ColumnCount);
-            var vt = svd.VT;
-            for (int i = 0; i < m.ColumnCount; i++)
+            _vt = new CMatrix(matrix.ColumnCount, matrix.ColumnCount);
+            for (int i = 0; i < matrix.ColumnCount; i++)
             {
-                for (int j = 0; j < m.ColumnCount; j++)
+                for (int j = 0; j < matrix.ColumnCount; j++)
                 {
-                    _vt[i, j] = vt.At(i, j);
+                    _vt[i, j] = vt[j * matrix.ColumnCount + i];
                 }
             }
         }

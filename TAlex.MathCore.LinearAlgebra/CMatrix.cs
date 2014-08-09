@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Globalization;
 using System.Collections.Generic;
@@ -2568,6 +2569,20 @@ namespace TAlex.MathCore.LinearAlgebra
         public Complex[,] ToArray()
         {
             return (Complex[,])_m.Clone();
+        }
+
+        public Complex[] To1DimArray()
+        {
+            Complex[] result = new Complex[RowCount * ColumnCount];
+
+            for (int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < ColumnCount; j++)
+                {
+                    result[j * RowCount + i] = this[i, j];
+                }
+            }
+            return result;
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MathNet.Numerics.Providers.LinearAlgebra;
 
 
 namespace TAlex.MathCore.LinearAlgebra
@@ -74,7 +75,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// the eigenvalues and the right eigenvectors of a square complex matrix.
         /// </summary>
         /// <param name="matrix">A complex square matrix.</param>
-        public CEigenproblem(CMatrix matrix) : this(matrix, true, false)
+        public CEigenproblem(CMatrix matrix) : this(matrix, true)
         {
         }
 
@@ -84,43 +85,28 @@ namespace TAlex.MathCore.LinearAlgebra
         /// </summary>
         /// <param name="matrix">A complex square matrix.</param>
         /// <param name="rightEigenvectors">A value that indicating whether the right eigenvectors will be computed.</param>
-        public CEigenproblem(CMatrix matrix, bool rightEigenvectors) : this(matrix, rightEigenvectors, false)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the CEigenproblem class, computing
-        /// the eigenvalues and optionally the right and/or the left eigenvectors of a square complex matrix.
-        /// </summary>
-        /// <param name="matrix">A complex square matrix.</param>
-        /// <param name="rightEigenvectors">A value that indicating whether the right eigenvectors will be computed.</param>
-        /// <param name="leftEigenvectors">A value that indicating whether the left eigenvectors will be computed.</param>
-        public CEigenproblem(CMatrix matrix, bool rightEigenvectors, bool leftEigenvectors)
+        public CEigenproblem(CMatrix matrix, bool rightEigenvectors)
         {
             if (!matrix.IsSquare)
                 throw new MatrixSizeMismatchException("The matrix must be square.");
 
-            
-            var m = new MathNet.Numerics.LinearAlgebra.Complex.DenseMatrix(matrix.RowCount, matrix.ColumnCount);
-            for (int i = 0; i < m.RowCount; i++)
-            {
-                for (int j = 0; j < m.ColumnCount; j++)
-                {
-                    m.At(i, j, matrix[i, j]);
-                }
-            }
-            var evd = m.Evd();
+            var order = matrix.RowCount;
 
-            _vals = evd.EigenValues.ToArray();
+            // Initialize matrices for eigenvalues and eigenvectors
+            var eigenVectors = new Complex[order * order];
+            var blockDiagonal = new Complex[order * order];
+            var eigenValues = new Complex[order];
+
+            new ManagedLinearAlgebraProvider().EigenDecomp(matrix.IsHermitian(), order, matrix.To1DimArray(), eigenVectors, eigenValues, blockDiagonal);
+
+            _vals = eigenValues;
 
             _rightvecs = new CMatrix(matrix.RowCount, matrix.ColumnCount);
-            var vecs = evd.EigenVectors;
-
-            for (int i = 0; i < m.RowCount; i++)
+            for (int i = 0; i < matrix.RowCount; i++)
             {
-                for (int j = 0; j < m.ColumnCount; j++)
+                for (int j = 0; j < matrix.ColumnCount; j++)
                 {
-                    _rightvecs[i, j] = vecs.At(i, j);
+                    _rightvecs[i, j] = eigenVectors[j * matrix.RowCount + i];
                 }
             }
         }
