@@ -1311,42 +1311,6 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
         }
 
         /// <summary>
-        /// Solves A*X=B for X using Cholesky factorization.
-        /// </summary>
-        /// <param name="a">The square, positive definite matrix A.</param>
-        /// <param name="orderA">The number of rows and columns in A.</param>
-        /// <param name="b">On entry the B matrix; on exit the X matrix.</param>
-        /// <param name="columnsB">The number of columns in the B matrix.</param>
-        /// <remarks>This is equivalent to the POTRF add POTRS LAPACK routines.</remarks>
-        public virtual void CholeskySolve(Complex[] a, int orderA, Complex[] b, int columnsB)
-        {
-            if (a == null)
-            {
-                throw new ArgumentNullException("a");
-            }
-
-            if (b == null)
-            {
-                throw new ArgumentNullException("b");
-            }
-
-            if (b.Length != orderA*columnsB)
-            {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "b");
-            }
-
-            if (ReferenceEquals(a, b))
-            {
-                throw new ArgumentException(Resources.ArgumentReferenceDifferent);
-            }
-
-            var clone = new Complex[a.Length];
-            a.Copy(clone);
-            CholeskyFactor(clone, orderA);
-            CholeskySolveFactored(clone, orderA, b, columnsB);
-        }
-
-        /// <summary>
         /// Solves A*X=B for X using a previously factored A matrix.
         /// </summary>
         /// <param name="a">The square, positive definite matrix A.</param>

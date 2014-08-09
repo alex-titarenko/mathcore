@@ -316,16 +316,6 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
         void CholeskyFactor(T[] a, int order);
 
         /// <summary>
-        /// Solves A*X=B for X using Cholesky factorization.
-        /// </summary>
-        /// <param name="a">The square, positive definite matrix A.</param>
-        /// <param name="orderA">The number of rows and columns in A.</param>
-        /// <param name="b">On entry the B matrix; on exit the X matrix.</param>
-        /// <param name="columnsB">The number of columns in the B matrix.</param>
-        /// <remarks>This is equivalent to the POTRF add POTRS LAPACK routines.</remarks>
-        void CholeskySolve(T[] a, int orderA, T[] b, int columnsB);
-
-        /// <summary>
         /// Solves A*X=B for X using a previously factored A matrix.
         /// </summary>
         /// <param name="a">The square, positive definite matrix A.</param>
