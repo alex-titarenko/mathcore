@@ -116,10 +116,6 @@
     <Compile Include="ThirdParty\Numerics\Providers\LinearAlgebra\ILinearAlgebraProvider.cs" />
     <Compile Include="ThirdParty\Numerics\Providers\LinearAlgebra\ManagedLinearAlgebraProvider.Complex.cs" />
     <Compile Include="ThirdParty\Numerics\Providers\LinearAlgebra\ManagedLinearAlgebraProvider.cs" />
-    <Compile Include="ThirdParty\Numerics\Random\RandomExtensions.cs" />
-    <Compile Include="ThirdParty\Numerics\Random\RandomSeed.cs" />
-    <Compile Include="ThirdParty\Numerics\Random\RandomSource.cs" />
-    <Compile Include="ThirdParty\Numerics\Random\SystemRandomSource.cs" />
     <Compile Include="ThirdParty\Numerics\Sorting.cs" />
     <Compile Include="ThirdParty\Numerics\SpecialFunctions\Stability.cs" />
     <Compile Include="ThirdParty\Numerics\Threading\CommonParallel.cs" />

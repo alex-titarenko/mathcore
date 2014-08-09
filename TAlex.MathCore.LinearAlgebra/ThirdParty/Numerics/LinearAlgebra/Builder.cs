@@ -104,7 +104,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
 
 namespace MathNet.Numerics.LinearAlgebra
 {
-    using MathNet.Numerics.Random;
     using Complex64 = TAlex.MathCore.Complex;
 
     /// <summary>
