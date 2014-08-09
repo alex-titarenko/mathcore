@@ -43,12 +43,6 @@ namespace MathNet.Numerics.LinearAlgebra
         // Factorizations
 
         /// <summary>
-        /// Computes the LU decomposition for a matrix.
-        /// </summary>
-        /// <returns>The LU decomposition object.</returns>
-        public abstract LU<T> LU();
-
-        /// <summary>
         /// Computes the QR decomposition for a matrix.
         /// </summary>
         /// <param name="method">The type of QR factorization to perform.</param>
@@ -73,72 +67,6 @@ namespace MathNet.Numerics.LinearAlgebra
         /// </summary>
         /// <returns>The EVD decomposition object.</returns>
         public abstract Evd<T> Evd(Symmetricity symmetricity = Symmetricity.Unknown);
-
-
-
-        // Direct Solvers: Full
-
-        /// <summary>
-        /// Solves a system of linear equations, <b>Ax = b</b>, with A QR factorized.
-        /// </summary>
-        /// <param name="input">The right hand side vector, <b>b</b>.</param>
-        /// <param name="result">The left hand side <see cref="Matrix{T}"/>, <b>x</b>.</param>
-        public void Solve(Vector<T> input, Vector<T> result)
-        {
-            if (ColumnCount == RowCount)
-            {
-                LU().Solve(input, result);
-                return;
-            }
-
-            QR().Solve(input, result);
-        }
-
-        /// <summary>
-        /// Solves a system of linear equations, <b>AX = B</b>, with A QR factorized.
-        /// </summary>
-        /// <param name="input">The right hand side <see cref="Matrix{T}"/>, <b>B</b>.</param>
-        /// <param name="result">The left hand side <see cref="Matrix{T}"/>, <b>X</b>.</param>
-        public void Solve(Matrix<T> input, Matrix<T> result)
-        {
-            if (ColumnCount == RowCount)
-            {
-                LU().Solve(input, result);
-                return;
-            }
-
-            QR().Solve(input, result);
-        }
-
-
-
-        // Direct Solvers: Simple
-
-        /// <summary>
-        /// Solves a system of linear equations, <b>AX = B</b>, with A QR factorized.
-        /// </summary>
-        /// <param name="input">The right hand side <see cref="Matrix{T}"/>, <b>B</b>.</param>
-        /// <returns>The left hand side <see cref="Matrix{T}"/>, <b>X</b>.</returns>
-        public Matrix<T> Solve(Matrix<T> input)
-        {
-            var x = Build.SameAs(this, ColumnCount, input.ColumnCount);
-            Solve(input, x);
-            return x;
-        }
-
-
-        /// <summary>
-        /// Solves a system of linear equations, <b>Ax = b</b>, with A QR factorized.
-        /// </summary>
-        /// <param name="input">The right hand side vector, <b>b</b>.</param>
-        /// <returns>The left hand side <see cref="Vector{T}"/>, <b>x</b>.</returns>
-        public Vector<T> Solve(Vector<T> input)
-        {
-            var x = Vector<T>.Build.SameAs(this, ColumnCount);
-            Solve(input, x);
-            return x;
-        }
-
 
 
         // Iterative Solvers: Full

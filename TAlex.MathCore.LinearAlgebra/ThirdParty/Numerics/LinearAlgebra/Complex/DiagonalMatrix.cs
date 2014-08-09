@@ -703,20 +703,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         }
 
         /// <summary>
-        /// Computes the determinant of this matrix.
-        /// </summary>
-        /// <returns>The determinant of this matrix.</returns>
-        public override Complex Determinant()
-        {
-            if (RowCount != ColumnCount)
-            {
-                throw new ArgumentException(Resources.ArgumentMatrixSquare);
-            }
-
-            return _data.Aggregate(Complex.One, (current, t) => current * t);
-        }
-
-        /// <summary>
         /// Returns the elements of the diagonal in a <see cref="DenseVector"/>.
         /// </summary>
         /// <returns>The elements of the diagonal.</returns>
@@ -819,7 +805,7 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
         /// <exception cref="ArgumentException">If <see cref="DiagonalMatrix"/> is not a square matrix.</exception>
         /// <exception cref="ArgumentException">If <see cref="DiagonalMatrix"/> is singular.</exception>
         /// <returns>The inverse of this matrix.</returns>
-        public override Matrix<Complex> Inverse()
+        public virtual Matrix<Complex> Inverse()
         {
             if (RowCount != ColumnCount)
             {

@@ -735,11 +735,6 @@ namespace MathNet.Numerics.LinearAlgebra.Complex
             return true;
         }
 
-        public override LU<Complex> LU()
-        {
-            return UserLU.Create(this);
-        }
-
         public override QR<Complex> QR(QRMethod method = QRMethod.Thin)
         {
             return UserQR.Create(this, method);

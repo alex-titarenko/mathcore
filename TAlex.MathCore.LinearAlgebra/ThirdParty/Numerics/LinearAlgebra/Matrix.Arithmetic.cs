@@ -1434,18 +1434,6 @@ namespace MathNet.Numerics.LinearAlgebra
             return Svd(false).ConditionNumber;
         }
 
-        /// <summary>Computes the determinant of this matrix.</summary>
-        /// <returns>The determinant of this matrix.</returns>
-        public virtual T Determinant()
-        {
-            if (RowCount != ColumnCount)
-            {
-                throw new ArgumentException(Resources.ArgumentMatrixSquare);
-            }
-
-            return LU().Determinant;
-        }
-
         /// <summary>
         /// Computes an orthonormal basis for the null space of this matrix,
         /// also known as the kernel of the corresponding matrix transformation.
@@ -1464,18 +1452,6 @@ namespace MathNet.Numerics.LinearAlgebra
         {
             var svd = Svd(true);
             return svd.U.EnumerateColumns(0, svd.Rank).ToArray();
-        }
-
-        /// <summary>Computes the inverse of this matrix.</summary>
-        /// <returns>The inverse of this matrix.</returns>
-        public virtual Matrix<T> Inverse()
-        {
-            if (RowCount != ColumnCount)
-            {
-                throw new ArgumentException(Resources.ArgumentMatrixSquare);
-            }
-
-            return LU().Inverse();
         }
 
         /// <summary>
