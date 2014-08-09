@@ -48,7 +48,6 @@
     <Compile Include="Vendors\Numerics\GlobalizationHelper.cs" />
     <Compile Include="Vendors\Numerics\LinearAlgebra\Complex\Factorization\DenseEvd.cs" />
     <Compile Include="Vendors\Numerics\LinearAlgebra\Options.cs" />
-    <Compile Include="Vendors\Numerics\Permutation.cs" />
     <Compile Include="Vendors\Numerics\Precision.Comparison.cs" />
     <Compile Include="Vendors\Numerics\Precision.cs" />
     <Compile Include="Vendors\Numerics\Precision.Equality.cs" />
@@ -61,7 +60,6 @@
     <Compile Include="Vendors\Numerics\Providers\LinearAlgebra\ILinearAlgebraProvider.cs" />
     <Compile Include="Vendors\Numerics\Providers\LinearAlgebra\ManagedLinearAlgebraProvider.Complex.cs" />
     <Compile Include="Vendors\Numerics\Providers\LinearAlgebra\ManagedLinearAlgebraProvider.cs" />
-    <Compile Include="Vendors\Numerics\Sorting.cs" />
     <Compile Include="Vendors\Numerics\SpecialFunctions\Stability.cs" />
     <Compile Include="Vendors\Numerics\Threading\CommonParallel.cs" />
     <Compile Include="NumericUtilExtensions.cs" />

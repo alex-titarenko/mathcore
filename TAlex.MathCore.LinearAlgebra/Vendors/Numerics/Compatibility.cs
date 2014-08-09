@@ -6,15 +6,6 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
-    public class SerializableAttribute : Attribute
-    {
-    }
-
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public class SpecialNameAttribute : Attribute
-    {
-    }
 
     internal static class Partitioner
     {
