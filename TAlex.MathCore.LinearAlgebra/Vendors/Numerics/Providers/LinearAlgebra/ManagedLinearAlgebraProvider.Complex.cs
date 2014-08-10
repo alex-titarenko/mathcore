@@ -32,7 +32,7 @@ using System;
 using MathNet.Numerics.LinearAlgebra.Complex.Factorization;
 using MathNet.Numerics.Threading;
 using TAlex.MathCore;
-using Resources;
+using TAlex.MathCore.LinearAlgebra.Properties;
 
 namespace MathNet.Numerics.Providers.LinearAlgebra
 {

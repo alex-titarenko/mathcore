@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Resources;
+    using TAlex.MathCore.LinearAlgebra.Properties;
 
 
     internal static class Partitioner

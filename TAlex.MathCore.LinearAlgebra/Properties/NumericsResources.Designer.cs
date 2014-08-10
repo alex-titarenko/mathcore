@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Resources {
+namespace TAlex.MathCore.LinearAlgebra.Properties {
     using System;
     
     

@@ -1,5 +1,5 @@
 ﻿using System;
-using Resources;
+using TAlex.MathCore.LinearAlgebra.Properties;
 
 
 namespace MathNet.Numerics
