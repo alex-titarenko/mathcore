@@ -1,5 +1,6 @@
 ﻿using System;
-using MathNet.Numerics.Properties;
+using Resources;
+
 
 namespace MathNet.Numerics
 {
@@ -8,7 +9,7 @@ namespace MathNet.Numerics
     /// </summary>
     public class NonConvergenceException : Exception
     {
-        public NonConvergenceException() : base(Resources.ConvergenceFailed)
+        public NonConvergenceException() : base(NumericsResources.ConvergenceFailed)
         {
         }
 
@@ -27,7 +28,7 @@ namespace MathNet.Numerics
     public class NumericalBreakdownException : NonConvergenceException
     {
         public NumericalBreakdownException()
-            : base(Resources.NumericalBreakdown)
+            : base(NumericsResources.NumericalBreakdown)
         {
         }
 

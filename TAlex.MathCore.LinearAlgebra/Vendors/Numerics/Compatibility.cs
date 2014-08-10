@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Resources;
 
 
     internal static class Partitioner
@@ -92,7 +93,7 @@
                 var action = actions[i];
                 if (action == null)
                 {
-                    throw new ArgumentException(String.Format(Properties.Resources.ArgumentItemNull, "actions"), "actions");
+                    throw new ArgumentException(String.Format(NumericsResources.ArgumentItemNull, "actions"), "actions");
                 }
 
                 tasks[i] = Task.Factory.StartNew(action, parallelOptions.CancellationToken, TaskCreationOptions.None, parallelOptions.TaskScheduler);

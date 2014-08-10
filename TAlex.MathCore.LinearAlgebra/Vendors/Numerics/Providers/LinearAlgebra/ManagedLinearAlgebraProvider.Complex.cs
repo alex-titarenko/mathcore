@@ -30,9 +30,9 @@
 
 using System;
 using MathNet.Numerics.LinearAlgebra.Complex.Factorization;
-using MathNet.Numerics.Properties;
 using MathNet.Numerics.Threading;
 using TAlex.MathCore;
+using Resources;
 
 namespace MathNet.Numerics.Providers.LinearAlgebra
 {
@@ -63,12 +63,12 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (y.Length != x.Length)
             {
-                throw new ArgumentException(Resources.ArgumentVectorsSameLength);
+                throw new ArgumentException(NumericsResources.ArgumentVectorsSameLength);
             }
 
             if (y.Length != x.Length)
             {
-                throw new ArgumentException(Resources.ArgumentVectorsSameLength);
+                throw new ArgumentException(NumericsResources.ArgumentVectorsSameLength);
             }
 
             if (alpha.IsZero)
@@ -173,7 +173,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (y.Length != x.Length)
             {
-                throw new ArgumentException(Resources.ArgumentVectorsSameLength);
+                throw new ArgumentException(NumericsResources.ArgumentVectorsSameLength);
             }
 
             var dot = Complex.Zero;
@@ -214,7 +214,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (y.Length != x.Length || y.Length != result.Length)
             {
-                throw new ArgumentException(Resources.ArgumentVectorsSameLength);
+                throw new ArgumentException(NumericsResources.ArgumentVectorsSameLength);
             }
 
             CommonParallel.For(0, y.Length, 4096, (a, b) =>
@@ -255,7 +255,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (y.Length != x.Length || y.Length != result.Length)
             {
-                throw new ArgumentException(Resources.ArgumentVectorsSameLength);
+                throw new ArgumentException(NumericsResources.ArgumentVectorsSameLength);
             }
 
             CommonParallel.For(0, y.Length, 4096, (a, b) =>
@@ -296,7 +296,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (y.Length != x.Length || y.Length != result.Length)
             {
-                throw new ArgumentException(Resources.ArgumentVectorsSameLength);
+                throw new ArgumentException(NumericsResources.ArgumentVectorsSameLength);
             }
 
             CommonParallel.For(0, y.Length, 4096, (a, b) =>
@@ -337,7 +337,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (y.Length != x.Length || y.Length != result.Length)
             {
-                throw new ArgumentException(Resources.ArgumentVectorsSameLength);
+                throw new ArgumentException(NumericsResources.ArgumentVectorsSameLength);
             }
 
             CommonParallel.For(0, y.Length, 4096, (a, b) =>
@@ -911,12 +911,12 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (data.Length != order*order)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "data");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "data");
             }
 
             if (ipiv.Length != order)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "ipiv");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "ipiv");
             }
 
             // Initialize the pivot matrix to the identity permutation.
@@ -1004,7 +1004,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (a.Length != order*order)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "a");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "a");
             }
 
             var ipiv = new int[order];
@@ -1033,12 +1033,12 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (a.Length != order*order)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "a");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "a");
             }
 
             if (ipiv.Length != order)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "ipiv");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "ipiv");
             }
 
             var inverse = new Complex[a.Length];
@@ -1102,17 +1102,17 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (a.Length != order*order)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "a");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "a");
             }
 
             if (b.Length != order*columnsOfB)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "b");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "b");
             }
 
             if (ReferenceEquals(a, b))
             {
-                throw new ArgumentException(Resources.ArgumentReferenceDifferent);
+                throw new ArgumentException(NumericsResources.ArgumentReferenceDifferent);
             }
 
             var ipiv = new int[order];
@@ -1150,22 +1150,22 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (a.Length != order*order)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "a");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "a");
             }
 
             if (ipiv.Length != order)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "ipiv");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "ipiv");
             }
 
             if (b.Length != order*columnsOfB)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "b");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "b");
             }
 
             if (ReferenceEquals(a, b))
             {
-                throw new ArgumentException(Resources.ArgumentReferenceDifferent);
+                throw new ArgumentException(NumericsResources.ArgumentReferenceDifferent);
             }
 
             // Compute the column vector  P*B
@@ -1264,7 +1264,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 }
                 else
                 {
-                    throw new ArgumentException(Resources.ArgumentMatrixPositiveDefinite);
+                    throw new ArgumentException(NumericsResources.ArgumentMatrixPositiveDefinite);
                 }
 
                 for (var i = ij + 1; i < order; i++)
@@ -1331,12 +1331,12 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (b.Length != orderA*columnsB)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "b");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "b");
             }
 
             if (ReferenceEquals(a, b))
             {
-                throw new ArgumentException(Resources.ArgumentReferenceDifferent);
+                throw new ArgumentException(NumericsResources.ArgumentReferenceDifferent);
             }
 
             CommonParallel.For(0, columnsB, (u, v) =>
@@ -1412,17 +1412,17 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (r.Length != rowsR*columnsR)
             {
-                throw new ArgumentException(string.Format(Resources.ArgumentArrayWrongLength, "rowsR * columnsR"), "r");
+                throw new ArgumentException(string.Format(NumericsResources.ArgumentArrayWrongLength, "rowsR * columnsR"), "r");
             }
 
             if (tau.Length < Math.Min(rowsR, columnsR))
             {
-                throw new ArgumentException(string.Format(Resources.ArrayTooSmall, "min(m,n)"), "tau");
+                throw new ArgumentException(string.Format(NumericsResources.ArrayTooSmall, "min(m,n)"), "tau");
             }
 
             if (q.Length != rowsR*rowsR)
             {
-                throw new ArgumentException(string.Format(Resources.ArgumentArrayWrongLength, "rowsR * rowsR"), "q");
+                throw new ArgumentException(string.Format(NumericsResources.ArgumentArrayWrongLength, "rowsR * rowsR"), "q");
             }
 
             var work = columnsR > rowsR ? new Complex[rowsR*rowsR] : new Complex[rowsR*columnsR];
@@ -1463,17 +1463,17 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (r.Length != rowsR*columnsR)
             {
-                throw new ArgumentException(string.Format(Resources.ArgumentArrayWrongLength, "rowsR * columnsR"), "r");
+                throw new ArgumentException(string.Format(NumericsResources.ArgumentArrayWrongLength, "rowsR * columnsR"), "r");
             }
 
             if (tau.Length < Math.Min(rowsR, columnsR))
             {
-                throw new ArgumentException(string.Format(Resources.ArrayTooSmall, "min(m,n)"), "tau");
+                throw new ArgumentException(string.Format(NumericsResources.ArrayTooSmall, "min(m,n)"), "tau");
             }
 
             if (q.Length != rowsR*rowsR)
             {
-                throw new ArgumentException(string.Format(Resources.ArgumentArrayWrongLength, "rowsR * rowsR"), "q");
+                throw new ArgumentException(string.Format(NumericsResources.ArgumentArrayWrongLength, "rowsR * rowsR"), "q");
             }
 
             if (columnsR > rowsR)
@@ -1481,7 +1481,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 if (work.Length < rowsR*rowsR)
                 {
                     work[0] = rowsR*rowsR;
-                    throw new ArgumentException(Resources.WorkArrayTooSmall, "work");
+                    throw new ArgumentException(NumericsResources.WorkArrayTooSmall, "work");
                 }
             }
             else
@@ -1489,7 +1489,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
                 if (work.Length < rowsR*columnsR)
                 {
                     work[0] = rowsR*columnsR;
-                    throw new ArgumentException(Resources.WorkArrayTooSmall, "work");
+                    throw new ArgumentException(NumericsResources.WorkArrayTooSmall, "work");
                 }
             }
 
@@ -1542,17 +1542,17 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (a.Length != rowsA*columnsA)
             {
-                throw new ArgumentException(string.Format(Resources.ArgumentArrayWrongLength, "rowsR * columnsR"), "a");
+                throw new ArgumentException(string.Format(NumericsResources.ArgumentArrayWrongLength, "rowsR * columnsR"), "a");
             }
 
             if (tau.Length < Math.Min(rowsA, columnsA))
             {
-                throw new ArgumentException(string.Format(Resources.ArrayTooSmall, "min(m,n)"), "tau");
+                throw new ArgumentException(string.Format(NumericsResources.ArrayTooSmall, "min(m,n)"), "tau");
             }
 
             if (r.Length != columnsA*columnsA)
             {
-                throw new ArgumentException(string.Format(Resources.ArgumentArrayWrongLength, "columnsA * columnsA"), "r");
+                throw new ArgumentException(string.Format(NumericsResources.ArgumentArrayWrongLength, "columnsA * columnsA"), "r");
             }
 
             var work = new Complex[rowsA*columnsA];
@@ -1593,23 +1593,23 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (a.Length != rowsA*columnsA)
             {
-                throw new ArgumentException(string.Format(Resources.ArgumentArrayWrongLength, "rowsR * columnsR"), "a");
+                throw new ArgumentException(string.Format(NumericsResources.ArgumentArrayWrongLength, "rowsR * columnsR"), "a");
             }
 
             if (tau.Length < Math.Min(rowsA, columnsA))
             {
-                throw new ArgumentException(string.Format(Resources.ArrayTooSmall, "min(m,n)"), "tau");
+                throw new ArgumentException(string.Format(NumericsResources.ArrayTooSmall, "min(m,n)"), "tau");
             }
 
             if (r.Length != columnsA*columnsA)
             {
-                throw new ArgumentException(string.Format(Resources.ArgumentArrayWrongLength, "columnsA * columnsA"), "r");
+                throw new ArgumentException(string.Format(NumericsResources.ArgumentArrayWrongLength, "columnsA * columnsA"), "r");
             }
 
             if (work.Length < rowsA*columnsA)
             {
                 work[0] = rowsA*columnsA;
-                throw new ArgumentException(Resources.WorkArrayTooSmall, "work");
+                throw new ArgumentException(NumericsResources.WorkArrayTooSmall, "work");
             }
 
             var minmn = Math.Min(rowsA, columnsA);
@@ -1797,17 +1797,17 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (u.Length != rowsA*rowsA)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "u");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "u");
             }
 
             if (vt.Length != columnsA*columnsA)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "vt");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "vt");
             }
 
             if (s.Length != Math.Min(rowsA, columnsA))
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "s");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "s");
             }
 
             var work = new Complex[rowsA];
@@ -1858,28 +1858,28 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (u.Length != rowsA*rowsA)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "u");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "u");
             }
 
             if (vt.Length != columnsA*columnsA)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "vt");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "vt");
             }
 
             if (s.Length != Math.Min(rowsA, columnsA))
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "s");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "s");
             }
 
             if (work.Length == 0)
             {
-                throw new ArgumentException(Resources.ArgumentSingleDimensionArray, "work");
+                throw new ArgumentException(NumericsResources.ArgumentSingleDimensionArray, "work");
             }
 
             if (work.Length < rowsA)
             {
                 work[0] = rowsA;
-                throw new ArgumentException(Resources.WorkArrayTooSmall, "work");
+                throw new ArgumentException(NumericsResources.WorkArrayTooSmall, "work");
             }
 
             const int maxiter = 1000;
@@ -2527,12 +2527,12 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (b.Length != rowsA*columnsB)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "b");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "b");
             }
 
             if (x.Length != columnsA*columnsB)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "b");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "b");
             }
 
             var work = new Complex[rowsA];
@@ -2586,27 +2586,27 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (u.Length != rowsA*rowsA)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "u");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "u");
             }
 
             if (vt.Length != columnsA*columnsA)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "vt");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "vt");
             }
 
             if (s.Length != Math.Min(rowsA, columnsA))
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "s");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "s");
             }
 
             if (b.Length != rowsA*columnsB)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "b");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "b");
             }
 
             if (x.Length != columnsA*columnsB)
             {
-                throw new ArgumentException(Resources.ArgumentArraysSameLength, "b");
+                throw new ArgumentException(NumericsResources.ArgumentArraysSameLength, "b");
             }
 
             var mn = Math.Min(rowsA, columnsA);
@@ -2661,7 +2661,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (matrix.Length != order*order)
             {
-                throw new ArgumentException(String.Format(Resources.ArgumentArrayWrongLength, order*order), "matrix");
+                throw new ArgumentException(String.Format(NumericsResources.ArgumentArrayWrongLength, order*order), "matrix");
             }
 
             if (matrixEv == null)
@@ -2671,7 +2671,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (matrixEv.Length != order*order)
             {
-                throw new ArgumentException(String.Format(Resources.ArgumentArrayWrongLength, order*order), "matrixEv");
+                throw new ArgumentException(String.Format(NumericsResources.ArgumentArrayWrongLength, order*order), "matrixEv");
             }
 
             if (vectorEv == null)
@@ -2681,7 +2681,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (vectorEv.Length != order)
             {
-                throw new ArgumentException(String.Format(Resources.ArgumentArrayWrongLength, order), "vectorEv");
+                throw new ArgumentException(String.Format(NumericsResources.ArgumentArrayWrongLength, order), "vectorEv");
             }
 
             if (matrixD == null)
@@ -2691,7 +2691,7 @@ namespace MathNet.Numerics.Providers.LinearAlgebra
 
             if (matrixD.Length != order*order)
             {
-                throw new ArgumentException(String.Format(Resources.ArgumentArrayWrongLength, order*order), "matrixD");
+                throw new ArgumentException(String.Format(NumericsResources.ArgumentArrayWrongLength, order*order), "matrixD");
             }
             var matrixCopy = new Complex[matrix.Length];
             Array.Copy(matrix, matrixCopy, matrix.Length);

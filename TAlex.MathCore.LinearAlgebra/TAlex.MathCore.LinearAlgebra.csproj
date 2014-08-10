@@ -51,11 +51,10 @@
     <Compile Include="Vendors\Numerics\Precision.Comparison.cs" />
     <Compile Include="Vendors\Numerics\Precision.cs" />
     <Compile Include="Vendors\Numerics\Precision.Equality.cs" />
-    <Compile Include="Vendors\Numerics\Properties\Resources.Designer.cs" />
-    <Compile Include="Vendors\Numerics\Properties\Resources1.Designer.cs">
+    <Compile Include="Properties\NumericsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>NumericsResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Vendors\Numerics\Providers\LinearAlgebra\ILinearAlgebraProvider.cs" />
     <Compile Include="Vendors\Numerics\Providers\LinearAlgebra\ManagedLinearAlgebraProvider.Complex.cs" />
@@ -72,9 +71,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Vendors\Numerics\Properties\Resources.resx">
+    <EmbeddedResource Include="Properties\NumericsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+      <LastGenOutput>NumericsResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

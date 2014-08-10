@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TAlex.MathCore.LinearAlgebra.Vendors.Numerics.Properties {
+namespace Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace TAlex.MathCore.LinearAlgebra.Vendors.Numerics.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class NumericsResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal NumericsResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace TAlex.MathCore.LinearAlgebra.Vendors.Numerics.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TAlex.MathCore.LinearAlgebra.Vendors.Numerics.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TAlex.MathCore.LinearAlgebra.Properties.NumericsResources", typeof(NumericsResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
