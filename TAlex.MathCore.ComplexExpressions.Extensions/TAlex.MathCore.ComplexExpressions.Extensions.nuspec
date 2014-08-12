@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://bitbucket.org/t_alex/talex.mathcore</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2014 T-Alex Software</copyright>
+    <tags>Math MathCore Mathematica Complex Expressions</tags>
+	
+	<dependencies>
+		<dependency id="TAlex.MathCore" />
+		<dependency id="TAlex.MathCore.ExpressionsBase" />
+		<dependency id="TAlex.MathCore.LinearAlgebra" />
+		<dependency id="TAlex.MathCore.NumericalAnalysis" />
+		<dependency id="TAlex.MathCore.SpecialFunctions" />
+		<dependency id="TAlex.MathCore.Statistics" />
+	</dependencies>
+  </metadata>
+</package>
