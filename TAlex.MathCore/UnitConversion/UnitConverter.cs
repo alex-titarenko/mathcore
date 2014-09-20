@@ -8,10 +8,7 @@ namespace TAlex.MathCore.UnitConversion
 {
     public static class UnitConverter
     {
-        public static decimal Convert(decimal sourceValue, Unit sourceUnit, Unit outputUnit)
-        {
-            return sourceUnit.Convert(sourceValue, outputUnit);
-        }
+        public static readonly Quantity Length = new Length();
 
 
         public static IList<Quantity> Quantities
@@ -20,9 +17,15 @@ namespace TAlex.MathCore.UnitConversion
             {
                 return new List<Quantity>
                 {
-                    new Length()
+                    Length
                 };
             }
+        }
+
+
+        public static decimal Convert(decimal sourceValue, Unit sourceUnit, Unit outputUnit)
+        {
+            return sourceUnit.Convert(sourceValue, outputUnit);
         }
     }
 }
