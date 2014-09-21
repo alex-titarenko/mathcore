@@ -56,9 +56,11 @@
     </Compile>
     <Compile Include="SpecialFunctions\Combinatorics.cs" />
     <Compile Include="SpecialFunctions\NumberTheory.cs" />
+    <Compile Include="UnitConversion\Quantities\Data.cs" />
     <Compile Include="UnitConversion\Quantities\Quantity.cs" />
     <Compile Include="UnitConversion\UnitConverter.cs" />
     <Compile Include="UnitConversion\Quantities\Length.cs" />
+    <Compile Include="UnitConversion\Units\DataUnit.cs" />
     <Compile Include="UnitConversion\Units\LinearUnit.cs" />
     <Compile Include="UnitConversion\Units\Unit.cs" />
   </ItemGroup>

@@ -9,6 +9,7 @@ namespace TAlex.MathCore.UnitConversion
     public static class UnitConverter
     {
         public static readonly Quantity Length = new Length();
+        public static readonly Data Data = new Data();
 
 
         public static IList<Quantity> Quantities
@@ -17,7 +18,8 @@ namespace TAlex.MathCore.UnitConversion
             {
                 return new List<Quantity>
                 {
-                    Length
+                    Length,
+                    Data
                 };
             }
         }
