@@ -56,12 +56,16 @@
     </Compile>
     <Compile Include="SpecialFunctions\Combinatorics.cs" />
     <Compile Include="SpecialFunctions\NumberTheory.cs" />
+    <Compile Include="UnitConversion\Quantities\Angle.cs" />
     <Compile Include="UnitConversion\Quantities\Data.cs" />
     <Compile Include="UnitConversion\Quantities\Quantity.cs" />
+    <Compile Include="UnitConversion\Quantities\Temperature.cs" />
     <Compile Include="UnitConversion\Quantities\Time.cs" />
+    <Compile Include="UnitConversion\Quantities\Weight.cs" />
     <Compile Include="UnitConversion\UnitConverter.cs" />
     <Compile Include="UnitConversion\Quantities\Length.cs" />
     <Compile Include="UnitConversion\Units\LinearUnit.cs" />
+    <Compile Include="UnitConversion\Units\TemperatureUnit.cs" />
     <Compile Include="UnitConversion\Units\Unit.cs" />
   </ItemGroup>
   <ItemGroup>

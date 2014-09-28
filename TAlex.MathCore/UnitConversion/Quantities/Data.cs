@@ -22,8 +22,8 @@ namespace TAlex.MathCore.UnitConversion.Quantities
         public static readonly LinearUnit Megabyte = new LinearUnit("Megabyte", "Megabytes", "MB", 8388608);
         public static readonly LinearUnit Gigabit = new LinearUnit("Gigabit", "Gigabits", "gb", 1073741824);
         public static readonly LinearUnit Gigabyte = new LinearUnit("Gigabyte", "Gigabytes", "GB", 8589934592);
-        public static readonly LinearUnit Terabit = new LinearUnit("Tegabit", "Tegabits", "tb", 1099511627776);
-        public static readonly LinearUnit Tegabyte = new LinearUnit("Tegabyte", "Tegabytes", "TB", 8796093022208);
+        public static readonly LinearUnit Terabit = new LinearUnit("Terabit", "Terabits", "tb", 1099511627776);
+        public static readonly LinearUnit Terabyte = new LinearUnit("Terabyte", "Terabytes", "TB", 8796093022208);
         public static readonly LinearUnit Petabit = new LinearUnit("Petabit", "Petabits", "pb", 1125899906842624);
         public static readonly LinearUnit Petabyte = new LinearUnit("Petabyte", "Petabytes", "PB", 9007199254740992);
 
@@ -42,9 +42,9 @@ namespace TAlex.MathCore.UnitConversion.Quantities
                     Gigabit,
                     Gigabyte,
                     Terabit,
-                    Tegabyte,
+                    Terabyte,
                     Petabit,
-                    Tegabyte
+                    Petabyte
                 };
             }
         }
