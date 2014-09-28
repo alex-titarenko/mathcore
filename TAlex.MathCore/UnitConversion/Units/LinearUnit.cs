@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 namespace TAlex.MathCore.UnitConversion.Units
 {
     public class LinearUnit : Unit
@@ -20,7 +19,7 @@ namespace TAlex.MathCore.UnitConversion.Units
 
         public override decimal Convert(decimal sourceValue, Unit outputUnit)
         {
-            return sourceValue / Factor * ((LinearUnit)outputUnit).Factor;
+            return sourceValue * Factor / ((LinearUnit)outputUnit).Factor;
         }
     }
 }
