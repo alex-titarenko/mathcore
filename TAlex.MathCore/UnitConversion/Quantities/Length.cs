@@ -9,11 +9,6 @@ namespace TAlex.MathCore.UnitConversion.Quantities
 {
     public class Length : Quantity
     {
-        public override string Name
-        {
-            get { return "Length"; }
-        }
-
         public static readonly LinearUnit Nanometer = new LinearUnit("Nanometer", "Nanometers", "nm", 0.000000001M);
         public static readonly LinearUnit Micron = new LinearUnit("Micron", "Microns", "µm", 0.000001M);
         public static readonly LinearUnit Millimeter = new LinearUnit("Millimeter", "Millimeters", "mm", 0.001M);
@@ -25,8 +20,13 @@ namespace TAlex.MathCore.UnitConversion.Quantities
         public static readonly LinearUnit Feet = new LinearUnit("Feet", "Feet", "ft", 0.3048M);
         public static readonly LinearUnit Yard = new LinearUnit("Yard", "Yards", "yd", 0.9144M);
         public static readonly LinearUnit Mile = new LinearUnit("Mile", "Miles", "mi", 1609.344M);
-        public static readonly LinearUnit NauticalMile = new LinearUnit("Nautical Mile", "Nautical Miles", "nautical mi", 1852);
+        public static readonly LinearUnit NauticalMile = new LinearUnit("Nautical Mile", "Nautical Miles", "nmi", 1852);
 
+
+        public override string Name
+        {
+            get { return "Length"; }
+        }
 
         public override List<Unit> Units
         {

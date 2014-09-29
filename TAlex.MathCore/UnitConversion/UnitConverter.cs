@@ -10,6 +10,8 @@ namespace TAlex.MathCore.UnitConversion
     {
         public static readonly Length Length = new Length();
         public static readonly Weight Weight = new Weight();
+        public static readonly Volume Volume = new Volume(); 
+        public static readonly Speed Speed = new Speed();
         public static readonly Time Time = new Time();
         public static readonly Temperature Temperature = new Temperature();
         public static readonly Angle Angle = new Angle(); 
@@ -24,6 +26,8 @@ namespace TAlex.MathCore.UnitConversion
                 {
                     Length,
                     Weight,
+                    Volume,
+                    Speed,
                     Time,
                     Temperature,
                     Angle,

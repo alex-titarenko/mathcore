@@ -9,11 +9,6 @@ namespace TAlex.MathCore.UnitConversion.Quantities
 {
     public class Data : Quantity
     {
-        public override string Name
-        {
-            get { return "Data"; }
-        }
-
         public static readonly LinearUnit Bit = new LinearUnit("Bit", "Bits", "b", 1);
         public static readonly LinearUnit Byte = new LinearUnit("Byte", "Bytes", "B", 8);
         public static readonly LinearUnit Kilobit = new LinearUnit("Kilobit", "Kilobits", "kb", 1024);
@@ -26,6 +21,12 @@ namespace TAlex.MathCore.UnitConversion.Quantities
         public static readonly LinearUnit Terabyte = new LinearUnit("Terabyte", "Terabytes", "TB", 8796093022208);
         public static readonly LinearUnit Petabit = new LinearUnit("Petabit", "Petabits", "pb", 1125899906842624);
         public static readonly LinearUnit Petabyte = new LinearUnit("Petabyte", "Petabytes", "PB", 9007199254740992);
+
+
+        public override string Name
+        {
+            get { return "Data"; }
+        }
 
         public override List<Units.Unit> Units
         {

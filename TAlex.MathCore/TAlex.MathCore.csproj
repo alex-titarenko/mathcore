@@ -59,8 +59,10 @@
     <Compile Include="UnitConversion\Quantities\Angle.cs" />
     <Compile Include="UnitConversion\Quantities\Data.cs" />
     <Compile Include="UnitConversion\Quantities\Quantity.cs" />
+    <Compile Include="UnitConversion\Quantities\Speed.cs" />
     <Compile Include="UnitConversion\Quantities\Temperature.cs" />
     <Compile Include="UnitConversion\Quantities\Time.cs" />
+    <Compile Include="UnitConversion\Quantities\Volume.cs" />
     <Compile Include="UnitConversion\Quantities\Weight.cs" />
     <Compile Include="UnitConversion\UnitConverter.cs" />
     <Compile Include="UnitConversion\Quantities\Length.cs" />
