@@ -57,7 +57,11 @@
     <Compile Include="SpecialFunctions\Combinatorics.cs" />
     <Compile Include="SpecialFunctions\NumberTheory.cs" />
     <Compile Include="UnitConversion\Quantities\Angle.cs" />
+    <Compile Include="UnitConversion\Quantities\Area.cs" />
     <Compile Include="UnitConversion\Quantities\Data.cs" />
+    <Compile Include="UnitConversion\Quantities\Energy.cs" />
+    <Compile Include="UnitConversion\Quantities\Power.cs" />
+    <Compile Include="UnitConversion\Quantities\Pressure.cs" />
     <Compile Include="UnitConversion\Quantities\Quantity.cs" />
     <Compile Include="UnitConversion\Quantities\Speed.cs" />
     <Compile Include="UnitConversion\Quantities\Temperature.cs" />
