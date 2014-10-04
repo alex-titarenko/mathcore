@@ -23,7 +23,7 @@ namespace TAlex.MathCore.UnitConversion.Quantities.Annotation
         public QuantityAttribute(string defaultInputUnitName, string defaultOutputUnitName)
         {
             DefaultInputUnitName = defaultInputUnitName;
-            DefaultOutputUnitName = DefaultOutputUnitName;
+            DefaultOutputUnitName = defaultOutputUnitName;
         }
     }
 }
