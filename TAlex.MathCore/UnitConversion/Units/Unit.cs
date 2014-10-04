@@ -24,5 +24,11 @@ namespace TAlex.MathCore.UnitConversion.Units
 
 
         public abstract decimal Convert(decimal sourceValue, Unit outputUnit);
+
+
+        public override string ToString()
+        {
+            return Plural;
+        }
     }
 }

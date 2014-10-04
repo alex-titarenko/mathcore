@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAlex.MathCore.UnitConversion.Quantities.Annotation;
 using TAlex.MathCore.UnitConversion.Units;
 
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
+    [Quantity("Radian", "Degree")]
     public class Angle : Quantity
     {
         public static readonly LinearUnit Degree = new LinearUnit("Degree", "Degrees", "°", (decimal)Math.PI / 180);

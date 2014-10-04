@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAlex.MathCore.UnitConversion.Quantities.Annotation;
 using TAlex.MathCore.UnitConversion.Units;
 
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
+    [Quantity("Sq. feet", "Sq. meter")]
     public class Area : Quantity
     {
         public static readonly LinearUnit SquareMillimeter = new LinearUnit("Sq. millimeter", "Sq. millimeters", "sq mm", 0.000001M);

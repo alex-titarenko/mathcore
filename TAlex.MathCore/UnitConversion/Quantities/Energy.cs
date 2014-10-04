@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAlex.MathCore.UnitConversion.Quantities.Annotation;
 using TAlex.MathCore.UnitConversion.Units;
 
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
+    [Quantity("Joule", "Calorie")]
     public class Energy : Quantity
     {
         public static readonly LinearUnit ElectronVolt = new LinearUnit("Electron volt", "Electron volts", "eV", 1.60217653e-19M);

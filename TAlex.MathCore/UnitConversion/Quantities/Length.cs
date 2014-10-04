@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAlex.MathCore.UnitConversion.Quantities.Annotation;
 using TAlex.MathCore.UnitConversion.Units;
 
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
+    [Quantity("Inch", "Centimeter")]
     public class Length : Quantity
     {
         public static readonly LinearUnit Nanometer = new LinearUnit("Nanometer", "Nanometers", "nm", 0.000000001M);

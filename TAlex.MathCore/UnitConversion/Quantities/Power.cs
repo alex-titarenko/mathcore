@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAlex.MathCore.UnitConversion.Quantities.Annotation;
 using TAlex.MathCore.UnitConversion.Units;
 
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
+    [Quantity("Kilowatt", "Horsepower")]
     public class Power : Quantity
     {
         public static readonly LinearUnit Watt = new LinearUnit("Watt", "Watts", "W", 1);

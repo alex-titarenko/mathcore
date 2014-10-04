@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAlex.MathCore.UnitConversion.Quantities.Annotation;
 using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
+    [Quantity("Hour", "Minute")]
     public class Time : Quantity
     {
         public static readonly LinearUnit Microsecond = new LinearUnit("Microsecond", "Microseconds", "μs", 0.000001M);

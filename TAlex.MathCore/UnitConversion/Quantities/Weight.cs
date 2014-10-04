@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TAlex.MathCore.UnitConversion.Quantities.Annotation;
 using TAlex.MathCore.UnitConversion.Units;
 
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
+    [Quantity("Pound", "Kilogram")]
     public class Weight : Quantity
     {
         public static readonly LinearUnit Carat = new LinearUnit("Carat", "Carats", "ct", 0.0002M);
