@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Mile per hour", "Kilometer per hour")]
+    [Quantity("mph", "km/h")]
     public class Speed : Quantity
     {
         public static readonly LinearUnit CentimeterPerSecond = new LinearUnit("Centimeter per second", "Centimeters per second", "cm/s", 0.01M);

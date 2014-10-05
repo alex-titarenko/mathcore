@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Gigabyte", "Megabyte")]
+    [Quantity("GB", "MB")]
     public class Data : Quantity
     {
         public static readonly LinearUnit Bit = new LinearUnit("Bit", "Bits", "b", 1);

@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Pound", "Kilogram")]
+    [Quantity("lb", "kg")]
     public class Weight : Quantity
     {
         public static readonly LinearUnit Carat = new LinearUnit("Carat", "Carats", "ct", 0.0002M);

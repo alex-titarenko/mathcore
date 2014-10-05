@@ -7,7 +7,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Hour", "Minute")]
+    [Quantity("h", "min")]
     public class Time : Quantity
     {
         public static readonly LinearUnit Microsecond = new LinearUnit("Microsecond", "Microseconds", "μs", 0.000001M);

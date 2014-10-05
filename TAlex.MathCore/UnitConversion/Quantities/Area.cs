@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Square feet", "Square meter")]
+    [Quantity("sq ft", "sq m")]
     public class Area : Quantity
     {
         public static readonly LinearUnit SquareMillimeter = new LinearUnit("Square millimeter", "Square millimeters", "sq mm", 0.000001M);

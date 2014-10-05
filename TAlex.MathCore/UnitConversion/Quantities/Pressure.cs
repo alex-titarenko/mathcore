@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Millimeter of mercury", "Pascal")]
+    [Quantity("mmHg", "Pa")]
     public class Pressure : Quantity
     {
         public static readonly LinearUnit Pascal = new LinearUnit("Pascal", "Pascal", "Pa", 1);

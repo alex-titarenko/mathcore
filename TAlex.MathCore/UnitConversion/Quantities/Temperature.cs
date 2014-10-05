@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Fahrenheit", "Celsius")]
+    [Quantity("F", "C")]
     public class Temperature : Quantity
     {
         public static readonly CustomUnit Celsius = new CustomUnit("Celsius", "Celsius", "C", C => C, C => C);

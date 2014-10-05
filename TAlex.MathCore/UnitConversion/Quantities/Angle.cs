@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Radian", "Degree")]
+    [Quantity("rad", "°")]
     public class Angle : Quantity
     {
         public static readonly LinearUnit Degree = new LinearUnit("Degree", "Degrees", "°", (decimal)Math.PI / 180);

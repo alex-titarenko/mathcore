@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Liter", "Milliliter")]
+    [Quantity("L", "ml")]
     public class Volume : Quantity
     {
         public static readonly LinearUnit Milliliter = new LinearUnit("Milliliter", "Milliliters", "ml", 0.000001M);

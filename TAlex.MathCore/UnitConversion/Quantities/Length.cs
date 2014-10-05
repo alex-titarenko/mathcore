@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Inch", "Centimeter")]
+    [Quantity("in", "cm")]
     public class Length : Quantity
     {
         public static readonly LinearUnit Nanometer = new LinearUnit("Nanometer", "Nanometers", "nm", 0.000000001M);

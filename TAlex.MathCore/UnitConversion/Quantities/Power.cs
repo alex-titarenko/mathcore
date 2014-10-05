@@ -8,7 +8,7 @@ using TAlex.MathCore.UnitConversion.Units;
 
 namespace TAlex.MathCore.UnitConversion.Quantities
 {
-    [Quantity("Kilowatt", "Horsepower")]
+    [Quantity("kW", "hp")]
     public class Power : Quantity
     {
         public static readonly LinearUnit Watt = new LinearUnit("Watt", "Watts", "W", 1);
