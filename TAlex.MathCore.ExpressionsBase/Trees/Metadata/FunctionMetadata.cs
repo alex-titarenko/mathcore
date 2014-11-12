@@ -9,6 +9,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
     {
         #region Properties
 
+        public virtual string Id { get; set; }
+
         public virtual string DisplayName { get; set; }
 
         public virtual string Category { get; set; }

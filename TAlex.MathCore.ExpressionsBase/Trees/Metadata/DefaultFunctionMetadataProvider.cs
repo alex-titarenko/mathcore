@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using TAlex.MathCore.ExpressionEvaluation.Extensions;
+using TAlex.MathCore.ExpressionEvaluation.Helpers;
 
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
@@ -15,6 +16,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
         public FunctionMetadata GetMetadata(Type functionType)
         {
             FunctionMetadata functionMetadata = new FunctionMetadata(functionType);
+
+            functionMetadata.Id = MD5.GetHashString(functionType.FullName);
 
             var displayNameAttr = functionType.GetCustomAttribute<DisplayNameAttribute>();
             functionMetadata.DisplayName = displayNameAttr != null ? displayNameAttr.DisplayName : null;
