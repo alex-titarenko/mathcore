@@ -7,24 +7,39 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
 {
     public class FunctionSignature
     {
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
-        public IList<Argument> Arguments { get; set; }
+        public IList<Argument> Arguments { get; private set; }
 
         public string Description { get; set; }
 
-        public int ArgumentCount { get; set; }
+        public int ArgumentCount { get; private set; }
+
+        public bool HasVariableArgumentNumber
+        {
+            get
+            {
+                return (Arguments != null && Arguments.Any() && Arguments.Last().Name == "...");
+            }
+        }
+
 
         public FunctionSignature(string name, IList<Argument> args)
         {
             Name = name;
             Arguments = args;
 
-            if (Arguments != null && Arguments.Any())
+            if (Arguments != null)
             {
-                if (Arguments.Last().Name == "...") ArgumentCount = -1;
+                if (HasVariableArgumentNumber) ArgumentCount = -1;
                 else ArgumentCount = Arguments.Count;
             }
+        }
+
+
+        public virtual string ToPlaceholderString()
+        {
+            return String.Format("{0}({1})", Name, String.Join(",", Enumerable.Repeat(String.Empty, Arguments.Count)));
         }
 
 
