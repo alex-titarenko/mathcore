@@ -14,6 +14,9 @@ namespace TAlex.MathCore.UnitConversion.Quantities
         public static readonly LinearUnit Degree = new LinearUnit("Degree", "Degrees", "°", (decimal)Math.PI / 180);
         public static readonly LinearUnit Gradian = new LinearUnit("Gradian", "Gradians", "gon", (decimal)Math.PI / 200);
         public static readonly LinearUnit Radian = new LinearUnit("Radian", "Radians", "rad", 1);
+        public static readonly LinearUnit AngularMil = new LinearUnit("Angular mil", "Angular mil", "µ", (decimal)Math.PI * 2 / 6400);
+        public static readonly LinearUnit Arcminute = new LinearUnit("Arcminute", "Arcminute", "′", (decimal)Math.PI / 10800);
+        public static readonly LinearUnit Arcsecond = new LinearUnit("Arcsecond", "Arcsecond", "\"", (decimal)Math.PI / 64800);
 
 
         public override string Name
@@ -29,7 +32,10 @@ namespace TAlex.MathCore.UnitConversion.Quantities
                 {
                     Degree,
                     Gradian,
-                    Radian
+                    Radian,
+                    AngularMil,
+                    Arcminute,
+                    Arcsecond
                 };
             }
         }

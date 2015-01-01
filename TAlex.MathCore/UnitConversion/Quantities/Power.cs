@@ -16,6 +16,7 @@ namespace TAlex.MathCore.UnitConversion.Quantities
         public static readonly LinearUnit Horsepower = new LinearUnit("Horsepower", "Horsepower", "hp", 745.69987158227022M);
         public static readonly LinearUnit FootPound = new LinearUnit("Foot-pound/minute", "Foot-pounds/minute", "ft lbf/min", 0.02259696580552334M);
         public static readonly LinearUnit BTU = new LinearUnit("BTU/minute", "BTUs/minute", "BTU/min", 17.584264M);
+        public static readonly LinearUnit Calorie = new LinearUnit("Calorie/second", "Calorie/second", "cal/s", 4.1868M);
 
 
         public override string Name
@@ -33,7 +34,8 @@ namespace TAlex.MathCore.UnitConversion.Quantities
                     Kilowatt,
                     Horsepower,
                     FootPound,
-                    BTU
+                    BTU,
+                    Calorie
                 };
             }
         }
