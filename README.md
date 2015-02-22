@@ -40,6 +40,12 @@ tree = expressionTreeBuilder.BuildTree("lsolve({2, 3; 5i, 14}, {2; -1})+10");
 actual = tree.Evaluate(); // {10.860258 + 0.46085233i; 10.093162 - 0.30723489i}
 ```
 
+Unit conversion example:
+```C#
+var value = UnitConverter.Convert(23, Length.Inch, Length.Centimeter); // 58.42
+```
+
+
 ## Get it on NuGet!
 ```
 Install-Package TAlex.MathCore
