@@ -31,7 +31,7 @@ var expressionTreeBuilder = new ComplexExpressionTreeBuilder
 How to use expression tree builder:
 ```C#
 var tree = expressionTreeBuilder.BuildTree("abs(2+4.1i)*9i");
-object actual = tree.Evaluate(); // 41.0562....
+object actual = tree.Evaluate(); // 41.0562...
 
 tree = expressionTreeBuilder.BuildTree("integ(sin(x)**x, 0, 100, x)");
 actual = tree.Evaluate(); // 7.4990012... + 0.13462383i...
@@ -45,6 +45,13 @@ Unit conversion example:
 var value = UnitConverter.Convert(23, Length.Inch, Length.Centimeter); // 58.42
 ```
 
+Matrix multiplication:
+```C#
+var a = new CMatrix(new Complex[,] { {2, 3}, {5, 8} });
+var b = new CMatrix(new Complex[,] { {1, 1}, {18, -1} });
+
+var result = a * b; // {56, -1; 149, -3}
+```
 
 ## Get it on NuGet!
 ```
