@@ -11,6 +11,35 @@ Advanced .NET math library (PCL).
 * **MathCore.ComplexExpressions** - extension for expression base library, which adds support complex numbers in expressions.
 * **MathCore.ComplexExpressions.Extensions** - sets of functions and constants for complex expressions library.
 
+## Examples of usage
+How to initialize expression tree builder:
+```C#
+var targetAssembly = Assembly.LoadFrom("TAlex.MathCore.ComplexExpressions.Extensions.dll");
+
+var constantFactory = new ConstantFlyweightFactory<object>();
+constantFactory.LoadFromAssemblies(new List<Assembly> { targetAssembly });
+
+var functionFactory = new FunctionFactory<object>();
+functionFactory.LoadFromAssemblies(new List<Assembly> { targetAssembly });
+
+var expressionTreeBuilder = new ComplexExpressionTreeBuilder
+{
+    ConstantFactory = constantFactory,
+    FunctionFactory = functionFactory
+};
+```
+How to use expression tree builder:
+```C#
+var tree = expressionTreeBuilder.BuildTree("abs(2+4.1i)*9i");
+object actual = tree.Evaluate(); // 41.0562....
+
+tree = expressionTreeBuilder.BuildTree("integ(sin(x)**x, 0, 100, x)");
+actual = tree.Evaluate(); // 7.4990012... + 0.13462383i...
+
+tree = expressionTreeBuilder.BuildTree("lsolve({2, 3; 5i, 14}, {2; -1})+10");
+actual = tree.Evaluate(); // {10.860258 + 0.46085233i; 10.093162 - 0.30723489i}
+```
+
 ## Get it on NuGet!
 ```
 Install-Package TAlex.MathCore
