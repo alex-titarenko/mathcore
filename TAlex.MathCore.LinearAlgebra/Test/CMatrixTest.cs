@@ -25,8 +25,10 @@ namespace TAlex.MathCore.LinearAlgebra.Test
         }
 
 
+        #region LUPDecomposition
+
         [Test]
-        public void LUPDecompositionTest()
+        public void LUPDecomposition()
         {
             //arrange
             double TOL = 10E-15;
@@ -45,8 +47,12 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             CMatrix.FuzzyEquals(P * _m, L * U, TOL).Should().BeTrue();
         }
 
+        #endregion
+
+        #region QRDecomposition
+
         [Test]
-        public void QRDecompositionTest()
+        public void QRDecomposition()
         {
             //arrange
             double TOL = 10E-14;
@@ -62,8 +68,31 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             CMatrix.FuzzyEquals(_m, Q * R, TOL).Should().BeTrue();
         }
 
+        #endregion
+
+        #region Mult()
+
         [Test]
-        public void DivTest()
+        public void Mult_TwoMatrices_MultResult()
+        {
+            //arrange
+            var a = new CMatrix(new Complex[,] { {2, 3}, {5, 8} });
+            var b = new CMatrix(new Complex[,] { {1, 1}, {18, -1} });
+            var expected = new CMatrix(new Complex[,] { {56, -1}, {149, -3} });
+
+            //action
+            var actual = a * b;
+
+            //assert
+            actual.Should().Equal(expected);
+        }
+
+        #endregion
+
+        #region Div
+
+        [Test]
+        public void Div()
         {
             //arrange
             double TOL = 10E-14;
@@ -82,8 +111,12 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             CMatrix.FuzzyEquals(c * m2, _m, TOL).Should().BeTrue();
         }
 
+        #endregion
+
+        #region Sqrt
+
         [Test]
-        public void SqrtTest()
+        public void Sqrt()
         {
             //arrange
             double TOL = 10E-14;
@@ -95,8 +128,12 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             CMatrix.FuzzyEquals(sq * sq, _m, TOL).Should().BeTrue();
         }
 
+        #endregion
+
+        #region Inverse
+
         [Test]
-        public void InverseTest()
+        public void Inverse()
         {
             //arrange
             const double TOL = 10E-16;
@@ -109,8 +146,12 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             CMatrix.FuzzyEquals(_m * inv_m, identity, TOL).Should().BeTrue();
         }
 
+        #endregion
+
+        #region Solve
+
         [Test]
-        public void SolveTest()
+        public void Solve()
         {
             //assert
             double TOL = 10E-15;
@@ -126,8 +167,12 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             CMatrix.FuzzyEquals(_m * x, b, TOL).Should().BeTrue();
         }
 
+        #endregion
+
+        #region CharacteristicPolynomials
+
         [Test]
-        public void CharacteristicPolynomialTest()
+        public void CharacteristicPolynomial()
         {
             //arrange
             double TOL = 10E-6;
@@ -140,5 +185,7 @@ namespace TAlex.MathCore.LinearAlgebra.Test
             //assert
             CMatrix.FuzzyEquals(test, zero, TOL).Should().BeTrue();
         }
+
+        #endregion
     }
 }
