@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -24,7 +25,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Extensions
 
         public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo element) where T : Attribute
         {
-            return (IEnumerable<T>)Attribute.GetCustomAttributes(element, typeof(T), true);
+            return Attribute.GetCustomAttributes(element, typeof(T), true).Cast<T>();
         }
     }
 }
