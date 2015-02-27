@@ -312,6 +312,7 @@ namespace TAlex.MathCore.Tests
         {
             //arrange
             Complex c = new Complex(3.6, -0.8);
+            string expected = String.Format("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<Complex Re=\"{0}\" Im=\"{1}\" />", c.Re, c.Im);
             XmlSerializer serializer = new XmlSerializer(typeof(Complex));
             StringBuilder sb = new StringBuilder();
             
@@ -322,8 +323,7 @@ namespace TAlex.MathCore.Tests
             }
 
             //assert
-            sb.ToString().Should().Be(String.Format(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<Complex Re=""{0}"" Im=""{1}"" />", c.Re, c.Im));
+            sb.ToString().Should().Be(expected);
         }
 
         [Test]
