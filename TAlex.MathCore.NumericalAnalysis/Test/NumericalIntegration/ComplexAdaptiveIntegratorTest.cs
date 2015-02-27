@@ -7,7 +7,7 @@ using TAlex.MathCore.NumericalAnalysis.NumericalIntegration;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.NumericalAnalysis.Test.NumericalIntegration
+namespace TAlex.MathCore.NumericalAnalysis.Tests.NumericalIntegration
 {
     [TestFixture]
     public class ComplexAdaptiveIntegratorTest

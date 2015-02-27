@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 
 
-namespace TAlex.MathCore.Test
+namespace TAlex.MathCore.Tests
 {
     [TestFixture]
     public class ComplexTest

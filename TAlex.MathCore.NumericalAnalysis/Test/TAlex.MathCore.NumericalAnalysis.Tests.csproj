@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{06FC6FAE-213F-4B96-AF31-AD711854B64E}</ProjectGuid>
+    <ProjectGuid>{77E73422-576E-4F9C-8DD4-986B996E8135}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TAlex.MathCore.ExpressionsBase.Test</RootNamespace>
-    <AssemblyName>TAlex.MathCore.ExpressionsBase.Test</AssemblyName>
+    <RootNamespace>TAlex.MathCore.NumericalAnalysis.Tests</RootNamespace>
+    <AssemblyName>TAlex.MathCore.NumericalAnalysis.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -56,18 +56,22 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Trees\Builders\DoubleExpressionTreeBuilderTest.cs" />
-    <Compile Include="Tokenize\StandardExpressionTokenizerTest.cs" />
+    <Compile Include="NumericalIntegration\ComplexAdaptiveIntegratorTest.cs" />
+    <Compile Include="NumericalIntegration\ComplexRombergIntegratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TAlex.MathCore.ExpressionsBase.csproj">
-      <Project>{62a967ec-ebdd-488a-a80a-d1b5ec1ad587}</Project>
-      <Name>TAlex.MathCore.ExpressionsBase</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\TAlex.MathCore\TAlex.MathCore.csproj">
+      <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
+      <Name>TAlex.MathCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TAlex.MathCore.NumericalAnalysis.csproj">
+      <Project>{948cea84-43b5-4a5c-b8ba-1acbf5bc7d12}</Project>
+      <Name>TAlex.MathCore.NumericalAnalysis</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

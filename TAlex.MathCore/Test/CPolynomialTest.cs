@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Xml;
 
 
-namespace TAlex.MathCore.Test
+namespace TAlex.MathCore.Tests
 {
     [TestFixture]
     public class CPolynomialTest

@@ -4,7 +4,7 @@ using TAlex.MathCore.SpecialFunctions;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.Test.SpecialFunctions
+namespace TAlex.MathCore.Tests.SpecialFunctions
 {
     [TestFixture]
     public class NumberTheoryTest

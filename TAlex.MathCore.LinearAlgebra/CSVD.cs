@@ -12,8 +12,6 @@ namespace TAlex.MathCore.LinearAlgebra
     {
         #region Fields
 
-        private bool _succeded;
-
         private double[] _s;
 
         private CMatrix _u;
@@ -112,17 +110,6 @@ namespace TAlex.MathCore.LinearAlgebra
             get
             {
                 return (double[])_s.Clone();
-            }
-        }
-
-        /// <summary>
-        /// Gets a value that indicating whether the singular value decomposition has been calculated successfully.
-        /// </summary>
-        public bool Succeded
-        {
-            get
-            {
-                return _succeded;
             }
         }
 

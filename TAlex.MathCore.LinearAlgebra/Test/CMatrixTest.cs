@@ -5,7 +5,7 @@ using TAlex.MathCore;
 using TAlex.MathCore.LinearAlgebra;
 
 
-namespace TAlex.MathCore.LinearAlgebra.Test
+namespace TAlex.MathCore.LinearAlgebra.Tests
 {    
     [TestFixture]
     public class CMatrixTest

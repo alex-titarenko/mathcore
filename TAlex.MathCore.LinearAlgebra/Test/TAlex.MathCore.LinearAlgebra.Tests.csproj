@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{07846086-435C-48A4-9EB0-959B08E59065}</ProjectGuid>
+    <ProjectGuid>{CE627563-ACDC-4F7D-B317-42B6F48C5A09}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TAlex.MathCore.SpecialFunctions.Test</RootNamespace>
-    <AssemblyName>TAlex.MathCore.SpecialFunctions.Test</AssemblyName>
+    <RootNamespace>TAlex.MathCore.LinearAlgebra.Tests</RootNamespace>
+    <AssemblyName>TAlex.MathCore.LinearAlgebra.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -44,7 +44,7 @@
       <HintPath>..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Choose>
@@ -56,21 +56,24 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ProbabilityIntegralsTest.cs" />
+    <Compile Include="CEigenproblemTest.cs" />
+    <Compile Include="CMatrixTest.cs" />
+    <Compile Include="CPolynomialExtensionsTest.cs" />
+    <Compile Include="CSVDTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\TAlex.MathCore\TAlex.MathCore.csproj">
       <Project>{97a80e94-cd29-4ced-9c78-510d7cdc0f91}</Project>
       <Name>TAlex.MathCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TAlex.MathCore.SpecialFunctions.csproj">
-      <Project>{4cbe910e-5ade-46e5-abf9-f6c51c4f8533}</Project>
-      <Name>TAlex.MathCore.SpecialFunctions</Name>
+    <ProjectReference Include="..\TAlex.MathCore.LinearAlgebra.csproj">
+      <Project>{44709d81-b144-4bf5-ba30-ca852fa9b29b}</Project>
+      <Name>TAlex.MathCore.LinearAlgebra</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

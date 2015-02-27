@@ -13,7 +13,7 @@ using System.Globalization;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 
 
-namespace TAlex.MathCore.ComplexExpressions.Test.Trees.Builders
+namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
 {
     [TestFixture]
     public class ComplexExpressionTreeBuilderExtensionsTest

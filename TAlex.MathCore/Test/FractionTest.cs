@@ -4,7 +4,7 @@ using NUnit.Framework;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.Test
+namespace TAlex.MathCore.Tests
 {
     [TestFixture]
     public class FractionTest

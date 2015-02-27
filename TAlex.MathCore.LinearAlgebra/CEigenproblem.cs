@@ -12,8 +12,6 @@ namespace TAlex.MathCore.LinearAlgebra
     {
         #region Fields
 
-        private bool _succeded;
-
         private Complex[] _vals;
 
         private CMatrix _rightvecs;
@@ -52,17 +50,6 @@ namespace TAlex.MathCore.LinearAlgebra
             get
             {
                 return new CMatrix(_rightvecs);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value that indicating whether the eigenvalues and eigenvectors has been calculated successfully.
-        /// </summary>
-        public bool Succeded
-        {
-            get
-            {
-                return _succeded;
             }
         }
 

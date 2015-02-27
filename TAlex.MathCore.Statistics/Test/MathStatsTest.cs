@@ -5,7 +5,7 @@ using TAlex.MathCore.Statistics;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.Statistics.Test
+namespace TAlex.MathCore.Statistics.Tests
 {
     [TestFixture]
     public class MathStatsTest

@@ -8,7 +8,7 @@ using FluentAssertions;
 using System.Globalization;
 
 
-namespace TAlex.MathCore.Test
+namespace TAlex.MathCore.Tests
 {
     [TestFixture]
     public class ConvertExTest

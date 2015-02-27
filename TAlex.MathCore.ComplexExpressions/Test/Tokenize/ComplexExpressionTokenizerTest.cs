@@ -8,7 +8,7 @@ using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.ComplexExpressions.Test.Tokenize
+namespace TAlex.MathCore.ComplexExpressions.Tests.Tokenize
 {
     [TestFixture]
     public class ComplexExpressionTokenizerTest

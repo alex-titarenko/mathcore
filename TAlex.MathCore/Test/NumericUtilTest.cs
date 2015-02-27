@@ -3,7 +3,7 @@ using System;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.Test
+namespace TAlex.MathCore.Tests
 {
     [TestFixture]
     public class NumericUtilTest

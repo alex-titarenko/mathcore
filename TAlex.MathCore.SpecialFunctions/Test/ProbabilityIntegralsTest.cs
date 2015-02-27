@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.SpecialFunctions.Test
+namespace TAlex.MathCore.SpecialFunctions.Tests
 {
     [TestFixture]
     public class ProbabilityIntegralsTest

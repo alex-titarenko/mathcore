@@ -9,7 +9,7 @@ using NUnit.Framework;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.ExpressionsBase.Test.Trees.Builders
+namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
 {
     [TestFixture]
     public class DoubleExpressionTreeBuilderTest
