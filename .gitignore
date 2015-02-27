@@ -50,6 +50,7 @@ _ReSharper*/
 ~$*
 
 #NuGet
+NuGet.exe
 *.nupkg
 packages/
 

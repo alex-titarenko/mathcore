@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore", "TAlex.MathCore\TAlex.MathCore.csproj", "{97A80E94-CD29-4CED-9C78-510D7CDC0F91}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.LinearAlgebra", "TAlex.MathCore.LinearAlgebra\TAlex.MathCore.LinearAlgebra.csproj", "{44709D81-B144-4BF5-BA30-CA852FA9B29B}"
@@ -32,6 +34,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ComplexExpressions.Test", "TAlex.MathCore.ComplexExpressions\Test\TAlex.MathCore.ComplexExpressions.Test.csproj", "{C22015BF-B7B1-410C-90B9-05424FBD7F4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.ComplexExpressions.Extensions", "TAlex.MathCore.ComplexExpressions.Extensions\TAlex.MathCore.ComplexExpressions.Extensions.csproj", "{E1C14CD2-671A-4181-B59E-C64DCA742B11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E0B9C09F-B245-495A-A799-4514DA169737}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
