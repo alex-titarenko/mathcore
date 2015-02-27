@@ -9,10 +9,10 @@ using TAlex.MathCore.UnitConversion.Quantities;
 using FluentAssertions;
 
 
-namespace TAlex.MathCore.Tests
+namespace TAlex.MathCore.Tests.UnitConversion
 {
     [TestFixture]
-    public class UnitConverterTest
+    public class UnitConverterTests
     {
         #region Convert
 

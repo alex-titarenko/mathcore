@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace TAlex.MathCore.ExpressionsBase.Tests.Tokenize
 {
     [TestFixture]
-    public class StandardExpressionTokenizerTest
+    public class StandardExpressionTokenizerTests
     {
         protected StandardExpressionTokenizer ExpressionTokenizer;
 

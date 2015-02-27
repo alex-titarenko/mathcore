@@ -1,6 +1,8 @@
 # MathCore
 Advanced .NET math library (PCL).
 
+[![Build status](https://ci.appveyor.com/api/projects/status/tx5d4fcdot9k0fvb?svg=true)](https://ci.appveyor.com/project/T-Alex/mathcore)
+
 ## Structure
 * **MathCore** - base library, contains the following features: complex numbers, fractions, complex polynomials, unit conversion, coordinate system conversion, numeric utils and some extensions for Math class.
 * **MathCore.LinearAlgebra** - linear algebra extension for math core, contains the following features: complex matrices, eigen problem solver, bunch operations with matrices (concat, add, sub, mult, rise to power, multiply, sqrt, inverse, trace, determinant and etc.).

@@ -8,7 +8,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.Tests.SpecialFunctions
 {
     [TestFixture]
-    public class CombinatoricsTest
+    public class CombinatoricsTests
     {
         [TestCase(0, 1)]
         [TestCase(1, 1)]

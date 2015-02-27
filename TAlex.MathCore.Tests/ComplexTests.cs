@@ -11,7 +11,7 @@ using System.Text;
 namespace TAlex.MathCore.Tests
 {
     [TestFixture]
-    public class ComplexTest
+    public class ComplexTests
     {
         [TestCase(3,5, -6,16, -3,21)]
         public void AddTest(double re1, double im1, double re2, double im2, double re3, double im3)

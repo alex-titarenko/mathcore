@@ -7,7 +7,7 @@ using TAlex.MathCore.LinearAlgebra;
 namespace TAlex.MathCore.LinearAlgebra.Tests
 {
     [TestFixture]
-    public class CEigenproblemTest
+    public class CEigenproblemTests
     {
         private CMatrix _m;
 

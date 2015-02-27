@@ -7,7 +7,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.Tests
 {
     [TestFixture]
-    public class FractionTest
+    public class FractionTests
     {
         [Test]
         public void op_EqualityTest()

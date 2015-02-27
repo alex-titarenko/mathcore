@@ -7,7 +7,7 @@ using TAlex.MathCore.LinearAlgebra;
 namespace TAlex.MathCore.LinearAlgebra.Tests
 {
     [TestFixture]
-    public class CSVDTest
+    public class CSVDTests
     {
         [Test]
         public void SingularValueDecompositionTest()

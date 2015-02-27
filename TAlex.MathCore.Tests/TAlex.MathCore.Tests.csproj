@@ -38,10 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
-      <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.XML" />
@@ -56,16 +56,16 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ComplexTest.cs" />
-    <Compile Include="CPolynomialTest.cs" />
-    <Compile Include="ConvertExTest.cs" />
-    <Compile Include="ExMathTest.cs" />
-    <Compile Include="FractionTest.cs" />
-    <Compile Include="NumericUtilTest.cs" />
+    <Compile Include="ComplexTests.cs" />
+    <Compile Include="CPolynomialTests.cs" />
+    <Compile Include="ConvertExTests.cs" />
+    <Compile Include="ExMathTests.cs" />
+    <Compile Include="FractionTests.cs" />
+    <Compile Include="NumericUtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecialFunctions\CombinatoricsTest.cs" />
-    <Compile Include="SpecialFunctions\NumberTheoryTest.cs" />
-    <Compile Include="UnitConverterTest.cs" />
+    <Compile Include="SpecialFunctions\CombinatoricsTests.cs" />
+    <Compile Include="SpecialFunctions\NumberTheoryTests.cs" />
+    <Compile Include="UnitConversion\UnitConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TAlex.MathCore\TAlex.MathCore.csproj">
@@ -76,9 +76,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UnitConversion\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

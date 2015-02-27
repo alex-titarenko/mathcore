@@ -8,7 +8,7 @@ using TAlex.MathCore.LinearAlgebra;
 namespace TAlex.MathCore.LinearAlgebra.Tests
 {    
     [TestFixture]
-    public class CMatrixTest
+    public class CMatrixTests
     {
         private CMatrix _m;
 

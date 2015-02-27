@@ -12,7 +12,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
 {
     [TestFixture]
-    public class DoubleExpressionTreeBuilderTest
+    public class DoubleExpressionTreeBuilderTests
     {
         protected DoubleExpressionTreeBuilder ExpressionTreeBuilder;
 

@@ -7,7 +7,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.Tests.SpecialFunctions
 {
     [TestFixture]
-    public class NumberTheoryTest
+    public class NumberTheoryTests
     {
         [TestCase(7, 7)]
         [TestCase(2, 3)]

@@ -6,7 +6,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.Tests
 {
     [TestFixture]
-    public class NumericUtilTest
+    public class NumericUtilTests
     {
         [TestCase(1, 0.999999, 10E-5)]
         [TestCase(5, 5, 10E-15)]

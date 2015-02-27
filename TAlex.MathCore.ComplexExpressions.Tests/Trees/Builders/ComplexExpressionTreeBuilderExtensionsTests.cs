@@ -16,7 +16,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
 namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
 {
     [TestFixture]
-    public class ComplexExpressionTreeBuilderExtensionsTest
+    public class ComplexExpressionTreeBuilderExtensionsTests
     {
         protected static FunctionFactory<Object> FunctionFactory;
         protected static ConstantFlyweightFactory<Object> ConstantFactory;
@@ -24,7 +24,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
 
         protected static List<TestCaseData> FunctionsTestCasesData;
 
-        static ComplexExpressionTreeBuilderExtensionsTest()
+        static ComplexExpressionTreeBuilderExtensionsTests()
         {
             var targetAssembly = Assembly.LoadFrom("TAlex.MathCore.ComplexExpressions.Extensions.dll");
 

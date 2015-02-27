@@ -10,7 +10,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.NumericalAnalysis.Tests.NumericalIntegration
 {
     [TestFixture]
-    public class ComplexRombergIntegratorTest
+    public class ComplexRombergIntegratorTests
     {
         private ComplexRombergIntegrator Integrator;
 

@@ -8,7 +8,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.Statistics.Tests
 {
     [TestFixture]
-    public class MathStatsTest
+    public class MathStatsTests
     {
         [Test]
         public void ModeTest()

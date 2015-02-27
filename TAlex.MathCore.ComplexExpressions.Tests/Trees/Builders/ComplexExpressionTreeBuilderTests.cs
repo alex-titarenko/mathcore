@@ -7,10 +7,10 @@ using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.LinearAlgebra;
 
 
-namespace Test
+namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
 {
     [TestFixture]
-    public class ComplexExpressionTreeBuilderTest
+    public class ComplexExpressionTreeBuilderTests
     {
         protected ComplexExpressionTreeBuilder TreeBuilder;
 

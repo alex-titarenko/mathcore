@@ -11,7 +11,7 @@ using System.Globalization;
 namespace TAlex.MathCore.Tests
 {
     [TestFixture]
-    public class ConvertExTest
+    public class ConvertExTests
     {
         [TestCase("1", 1)]
         [TestCase("10.2", 10.2)]

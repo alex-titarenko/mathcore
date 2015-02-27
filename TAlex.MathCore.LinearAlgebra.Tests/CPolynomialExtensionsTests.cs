@@ -8,7 +8,7 @@ using TAlex.MathCore.LinearAlgebra;
 namespace TAlex.MathCore.LinearAlgebra.Tests
 {
     [TestFixture]
-    public class CPolynomialExtensionsTest
+    public class CPolynomialExtensionsTests
     {
         [Test]
         public void CompanionMatrixRootsFindingTest()

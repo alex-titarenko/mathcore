@@ -10,7 +10,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.SpecialFunctions.Tests
 {
     [TestFixture]
-    public class ProbabilityIntegralsTest
+    public class ProbabilityIntegralsTests
     {
         [TestCase(0, 0)]
         [TestCase(0.25, 0.276326390168236932985068)]

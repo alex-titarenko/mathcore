@@ -38,10 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
-      <HintPath>..\..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.2.0.1\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -56,9 +56,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Tokenize\ComplexExpressionTokenizerTest.cs" />
-    <Compile Include="Trees\Builders\ComplexExpressionTreeBuilderExtensionsTest.cs" />
-    <Compile Include="Trees\Builders\ComplexExpressionTreeBuilderTest.cs" />
+    <Compile Include="Tokenize\ComplexExpressionTokenizerTests.cs" />
+    <Compile Include="Trees\Builders\ComplexExpressionTreeBuilderExtensionsTests.cs" />
+    <Compile Include="Trees\Builders\ComplexExpressionTreeBuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

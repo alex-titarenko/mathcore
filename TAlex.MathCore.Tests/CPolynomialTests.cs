@@ -13,7 +13,7 @@ using System.Xml;
 namespace TAlex.MathCore.Tests
 {
     [TestFixture]
-    public class CPolynomialTest
+    public class CPolynomialTests
     {
         #region FromRoots
 

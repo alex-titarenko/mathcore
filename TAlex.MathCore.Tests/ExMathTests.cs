@@ -5,7 +5,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.Tests
 {
     [TestFixture]
-    public class ExMathTest
+    public class ExMathTests
     {
         [TestCase(5.2, 0, 5, 0)]
         [TestCase(-1.1, 13.6, -2, 13)]

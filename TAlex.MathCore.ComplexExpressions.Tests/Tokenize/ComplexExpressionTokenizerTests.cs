@@ -11,7 +11,7 @@ using FluentAssertions;
 namespace TAlex.MathCore.ComplexExpressions.Tests.Tokenize
 {
     [TestFixture]
-    public class ComplexExpressionTokenizerTest
+    public class ComplexExpressionTokenizerTests
     {
         protected IExpressionTokenizer Tokenizer = new StandardExpressionTokenizer();
 
