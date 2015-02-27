@@ -120,9 +120,8 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
 
         protected virtual IEnumerable<KeyValuePair<string, FunctionMetadata>> GetFunctionsFromAssembly(Assembly assembly)
         {
-            Type[] exportedTypes = assembly.GetExportedTypes();
-            List<Type> fnTypes = exportedTypes
-                .Where(x => x.GetCustomAttributes<FunctionSignatureAttribute>().Any() && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
+            List<Type> fnTypes = assembly.ExportedTypes
+                .Where(x => x.GetCustomAttributes<FunctionSignatureAttribute>().Any() && typeof(Expression<T>).GetTypeInfo().IsAssignableFrom(x.GetTypeInfo())).ToList();
 
             return fnTypes.SelectMany(x => x.GetCustomAttributes<FunctionSignatureAttribute>().Select(a => a.Name).Distinct().Select(name => new KeyValuePair<string, FunctionMetadata>(name, MetadataProvider.GetMetadata(x))));
         }

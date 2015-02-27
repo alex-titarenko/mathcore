@@ -10,6 +10,7 @@
 
 namespace TAlex.MathCore.LinearAlgebra.Properties {
     using System;
+    using System.Reflection;
     
     
     /// <summary>
@@ -39,7 +40,7 @@ namespace TAlex.MathCore.LinearAlgebra.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TAlex.MathCore.LinearAlgebra.Properties.NumericsResources", typeof(NumericsResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TAlex.MathCore.LinearAlgebra.Properties.NumericsResources", typeof(NumericsResources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

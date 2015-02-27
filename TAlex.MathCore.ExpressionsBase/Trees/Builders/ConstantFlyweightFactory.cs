@@ -60,9 +60,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
         {
             foreach (Assembly assembly in assemblies)
             {
-                Type[] exportedTypes = assembly.GetExportedTypes();
-
-                var constants = exportedTypes.Where(x => x.GetCustomAttribute<ConstantAttribute>() != null && typeof(Expression<T>).IsAssignableFrom(x)).ToList();
+                var constants = assembly.ExportedTypes.Where(x => x.GetCustomAttribute<ConstantAttribute>() != null && typeof(Expression<T>).GetTypeInfo().IsAssignableFrom(x.GetTypeInfo())).ToList();
 
                 foreach (var x in constants)
                 {
