@@ -181,6 +181,16 @@ namespace TAlex.MathCore
         }
 
         /// <summary>
+        /// Calculates the integral part of a specified real number.
+        /// </summary>
+        /// <param name="d">A number to truncate.</param>
+        /// <returns>The integral part of d; that is, the number that remains after any fractional digits have been discarded.</returns>
+        public static double Truncate(double d)
+        {
+            return (d > 0) ? Math.Floor(d) : Math.Ceiling(d);
+        }
+
+        /// <summary>
         /// Returns the fractional part of a complex number.
         /// </summary>
         /// <param name="c">A complex number.</param>
@@ -278,6 +288,8 @@ namespace TAlex.MathCore
         {
             return degree / 180.0 * Math.PI;
         }
+
+        #region Trigonometric and Hyperbolic Functions
 
         /// <summary>
         /// Returns the sine of a real number.
@@ -631,15 +643,7 @@ namespace TAlex.MathCore
                 return Math.Tanh(d) / d;
         }
 
-        /// <summary>
-        /// Calculates the integral part of a specified real number.
-        /// </summary>
-        /// <param name="d">A number to truncate.</param>
-        /// <returns>The integral part of d; that is, the number that remains after any fractional digits have been discarded.</returns>
-        public static double Truncate(double d)
-        {
-            return (d > 0) ? Math.Floor(d) : Math.Ceiling(d);
-        }
+        #endregion
 
         #endregion
     }
