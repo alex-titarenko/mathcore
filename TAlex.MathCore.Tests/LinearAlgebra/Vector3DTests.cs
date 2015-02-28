@@ -48,6 +48,63 @@ namespace TAlex.MathCore.Tests.LinearAlgebra
 
         #endregion
 
+        #region Add
+
+        [Test]
+        public void Add_TwoVectors_SumOfVectors()
+        {
+            //arrange
+            var v1 = new Vector3D(1, 3, -5);
+            var v2 = new Vector3D(2, 11, 1);
+            var expected = new Vector3D(3, 14, -4);
+
+            //action
+            var actual = Vector3D.Add(v1, v2);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Subtract
+
+        [Test]
+        public void Subtract_TwoVectors_SubtractionOfVectors()
+        {
+            //arrange
+            var v1 = new Vector3D(1, 3, -5);
+            var v2 = new Vector3D(2, 11, 1);
+            var expected = new Vector3D(-1, -8, -6);
+
+            //action
+            var actual = Vector3D.Subtract(v1, v2);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Multiply
+
+        [Test]
+        public void Multiply_VectorAndScalar_Vector()
+        {
+            //arrange
+            var v = new Vector3D(2, 5, -3);
+            const double scalar = 3;
+            var expected = new Vector3D(6, 15, -9);
+
+            //action
+            var actual = Vector3D.Multiply(v, scalar);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
         #region CrossProduct
 
         [Test]
@@ -82,6 +139,38 @@ namespace TAlex.MathCore.Tests.LinearAlgebra
 
             //assert
             Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Normalize
+
+        [Test]
+        public void Normalize_NotNormalizedVector_NormalizeVector()
+        {
+            //arrange
+            var v = new Vector3D(0, -4, 2);
+            var expected = new Vector3D(0, -4 / Math.Sqrt(20), 2 / Math.Sqrt(20));
+
+            //action
+            v.Normalize();
+
+            //assert
+            Assert.AreEqual(expected, v);
+        }
+
+        [Test]
+        public void Normalize_NormalizedVector_NormalizedVector()
+        {
+            //arrange
+            var v = new Vector3D(0, 1, 0);
+            var expected = v;
+
+            //action
+            v.Normalize();
+
+            //assert
+            Assert.AreEqual(expected, v);
         }
 
         #endregion

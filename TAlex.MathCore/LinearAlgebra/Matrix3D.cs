@@ -141,7 +141,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// Multiplies matrix by vector.
         /// </summary>
         /// <param name="m">The matrix to multiply.</param>
-        /// <param name="v">The vector by which the matrix is multiplied.</param>
+        /// <param name="v">The vector to multiply.</param>
         /// <returns>the result of multiplication.</returns>
         public static Vector3D Multiply(Matrix3D m, Vector3D v)
         {
@@ -296,6 +296,15 @@ namespace TAlex.MathCore.LinearAlgebra
         }
 
         /// <summary>
+        /// Returns the string representation of the matrix.
+        /// </summary>
+        /// <returns>the string representation of this matrix.</returns>
+        public override string ToString()
+        {
+            return String.Format("{{[{0}, {1}, {2}] [{3}, {4}, {5}] [{6}, {7}, {8}]}}", M11, M12, M13, M21, M22, M23, M31, M32, M33);
+        }
+
+        /// <summary>
         /// Transforms the specified vector by this matrix.
         /// </summary>
         /// <param name="v">The vector for transformation.</param>
@@ -348,7 +357,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// Multiplies matrix by vector.
         /// </summary>
         /// <param name="m">The matrix to multiply.</param>
-        /// <param name="v">The vector by which the matrix is multiplied.</param>
+        /// <param name="v">The vector to multiply.</param>
         /// <returns>the result of multiplication.</returns>
         public static Vector3D operator *(Matrix3D m, Vector3D v)
         {

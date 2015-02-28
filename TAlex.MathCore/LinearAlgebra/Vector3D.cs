@@ -158,7 +158,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// </summary>
         public void Normalize()
         {
-            double length = Math.Sqrt(X * X + Y * Y + Z * Z);
+            double length = Length;
 
             X /= length;
             Y /= length;
