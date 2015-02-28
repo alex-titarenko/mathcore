@@ -116,23 +116,23 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <summary>
         /// Multiplies matrix by scalar.
         /// </summary>
-        /// <param name="m">Matrix to multiply.</param>
-        /// <param name="d">Scalar value to multiply.</param>
+        /// <param name="m">The matrix to multiply.</param>
+        /// <param name="scalar">The scalar value to multiply.</param>
         /// <returns>the result of multiplication.</returns>
-        public static Matrix3D Multiply(Matrix3D m, double d)
+        public static Matrix3D Multiply(Matrix3D m, double scalar)
         {
             Matrix3D result = new Matrix3D();
-            result.M11 = m.M11 * d;
-            result.M12 = m.M12 * d;
-            result.M13 = m.M13 * d;
+            result.M11 = m.M11 * scalar;
+            result.M12 = m.M12 * scalar;
+            result.M13 = m.M13 * scalar;
 
-            result.M21 = m.M21 * d;
-            result.M22 = m.M22 * d;
-            result.M23 = m.M23 * d;
+            result.M21 = m.M21 * scalar;
+            result.M22 = m.M22 * scalar;
+            result.M23 = m.M23 * scalar;
 
-            result.M31 = m.M31 * d;
-            result.M32 = m.M32 * d;
-            result.M33 = m.M33 * d;
+            result.M31 = m.M31 * scalar;
+            result.M32 = m.M32 * scalar;
+            result.M33 = m.M33 * scalar;
 
             return result;
         }
@@ -140,8 +140,8 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <summary>
         /// Multiplies matrix by vector.
         /// </summary>
-        /// <param name="m">Matrix to multiply.</param>
-        /// <param name="v">Vector by which the matrix is multiplied.</param>
+        /// <param name="m">The matrix to multiply.</param>
+        /// <param name="v">The vector by which the matrix is multiplied.</param>
         /// <returns>the result of multiplication.</returns>
         public static Vector3D Multiply(Matrix3D m, Vector3D v)
         {
@@ -157,8 +157,8 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <summary>
         /// Multiplies the specified matrices.
         /// </summary>
-        /// <param name="m1">Matrix to multiply.</param>
-        /// <param name="m2">Matrix by which the first matrix is multiplied.</param>
+        /// <param name="m1">The matrix to multiply.</param>
+        /// <param name="m2">The matrix by which the first matrix is multiplied.</param>
         /// <returns>the result of multiplication.</returns>
         public static Matrix3D Multiply(Matrix3D m1, Matrix3D m2)
         {
@@ -298,7 +298,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <summary>
         /// Transforms the specified vector by this matrix.
         /// </summary>
-        /// <param name="v">Vector for transformation.</param>
+        /// <param name="v">The vector for transformation.</param>
         /// <returns>result of transforming vector by this Matrix3D.</returns>
         public Vector3D Transform(Vector3D v)
         {
@@ -308,7 +308,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <summary>
         /// Transforms to orthogonal projection the specified vector by this matrix.
         /// </summary>
-        /// <param name="v">Vector for transformation.</param>
+        /// <param name="v">The vector for transformation.</param>
         /// <returns>result of transforming vector by this Matrix3D.</returns>
         public Point TransformToOrthogonalProjection(Vector3D v)
         {
@@ -325,30 +325,30 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <summary>
         /// Multiplies matrix by scalar.
         /// </summary>
-        /// <param name="m">Matrix to multiply.</param>
-        /// <param name="d">Scalar value to multiply.</param>
+        /// <param name="m">The matrix to multiply.</param>
+        /// <param name="scalar">The scalar value to multiply.</param>
         /// <returns>the result of multiplication.</returns>
-        public static Matrix3D operator *(Matrix3D m, double d)
+        public static Matrix3D operator *(Matrix3D m, double scalar)
         {
-            return Multiply(m, d);
+            return Multiply(m, scalar);
         }
 
         /// <summary>
         /// Multiplies scalar by matrix.
         /// </summary>
-        /// <param name="d">Scalar value to multiply.</param>
-        /// <param name="m">Matrix to multiply.</param>
+        /// <param name="scalar">The scalar value to multiply.</param>
+        /// <param name="m">The matrix to multiply.</param>
         /// <returns>the result of multiplication.</returns>
-        public static Matrix3D operator *(double d, Matrix3D m)
+        public static Matrix3D operator *(double scalar, Matrix3D m)
         {
-            return Multiply(m, d);
+            return Multiply(m, scalar);
         }
 
         /// <summary>
         /// Multiplies matrix by vector.
         /// </summary>
-        /// <param name="m">Matrix to multiply.</param>
-        /// <param name="v">Vector by which the matrix is multiplied.</param>
+        /// <param name="m">The matrix to multiply.</param>
+        /// <param name="v">The vector by which the matrix is multiplied.</param>
         /// <returns>the result of multiplication.</returns>
         public static Vector3D operator *(Matrix3D m, Vector3D v)
         {
@@ -358,8 +358,8 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <summary>
         /// Multiplies the specified matrices.
         /// </summary>
-        /// <param name="m1">Matrix to multiply.</param>
-        /// <param name="m2">Matrix by which the first matrix is multiplied.</param>
+        /// <param name="m1">The matrix to multiply.</param>
+        /// <param name="m2">The matrix by which the first matrix is multiplied.</param>
         /// <returns>the result of multiplication.</returns>
         public static Matrix3D operator *(Matrix3D m1, Matrix3D m2)
         {
