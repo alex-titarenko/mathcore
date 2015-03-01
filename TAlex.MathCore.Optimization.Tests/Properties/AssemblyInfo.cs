@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("TAlex.MathCore.Optimization.Tests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Unit Tests for TAlex.MathCore.Optimization Library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("T-Alex Software")]
 [assembly: AssemblyProduct("TAlex.MathCore.Optimization.Tests")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright © 2015 T-Alex Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

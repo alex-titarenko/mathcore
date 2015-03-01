@@ -54,7 +54,7 @@ namespace TAlex.MathCore.Optimization.Tests.EvolutionaryAlgorithms.GeneticAlgori
 
             //assert
             Target.Population.Count.Should().Be(Target.GenerationSize);
-            Target.BestIndividual.Fitness.Should().BeGreaterThan(79);
+            Target.BestIndividual.Fitness.Should().BeGreaterThan(78);
         }
 
         #endregion
