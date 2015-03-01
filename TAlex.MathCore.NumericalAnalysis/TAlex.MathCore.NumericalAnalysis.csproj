@@ -33,7 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="Optimization\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EquationSolvers\BisectionEquationSolver.cs" />
