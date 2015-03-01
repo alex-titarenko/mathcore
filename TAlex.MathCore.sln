@@ -41,6 +41,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E0B9C0
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.Optimization", "TAlex.MathCore.Optimization\TAlex.MathCore.Optimization.csproj", "{87B28E92-A4BD-4481-B48B-D0B119F36E0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TAlex.MathCore.Optimization.Tests", "TAlex.MathCore.Optimization.Tests\TAlex.MathCore.Optimization.Tests.csproj", "{3EDA27CF-4CCA-432E-938B-8DB4F498E126}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +112,14 @@ Global
 		{E1C14CD2-671A-4181-B59E-C64DCA742B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1C14CD2-671A-4181-B59E-C64DCA742B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1C14CD2-671A-4181-B59E-C64DCA742B11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B28E92-A4BD-4481-B48B-D0B119F36E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B28E92-A4BD-4481-B48B-D0B119F36E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B28E92-A4BD-4481-B48B-D0B119F36E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B28E92-A4BD-4481-B48B-D0B119F36E0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EDA27CF-4CCA-432E-938B-8DB4F498E126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EDA27CF-4CCA-432E-938B-8DB4F498E126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EDA27CF-4CCA-432E-938B-8DB4F498E126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EDA27CF-4CCA-432E-938B-8DB4F498E126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,5 +132,6 @@ Global
 		{8AB079F3-BE64-456C-A831-4BCBBDB51B40} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 		{77E73422-576E-4F9C-8DD4-986B996E8135} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 		{C22015BF-B7B1-410C-90B9-05424FBD7F4F} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
+		{3EDA27CF-4CCA-432E-938B-8DB4F498E126} = {37EACF5A-E850-4D26-860F-707D0CF7E54A}
 	EndGlobalSection
 EndGlobal
