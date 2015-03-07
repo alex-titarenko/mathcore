@@ -70,4 +70,4 @@ Install-Package TAlex.MathCore.ComplexExpressions.Extensions
 ```
 
 ## License
-MathCore is under the [MIT license](https://github.com/T-Alex/MathCore/blob/master/LICENSE.md).
+MathCore is under the [MIT license](LICENSE.md).
