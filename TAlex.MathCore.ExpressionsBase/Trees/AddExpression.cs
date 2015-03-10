@@ -7,7 +7,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
     {
         public override string ToString()
         {
-            return "(" + LeftExpression + "+" + RightExpression + ")";
+            return LeftExpression + "+" + RightExpression;
         }
     }
 }

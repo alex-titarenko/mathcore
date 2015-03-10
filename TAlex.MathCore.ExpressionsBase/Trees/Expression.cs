@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
+
 
 namespace TAlex.MathCore.ExpressionEvaluation.Trees
 {
@@ -44,6 +46,18 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees
 
         public abstract void ReplaceChild(Expression<T> oldExpression, Expression<T> newExpression);
 
+
+        protected virtual string WrapWithParentheses(Expression<T> expr, params Type[] conditions)
+        {
+            foreach (var cond in conditions)
+            {
+                if (expr.GetType().GetTypeInfo().IsSubclassOf(cond))
+                {
+                    return String.Format("({0})", expr);
+                }
+            }
+            return expr.ToString();
+        }
 
         #region Nested Types
 

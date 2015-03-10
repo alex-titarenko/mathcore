@@ -24,8 +24,10 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         }
 
 
+        #region Evaluate
+
         [TestCase("3", 3)]
-        public void EvaluateTest_Scalar(string expression, double expected)
+        public void Evaluate_Scalar(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -39,7 +41,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
 
         [TestCase("-3", -3)]
         [TestCase("--3", 3)]
-        public void EvaluateTest_UnaryMinus(string expression, double expected)
+        public void Evaluate_UnaryMinus(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -52,7 +54,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         }
 
         [TestCase("3 + 5", 8)]
-        public void EvaluateTest_Add(string expression, double expected)
+        public void Evaluate_Add(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -65,7 +67,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         }
 
         [TestCase("3 - 5", -2)]
-        public void EvaluateTest_Sub(string expression, double expected)
+        public void Evaluate_Sub(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -78,7 +80,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         }
 
         [TestCase("3*5", 15)]
-        public void EvaluateTest_Mult(string expression, double expected)
+        public void Evaluate_Mult(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -91,7 +93,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         }
 
         [TestCase("3/5/2", 3.0 / 5 / 2)]
-        public void EvaluateTest_Div(string expression, double expected)
+        public void Evaluate_Div(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -104,7 +106,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         }
 
         [TestCase("4^2^3", 65536)]
-        public void EvaluateTest_Pow(string expression, double expected)
+        public void Evaluate_Pow(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -117,7 +119,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         }
 
         [TestCase("(2+3)*5", 25)]
-        public void EvaluateTest_Brackets(string expression, double expected)
+        public void Evaluate_Brackets(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -130,7 +132,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         }
 
         [TestCase("3*5+16*-3", -33)]
-        public void EvaluateTest_AddMult(string expression, double expected)
+        public void Evaluate_AddMult(string expression, double expected)
         {
             //arrange
             Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
@@ -144,7 +146,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
 
 
         [Test]
-        public void EvaluateTest_NullExpression()
+        public void Evaluate_NullExpression()
         {
             //arrange
             string expression = null;
@@ -159,7 +161,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
         [TestCase("3+")]
         [TestCase("3*(2+8")]
         [TestCase("3+5{")]
-        public void EvaluateTest_NoExpressionSyntaxException(string expression)
+        public void Evaluate_NoExpressionSyntaxException(string expression)
         {
             //action
             Action action = () => ExpressionTreeBuilder.BuildTree(expression);
@@ -167,5 +169,38 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
             //assert
             action.ShouldThrow<SyntaxException>();
         }
+
+        #endregion
+
+        #region ToString
+
+        [TestCase("2 + 3", "2+3")]
+        [TestCase("2 - 3", "2-3")]
+        [TestCase("2 * 3", "2*3")]
+        [TestCase("2 / 3", "2/3")]
+        [TestCase("2 * 3 + 5", "2*3+5")]
+        [TestCase("2 * (3 + 5)", "2*(3+5)")]
+        [TestCase("(1 + 2) * (3 + 5)", "(1+2)*(3+5)")]
+        [TestCase("1 + 2 * 3 + 5", "1+2*3+5")]
+        [TestCase("(3 + 5) / 18", "(3+5)/18")]
+        [TestCase("2^3", "2^3")]
+        [TestCase("2^3+5", "2^3+5")]
+        [TestCase("2^(3+5)", "2^(3+5)")]
+        [TestCase("(3+11*5)^2", "(3+11*5)^2")]
+        [TestCase("((3+11)*5)^2", "((3+11)*5)^2")]
+        [TestCase("((((3+11))*5)^2)", "((3+11)*5)^2")]
+        public void ToString(string expression, string expected)
+        {
+            //arrange
+            Expression<double> target = ExpressionTreeBuilder.BuildTree(expression);
+
+            //action
+            var actual = target.ToString();
+
+            //assert
+            actual.Should().Be(expected);
+        }
+
+        #endregion
     }
 }
