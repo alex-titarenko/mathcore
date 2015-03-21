@@ -3,7 +3,7 @@ REM variables
 
 set solutionName=TAlex.MathCore.sln
 set config=Release
-set buildDir=_Build
+set buildDir=Build
 set packagesDir=%buildDir%\packages
 
 REM process

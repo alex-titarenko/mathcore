@@ -48,11 +48,8 @@ namespace TAlex.MathCore.Optimization.EvolutionaryAlgorithms.GeneticAlgorithms
                     }
                 }
 
-                var s = neighbours[indexOfBest].Crossover(Population[i], RandomGenerator);
-                if (s[0].Fitness > s[1].Fitness)
-                    newGeneration.Add(s[0]);
-                else
-                    newGeneration.Add(s[1]);
+                var children = neighbours[indexOfBest].Crossover(Population[i], RandomGenerator);
+                newGeneration.Add(children.Max());
             }
 
             for (int i = populationSize - rem; i < populationSize; i++)

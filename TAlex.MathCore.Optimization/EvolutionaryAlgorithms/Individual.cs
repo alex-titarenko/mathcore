@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TAlex.MathCore.Optimization.RandomGenerators;
 
 
@@ -31,9 +32,15 @@ namespace TAlex.MathCore.Optimization.EvolutionaryAlgorithms
         #region Methods
 
         public abstract Individual Mutate(IRandomGenerator randomGenerator);
-        public abstract Individual[] Crossover(Individual another, IRandomGenerator randomGenerator);
+        public abstract IEnumerable<Individual> Crossover(Individual another, IRandomGenerator randomGenerator);
 
         public abstract double EvaluateFitness();
+
+
+        public override string ToString()
+        {
+            return String.Format("{0}: {1}", GetType().Name, _cachedFitness);
+        }
 
         #endregion
 

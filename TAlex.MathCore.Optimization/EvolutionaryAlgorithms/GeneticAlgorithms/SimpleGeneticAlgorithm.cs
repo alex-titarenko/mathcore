@@ -51,8 +51,8 @@ namespace TAlex.MathCore.Optimization.EvolutionaryAlgorithms.GeneticAlgorithms
                 a1 = Population[RandomGenerator.Next(populationSize)];
                 a2 = Population[RandomGenerator.Next(populationSize)];
 
-                Individual[] s = a1.Crossover(a2, RandomGenerator);
-                newGeneration.AddRange(s);
+                var children = a1.Crossover(a2, RandomGenerator);
+                newGeneration.AddRange(children);
             }
 
             if (newGeneration.Count < populationSize)

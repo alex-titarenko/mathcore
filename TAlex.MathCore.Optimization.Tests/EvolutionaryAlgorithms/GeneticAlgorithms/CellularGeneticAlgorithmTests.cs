@@ -32,7 +32,7 @@ namespace TAlex.MathCore.Optimization.Tests.EvolutionaryAlgorithms.GeneticAlgori
 
             Target = new CellularGeneticAlgorithm(Problem)
             {
-                GenerationSize = 100,
+                GenerationSize = 150,
                 RandomGenerator = new RandomGenerator(0)
             };
         }

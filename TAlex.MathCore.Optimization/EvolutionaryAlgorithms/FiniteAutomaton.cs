@@ -83,7 +83,7 @@ namespace TAlex.MathCore.Optimization.EvolutionaryAlgorithms
             return mutatedIndividual;
         }
 
-        public override Individual[] Crossover(Individual anotherIndividual, IRandomGenerator randomGenerator)
+        public override IEnumerable<Individual> Crossover(Individual anotherIndividual, IRandomGenerator randomGenerator)
         {
             var another = anotherIndividual as FiniteAutomaton;
             if (another == null) throw new ArgumentException();
