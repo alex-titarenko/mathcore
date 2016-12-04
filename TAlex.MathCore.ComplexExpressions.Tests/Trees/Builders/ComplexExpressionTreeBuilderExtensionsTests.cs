@@ -11,7 +11,7 @@ using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using TAlex.MathCore.LinearAlgebra;
 using System.Globalization;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Metadata;
-
+using TAlex.MathCore.ExpressionEvaluation.ComplexExpressions;
 
 namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
 {
@@ -26,7 +26,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
 
         static ComplexExpressionTreeBuilderExtensionsTests()
         {
-            var targetAssembly = Assembly.LoadFrom("TAlex.MathCore.ComplexExpressions.Extensions.dll");
+            var targetAssembly = typeof(ExpressionExtensions).Assembly; //Assembly.LoadFrom("TAlex.MathCore.ComplexExpressions.Extensions.dll");
 
             ConstantFactory = new ConstantFlyweightFactory<object>();
             ConstantFactory.LoadFromAssemblies(new List<Assembly> { targetAssembly });
