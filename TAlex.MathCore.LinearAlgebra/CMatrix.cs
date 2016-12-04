@@ -2878,7 +2878,14 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <returns>A complex matrix that represents the converted one-dimensional complex array.</returns>
         public static implicit operator CMatrix(Complex[] array)
         {
-            return new CMatrix(array);
+            var m = new CMatrix(array.Length, 1);
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                m[i, 0] = array[i];
+            }
+
+            return m;
         }
 
         /// <summary>
@@ -2898,7 +2905,14 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <returns>A complex matrix that represents the converted one-dimensional real array.</returns>
         public static implicit operator CMatrix(double[] array)
         {
-            return new CMatrix(array);
+            var m = new CMatrix(array.Length, 1);
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                m[i, 0] = array[i];
+            }
+
+            return m;
         }
 
         /// <summary>
