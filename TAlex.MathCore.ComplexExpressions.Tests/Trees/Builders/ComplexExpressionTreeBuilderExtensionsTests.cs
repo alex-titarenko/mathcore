@@ -26,7 +26,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
 
         static ComplexExpressionTreeBuilderExtensionsTests()
         {
-            var targetAssembly = typeof(ExpressionExtensions).Assembly; //Assembly.LoadFrom("TAlex.MathCore.ComplexExpressions.Extensions.dll");
+            var targetAssembly = typeof(ExpressionExtensions).Assembly;
 
             ConstantFactory = new ConstantFlyweightFactory<object>();
             ConstantFactory.LoadFromAssemblies(new List<Assembly> { targetAssembly });

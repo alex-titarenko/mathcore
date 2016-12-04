@@ -511,30 +511,6 @@ namespace TAlex.MathCore.LinearAlgebra
             _m = new Complex[n, 1];
         }
 
-        /// <summary>
-        /// Initializes a complex column vector from a complex array.
-        /// </summary>
-        /// <param name="vector">One-dimensional complex array.</param>
-        public CMatrix(Complex[] vector)
-        {
-            _m = new Complex[vector.Length, 1];
-
-            for (int i = 0; i < vector.Length; i++)
-                this[i, 0] = vector[i];
-        }
-
-        /// <summary>
-        /// Initializes a complex column vector from a real array.
-        /// </summary>
-        /// <param name="vector">One-dimensional real array.</param>
-        public CMatrix(double[] vector)
-        {
-            _m = new Complex[vector.Length, 1];
-
-            for (int i = 0; i < vector.Length; i++)
-                this[i, 0] = vector[i];
-        }
-
         #endregion
 
         #region Methods
