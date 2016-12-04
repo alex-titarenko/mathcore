@@ -10,16 +10,16 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright 2015 T-Alex Software</copyright>
+    <copyright>Copyright 2016 T-Alex Software</copyright>
     <tags>Math MathCore Mathematica Complex Expression Functions</tags>
 	
 	<dependencies>
-		<dependency id="TAlex.MathCore" />
-		<dependency id="TAlex.MathCore.ExpressionsBase" />
-		<dependency id="TAlex.MathCore.LinearAlgebra" />
-		<dependency id="TAlex.MathCore.NumericalAnalysis" />
-		<dependency id="TAlex.MathCore.SpecialFunctions" />
-		<dependency id="TAlex.MathCore.Statistics" />
+		<dependency id="TAlex.MathCore" version="1.4.0" />
+		<dependency id="TAlex.MathCore.ExpressionsBase" version="1.1.4" />
+		<dependency id="TAlex.MathCore.LinearAlgebra" version="1.1.3" />
+		<dependency id="TAlex.MathCore.NumericalAnalysis" version="1.1.1" />
+		<dependency id="TAlex.MathCore.SpecialFunctions" version="1.1.1" />
+		<dependency id="TAlex.MathCore.Statistics" version="1.1.1" />
 	</dependencies>
   </metadata>
 </package>
