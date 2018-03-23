@@ -1,102 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{97A80E94-CD29-4CED-9C78-510D7CDC0F91}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TAlex.MathCore</RootNamespace>
     <AssemblyName>TAlex.MathCore</AssemblyName>
-    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+
+    <Product>TAlex.MathCore</Product>
+    <Version>2.0.0</Version>
+    <Authors>Alex Titarenko</Authors>
+    <Description>MathCore Library</Description>
+    <PackageProjectUrl>https://github.com/T-Alex/MathCore</PackageProjectUrl>
+    <Copyright>Copyright 2018 Alex Titarenko</Copyright>
+    <PackageTags>Math MathCore Mathematica Complex Number Polynomial Fraction UnitConversion Special Functions</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\TAlex.MathCore.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>
-    </NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Complex.cs" />
-    <Compile Include="ComplexComparer.cs" />
-    <Compile Include="ConvertEx.cs" />
-    <Compile Include="CPolynomial.cs" />
-    <Compile Include="ExMath.cs" />
-    <Compile Include="Fraction.cs" />
-    <Compile Include="Graphing\CoordSysConverter.cs" />
-    <Compile Include="LinearAlgebra\Matrix3D.cs" />
-    <Compile Include="LinearAlgebra\Point.cs" />
-    <Compile Include="LinearAlgebra\Vector3D.cs" />
-    <Compile Include="Machine.cs" />
-    <Compile Include="NotConvergenceException.cs" />
-    <Compile Include="NumericUtil.cs" />
-    <Compile Include="Performance\PerformanceManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="SpecialFunctions\Combinatorics.cs" />
-    <Compile Include="SpecialFunctions\NumberTheory.cs" />
-    <Compile Include="UnitConversion\Quantities\Angle.cs" />
-    <Compile Include="UnitConversion\Quantities\Annotation\QuantityAttribute.cs" />
-    <Compile Include="UnitConversion\Quantities\Area.cs" />
-    <Compile Include="UnitConversion\Quantities\Data.cs" />
-    <Compile Include="UnitConversion\Quantities\Energy.cs" />
-    <Compile Include="UnitConversion\Quantities\Power.cs" />
-    <Compile Include="UnitConversion\Quantities\Pressure.cs" />
-    <Compile Include="UnitConversion\Quantities\Quantity.cs" />
-    <Compile Include="UnitConversion\Quantities\Speed.cs" />
-    <Compile Include="UnitConversion\Quantities\Temperature.cs" />
-    <Compile Include="UnitConversion\Quantities\Time.cs" />
-    <Compile Include="UnitConversion\Quantities\Volume.cs" />
-    <Compile Include="UnitConversion\Quantities\Weight.cs" />
-    <Compile Include="UnitConversion\UnitConverter.cs" />
-    <Compile Include="UnitConversion\Quantities\Length.cs" />
-    <Compile Include="UnitConversion\Units\LinearUnit.cs" />
-    <Compile Include="UnitConversion\Units\CustomUnit.cs" />
-    <Compile Include="UnitConversion\Units\Unit.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
