@@ -15,7 +15,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Extensions
 
         public static T GetCustomAttribute<T>(this MemberInfo element) where T : Attribute
         {
-            Attribute[] customAttributes = element.GetCustomAttributes(typeof(T), true).ToArray();
+            Attribute[] customAttributes = element.GetCustomAttributes(typeof(T), true).Cast<T>().ToArray();
             if (customAttributes == null || customAttributes.Length == 0)
             {
                 return null;

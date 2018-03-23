@@ -172,10 +172,10 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Builders
             }
         }
 
-        [DisplayName("Minimum")]
-        [Category("General")]
+        [Metadata.DisplayName("Minimum")]
+        [Metadata.Category("General")]
         [Section("Basic")]
-        [Description("Some description")]
+        [Metadata.Description("Some description")]
         [FunctionSignature("min", "real arg1", "real arg2", "...")]
         public class MinFuncExpression : MultiaryExpression<double>
         {
