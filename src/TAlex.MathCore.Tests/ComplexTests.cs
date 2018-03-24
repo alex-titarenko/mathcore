@@ -288,7 +288,7 @@ namespace TAlex.MathCore.Tests
             Action action = () => Complex.Parse(s);
 
             //assert
-            action.ShouldThrow<FormatException>();
+            action.Should().Throw<FormatException>();
         }
 
         [TestCase(5.5, 0, "5.5")]

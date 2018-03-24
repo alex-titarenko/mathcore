@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using System.Globalization;
 
@@ -37,9 +33,9 @@ namespace TAlex.MathCore.Tests
         {
             //action
             Action action = () => ConvertEx.ToDouble(s, CultureInfo.InvariantCulture);
-
+            
             //assert
-            action.ShouldThrow<FormatException>();
+            action.Should().Throw<FormatException>();
         }
     }
 }

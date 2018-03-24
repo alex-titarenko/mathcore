@@ -46,7 +46,7 @@ namespace TAlex.MathCore.Tests.SpecialFunctions
             Action action = () => Combinatorics.Factorial(n);
 
             //assert
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
     }
 }

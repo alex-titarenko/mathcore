@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project>
     <PropertyGroup>
         <Authors>Alex Titarenko</Authors>
         <PackageProjectUrl>https://github.com/T-Alex/MathCore</PackageProjectUrl>

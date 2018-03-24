@@ -345,7 +345,7 @@ namespace TAlex.MathCore.Tests
             Action action = () => CPolynomial.Parse(s);
 
             //assert
-            action.ShouldThrow<FormatException>();
+            action.Should().Throw<FormatException>();
         }
 
         #endregion
