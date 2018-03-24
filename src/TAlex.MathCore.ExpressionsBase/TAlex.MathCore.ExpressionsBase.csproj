@@ -1,17 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Library.Common.props" />
   <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
     <RootNamespace>TAlex.MathCore.ExpressionEvaluation</RootNamespace>
     <AssemblyName>TAlex.MathCore.ExpressionsBase</AssemblyName>
-    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-
     <Product>TAlex.MathCore.ExpressionsBase</Product>
     <Version>2.0.0</Version>
-    <Authors>Alex Titarenko</Authors>
     <Description>MathCore Library - ExpressionsBase</Description>
-    <PackageProjectUrl>https://github.com/T-Alex/MathCore</PackageProjectUrl>
-    <Copyright>Copyright 2018 Alex Titarenko</Copyright>
     <PackageTags>Math MathCore Mathematica Evaluate Expression Engine</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 </Project>

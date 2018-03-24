@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Authors>Alex Titarenko</Authors>
+        <PackageProjectUrl>https://github.com/T-Alex/MathCore</PackageProjectUrl>
+        <Copyright>Copyright 2018 Alex Titarenko</Copyright>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+</Project>
