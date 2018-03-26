@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Library.Common.props" />
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <RootNamespace>TAlex.MathCore.ExpressionEvaluation</RootNamespace>
+    <AssemblyName>TAlex.MathCore.ComplexExpressions</AssemblyName>
+    <Product>TAlex.MathCore.ComplexExpressions</Product>
+    <Version>2.0.0</Version>
+    <Description>MathCore Library - Complex Expressions</Description>
+    <PackageTags>Math MathCore Mathematica Complex Expression Evaluate Expression</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TAlex.MathCore\TAlex.MathCore.csproj" />
+    <ProjectReference Include="..\TAlex.MathCore.ExpressionsBase\TAlex.MathCore.ExpressionsBase.csproj" />
+    <ProjectReference Include="..\TAlex.MathCore.LinearAlgebra\TAlex.MathCore.LinearAlgebra.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Library.Common.props" />
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <RootNamespace>TAlex.MathCore</RootNamespace>
+    <AssemblyName>TAlex.MathCore</AssemblyName>
+    <Product>TAlex.MathCore</Product>
+    <Version>2.0.0</Version>
+    <Description>MathCore Library</Description>
+    <PackageTags>Math MathCore Mathematica Complex Number Polynomial Fraction UnitConversion Special Functions</PackageTags>
+  </PropertyGroup>
+</Project>

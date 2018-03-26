@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Library.Common.props" />
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <RootNamespace>TAlex.MathCore.Optimization</RootNamespace>
+    <AssemblyName>TAlex.MathCore.Optimization</AssemblyName>
+    <Product>TAlex.MathCore.Optimization</Product>
+    <Version>2.0.0</Version>
+    <Description>MathCore Library - Optimization</Description>
+    <PackageTags>Math MathCore Mathematica Optimization Cellular Genetic Algorithm</PackageTags>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Library.Common.props" />
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <RootNamespace>TAlex.MathCore.ExpressionEvaluation</RootNamespace>
+    <AssemblyName>TAlex.MathCore.ExpressionsBase</AssemblyName>
+    <Product>TAlex.MathCore.ExpressionsBase</Product>
+    <Version>2.0.0</Version>
+    <Description>MathCore Library - ExpressionsBase</Description>
+    <PackageTags>Math MathCore Mathematica Evaluate Expression Engine</PackageTags>
+  </PropertyGroup>
+</Project>

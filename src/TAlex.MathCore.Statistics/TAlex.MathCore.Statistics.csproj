@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Library.Common.props" />
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
+    <RootNamespace>TAlex.MathCore.Statistics</RootNamespace>
+    <AssemblyName>TAlex.MathCore.Statistics</AssemblyName>
+    <Product>TAlex.MathCore.Statistics</Product>
+    <Version>2.0.0</Version>
+    <Description>MathCore Library - Statistics</Description>
+    <PackageTags>Math MathCore Mathematica Statistic Mean Median Standard Deviation Covariance Correlation Distribution</PackageTags>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\TAlex.MathCore\TAlex.MathCore.csproj" />
+    <ProjectReference Include="..\TAlex.MathCore.SpecialFunctions\TAlex.MathCore.SpecialFunctions.csproj" />
+  </ItemGroup>
+</Project>
