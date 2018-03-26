@@ -55,6 +55,11 @@ namespace TAlex.MathCore.ExpressionEvaluation.Trees.Metadata
             return signature;
         }
 
+        public override string ToString()
+        {
+            return this.DisplayName;
+        }
+
         #endregion
     }
 }

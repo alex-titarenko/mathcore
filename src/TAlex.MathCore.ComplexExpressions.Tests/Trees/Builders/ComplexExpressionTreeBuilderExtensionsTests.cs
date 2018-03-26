@@ -20,7 +20,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
         protected static ConstantFlyweightFactory<Object> ConstantFactory;
         protected static ComplexExpressionTreeBuilder ExpressionTreeBuilder;
 
-        protected static readonly List<TestCaseData> FunctionsTestCasesData;
+        protected static readonly object[] FunctionsTestCasesData;
 
         static ComplexExpressionTreeBuilderExtensionsTests()
         {
@@ -38,12 +38,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
                 FunctionFactory = FunctionFactory
             };
 
-            FunctionsTestCasesData = FunctionFactory.GetMetadata().Select(x =>
-            {
-                var d = new TestCaseData(x);
-                d.SetName(String.Format("ShouldContainsCorrectedExampleUsages: {0}", x.DisplayName));
-                return d;
-            }).ToList();
+            FunctionsTestCasesData = FunctionFactory.GetMetadata().ToArray();
         }
 
         [Test]
