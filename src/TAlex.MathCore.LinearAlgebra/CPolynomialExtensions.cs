@@ -11,6 +11,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// <summary>
         /// Returns the value of the complex polynomial evaluated at a specified value.
         /// </summary>
+        /// <param name="poly">The source.</param>
         /// <param name="value">A complex square matrix.</param>
         /// <returns>The evaluated value of the complex polynomial.</returns>
         /// <exception cref="MatrixSizeMismatchException">The matrix value is not square.</exception>

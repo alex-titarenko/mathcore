@@ -1757,7 +1757,7 @@ namespace TAlex.MathCore.LinearAlgebra
         /// </summary>
         /// <param name="m1">The first complex matrix to compare.</param>
         /// <param name="m2">The second complex matrix to compare.</param>
-        /// <param name="TOL">The tolerance.</param>
+        /// <param name="relativeTolerance">The tolerance.</param>
         /// <returns>True if the m1 and m2 parameters have the same value with tolerance TOL; otherwise, false.</returns>
         public static bool FuzzyEquals(CMatrix m1, CMatrix m2, double relativeTolerance)
         {
