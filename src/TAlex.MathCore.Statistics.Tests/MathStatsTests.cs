@@ -1,7 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
-using TAlex.MathCore;
-using TAlex.MathCore.Statistics;
 using FluentAssertions;
 
 

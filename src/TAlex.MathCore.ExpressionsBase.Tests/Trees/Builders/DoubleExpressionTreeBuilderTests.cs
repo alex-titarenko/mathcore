@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
@@ -155,7 +152,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
             Action action = () => ExpressionTreeBuilder.BuildTree(expression);
 
             //arrange
-            action.ShouldThrow<Exception>();
+            action.Should().Throw<Exception>();
         }
 
         [TestCase("3+")]
@@ -167,7 +164,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Trees.Builders
             Action action = () => ExpressionTreeBuilder.BuildTree(expression);
 
             //assert
-            action.ShouldThrow<SyntaxException>();
+            action.Should().Throw<SyntaxException>();
         }
 
         #endregion

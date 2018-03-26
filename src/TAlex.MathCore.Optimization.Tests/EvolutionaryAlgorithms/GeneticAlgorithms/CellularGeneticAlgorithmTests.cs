@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using TAlex.MathCore.Optimization.EvolutionaryAlgorithms;
 using TAlex.MathCore.Optimization.EvolutionaryAlgorithms.GeneticAlgorithms;
 using TAlex.MathCore.Optimization.Tests.EvolutionaryAlgorithms.GeneticAlgorithms.Problems.ArtificialAnt;
 using FluentAssertions;
 using TAlex.MathCore.Optimization.RandomGenerators;
-using System.Diagnostics;
 
 
 namespace TAlex.MathCore.Optimization.Tests.EvolutionaryAlgorithms.GeneticAlgorithms

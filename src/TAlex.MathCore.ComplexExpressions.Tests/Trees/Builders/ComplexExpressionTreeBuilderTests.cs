@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using TAlex.MathCore;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
 using FluentAssertions;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
@@ -127,7 +126,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
             Action action = () => TreeBuilder.BuildTree(s);
 
             //assert
-            action.ShouldThrow<MatrixSizeMismatchException>();
+            action.Should().Throw<MatrixSizeMismatchException>();
         }
     }
 }

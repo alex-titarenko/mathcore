@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using TAlex.MathCore.ExpressionEvaluation.Trees;
 using TAlex.MathCore.ExpressionEvaluation.Trees.Builders;
@@ -22,7 +20,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
         protected static ConstantFlyweightFactory<Object> ConstantFactory;
         protected static ComplexExpressionTreeBuilder ExpressionTreeBuilder;
 
-        protected static List<TestCaseData> FunctionsTestCasesData;
+        protected static readonly List<TestCaseData> FunctionsTestCasesData;
 
         static ComplexExpressionTreeBuilderExtensionsTests()
         {
@@ -137,7 +135,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Trees.Builders
             }
         }
 
-        [Test, TestCaseSource("FunctionsTestCasesData")]
+        [Test, TestCaseSource(nameof(FunctionsTestCasesData))]
         public void AllFunctionsTest_ShouldContainsCorrectedExampleUsages(FunctionMetadata item)
         {
             //action

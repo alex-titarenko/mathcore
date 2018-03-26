@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TAlex.MathCore.ExpressionEvaluation.Tokenize;
 using FluentAssertions;
 
@@ -40,7 +36,7 @@ namespace TAlex.MathCore.ComplexExpressions.Tests.Tokenize
             IEnumerable<Token> actualTokens = Tokenizer.GetTokens(expression);
 
             //assert
-            actualTokens.ShouldAllBeEquivalentTo(expectedTokens);
+            actualTokens.Should().BeEquivalentTo(expectedTokens);
         }
     }
 }

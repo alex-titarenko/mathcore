@@ -10,7 +10,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Extensions
     {
         public static T GetCustomAttribute<T>(this Type element) where T : Attribute
         {
-            return GetCustomAttribute<T>(element.GetTypeInfo());
+            return GetCustomAttribute<T>((MemberInfo)element.GetTypeInfo());
         }
 
         public static T GetCustomAttribute<T>(this MemberInfo element) where T : Attribute
@@ -29,7 +29,7 @@ namespace TAlex.MathCore.ExpressionEvaluation.Extensions
 
         public static IEnumerable<T> GetCustomAttributes<T>(this Type element) where T : Attribute
         {
-            return GetCustomAttributes<T>(element.GetTypeInfo());
+            return GetCustomAttributes<T>((MemberInfo)element.GetTypeInfo());
         }
 
         public static IEnumerable<T> GetCustomAttributes<T>(this MemberInfo element) where T : Attribute

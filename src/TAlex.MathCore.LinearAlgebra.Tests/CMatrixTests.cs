@@ -1,12 +1,9 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
-using TAlex.MathCore;
-using TAlex.MathCore.LinearAlgebra;
 
 
 namespace TAlex.MathCore.LinearAlgebra.Tests
-{    
+{
     [TestFixture]
     public class CMatrixTests
     {

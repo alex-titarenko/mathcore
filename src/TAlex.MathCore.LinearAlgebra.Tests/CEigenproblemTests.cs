@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
-using TAlex.MathCore.LinearAlgebra;
 
 
 namespace TAlex.MathCore.LinearAlgebra.Tests

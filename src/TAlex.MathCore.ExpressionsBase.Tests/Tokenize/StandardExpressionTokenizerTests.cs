@@ -41,10 +41,10 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Tokenize
             };
 
             //action
-            IEnumerable<Token> actual = ExpressionTokenizer.GetTokens(expression);
+            IEnumerable<Token> actual = ExpressionTokenizer.GetTokens(expression).ToList();
 
             //assert
-            actual.ShouldAllBeEquivalentTo(expected);
+            actual.Should().BeEquivalentTo(expected);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace TAlex.MathCore.ExpressionsBase.Tests.Tokenize
             IEnumerable<Token> actual = ExpressionTokenizer.GetTokens(expression);
 
             //assert
-            actual.ShouldAllBeEquivalentTo(expected);
+            actual.Should().BeEquivalentTo(expected);
         }
     }
 }
