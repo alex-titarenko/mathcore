@@ -1,5 +1,5 @@
 # MathCore
-[![Build status](https://ci.appveyor.com/api/projects/status/tx5d4fcdot9k0fvb?svg=true)](https://ci.appveyor.com/project/T-Alex/mathcore)
+[![Build status](https://ci.appveyor.com/api/projects/status/tx5d4fcdot9k0fvb?svg=true)](https://ci.appveyor.com/project/alex-titarenko/mathcore)
 
 Advanced .NET math library (.NET Standard).
 
