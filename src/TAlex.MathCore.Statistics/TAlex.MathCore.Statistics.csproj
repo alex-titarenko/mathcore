@@ -5,7 +5,7 @@
     <RootNamespace>TAlex.MathCore.Statistics</RootNamespace>
     <AssemblyName>TAlex.MathCore.Statistics</AssemblyName>
     <Product>TAlex.MathCore.Statistics</Product>
-    <Version>2.0.0</Version>
+    <Version>2.0.2</Version>
     <Description>MathCore Library - Statistics</Description>
     <PackageTags>Math MathCore Mathematica Statistic Mean Median Standard Deviation Covariance Correlation Distribution</PackageTags>
   </PropertyGroup>

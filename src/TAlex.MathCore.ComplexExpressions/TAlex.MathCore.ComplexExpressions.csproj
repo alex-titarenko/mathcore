@@ -5,7 +5,7 @@
     <RootNamespace>TAlex.MathCore.ExpressionEvaluation</RootNamespace>
     <AssemblyName>TAlex.MathCore.ComplexExpressions</AssemblyName>
     <Product>TAlex.MathCore.ComplexExpressions</Product>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Description>MathCore Library - Complex Expressions</Description>
     <PackageTags>Math MathCore Mathematica Complex Expression Evaluate Expression</PackageTags>
   </PropertyGroup>

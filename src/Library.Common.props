@@ -1,8 +1,8 @@
 <Project>
     <PropertyGroup>
         <Authors>Alex Titarenko</Authors>
-        <PackageProjectUrl>https://github.com/T-Alex/MathCore</PackageProjectUrl>
-        <Copyright>Copyright 2018 Alex Titarenko</Copyright>
+        <PackageProjectUrl>https://github.com/alex-titarenko/mathcore</PackageProjectUrl>
+        <Copyright>Copyright 2020 Alex Titarenko</Copyright>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
         <NoWarn>1591</NoWarn>

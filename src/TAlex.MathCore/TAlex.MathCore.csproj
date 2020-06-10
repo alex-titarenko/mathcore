@@ -5,7 +5,7 @@
     <RootNamespace>TAlex.MathCore</RootNamespace>
     <AssemblyName>TAlex.MathCore</AssemblyName>
     <Product>TAlex.MathCore</Product>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Description>MathCore Library</Description>
     <PackageTags>Math MathCore Mathematica Complex Number Polynomial Fraction UnitConversion Special Functions</PackageTags>
   </PropertyGroup>

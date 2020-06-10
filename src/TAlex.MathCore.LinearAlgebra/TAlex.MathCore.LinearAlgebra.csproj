@@ -5,7 +5,7 @@
     <RootNamespace>TAlex.MathCore.LinearAlgebra</RootNamespace>
     <AssemblyName>TAlex.MathCore.LinearAlgebra</AssemblyName>
     <Product>TAlex.MathCore.LinearAlgebra</Product>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Description>MathCore Library - Linear Algebra</Description>
     <PackageTags>Math MathCore Mathematica Linear Algebra Linear System Complex Matrix SVD Eigenvalues</PackageTags>
   </PropertyGroup>

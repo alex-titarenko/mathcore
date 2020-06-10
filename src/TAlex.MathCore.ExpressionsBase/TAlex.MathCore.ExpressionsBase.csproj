@@ -5,7 +5,7 @@
     <RootNamespace>TAlex.MathCore.ExpressionEvaluation</RootNamespace>
     <AssemblyName>TAlex.MathCore.ExpressionsBase</AssemblyName>
     <Product>TAlex.MathCore.ExpressionsBase</Product>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Description>MathCore Library - ExpressionsBase</Description>
     <PackageTags>Math MathCore Mathematica Evaluate Expression Engine</PackageTags>
   </PropertyGroup>
