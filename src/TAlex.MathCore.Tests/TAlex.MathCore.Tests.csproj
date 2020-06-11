@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net451</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <RootNamespace>TAlex.MathCore.Tests</RootNamespace>
     <AssemblyName>TAlex.MathCore.Tests</AssemblyName>
     <IsPackable>false</IsPackable>
