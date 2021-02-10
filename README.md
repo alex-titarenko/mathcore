@@ -1,5 +1,5 @@
 # MathCore
-![Build](https://github.com/alex-titarenko/mathcore/workflows/Build/badge.svg?branch=master)
+![Build](https://github.com/alex-titarenko/mathcore/workflows/Build/badge.svg?branch=main)
 
 Advanced .NET math library (.NET Standard).
 
